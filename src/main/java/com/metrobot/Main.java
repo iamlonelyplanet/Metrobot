@@ -1,25 +1,18 @@
 package com.metrobot;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static final String SAVE_FILE = "windows.json";
+    private static final String SAVE_FILE = "windows.txt";
 
     public static void main(String[] args) {
         try {
-            List<Integer> windows = loadSelectedWindows();
-
-            if (windows.isEmpty()) {
-                windows = askWindows();
-                saveSelectedWindows(windows);
-            }
+            List<Integer> lastConfig = loadSelectedWindows();
+            List<Integer> windows = askWindows(lastConfig);
+            saveSelectedWindows(windows);
 
             System.out.println("Выбраны окна: " + windows);
             ArenaBot bot = new ArenaBot(windows);
@@ -29,12 +22,23 @@ public class Main {
         }
     }
 
-    private static List<Integer> askWindows() {
+    private static List<Integer> askWindows(List<Integer> lastConfig) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите номера окон для работы (через пробел). Доступные окна: 1, 2, 3, 4.");
+
+        if (!lastConfig.isEmpty()) {
+            System.out.println("Последняя конфигурация окон: " + lastConfig);
+        } else {
+            System.out.println("Последняя конфигурация отсутствует.");
+        }
+
+        System.out.println("Введи номера окон для работы (через пробел), или Enter, чтобы оставить как есть:");
         String line = scanner.nextLine().trim();
+
+        if (line.isEmpty() && !lastConfig.isEmpty()) {
+            return lastConfig;
+        }
+
         List<Integer> res = new ArrayList<>();
-        if (line.isEmpty()) return res;
         for (String tok : line.split("\\s+")) {
             try {
                 int v = Integer.parseInt(tok);
@@ -47,8 +51,10 @@ public class Main {
 
     private static void saveSelectedWindows(List<Integer> numbers) {
         try (Writer writer = new FileWriter(SAVE_FILE)) {
-            new Gson().toJson(numbers, writer);
-            System.out.println("Сохранён " + SAVE_FILE);
+            for (int num : numbers) {
+                writer.write(num + " ");
+            }
+            System.out.println("Сохранено в " + SAVE_FILE);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,11 +63,19 @@ public class Main {
     private static List<Integer> loadSelectedWindows() {
         File f = new File(SAVE_FILE);
         if (!f.exists()) return new ArrayList<>();
-        try (Reader reader = new FileReader(f)) {
-            Type listType = new TypeToken<List<Integer>>() {
-            }.getType();
-            List<Integer> list = new Gson().fromJson(reader, listType);
-            return list == null ? new ArrayList<>() : list;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+            String line = reader.readLine();
+            List<Integer> list = new ArrayList<>();
+            if (line != null && !line.trim().isEmpty()) {
+                for (String tok : line.trim().split("\\s+")) {
+                    try {
+                        list.add(Integer.parseInt(tok));
+                    } catch (NumberFormatException ignored) {
+                    }
+                }
+            }
+            return list;
         } catch (IOException e) {
             e.printStackTrace();
             return new ArrayList<>();
