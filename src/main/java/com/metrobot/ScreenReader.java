@@ -1,17 +1,9 @@
 package com.metrobot;
 
 import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
-import javax.imageio.ImageIO;
+
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorConvertOp;
-import java.awt.image.ConvolveOp;
-import java.awt.image.Kernel;
-import java.awt.image.RescaleOp;
+import java.awt.image.*;
 
 public class ScreenReader {
 

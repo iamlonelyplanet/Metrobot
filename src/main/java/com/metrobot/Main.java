@@ -10,9 +10,10 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Выберите режим:");
-            System.out.println("1. Клановые войны (ClanWarBot)");
-            System.out.println("2. Рейд (RaidBot)");
-            System.out.print("Введите номер: ");
+            System.out.println("1. Клановые войны");
+            System.out.println("2. Рейд");
+            System.out.println("3. Арена");
+            System.out.print("Введите номер режима игры: ");
             int mode = Integer.parseInt(scanner.nextLine().trim());
 
             List<Integer> windows = askWindows();
@@ -27,11 +28,17 @@ public class Main {
                     clanWarBot.start(); // блокирующий запуск
                     break;
                 case 2:
-                    System.out.print("Введите время старта рейда (часы:минуты, например 18:05): ");
+                    System.out.print("Введи время старта рейда (например 18:05): ");
                     String timeStr = scanner.nextLine().trim();
 
                     RaidBot raidBot = new RaidBot(windows, timeStr);
                     raidBot.start(); // блокирующий запуск
+                    break;
+                case 3:
+                    System.out.print("Идём на Арену!");
+
+                    ArenaBot arenaBot = new ArenaBot(windows);
+                    arenaBot.start(); // блокирующий запуск
                     break;
                 default:
                     System.out.println("Неизвестный режим. Завершаю.");
@@ -52,7 +59,8 @@ public class Main {
             try {
                 int v = Integer.parseInt(tok);
                 if (v >= 1 && v <= 4) res.add(v);
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
         }
         return res;
     }

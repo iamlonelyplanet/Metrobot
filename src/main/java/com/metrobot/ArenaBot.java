@@ -1,13 +1,13 @@
 package com.metrobot;
 
 import java.awt.*;
-import java.awt.event.InputEvent;
-import java.util.*;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ArenaBot {
+public class ArenaBot extends BaseBot {
+
     private final List<Integer> windows; // номера окон 1..4
-    private final Robot robot;
 
     // Верхние левые углы окон (фиксированные, как ты давал)
     private final Point[] windowPositions = new Point[]{
@@ -26,10 +26,10 @@ public class ArenaBot {
     private final Map<String, Point> buttons = new LinkedHashMap<>();
 
     // Паузы
-    private static final long PAUSE_AFTER_EACH_STEP_MS = 4000L; // 3 сек между этапами (Арена -> ... -> Закрыть)
+    private static final long PAUSE_AFTER_EACH_STEP_MS = 4000L; // 4 сек между этапами (Арена -> ... -> Закрыть)
     private static final long PAUSE_BETWEEN_WINDOWS_MS = 500L;  // 0.5 сек между окнами
     private static final int TOTAL_BATTLES = 50;
-    private static final int INTER_BATTLE_SECONDS = 4 * 60 + 45; // 4 мин 45 сек
+    private static final int INTER_BATTLE_SECONDS = 4 * 60 + 40; // 4 мин 40 сек
 
     public ArenaBot(List<Integer> windows) throws AWTException {
         this.windows = windows;
@@ -39,8 +39,8 @@ public class ArenaBot {
         buttons.put("Атаковать", new Point(390, 610));
         buttons.put("Пропустить бой", new Point(510, 130));
         buttons.put("Закрыть — Победа", new Point(640, 615));
-        buttons.put("Закрыть — Поражение", new Point(640, 560));
         buttons.put("Забрать коллекцию", new Point(640, 560));
+        buttons.put("Закрыть — Поражение", new Point(640, 560));
     }
 
     public void start() {
@@ -54,13 +54,8 @@ public class ArenaBot {
                 // порядок действий: для каждой кнопки — кликаем по всем выбранным окнам (с паузой между окнами),
                 // затем делаем общую паузу (2 с) перед следующей кнопкой
                 for (Map.Entry<String, Point> btnEntry : buttons.entrySet()) {
-                    String btnName = btnEntry.getKey();
-                    Point btnRel = btnEntry.getValue();
-
-                    clickAllSelectedWindows(btnRel, btnName);
-
-                    // после кликов по всем окнам делаем паузу между этапами,
-                    // но если это последняя кнопка ("Закрыть — Поражение"), можно также паузу держать
+                    String buttonName = btnEntry.getKey();
+                    clickAllWindows(buttonName);
                     Thread.sleep(PAUSE_AFTER_EACH_STEP_MS);
                 }
 
@@ -69,11 +64,11 @@ public class ArenaBot {
                 // межбоевой таймер (если не последний бой)
                 if (battle < TOTAL_BATTLES) {
                     System.out.println("Пауза между боями...");
-                    runInterBattleCountdown(INTER_BATTLE_SECONDS);
+                    countdown(INTER_BATTLE_SECONDS);
                 }
             }
 
-            System.out.println("Все бои (до " + TOTAL_BATTLES + ") завершены.");
+            System.out.println(TOTAL_BATTLES + "боёв завершены.");
         } catch (InterruptedException e) {
             System.out.println("Interrupted — завершаю.");
             Thread.currentThread().interrupt();
@@ -82,40 +77,25 @@ public class ArenaBot {
         }
     }
 
-    // Кликаем по всем выбранным окнам для данной кнопки (с паузой 0.5 с между окнами)
-    private void clickAllSelectedWindows(Point btnRelative, String btnName) throws InterruptedException {
+    // Кликаем по всем выбранным окнам для данной кнопки (с паузой 0.5 сек между окнами)
+    private void clickAllWindows(String buttonName) throws InterruptedException {
+        Point rel = WindowConfig.ARENA_BUTTONS.get(buttonName);
         for (int i = 0; i < windows.size(); i++) {
             int winIndex = windows.get(i);
             if (winIndex < 1 || winIndex > windowPositions.length) continue; // защита
             Point winPos = windowPositions[winIndex - 1];
             String winName = windowNames[winIndex - 1];
 
-            int x = winPos.x + btnRelative.x;
-            int y = winPos.y + btnRelative.y;
+            int x = winPos.x + rel.x;
+            int y = winPos.y + rel.y;
             clickAt(x, y);
 
-            System.out.printf("Клик в (%s) по кнопке \"%s\"%n", winName, btnName);
+            System.out.printf("Клик в (%s) по кнопке \"%s\"%n", winName, buttonName);
 
             if (i < windows.size() - 1) Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
         }
     }
 
-    private void clickAt(int x, int y) {
-        robot.mouseMove(x, y);
-        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-    }
-
-    // Обратный отсчёт между боями — печать одной строкой, обновляемой каждую сек.
-    private void runInterBattleCountdown(int totalSeconds) throws InterruptedException {
-        for (int s = totalSeconds; s > 0; s--) {
-            int mm = s / 60;
-            int ss = s % 60;
-            System.out.printf("\rОсталось до следующего боя: %02d:%02d   ", mm, ss);
-            Thread.sleep(1000);
-        }
-        System.out.println(); // перевод строки после таймера
-    }
 
     private void countdownSeconds(int seconds) throws InterruptedException {
         for (int i = seconds; i > 0; i--) {

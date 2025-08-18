@@ -1,6 +1,6 @@
 package com.metrobot;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -36,30 +36,15 @@ public class WindowConfig {
         return m;
     }
 
-    // ===== КНОПКИ — Арена =====
-    public static final Point BTN_ARENA = new Point(430, 400);
-    public static final Point BTN_ATTACK = new Point(390, 610);
-    public static final Point BTN_SKIP_BATTLE = new Point(510, 130);
-    public static final Point BTN_CLOSE_WIN = new Point(640, 615); // победа
-    public static final Point BTN_CLOSE_LOSE = new Point(640, 560); // поражение
-    public static final Point BTN_GET_PRIZE = new Point(640, 560);
-
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
-        put("Арена", BTN_ARENA);
-        put("Атаковать", BTN_ATTACK);
-        put("Пропустить бой", BTN_SKIP_BATTLE);
-        put("Закрыть — Победа", BTN_CLOSE_WIN);
-        put("Закрыть — Поражение", BTN_CLOSE_LOSE);
-        put("Забрать коллекцию", BTN_GET_PRIZE);
+        put("Арена", new Point(430, 400));
+        put("Атаковать", new Point(390, 610));
+        put("Пропустить бой", new Point(510, 130));
+        put("Закрыть — Победа", new Point(640, 615));
+        put("Закрыть — Поражение", new Point(640, 560));
+        put("Забрать коллекцию", new Point(640, 560));
     }};
-
-    // ===== КНОПКИ — КВ (клановая война) =====
-    public static final Point KV_CLAN_BUTTON = new Point(290, 160);
-    public static final Point KV_WAR_BUTTON = new Point(180, 400);
-    public static final Point KV_ATTACK_BUTTON = new Point(540, 385);
-    public static final Point KV_SKIP_BATTLE_BUTTON = new Point(510, 130);
-    public static final Point KV_CLOSE_BUTTON = new Point(640, 530);
 
     // --- Клановая война ---
     public static final LinkedHashMap<String, Point> KV_BUTTONS = new LinkedHashMap<>() {{
