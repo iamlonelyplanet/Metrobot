@@ -16,7 +16,7 @@ public class Main {
             System.out.print("Введите номер режима игры: ");
             int mode = Integer.parseInt(scanner.nextLine().trim());
 
-            List<Integer> windows = askWindows();
+            List<Integer> windows = askWindows(scanner);
             if (windows.isEmpty()) {
                 System.out.println("Окна не выбраны — выхожу.");
                 return;
@@ -35,7 +35,7 @@ public class Main {
                     raidBot.start(); // блокирующий запуск
                     break;
                 case 3:
-                    System.out.print("Идём на Арену!");
+                    System.out.println("Идём на Арену!");
 
                     ArenaBot arenaBot = new ArenaBot(windows);
                     arenaBot.start(); // блокирующий запуск
@@ -49,8 +49,7 @@ public class Main {
         }
     }
 
-    private static List<Integer> askWindows() {
-        Scanner scanner = new Scanner(System.in);
+    private static List<Integer> askWindows(Scanner scanner) {
         System.out.println("Введите номера окон для работы (через пробел). Доступные окна: 1, 2, 3, 4.");
         String line = scanner.nextLine().trim();
         List<Integer> res = new ArrayList<>();

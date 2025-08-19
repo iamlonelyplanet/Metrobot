@@ -1,7 +1,6 @@
 package com.metrobot;
 
 import java.awt.*;
-import java.awt.event.InputEvent;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -19,24 +18,15 @@ public class RaidBot extends BaseBot {
 
     // ===== Настройки времени =====
     private static final long PRE_START_DELAY_MS = 5_000;      // 5 секунд перед подготовительными кликами
-    private static final long PREP_STEP_DELAY_MS = 3_000;      // 2 сек между кнопками подготовки
-    private static final long IN_BATTLE_DELAY_MS = 12_500;      // 12,5 сек между кликами внутри боя
+    private static final long PREP_STEP_DELAY_MS = 3_000;      // пауза между шагами подготовки
+    private static final long IN_BATTLE_DELAY_MS = 12_500;     // ожидание внутри боя
     private static final long BETWEEN_BATTLES_MS = 283_000;    // 4 мин 43 сек между боями
     private static final long BETWEEN_WINDOWS_MS = 500;        // пауза между окнами при одном шаге
     private static final int MAX_BATTLES = 12;
 
-    // ===== Координаты кнопок (относительно верхнего левого угла окна) =====
-    private static final Point BTN_CLAN = new Point(290, 160);
-    private static final Point BTN_RAIDS = new Point(180, 510);
-    private static final Point BTN_REFRESH = new Point(240, 135);
-
-    private static final Point BTN_ATTACK = new Point(549, 430);
-    private static final Point BTN_SKIP = new Point(510, 120);
-    private static final Point BTN_CLOSE = new Point(640, 530);
-
     // ===== Поля =====
     private final List<Integer> windows;                          // выбранные окна (1..4)
-    private final Map<Integer, WindowConfig.GameWindow> winMap;   // 1..4 -> окно
+    private final Map<Integer, WindowConfig.GameWindow> windowsMap;   // 1..4 -> окно
     private final LocalTime startTime;                            // время старта рейда
 
     /**
@@ -44,7 +34,7 @@ public class RaidBot extends BaseBot {
      */
     public RaidBot(List<Integer> windows, String timeHHmm) throws Exception {
         this.windows = new ArrayList<>(windows);
-        this.winMap = WindowConfig.defaultWindows();
+        this.windowsMap = WindowConfig.defaultWindows();
         this.startTime = LocalTime.parse(timeHHmm, DateTimeFormatter.ofPattern("H:mm"));
         this.robot = new Robot();
     }
@@ -57,28 +47,26 @@ public class RaidBot extends BaseBot {
             waitUntilStartTime();
             System.out.printf("Старт рейда в %02d:%02d%n", startTime.getHour(), startTime.getMinute());
 
-
             // Подготовительные клики (разово)
             Thread.sleep(PRE_START_DELAY_MS);
-            /** clickAllWindows(BTN_CLAN, "Клан");
+            clickAllWindows("Клан");
             Thread.sleep(PREP_STEP_DELAY_MS);
-            clickAllWindows(BTN_RAIDS, "Рейды");
+            clickAllWindows("Рейды");
             Thread.sleep(PREP_STEP_DELAY_MS);
-            clickAllWindows(BTN_REFRESH, "Обновить");
-             */
+            clickAllWindows("Обновить");
 
             // 12 боёв
             for (int battle = 1; battle <= MAX_BATTLES; battle++) {
                 System.out.println("\n=== Рейд — бой #" + battle + " ===");
 
                 Thread.sleep(PREP_STEP_DELAY_MS);
-                clickAllWindows(BTN_ATTACK, "Атаковать");
+                clickAllWindows("Атаковать");
 
                 Thread.sleep(IN_BATTLE_DELAY_MS);
-                clickAllWindows(BTN_SKIP, "Пропустить");
+                clickAllWindows("Пропустить");
 
                 Thread.sleep(PREP_STEP_DELAY_MS);
-                clickAllWindows(BTN_CLOSE, "Закрыть");
+                clickAllWindows("Закрыть");
 
                 if (battle < MAX_BATTLES) {
                     System.out.println("Ожидание 4:46 до следующего боя...");
@@ -108,16 +96,21 @@ public class RaidBot extends BaseBot {
         }
     }
 
-    private void clickAllWindows(Point rel, String label) throws InterruptedException {
+    private void clickAllWindows(String buttonName) throws InterruptedException {
+        Point rel = WindowConfig.RAID_BUTTONS.get(buttonName);
+        if (rel == null) {
+            System.err.println("⚠ Кнопка \"" + buttonName + "\" не найдена в WindowConfig");
+            return;
+        }
+
         for (int i = 0; i < windows.size(); i++) {
             int idx = windows.get(i);
-            WindowConfig.GameWindow gw = winMap.get(idx);
-            if (gw == null) continue;
+            WindowConfig.GameWindow gw = windowsMap.get(idx);
 
             int x = gw.topLeft.x + rel.x;
             int y = gw.topLeft.y + rel.y;
             clickAt(x, y);
-            System.out.printf("Окно \"%s\": \"%s\" (%d,%d)%n", gw.name, label, x, y);
+            System.out.printf("Окно \"%s\": \"%s\" (%d,%d)%n", gw.name, buttonName, x, y);
 
             if (i < windows.size() - 1) Thread.sleep(BETWEEN_WINDOWS_MS);
         }
