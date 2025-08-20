@@ -53,6 +53,7 @@ public class WindowConfig {
         put("КВ — Атаковать", new Point(540, 385));
         put("КВ — Пропустить бой", new Point(510, 130));
         put("КВ — Закрыть", new Point(640, 530));
+        // put("КВ — Погон", new Point(646, 646));
     }};
 
     // --- Рейд ---
