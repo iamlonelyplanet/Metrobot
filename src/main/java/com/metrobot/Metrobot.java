@@ -16,7 +16,8 @@ import java.util.regex.Pattern;
 public class Metrobot {
 
     private static Robot robot;
-
+    // проба, удалить.
+    int a = 1;
     // Координаты для кнопки Начстанции
     private static final int HOME_X = 176;  // центр кнопки (130 + 93/2)
     private static final int HOME_Y = 392;  // центр кнопки (290 + 204/2)
