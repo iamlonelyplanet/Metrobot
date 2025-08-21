@@ -8,17 +8,17 @@ import java.util.Map;
 
 public class RaidBot extends BaseBot {
 
-    private static final long PRE_START_DELAY_MS   = 5_000;   // 5 c
-    private static final long PREP_STEP_DELAY_MS   = 3_000;   // 3 c
-    private static final long IN_BATTLE_DELAY_MS   = 12_500;  // 12.5 c
+    private static final long PRE_START_DELAY_MS   = 5_000;   // 5 с
+    private static final long PREP_STEP_DELAY_MS   = 3_000;   // 3 с
+    private static final long IN_BATTLE_DELAY_MS   = 12_500;  // 12.5 с
     private static final long BETWEEN_BATTLES_MS   = 283_000; // 4:43
     private static final int  MAX_BATTLES = 12;
 
     private final LocalTime startTime;
 
-    public RaidBot(List<Integer> windows, String timeHHmm) {
+    public RaidBot(List<Integer> windows, LocalTime timeHHmm) {
         super(windows);
-        this.startTime = LocalTime.parse(timeHHmm, DateTimeFormatter.ofPattern("H:mm"));
+        this.startTime = timeHHmm;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.metrobot;
 
 import java.awt.*;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -14,11 +15,11 @@ public class ClanWarBot extends BaseBot {
     private static final long PAUSE_AFTER_SKIP_MS   = 3000;
     private static final long BETWEEN_BATTLES_SECONDS = 293; // 4:53
 
-    private static final int START_HOUR = 1;
-    private static final int START_MIN  = 37;
+    private final LocalTime startTime;
 
-    public ClanWarBot(List<Integer> windows) {
+    public ClanWarBot(List<Integer> windows, LocalTime timeHHmm) {
         super(windows);
+        this.startTime = timeHHmm;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class ClanWarBot extends BaseBot {
     public void start() {
         try {
             waitUntilStartTime();
-            System.out.println("Старт КВ! Подготовь окна...");
+            System.out.printf("Старт КВ в %02d:%02d%n", startTime.getHour(), startTime.getMinute());
             Thread.sleep(2000);
 
             clickAllWindows("КВ — Клан");
@@ -69,11 +70,12 @@ public class ClanWarBot extends BaseBot {
     }
 
     private void waitUntilStartTime() throws InterruptedException {
-        System.out.printf("Ожидание времени запуска: %02d:%02d...\n", START_HOUR, START_MIN);
+        System.out.printf("Ожидание времени запуска КВ: %02d:%02d...\n",
+                startTime.getHour(), startTime.getMinute());
         while (true) {
             LocalTime now = LocalTime.now();
-            if (now.getHour() > START_HOUR) break;
-            if (now.getHour() == START_HOUR && now.getMinute() >= START_MIN) break;
+            if (now.getHour() > startTime.getHour()) break;
+            if (now.getHour() == startTime.getHour() && now.getMinute() >= startTime.getMinute()) break;
             Thread.sleep(1_000L);
         }
     }
