@@ -43,7 +43,7 @@ public class WindowConfig {
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
         put("Арена", new Point(430, 400));
         put("Атаковать", new Point(390, 610));
-        put("Пропустить бой", new Point(510, 130));
+        put("Пропустить", new Point(510, 130));
         put("Закрыть — Победа", new Point(640, 615));
         put("Закрыть — Поражение", new Point(640, 560));
         put("Забрать коллекцию", new Point(640, 560));
@@ -53,9 +53,9 @@ public class WindowConfig {
     public static final LinkedHashMap<String, Point> KV_BUTTONS = new LinkedHashMap<>() {{
         put("КВ — Клан", new Point(290, 160));
         put("КВ — Война", new Point(180, 400));
-        put("КВ — Атаковать", new Point(540, 385));
-        put("КВ — Пропустить бой", new Point(510, 130));
-        put("КВ — Закрыть", new Point(640, 530));
+        put("Атаковать", new Point(540, 385));
+        put("Пропустить", new Point(510, 130));
+        put("Закрыть", new Point(640, 530));
         // put("КВ — Погон", new Point(646, 646));
     }};
 
@@ -65,7 +65,7 @@ public class WindowConfig {
         put("Рейды", new Point(180, 510));
         put("Обновить", new Point(240, 135));
         put("Атаковать", new Point(549, 430));
-        put("Пропустить", new Point(510, 120));
+        put("Пропустить", new Point(510, 130));
         put("Закрыть", new Point(640, 530));
     }};
 }

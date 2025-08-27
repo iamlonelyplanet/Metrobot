@@ -10,7 +10,6 @@ import static com.metrobot.WindowConfig.*;
 public class RaidBot extends BaseBot {
 
     private static final int TOTAL_BATTLES = 12;
-
     private final LocalTime startTime;
 
     public RaidBot(List<Integer> windows, LocalTime timeHHmm) {

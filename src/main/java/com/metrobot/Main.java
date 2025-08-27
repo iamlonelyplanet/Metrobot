@@ -15,7 +15,7 @@ public class Main {
             // Загружаем конфиг, если есть
             Map<String, String> config = loadConfig();
 
-            // === Режим игры ===
+            // === Спрашиваем режим игры ===
             int mode = askMode(scanner, config.get("mode"));
 
             // === Окна ===
@@ -51,7 +51,6 @@ public class Main {
                 default:
                     System.out.println("Неизвестный режим. Завершаю.");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,7 +88,7 @@ public class Main {
 
     // Спрашиваем режим с возможностью оставить по умолчанию
     private static int askMode(Scanner scanner, String defaultModeStr) {
-        System.out.println("Выберите режим:");
+        System.out.println("Выбери режим:");
         System.out.println("1. Клановые войны");
         System.out.println("2. Рейд");
         System.out.println("3. Арена");
@@ -102,15 +101,16 @@ public class Main {
         }
 
         if (defaultMode != -1) {
-            System.out.print("Введите номер режима игры [" + defaultMode + "]: ");
+            System.out.print("Введи номер режима игры (Enter - оставить имеющиеся настройки) [" + defaultMode + "]: ");
         } else {
-            System.out.print("Введите номер режима игры: ");
+            System.out.print("Введи номер режима игры (Enter - оставить имеющиеся настройки): ");
         }
 
         String line = scanner.nextLine().trim();
         if (line.isEmpty() && defaultMode != -1) {
             return defaultMode;
         }
+
         return Integer.parseInt(line);
     }
 
@@ -150,7 +150,7 @@ public class Main {
 
     // Спрашиваем время старта КВ или рейда
     private static LocalTime askStartTime(Scanner scanner, String botName) {
-        System.out.printf("Введи время старта %s (например 18:05): ", botName);
+        System.out.printf("Введи время старта режима %s (например 18:05): ", botName);
         String input = scanner.nextLine().trim();
         return LocalTime.parse(input); // бросит исключение, если формат неверный
     }

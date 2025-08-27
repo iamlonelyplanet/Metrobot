@@ -9,8 +9,6 @@ import static com.metrobot.WindowConfig.PAUSE_MS;
 public class ArenaBot extends BaseBot {
 
     private static final int TOTAL_BATTLES = 50;
-
-
     private static final long FIVE_MINUTES_PAUSE_SECONDS = 285; // 4:45
 
     public ArenaBot(List<Integer> windows) {

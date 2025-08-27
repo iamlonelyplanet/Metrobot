@@ -11,7 +11,6 @@ import static com.metrobot.WindowConfig.PAUSE_MS;
 public class ClanWarBot extends BaseBot {
 
     private static final int TOTAL_BATTLES = 24;
-
     private final LocalTime startTime;
 
     public ClanWarBot(List<Integer> windows, LocalTime timeHHmm) {
