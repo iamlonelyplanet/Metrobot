@@ -4,11 +4,14 @@ import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
+import static com.metrobot.WindowConfig.PAUSE_MS;
+
 public class ArenaBot extends BaseBot {
 
-    private static final long PAUSE_AFTER_EACH_STEP_MS = 4000L; // 4 сек
-    private static final int  TOTAL_BATTLES = 50;
-    private static final int  INTER_BATTLE_SECONDS = 4 * 60 + 40; // 4:40
+    private static final int TOTAL_BATTLES = 50;
+
+
+    private static final long FIVE_MINUTES_PAUSE_SECONDS = 285; // 4:45
 
     public ArenaBot(List<Integer> windows) {
         super(windows); // важно: заполняем базовые windows/windowsMap
@@ -27,24 +30,28 @@ public class ArenaBot extends BaseBot {
             for (int battle = 1; battle <= TOTAL_BATTLES; battle++) {
                 System.out.println("\n=== Бой №" + battle + " ===");
 
+                showAllGameWindows();
+
                 clickAllWindows("Арена");
-                Thread.sleep(PAUSE_AFTER_EACH_STEP_MS);
+                Thread.sleep(PAUSE_MS);
                 clickAllWindows("Атаковать");
-                Thread.sleep(PAUSE_AFTER_EACH_STEP_MS);
+                Thread.sleep(PAUSE_MS);
                 clickAllWindows("Пропустить бой");
-                Thread.sleep(PAUSE_AFTER_EACH_STEP_MS);
+                Thread.sleep(PAUSE_MS);
 
                 clickAllWindows("Забрать коллекцию");
-                Thread.sleep(PAUSE_AFTER_EACH_STEP_MS);
+                Thread.sleep(PAUSE_MS);
                 clickAllWindows("Закрыть — Победа");
-                Thread.sleep(PAUSE_AFTER_EACH_STEP_MS);
+                Thread.sleep(PAUSE_MS);
                 clickAllWindows("Закрыть — Поражение");
 
                 System.out.println("Бой " + battle + " завершён.");
 
+                minimizeAllGameWindows();
+
                 if (battle < TOTAL_BATTLES) {
                     System.out.println("Пауза между боями...");
-                    countdown(INTER_BATTLE_SECONDS);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS);
                 }
             }
 

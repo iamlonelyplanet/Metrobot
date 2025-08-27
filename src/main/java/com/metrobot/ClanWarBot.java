@@ -5,14 +5,12 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
+import static com.metrobot.WindowConfig.FIVE_MINUTES_PAUSE_SECONDS;
+import static com.metrobot.WindowConfig.PAUSE_MS;
+
 public class ClanWarBot extends BaseBot {
 
-    private static final int  TOTAL_BATTLES = 24;
-    private static final long PAUSE_AFTER_CLAN_MS = 2000;
-    private static final long PAUSE_AFTER_WAR_MS  = 2000;
-    private static final long PAUSE_AFTER_ATTACK_MS = 3000;
-    private static final long PAUSE_AFTER_SKIP_MS   = 3000;
-    private static final long BETWEEN_BATTLES_SECONDS = 293; // 4:53
+    private static final int TOTAL_BATTLES = 24;
 
     private final LocalTime startTime;
 
@@ -26,36 +24,35 @@ public class ClanWarBot extends BaseBot {
         return WindowConfig.KV_BUTTONS;
     }
 
-    @Override
-    protected long betweenWindowsMs() { // в КВ у тебя была пауза 1000 мс
-        return 1000L;
-    }
-
     public void start() {
         try {
             waitUntilStartTime();
             System.out.printf("Старт КВ в %02d:%02d%n", startTime.getHour(), startTime.getMinute());
             Thread.sleep(2000);
 
+            showAllGameWindows();
+
             clickAllWindows("КВ — Клан");
-            Thread.sleep(PAUSE_AFTER_CLAN_MS);
+            Thread.sleep(PAUSE_MS);
 
             clickAllWindows("КВ — Война");
-            Thread.sleep(PAUSE_AFTER_WAR_MS);
+            Thread.sleep(PAUSE_MS);
 
             for (int battle = 1; battle <= TOTAL_BATTLES; battle++) {
                 System.out.println("\n=== Бой №" + battle + " ===");
+                showAllGameWindows();
 
                 clickAllWindows("КВ — Атаковать");
-                Thread.sleep(PAUSE_AFTER_ATTACK_MS);
+                Thread.sleep(PAUSE_MS);
 
                 clickAllWindows("КВ — Пропустить бой");
-                Thread.sleep(PAUSE_AFTER_SKIP_MS);
+                Thread.sleep(PAUSE_MS);
 
                 clickAllWindows("КВ — Закрыть");
 
+                minimizeAllGameWindows();
                 if (battle < TOTAL_BATTLES) {
-                    countdown(BETWEEN_BATTLES_SECONDS);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 8);
                 }
             }
 

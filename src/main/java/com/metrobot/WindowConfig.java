@@ -4,9 +4,7 @@ import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Конфигурация окон и кнопок относительно верхнего левого угла окна.
- */
+// Конфигурация окон и кнопок относительно верхнего левого угла окна.
 public class WindowConfig {
 
     // ===== ОКНА =====
@@ -35,6 +33,11 @@ public class WindowConfig {
         m.put(4, ANTON);
         return m;
     }
+
+    // --- Паузы ---
+    public static final long PAUSE_MS = 3500;
+    public static final long FIVE_MINUTES_PAUSE_SECONDS = 285;
+    public static final long PAUSE_BEFORE_BOSS_MS = 12_000;
 
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
@@ -65,5 +68,4 @@ public class WindowConfig {
         put("Пропустить", new Point(510, 120));
         put("Закрыть", new Point(640, 530));
     }};
-
 }

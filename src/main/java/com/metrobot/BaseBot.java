@@ -18,9 +18,6 @@ public abstract class BaseBot {
     protected List<Integer> windows = new ArrayList<>();
     protected Map<Integer, WindowConfig.GameWindow> windowsMap = WindowConfig.defaultWindows();
 
-    // Пауза между кликами по разным окнам
-    protected static final long DEFAULT_BETWEEN_WINDOWS_MS = 500L;
-
     // --- Конструкторы ---
     public BaseBot() {
         try {
@@ -29,6 +26,7 @@ public abstract class BaseBot {
             e.printStackTrace();
         }
     }
+
     public BaseBot(List<Integer> windows) {
         this();
         if (windows != null) this.windows = new ArrayList<>(windows);
@@ -55,6 +53,7 @@ public abstract class BaseBot {
 
     // --- Окна игры (JNA утилиты, как были) ---
     private static final String GAME_WINDOW_TITLE = "Игроклуб Mail.ru";
+    protected boolean silentMode = true;
 
     protected List<HWND> findGameWindows() {
         List<HWND> res = new ArrayList<>();
@@ -68,20 +67,38 @@ public abstract class BaseBot {
         return res;
     }
 
-    protected void restoreGameWindows() {
+    // Развернуть все игровые окна
+    protected void showAllGameWindows() {
         List<HWND> wins = findGameWindows();
         for (HWND hWnd : wins) {
             User32.INSTANCE.ShowWindow(hWnd, User32.SW_RESTORE);
             User32.INSTANCE.SetForegroundWindow(hWnd);
-            try { Thread.sleep(200); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
+        System.out.println("Развернул окна");
+    }
+
+    // Свернуть обратно, только если включён silentMode
+    protected void minimizeAllGameWindows() {
+        if (!silentMode) return;
+        List<HWND> wins = findGameWindows();
+        for (HWND hWnd : wins) {
+            User32.INSTANCE.ShowWindow(hWnd, User32.SW_MINIMIZE);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        System.out.println("Свернул окна");
     }
 
     // === Унификация карт кнопок ===
     protected abstract Map<String, Point> getButtonMap();
-
-    // Можно переопределить в боте, если нужно другое значение
-    protected long betweenWindowsMs() { return DEFAULT_BETWEEN_WINDOWS_MS; }
 
     // === Единый метод кликов по всем выбранным окнам ===
     protected void clickAllWindows(String buttonName) throws InterruptedException {
@@ -102,7 +119,7 @@ public abstract class BaseBot {
             clickAt(x, y);
             System.out.printf("%s нажал \"%s\" (%d,%d)%n", gw.name, buttonName, x, y);
 
-            if (i < windows.size() - 1) Thread.sleep(betweenWindowsMs());
+            if (i < windows.size() - 1) Thread.sleep(300);
         }
     }
 }
