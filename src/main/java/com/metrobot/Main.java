@@ -38,7 +38,7 @@ public class Main {
                     clanWarBot.start();
                     break;
                 case 2:
-                    botName = "рейда";
+                    botName = "Рейд";
                     LocalTime timeStr = askStartTime(scanner, botName);
                     RaidBot raidBot = new RaidBot(windows, timeStr);
                     raidBot.start();
@@ -150,7 +150,7 @@ public class Main {
 
     // Спрашиваем время старта КВ или рейда
     private static LocalTime askStartTime(Scanner scanner, String botName) {
-        System.out.printf("Введи время старта для %s (например 18:05): ", botName);
+        System.out.printf("Введи время старта %s (например 18:05): ", botName);
         String input = scanner.nextLine().trim();
         return LocalTime.parse(input); // бросит исключение, если формат неверный
     }

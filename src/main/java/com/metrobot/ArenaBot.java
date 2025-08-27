@@ -29,14 +29,11 @@ public class ArenaBot extends BaseBot {
 
                 clickAllWindows("Арена");
                 Thread.sleep(PAUSE_AFTER_EACH_STEP_MS);
-
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_AFTER_EACH_STEP_MS);
-
                 clickAllWindows("Пропустить бой");
                 Thread.sleep(PAUSE_AFTER_EACH_STEP_MS);
 
-                // Жмём возможные финальные варианты по очереди
                 clickAllWindows("Забрать коллекцию");
                 Thread.sleep(PAUSE_AFTER_EACH_STEP_MS);
                 clickAllWindows("Закрыть — Победа");
