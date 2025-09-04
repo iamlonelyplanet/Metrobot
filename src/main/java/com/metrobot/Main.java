@@ -30,22 +30,24 @@ public class Main {
 
             // === Запуск бота ===
             String botName;
+            LocalTime startTime;
             switch (mode) {
                 case 1:
                     botName = "КВ";
-                    LocalTime startTime = askStartTime(scanner, botName);
+                    startTime = askStartTime(scanner, botName);
                     ClanWarBot clanWarBot = new ClanWarBot(windows, startTime);
                     clanWarBot.start();
                     break;
                 case 2:
                     botName = "Рейд";
-                    LocalTime timeStr = askStartTime(scanner, botName);
-                    RaidBot raidBot = new RaidBot(windows, timeStr);
+                    startTime = askStartTime(scanner, botName);
+                    RaidBot raidBot = new RaidBot(windows, startTime);
                     raidBot.start();
                     break;
                 case 3:
-                    System.out.println("Идём на Арену!");
-                    ArenaBot arenaBot = new ArenaBot(windows);
+                    botName = "Арена";
+                    startTime = askStartTime(scanner, botName);
+                    ArenaBot arenaBot = new ArenaBot(windows, startTime);
                     arenaBot.start();
                     break;
                 default:

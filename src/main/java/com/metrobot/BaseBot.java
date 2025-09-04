@@ -2,6 +2,7 @@ package com.metrobot;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,18 @@ public abstract class BaseBot {
             Thread.sleep(1000);
         }
         System.out.println();
+    }
+
+    // --- Ожидание времени запуска ---
+    protected void waitUntilStartTime(LocalTime startTime) throws InterruptedException {
+        System.out.printf("Ожидание времени запуска: %02d:%02d...\n",
+                startTime.getHour(), startTime.getMinute());
+        while (true) {
+            LocalTime now = LocalTime.now();
+            if (now.getHour() > startTime.getHour()) break;
+            if (now.getHour() == startTime.getHour() && now.getMinute() >= startTime.getMinute()) break;
+            Thread.sleep(1_000L);
+        }
     }
 
     // --- Клик ---
@@ -119,7 +132,7 @@ public abstract class BaseBot {
             clickAt(x, y);
             System.out.printf("%s нажал \"%s\" (%d,%d)%n", gw.name, buttonName, x, y);
 
-            if (i < windows.size() - 1) Thread.sleep(300);
+            if (i < windows.size() - 1) Thread.sleep(500);
         }
     }
 }

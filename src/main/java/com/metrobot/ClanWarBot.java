@@ -5,8 +5,8 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-import static com.metrobot.WindowConfig.FIVE_MINUTES_PAUSE_SECONDS;
 import static com.metrobot.WindowConfig.PAUSE_MS;
+import static com.metrobot.WindowConfig.FIVE_MINUTES_PAUSE_SECONDS;
 
 public class ClanWarBot extends BaseBot {
 
@@ -25,7 +25,7 @@ public class ClanWarBot extends BaseBot {
 
     public void start() {
         try {
-            waitUntilStartTime();
+            waitUntilStartTime(startTime);
             System.out.printf("Старт КВ в %02d:%02d%n", startTime.getHour(), startTime.getMinute());
             Thread.sleep(2000);
 
@@ -41,17 +41,17 @@ public class ClanWarBot extends BaseBot {
                 System.out.println("\n=== Бой №" + battle + " ===");
                 showAllGameWindows();
 
-                clickAllWindows("КВ — Атаковать");
+                clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_MS);
 
-                clickAllWindows("КВ — Пропустить бой");
+                clickAllWindows("Пропустить");
                 Thread.sleep(PAUSE_MS);
 
-                clickAllWindows("КВ — Закрыть");
+                clickAllWindows("Закрыть");
 
                 minimizeAllGameWindows();
                 if (battle < TOTAL_BATTLES) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 8);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 5);
                 }
             }
 
@@ -61,17 +61,6 @@ public class ClanWarBot extends BaseBot {
             Thread.currentThread().interrupt();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    private void waitUntilStartTime() throws InterruptedException {
-        System.out.printf("Ожидание времени запуска КВ: %02d:%02d...\n",
-                startTime.getHour(), startTime.getMinute());
-        while (true) {
-            LocalTime now = LocalTime.now();
-            if (now.getHour() > startTime.getHour()) break;
-            if (now.getHour() == startTime.getHour() && now.getMinute() >= startTime.getMinute()) break;
-            Thread.sleep(1_000L);
         }
     }
 }

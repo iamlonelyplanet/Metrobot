@@ -24,7 +24,7 @@ public class RaidBot extends BaseBot {
 
     public void start() {
         try {
-            waitUntilStartTime();
+            waitUntilStartTime(startTime);
             System.out.printf("Старт рейда в %02d:%02d%n", startTime.getHour(), startTime.getMinute());
 
             // Подготовительные клики (разово)
@@ -34,7 +34,7 @@ public class RaidBot extends BaseBot {
             Thread.sleep(PAUSE_MS);
             clickAllWindows("Рейды");
             Thread.sleep(PAUSE_MS);
-            clickAllWindows("Обновить"); // если нужно — оставь, если нет, закомментируй
+            clickAllWindows("Обновить");
 
             // Бои
             for (int battle = 1; battle <= TOTAL_BATTLES; battle++) {
@@ -63,17 +63,6 @@ public class RaidBot extends BaseBot {
             Thread.currentThread().interrupt();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    private void waitUntilStartTime() throws InterruptedException {
-        System.out.printf("Ожидание времени запуска рейда: %02d:%02d...%n",
-                startTime.getHour(), startTime.getMinute());
-        while (true) {
-            LocalTime now = LocalTime.now();
-            if (now.getHour() > startTime.getHour()) break;
-            if (now.getHour() == startTime.getHour() && now.getMinute() >= startTime.getMinute()) break;
-            Thread.sleep(1000);
         }
     }
 }

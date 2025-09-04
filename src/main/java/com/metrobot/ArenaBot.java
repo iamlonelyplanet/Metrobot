@@ -1,18 +1,21 @@
 package com.metrobot;
 
 import java.awt.*;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
 import static com.metrobot.WindowConfig.PAUSE_MS;
+import static com.metrobot.WindowConfig.FIVE_MINUTES_PAUSE_SECONDS;
 
 public class ArenaBot extends BaseBot {
 
     private static final int TOTAL_BATTLES = 50;
-    private static final long FIVE_MINUTES_PAUSE_SECONDS = 285; // 4:45
+    private final LocalTime startTime;
 
-    public ArenaBot(List<Integer> windows) {
-        super(windows); // важно: заполняем базовые windows/windowsMap
+    public ArenaBot(List<Integer> windows, LocalTime timeHHmm) {
+        super(windows);
+        this.startTime = timeHHmm;
     }
 
     @Override
@@ -22,8 +25,9 @@ public class ArenaBot extends BaseBot {
 
     public void start() {
         try {
-            System.out.println("Бот запустится через 5 секунд, подготовь окна игры...");
-            countdown(5);
+            waitUntilStartTime(startTime);
+            System.out.printf("Старт Арены в %02d:%02d%n", startTime.getHour(), startTime.getMinute());
+            Thread.sleep(2000);
 
             for (int battle = 1; battle <= TOTAL_BATTLES; battle++) {
                 System.out.println("\n=== Бой №" + battle + " ===");
@@ -34,7 +38,7 @@ public class ArenaBot extends BaseBot {
                 Thread.sleep(PAUSE_MS);
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_MS);
-                clickAllWindows("Пропустить бой");
+                clickAllWindows("Пропустить");
                 Thread.sleep(PAUSE_MS);
 
                 clickAllWindows("Забрать коллекцию");
