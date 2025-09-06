@@ -53,7 +53,7 @@ public class RaidBot extends BaseBot {
                 minimizeAllGameWindows();
                 if (battle < TOTAL_BATTLES) {
                     System.out.println("Ожидание 4:43 до следующего боя...");
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - 2);
                 }
             }
 

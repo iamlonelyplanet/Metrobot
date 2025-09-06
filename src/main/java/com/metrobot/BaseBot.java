@@ -19,6 +19,10 @@ public abstract class BaseBot {
     protected List<Integer> windows = new ArrayList<>();
     protected Map<Integer, WindowConfig.GameWindow> windowsMap = WindowConfig.defaultWindows();
 
+    // --- Окна игры (JNA утилиты, как были) ---
+    private static final String GAME_WINDOW_TITLE = "Игроклуб Mail.ru";
+    protected boolean silentMode = true;
+
     // --- Конструкторы ---
     public BaseBot() {
         try {
@@ -63,10 +67,6 @@ public abstract class BaseBot {
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
-
-    // --- Окна игры (JNA утилиты, как были) ---
-    private static final String GAME_WINDOW_TITLE = "Игроклуб Mail.ru";
-    protected boolean silentMode = true;
 
     protected List<HWND> findGameWindows() {
         List<HWND> res = new ArrayList<>();

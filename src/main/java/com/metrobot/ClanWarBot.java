@@ -51,7 +51,7 @@ public class ClanWarBot extends BaseBot {
 
                 minimizeAllGameWindows();
                 if (battle < TOTAL_BATTLES) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 5);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 6);
                 }
             }
 

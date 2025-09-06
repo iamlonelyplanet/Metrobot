@@ -9,6 +9,7 @@ public class Main {
     private static final String CONFIG_FILE = "Config.txt";
 
     public static void main(String[] args) {
+
         try {
             Scanner scanner = new Scanner(System.in);
 

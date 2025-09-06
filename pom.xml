@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.metrobot</groupId>
-    <artifactId>metrobot</artifactId>
+    <artifactId>metro2033bot</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
