@@ -21,6 +21,7 @@ public abstract class BaseBot {
 
     // --- Окна игры (JNA утилиты, как были) ---
     private static final String GAME_WINDOW_TITLE = "Игроклуб Mail.ru";
+    private static final String GAME_WINDOW_TITLE_2 = "2033";
     protected boolean silentMode = true;
 
     // --- Конструкторы ---
@@ -74,7 +75,7 @@ public abstract class BaseBot {
             char[] buffer = new char[512];
             User32.INSTANCE.GetWindowText(hWnd, buffer, 512);
             String title = new String(buffer).trim();
-            if (title.contains(GAME_WINDOW_TITLE)) res.add(hWnd);
+            if (title.contains("Игроклуб") || title.contains("2033")) res.add(hWnd);
             return true;
         }, null);
         return res;
@@ -127,8 +128,21 @@ public abstract class BaseBot {
             WindowConfig.GameWindow gw = windowsMap.get(idx);
             if (gw == null) continue;
 
-            int x = gw.topLeft.x + rel.x;
-            int y = gw.topLeft.y + rel.y;
+            int relX = rel.x;
+            int relY = rel.y;
+
+            // Масштаб учитываем только для окна Ф1.
+            // ВНИМАНИЕ: хотя по замерам зум ≈ 0.913, реально клики совпадают только при 0.95.
+            // Вероятно, Игромир округляет zoom-шаги (100% → 95% → 80% …). Или дело в масштабировании Windows 10.
+            if ("Ф1".equals(gw.name)) {
+                double scale = 0.96; // калибровка для Ctrl–1
+                relX = (int) Math.round(relX * scale);
+                relY = (int) Math.round(relY * scale);
+            }
+
+            int x = gw.topLeft.x + relX;
+            int y = gw.topLeft.y + relY;
+
             clickAt(x, y);
             System.out.printf("%s нажал \"%s\" (%d,%d)%n", gw.name, buttonName, x, y);
 

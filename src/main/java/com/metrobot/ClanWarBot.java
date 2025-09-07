@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-import static com.metrobot.WindowConfig.PAUSE_MS;
+import static com.metrobot.WindowConfig.PAUSE_LONG_MS;
 import static com.metrobot.WindowConfig.FIVE_MINUTES_PAUSE_SECONDS;
 
 public class ClanWarBot extends BaseBot {
@@ -32,24 +32,30 @@ public class ClanWarBot extends BaseBot {
             showAllGameWindows();
 
             clickAllWindows("КВ — Клан");
-            Thread.sleep(PAUSE_MS);
-
-            clickAllWindows("КВ — Война");
-            Thread.sleep(PAUSE_MS);
+            Thread.sleep(PAUSE_LONG_MS);
 
             for (int battle = 1; battle <= TOTAL_BATTLES; battle++) {
                 System.out.println("\n=== Бой №" + battle + " ===");
                 showAllGameWindows();
+                Thread.sleep(2000);
+
+                clickAllWindows("КВ — Война");
+                Thread.sleep(PAUSE_LONG_MS);
 
                 clickAllWindows("Атаковать");
-                Thread.sleep(PAUSE_MS);
+                Thread.sleep(PAUSE_LONG_MS);
 
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_MS);
+                Thread.sleep(PAUSE_LONG_MS);
 
                 clickAllWindows("Закрыть");
 
+                clickAllWindows("КВ — Погон");
+
+                System.out.println("Бой " + battle + " завершён.");
+
                 minimizeAllGameWindows();
+
                 if (battle < TOTAL_BATTLES) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS + 6);
                 }

@@ -7,14 +7,17 @@ import java.util.Map;
 // Конфигурация окон и кнопок относительно верхнего левого угла окна.
 public class WindowConfig {
     // --- Паузы ---
-    public static final long PAUSE_MS = 4000;
-    public static final long FIVE_MINUTES_PAUSE_SECONDS = 284;
+    public static final long PAUSE_LONG_MS = 4000;
+    public static final long PAUSE_SHORT_MS = 1000;
+    public static final long FIVE_MINUTES_PAUSE_SECONDS = 285;
     public static final long PAUSE_BEFORE_BOSS_MS = 12_500;
 
     // ===== ОКНА =====
     public static class GameWindow {
         public final String name;
         public final Point topLeft;
+        public String mode;
+
         public GameWindow(String name, int x, int y) {
             this.name = name;
             this.topLeft = new Point(x, y);
@@ -38,30 +41,30 @@ public class WindowConfig {
 
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
-        put("Арена", new Point(448, 360));
+        put("Арена", new Point(445, 400));
         put("Атаковать", new Point(390, 610));
         put("Пропустить", new Point(510, 130));
-        put("Закрыть — Победа", new Point(640, 615));
+        put("Закрыть — Победа", new Point(640, 610));
         put("Закрыть — Поражение", new Point(640, 560));
         put("Забрать коллекцию", new Point(640, 560));
     }};
 
     // --- Клановая война ---
     public static final LinkedHashMap<String, Point> KV_BUTTONS = new LinkedHashMap<>() {{
-        put("КВ — Клан", new Point(290, 160));
+        put("КВ — Клан", new Point(315, 155));
         put("КВ — Война", new Point(180, 400));
         put("Атаковать", new Point(540, 385));
         put("Пропустить", new Point(510, 130));
         put("Закрыть", new Point(640, 530));
-        // put("КВ — Погон", new Point(646, 646));
+        put("КВ — Погон", new Point(646, 646));
     }};
 
     // --- Рейд ---
     public static final LinkedHashMap<String, Point> RAID_BUTTONS = new LinkedHashMap<>() {{
-        put("Клан", new Point(290, 160));
+        put("Клан", new Point(310, 160));
         put("Рейды", new Point(180, 510));
-        put("Обновить", new Point(230, 120));
-        put("Атаковать", new Point(549, 430));
+        put("Обновить", new Point(252, 123));
+        put("Атаковать", new Point(549, 420));
         put("Пропустить", new Point(510, 130));
         put("Закрыть", new Point(640, 530));
     }};

@@ -29,30 +29,36 @@ public class RaidBot extends BaseBot {
 
             // Подготовительные клики (разово)
             showAllGameWindows();
-            Thread.sleep(PAUSE_MS + 2000);
+            Thread.sleep(PAUSE_LONG_MS + 2000);
             clickAllWindows("Клан");
-            Thread.sleep(PAUSE_MS);
+            Thread.sleep(PAUSE_LONG_MS);
             clickAllWindows("Рейды");
-            Thread.sleep(PAUSE_MS);
+            Thread.sleep(PAUSE_LONG_MS);
             clickAllWindows("Обновить");
+            Thread.sleep(PAUSE_SHORT_MS);
 
             // Бои
             for (int battle = 1; battle <= TOTAL_BATTLES; battle++) {
                 System.out.println("\n=== Рейд — бой #" + battle + " ===");
                 showAllGameWindows();
 
-                Thread.sleep(PAUSE_MS);
+                clickAllWindows("Рейды");
+                Thread.sleep(PAUSE_LONG_MS);
+
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Атаковать");
 
                 Thread.sleep(PAUSE_BEFORE_BOSS_MS);
                 clickAllWindows("Пропустить");
 
-                Thread.sleep(PAUSE_MS);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
 
+                System.out.println("Бой " + battle + " завершён.");
+
                 minimizeAllGameWindows();
+
                 if (battle < TOTAL_BATTLES) {
-                    System.out.println("Ожидание 4:43 до следующего боя...");
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - 2);
                 }
             }

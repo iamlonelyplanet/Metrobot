@@ -9,7 +9,6 @@ public class Main {
     private static final String CONFIG_FILE = "Config.txt";
 
     public static void main(String[] args) {
-
         try {
             Scanner scanner = new Scanner(System.in);
 
@@ -132,9 +131,9 @@ public class Main {
         }
 
         if (!defaultWindows.isEmpty()) {
-            System.out.print("Введите номера окон (через пробел) [" + defaultWindowsStr + "]: ");
+            System.out.print("Введи номера окон (через пробел) [" + defaultWindowsStr + "]: ");
         } else {
-            System.out.print("Введите номера окон для работы (через пробел). Доступные: 1, 2, 3, 4: ");
+            System.out.print("Введи номера окон (через пробел). Доступные: 1, 2, 3, 4: ");
         }
 
         String line = scanner.nextLine().trim();
@@ -151,7 +150,7 @@ public class Main {
         return res;
     }
 
-    // Спрашиваем время старта КВ или рейда
+    // Спрашиваем время старта режима
     private static LocalTime askStartTime(Scanner scanner, String botName) {
         System.out.printf("Введи время старта режима %s (например 18:05): ", botName);
         String input = scanner.nextLine().trim();
