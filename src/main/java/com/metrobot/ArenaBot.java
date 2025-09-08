@@ -32,26 +32,14 @@ public class ArenaBot extends BaseBot {
                 System.out.println("\n=== Бой №" + battle + " ===");
 
                 showAllGameWindows();
-
                 clickAllWindows("Арена");
-                Thread.sleep(PAUSE_LONG_MS);
-
                 clickAllWindows("Атаковать");
-                Thread.sleep(PAUSE_LONG_MS);
-
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
-
                 clickAllWindows("Забрать коллекцию");
-                Thread.sleep(PAUSE_SHORT_MS);
-
                 clickAllWindows("Закрыть — Победа");
-                Thread.sleep(PAUSE_SHORT_MS);
-
                 clickAllWindows("Закрыть — Поражение");
 
                 System.out.println("Бой " + battle + " завершён.");
-
                 minimizeAllGameWindows();
 
                 if (battle < TOTAL_BATTLES) {

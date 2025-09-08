@@ -10,18 +10,14 @@ import java.util.Map;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
+import static com.metrobot.WindowConfig.PAUSE_LONG_MS;
+
 public abstract class BaseBot {
 
     // === Общее состояние для всех ботов ===
     protected Robot robot;
-
-    // Список выбранных окон (1..4), и карта смещений 1..4 -> GameWindow
     protected List<Integer> windows = new ArrayList<>();
     protected Map<Integer, WindowConfig.GameWindow> windowsMap = WindowConfig.defaultWindows();
-
-    // --- Окна игры (JNA утилиты, как были) ---
-    private static final String GAME_WINDOW_TITLE = "Игроклуб Mail.ru";
-    private static final String GAME_WINDOW_TITLE_2 = "2033";
     protected boolean silentMode = true;
 
     // --- Конструкторы ---
@@ -61,14 +57,6 @@ public abstract class BaseBot {
         }
     }
 
-    // --- Клик ---
-    protected void clickAt(int x, int y) {
-        if (robot == null) return;
-        robot.mouseMove(x, y);
-        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-    }
-
     protected List<HWND> findGameWindows() {
         List<HWND> res = new ArrayList<>();
         User32.INSTANCE.EnumWindows((hWnd, data) -> {
@@ -96,9 +84,10 @@ public abstract class BaseBot {
         System.out.println("Развернул окна");
     }
 
-    // Свернуть обратно, только если включён silentMode
+    // Свернуть все игровые окна, если включён silentMode
     protected void minimizeAllGameWindows() {
         if (!silentMode) return;
+
         List<HWND> wins = findGameWindows();
         for (HWND hWnd : wins) {
             User32.INSTANCE.ShowWindow(hWnd, User32.SW_MINIMIZE);
@@ -132,7 +121,7 @@ public abstract class BaseBot {
             int relY = rel.y;
 
             // Масштаб учитываем только для окна Ф1.
-            // ВНИМАНИЕ: хотя по замерам зум ≈ 0.913, реально клики совпадают только при 0.95.
+            // ВНИМАНИЕ: хотя по замерам зум ≈ 0.913, реально клики совпадают только при 0.96.
             // Вероятно, Игромир округляет zoom-шаги (100% → 95% → 80% …). Или дело в масштабировании Windows 10.
             if ("Ф1".equals(gw.name)) {
                 double scale = 0.96; // калибровка для Ctrl–1
@@ -145,8 +134,17 @@ public abstract class BaseBot {
 
             clickAt(x, y);
             System.out.printf("%s нажал \"%s\" (%d,%d)%n", gw.name, buttonName, x, y);
+            Thread.sleep(PAUSE_LONG_MS);
 
             if (i < windows.size() - 1) Thread.sleep(500);
         }
+    }
+
+    // --- Клик ---
+    protected void clickAt(int x, int y) {
+        if (robot == null) return;
+        robot.mouseMove(x, y);
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
 }

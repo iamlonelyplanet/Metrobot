@@ -8,7 +8,7 @@ import java.util.*;
 
 public class WindowsCoordinates {
     private static final User32 user32 = User32.INSTANCE;
-    private final Map<String, RECT> coordinatesByRole = new HashMap<>();
+    private final Map<String, RECT> windowCoordinates = new HashMap<>();
 
     public WindowsCoordinates() {
         detectWindows();
@@ -23,7 +23,7 @@ public class WindowsCoordinates {
             user32.GetWindowText(hWnd, buffer, 512);
             String title = Native.toString(buffer);
 
-            if (title != null && title.equals("Игроклуб Mail.ru")) {
+            if (title.contains("2033") || title.contains("Игроклуб")) {
                 RECT rect = new RECT();
                 user32.GetWindowRect(hWnd, rect);
                 foundWindows.add(rect);
@@ -36,23 +36,22 @@ public class WindowsCoordinates {
                 .comparingInt((RECT r) -> r.top)
                 .thenComparingInt(r -> r.left));
 
-        // Если нашли хотя бы 4 окна — раскладываем по ролям
         if (foundWindows.size() >= 4) {
-            coordinatesByRole.put("Ф1", foundWindows.get(0));        // левое верхнее
-            coordinatesByRole.put("Лёха-156", foundWindows.get(1)); // правое верхнее
-            coordinatesByRole.put("Хуан", foundWindows.get(2));     // левое нижнее
-            coordinatesByRole.put("Антон", foundWindows.get(3));    // правое нижнее
+            windowCoordinates.put("Ф1", foundWindows.get(0));        // левое верхнее
+            windowCoordinates.put("Лёха-156", foundWindows.get(1)); // правое верхнее
+            windowCoordinates.put("Хуан", foundWindows.get(2));     // левое нижнее
+            windowCoordinates.put("Антон", foundWindows.get(3));    // правое нижнее
         }
     }
 
-    // Получаем координаты окна по роли
-    public RECT getCoordinates(String role) {
-        return coordinatesByRole.get(role);
+    // Получаем координаты окна
+    public RECT getCoordinates(String window) {
+        return windowCoordinates.get(window);
     }
 
     // Пример: получить левый верхний угол
-    public Point getTopLeft(String role) {
-        RECT rect = coordinatesByRole.get(role);
+    public Point getTopLeft(String window) {
+        RECT rect = windowCoordinates.get(window);
         if (rect != null) {
             return new Point(rect.left, rect.top);
         }

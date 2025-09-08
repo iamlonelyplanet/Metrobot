@@ -16,7 +16,6 @@ public class WindowConfig {
     public static class GameWindow {
         public final String name;
         public final Point topLeft;
-        public String mode;
 
         public GameWindow(String name, int x, int y) {
             this.name = name;
@@ -42,7 +41,7 @@ public class WindowConfig {
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
         put("Арена", new Point(445, 400));
-        put("Атаковать", new Point(390, 610));
+        put("Атаковать", new Point(390, 605));
         put("Пропустить", new Point(510, 130));
         put("Закрыть — Победа", new Point(640, 610));
         put("Закрыть — Поражение", new Point(640, 560));
