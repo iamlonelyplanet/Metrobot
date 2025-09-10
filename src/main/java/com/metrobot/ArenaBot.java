@@ -27,9 +27,11 @@ public class ArenaBot extends BaseBot {
             waitUntilStartTime(startTime);
             System.out.printf("Старт Арены в %02d:%02d%n", startTime.getHour(), startTime.getMinute());
             Thread.sleep(PAUSE_SHORT_MS);
+            Counter arena = new Counter("Арена");
+            int battlesLeft = TOTAL_BATTLES - arena.getCount();
 
-            for (int battle = 1; battle <= TOTAL_BATTLES; battle++) {
-                System.out.println("\n=== Бой №" + battle + " ===");
+            for (int battle = 1; battle <= battlesLeft; battle++) {
+                System.out.println("\n=== Бой №" + battle + " из " + battlesLeft + " ===");
 
                 showAllGameWindows();
                 clickAllWindows("Арена");
@@ -38,22 +40,25 @@ public class ArenaBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Пропустить");
                 Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Забрать коллекцию");
-                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Закрыть — Победа");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Закрыть — Поражение");
+                Thread.sleep(PAUSE_SHORT_MS);
+                clickAllWindows("Забрать коллекцию");
+                Thread.sleep(PAUSE_SHORT_MS);
 
                 System.out.println("Бой " + battle + " завершён.");
                 minimizeAllGameWindows();
 
-                if (battle < TOTAL_BATTLES) {
+                arena.plusOne();
+
+                if (battle < battlesLeft) {
                     System.out.println("Пауза между боями...");
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 3);
                 }
             }
 
-            System.out.println(TOTAL_BATTLES + " боёв завершены.");
+            System.out.println(TOTAL_BATTLES + " боёв завершено.");
         } catch (InterruptedException e) {
             System.out.println("Interrupted — завершаю.");
             Thread.currentThread().interrupt();

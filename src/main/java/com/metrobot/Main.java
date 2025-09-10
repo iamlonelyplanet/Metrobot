@@ -81,6 +81,8 @@ public class Main {
         }
     }
 
+    // Дальше идут методы-утилиты
+
     // Загружаем конфиг из файла в Map
     private static Map<String, String> loadConfig() {
         Map<String, String> config = new HashMap<>();
@@ -183,7 +185,8 @@ public class Main {
         for (String part : input.split(" ")) {
             try {
                 windows.add(Integer.parseInt(part.trim()));
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
         }
         return windows;
     }

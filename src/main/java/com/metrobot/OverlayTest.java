@@ -18,7 +18,7 @@ public class OverlayTest {
 
     private static void createAndShowGUI() {
         // выбор режима
-        String[] options = {"Arena", "KV", "Raid"};
+        String[] options = {"Арена", "КВ", "Рейд"};
         int choice = JOptionPane.showOptionDialog(
                 null,
                 "Выбери режим:",
@@ -34,13 +34,13 @@ public class OverlayTest {
         // выбираем Map из WindowConfig в зависимости от режима
         final Map<String, Point> buttonsMap;
         switch (mode) {
-            case "KV":
+            case "КВ":
                 buttonsMap = WindowConfig.KV_BUTTONS;
                 break;
-            case "Raid":
+            case "Рейд":
                 buttonsMap = WindowConfig.RAID_BUTTONS;
                 break;
-            case "Arena":
+            case "Арена":
             default:
                 buttonsMap = WindowConfig.ARENA_BUTTONS;
                 break;
