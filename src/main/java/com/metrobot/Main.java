@@ -2,11 +2,13 @@ package com.metrobot;
 
 import java.io.*;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Main {
 
     private static final String CONFIG_FILE = "Config.txt";
+    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
     public static void main(String[] args) {
         try {
@@ -18,35 +20,56 @@ public class Main {
             // === Спрашиваем режим игры ===
             int mode = askMode(scanner, config.get("mode"));
 
-            // === Окна ===
+            // === Спрашиваем рабочие окна ===
             List<Integer> windows = askWindows(scanner, config.get("windows"));
             if (windows.isEmpty()) {
                 System.out.println("Окна не выбраны — выхожу.");
                 return;
             }
 
-            // Сохраняем выбранные настройки обратно в файл
-            saveConfig(mode, windows);
+            // === Читаем времена стартов из конфига (если есть) ===
+            LocalTime arenaDefault = parseTime(config.get("arena_start"));
+            LocalTime kvDefault = parseTime(config.get("kv_start"));
+            LocalTime raidDefault = parseTime(config.get("raid_start"));
 
-            // === Запуск бота ===
+            // Подготовим переменные для записи обратно в конфиг
+            LocalTime arenaStart = arenaDefault;
+            LocalTime kvStart = kvDefault;
+            LocalTime raidStart = raidDefault;
+
+            // === Запуск бота в зависимости от режима ===
             String botName;
             LocalTime startTime;
             switch (mode) {
                 case 1:
                     botName = "КВ";
-                    startTime = askStartTime(scanner, botName);
+                    // спрашиваем/подтверждаем время только для выбранного режима
+                    startTime = askStartTime(scanner, botName, kvDefault);
+                    kvStart = startTime; // сохраняем для конфига
+
+                    // Сохраняем конфиг (mode, windows, времена)
+                    saveConfig(mode, windows, arenaStart, kvStart, raidStart);
+
                     ClanWarBot clanWarBot = new ClanWarBot(windows, startTime);
                     clanWarBot.start();
                     break;
                 case 2:
                     botName = "Рейд";
-                    startTime = askStartTime(scanner, botName);
+                    startTime = askStartTime(scanner, botName, raidDefault);
+                    raidStart = startTime;
+
+                    saveConfig(mode, windows, arenaStart, kvStart, raidStart);
+
                     RaidBot raidBot = new RaidBot(windows, startTime);
                     raidBot.start();
                     break;
                 case 3:
                     botName = "Арена";
-                    startTime = askStartTime(scanner, botName);
+                    startTime = askStartTime(scanner, botName, arenaDefault);
+                    arenaStart = startTime;
+
+                    saveConfig(mode, windows, arenaStart, kvStart, raidStart);
+
                     ArenaBot arenaBot = new ArenaBot(windows, startTime);
                     arenaBot.start();
                     break;
@@ -58,7 +81,7 @@ public class Main {
         }
     }
 
-    // Загружаем конфиг из файла
+    // Загружаем конфиг из файла в Map
     private static Map<String, String> loadConfig() {
         Map<String, String> config = new HashMap<>();
         File file = new File(CONFIG_FILE);
@@ -79,12 +102,47 @@ public class Main {
     }
 
     // Сохраняем конфиг
-    private static void saveConfig(int mode, List<Integer> windows) {
+    private static void saveConfig(int mode, List<Integer> windows,
+                                   LocalTime arenaStart, LocalTime kvStart, LocalTime raidStart) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(CONFIG_FILE))) {
             pw.println("mode=" + mode);
             pw.println("windows=" + windows.toString().replaceAll("[\\[\\],]", ""));
+            if (arenaStart != null) pw.println("arena_start=" + arenaStart.format(TIME_FORMAT));
+            if (kvStart != null) pw.println("kv_start=" + kvStart.format(TIME_FORMAT));
+            if (raidStart != null) pw.println("raid_start=" + raidStart.format(TIME_FORMAT));
         } catch (IOException e) {
             System.err.println("Ошибка записи " + CONFIG_FILE + ": " + e.getMessage());
+        }
+    }
+
+    private static LocalTime parseTime(String value) {
+        if (value == null || value.isEmpty()) return null;
+        try {
+            return LocalTime.parse(value, TIME_FORMAT);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // Спрашиваем время старта с дефолтным значением (если есть). Enter = оставить дефолт.
+    private static LocalTime askStartTime(Scanner scanner, String botName, LocalTime defaultTime) {
+        while (true) {
+            if (defaultTime != null) {
+                System.out.print("Введи время старта для режима " + botName + " (по умолчанию " + defaultTime.format(TIME_FORMAT) + "): ");
+            } else {
+                System.out.print("Введи время старта для режима " + botName + " (например 20:00): ");
+            }
+            String input = scanner.nextLine().trim();
+            if (input.isEmpty()) {
+                if (defaultTime != null) return defaultTime;
+                System.out.println("Время обязательно. Попробуй ещё раз.");
+                continue;
+            }
+            try {
+                return LocalTime.parse(input, TIME_FORMAT);
+            } catch (Exception e) {
+                System.out.println("Неверный формат времени, ожидалось HH:mm. Попробуй ещё раз.");
+            }
         }
     }
 
@@ -95,65 +153,38 @@ public class Main {
         System.out.println("2. Рейд");
         System.out.println("3. Арена");
 
-        int defaultMode = -1;
         if (defaultModeStr != null) {
-            try {
-                defaultMode = Integer.parseInt(defaultModeStr);
-            } catch (NumberFormatException ignored) {}
+            System.out.println("(Enter для выбора по умолчанию: " + defaultModeStr + ")");
         }
 
-        if (defaultMode != -1) {
-            System.out.print("Введи номер режима игры (Enter - оставить имеющиеся настройки) [" + defaultMode + "]: ");
-        } else {
-            System.out.print("Введи номер режима игры (Enter - оставить имеющиеся настройки): ");
+        String input = scanner.nextLine().trim();
+        if (input.isEmpty() && defaultModeStr != null) {
+            return Integer.parseInt(defaultModeStr);
         }
-
-        String line = scanner.nextLine().trim();
-        if (line.isEmpty() && defaultMode != -1) {
-            return defaultMode;
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            return 1;
         }
-
-        return Integer.parseInt(line);
     }
 
-    // Спрашиваем окна с возможностью оставить по умолчанию
+    // Спрашиваем список окон
     private static List<Integer> askWindows(Scanner scanner, String defaultWindowsStr) {
-        List<Integer> res = new ArrayList<>();
-        List<Integer> defaultWindows = new ArrayList<>();
-
-        if (defaultWindowsStr != null && !defaultWindowsStr.isEmpty()) {
-            for (String tok : defaultWindowsStr.split("\\s+")) {
-                try {
-                    int v = Integer.parseInt(tok);
-                    if (v >= 1 && v <= 4) defaultWindows.add(v);
-                } catch (NumberFormatException ignored) {}
-            }
-        }
-
-        if (!defaultWindows.isEmpty()) {
+        if (defaultWindowsStr != null) {
             System.out.print("Введи номера окон (через пробел) [" + defaultWindowsStr + "]: ");
         } else {
             System.out.print("Введи номера окон (через пробел). Доступные: 1, 2, 3, 4: ");
         }
 
-        String line = scanner.nextLine().trim();
-        if (line.isEmpty() && !defaultWindows.isEmpty()) {
-            return defaultWindows;
-        }
+        String input = scanner.nextLine().trim();
+        if (input.isEmpty() && defaultWindowsStr != null) input = defaultWindowsStr;
 
-        for (String tok : line.split("\\s+")) {
+        List<Integer> windows = new ArrayList<>();
+        for (String part : input.split(" ")) {
             try {
-                int v = Integer.parseInt(tok);
-                if (v >= 1 && v <= 4) res.add(v);
+                windows.add(Integer.parseInt(part.trim()));
             } catch (NumberFormatException ignored) {}
         }
-        return res;
-    }
-
-    // Спрашиваем время старта режима
-    private static LocalTime askStartTime(Scanner scanner, String botName) {
-        System.out.printf("Введи время старта режима %s (например 18:05): ", botName);
-        String input = scanner.nextLine().trim();
-        return LocalTime.parse(input); // бросит исключение, если формат неверный
+        return windows;
     }
 }
