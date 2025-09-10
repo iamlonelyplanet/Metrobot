@@ -11,6 +11,7 @@ import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
 import static com.metrobot.WindowConfig.PAUSE_LONG_MS;
+import static com.metrobot.WindowConfig.PAUSE_SHORT_MS;
 
 public abstract class BaseBot {
 
@@ -40,7 +41,7 @@ public abstract class BaseBot {
             long m = s / 60;
             long ss = s % 60;
             System.out.printf("\rДо следующего боя: %02d:%02d   ", m, ss);
-            Thread.sleep(1000);
+            Thread.sleep(1000); // Не менять, это эталон секунды в счётчике!
         }
         System.out.println();
     }
@@ -53,7 +54,7 @@ public abstract class BaseBot {
             LocalTime now = LocalTime.now();
             if (now.getHour() > startTime.getHour()) break;
             if (now.getHour() == startTime.getHour() && now.getMinute() >= startTime.getMinute()) break;
-            Thread.sleep(1_000L);
+            Thread.sleep(PAUSE_SHORT_MS);
         }
     }
 
@@ -120,23 +121,22 @@ public abstract class BaseBot {
             int relX = rel.x;
             int relY = rel.y;
 
-            // Масштаб учитываем только для окна Ф1.
-            // ВНИМАНИЕ: хотя по замерам зум ≈ 0.913, реально клики совпадают только при 0.96.
-            // Вероятно, Игромир округляет zoom-шаги (100% → 95% → 80% …). Или дело в масштабировании Windows 10.
-            if ("Ф1".equals(gw.name)) {
-                double scale = 0.96; // калибровка для Ctrl–1
-                relX = (int) Math.round(relX * scale);
-                relY = (int) Math.round(relY * scale);
-            }
+//            // Масштаб учитываем только для окна Ф1.
+//            // ВНИМАНИЕ: хотя по замерам зум ≈ 0.913, реально клики совпадают только при 0.96.
+//            // Вероятно, Игромир округляет zoom-шаги (100% → 95% → 80% …). Или дело в масштабировании Windows 10.
+//            if ("Ф1".equals(gw.name)) {
+//                double scale = 0.96; // калибровка для Ctrl–1
+//                relX = (int) Math.round(relX * scale);
+//                relY = (int) Math.round(relY * scale);
+//            }
 
             int x = gw.topLeft.x + relX;
             int y = gw.topLeft.y + relY;
 
             clickAt(x, y);
             System.out.printf("%s нажал \"%s\" (%d,%d)%n", gw.name, buttonName, x, y);
-            Thread.sleep(PAUSE_LONG_MS);
 
-            if (i < windows.size() - 1) Thread.sleep(500);
+            if (i < windows.size() - 1) Thread.sleep(400);
         }
     }
 

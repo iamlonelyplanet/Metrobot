@@ -45,6 +45,7 @@ public class RaidBot extends BaseBot {
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_BEFORE_BOSS_MS);
                 clickAllWindows("Пропустить");
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Закрыть");
 
                 System.out.println("Бой " + battle + " завершён.");

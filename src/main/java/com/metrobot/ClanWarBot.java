@@ -26,7 +26,7 @@ public class ClanWarBot extends BaseBot {
         try {
             waitUntilStartTime(startTime);
             System.out.printf("Старт КВ в %02d:%02d%n", startTime.getHour(), startTime.getMinute());
-            Thread.sleep(2000);
+            Thread.sleep(PAUSE_SHORT_MS);
 
             showAllGameWindows();
             clickAllWindows("КВ — Клан");
@@ -34,19 +34,23 @@ public class ClanWarBot extends BaseBot {
             for (int battle = 1; battle <= TOTAL_BATTLES; battle++) {
                 System.out.println("\n=== Бой №" + battle + " ===");
                 showAllGameWindows();
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_SHORT_MS);
 
                 clickAllWindows("КВ — Война");
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Атаковать");
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Пропустить");
+                Thread.sleep(PAUSE_SHORT_MS * 2);
                 clickAllWindows("Закрыть");
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("КВ — Погон");
 
                 System.out.println("Бой " + battle + " завершён.");
                 minimizeAllGameWindows();
 
                 if (battle < TOTAL_BATTLES) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 6);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 5);
                 }
             }
 

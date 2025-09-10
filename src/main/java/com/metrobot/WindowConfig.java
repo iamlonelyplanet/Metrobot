@@ -8,8 +8,8 @@ import java.util.Map;
 public class WindowConfig {
     // --- Паузы ---
     public static final long PAUSE_LONG_MS = 4000;
-    public static final long PAUSE_SHORT_MS = 1000;
-    public static final long FIVE_MINUTES_PAUSE_SECONDS = 285;
+    public static final long PAUSE_SHORT_MS = 1200;
+    public static final long FIVE_MINUTES_PAUSE_SECONDS = 282;
     public static final long PAUSE_BEFORE_BOSS_MS = 12_500;
 
     // ===== ОКНА =====
