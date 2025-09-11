@@ -45,6 +45,7 @@ public class ClanWarBot extends BaseBot {
                 clickAllWindows("Закрыть");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("КВ — Погон");
+                Thread.sleep(PAUSE_SHORT_MS);
 
                 System.out.println("Бой " + battle + " завершён.");
                 minimizeAllGameWindows();

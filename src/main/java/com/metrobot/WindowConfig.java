@@ -60,9 +60,9 @@ public class WindowConfig {
 
     // --- Рейд ---
     public static final LinkedHashMap<String, Point> RAID_BUTTONS = new LinkedHashMap<>() {{
-        put("Клан", new Point(310, 160));
+        put("Клан", new Point(315, 155));
         put("Рейды", new Point(180, 510));
-        put("Обновить", new Point(252, 123));
+        put("Обновить", new Point(240, 124));
         put("Атаковать", new Point(549, 420));
         put("Пропустить", new Point(510, 130));
         put("Закрыть", new Point(640, 530));
