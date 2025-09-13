@@ -9,8 +9,8 @@ public class WindowConfig {
     // --- Паузы ---
     public static final long PAUSE_LONG_MS = 4000;
     public static final long PAUSE_SHORT_MS = 1200;
-    public static final long FIVE_MINUTES_PAUSE_SECONDS = 282;
-    public static final long PAUSE_BEFORE_BOSS_MS = 12_500;
+    public static final long FIVE_MINUTES_PAUSE_SECONDS = 284;
+    public static final long PAUSE_BEFORE_BOSS_MS = 14_000;
 
     // --- Максимальное количество боёв ---
     public static final int MAX_BATTLES_ARENA = 50;
@@ -55,12 +55,12 @@ public class WindowConfig {
 
     // --- Клановая война ---
     public static final LinkedHashMap<String, Point> KV_BUTTONS = new LinkedHashMap<>() {{
-        put("КВ — Клан", new Point(315, 155));
-        put("КВ — Война", new Point(180, 400));
+        put("Клан", new Point(315, 155));
+        put("Война", new Point(180, 400));
         put("Атаковать", new Point(540, 385));
         put("Пропустить", new Point(510, 130));
         put("Закрыть", new Point(640, 530));
-        put("КВ — Погон", new Point(646, 646));
+        put("КВ — Погон", new Point(640, 646));
     }};
 
     // --- Рейд ---

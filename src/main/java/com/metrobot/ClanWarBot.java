@@ -2,13 +2,13 @@ package com.metrobot;
 
 import java.awt.*;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static com.metrobot.WindowConfig.*;
 
 public class ClanWarBot extends BaseBot {
-
     private final LocalTime startTime;
 
     public ClanWarBot(List<Integer> windows, LocalTime timeHHmm) {
@@ -24,24 +24,31 @@ public class ClanWarBot extends BaseBot {
     public void start() {
         try {
             waitUntilStartTime(startTime);
-            System.out.printf("Старт КВ в %02d:%02d%n", startTime.getHour(), startTime.getMinute());
+            System.out.println("Старт КВ");
             Thread.sleep(PAUSE_SHORT_MS);
 
-            showAllGameWindows();
-            // Однократный подготовительный клик
-            clickAllWindows("КВ — Клан");
+            Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
+            Counter kvCounter = counters.get("КВ");
 
-            for (int battle = 1; battle <= MAX_BATTLES_CLANWAR; battle++) {
-                System.out.println("\n=== Бой №" + battle + " ===");
+            showAllGameWindows();
+
+            // Однократный подготовительный клик (если нужен)
+            if (kvCounter.getCount() == 0) {
+                clickAllWindows("Клан");
+            }
+
+            // Бои
+            for (int battle = (kvCounter.getCount() + 1); battle <= MAX_BATTLES_CLANWAR; battle++) {
+                System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_CLANWAR + " ===");
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
 
-                clickAllWindows("КВ — Война");
+                clickAllWindows("Война");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("КВ — Погон");
@@ -50,12 +57,16 @@ public class ClanWarBot extends BaseBot {
                 System.out.println("Бой " + battle + " завершён.");
                 minimizeAllGameWindows();
 
+                kvCounter.plusOne();
+                CounterStorage.saveCounters(counters);
+                System.out.println("Прошло " + kvCounter.getCount() + " боёв");
+
                 if (battle < MAX_BATTLES_CLANWAR) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 5);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 3);
                 }
             }
 
-            System.out.println("\nВсе " + MAX_BATTLES_CLANWAR + " боёв завершены. КВ окончена.");
+            System.out.println("\nВсе " + kvCounter.getCount() + " боёв завершены. КВ окончена.");
         } catch (InterruptedException ie) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();

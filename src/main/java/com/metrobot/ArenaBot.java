@@ -30,9 +30,8 @@ public class ArenaBot extends BaseBot {
             Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
             Counter arenaCounter = counters.get("Арена");
 
-            int battlesLeft = MAX_BATTLES_ARENA - arenaCounter.getCount();
-
-            for (int battle = (arenaCounter.getCount() + 1); battle <= battlesLeft; battle++) {
+            // Бои
+            for (int battle = (arenaCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_ARENA + " ===");
                 showAllGameWindows();
 
@@ -56,16 +55,16 @@ public class ArenaBot extends BaseBot {
                 CounterStorage.saveCounters(counters);
                 System.out.println("Прошло " + arenaCounter.getCount() + " боёв");
 
-                if (battle <= MAX_BATTLES_ARENA) {
+                if (battle < MAX_BATTLES_ARENA) {
                     System.out.println("Пауза между боями...");
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 3);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS);
                 }
             }
 
-            System.out.println(MAX_BATTLES_ARENA + " боёв завершено.");
+            System.out.println("\nВсе " + MAX_BATTLES_ARENA + " боёв завершены. Арена окончена");
 
         } catch (InterruptedException e) {
-            System.out.println("Interrupted — завершаю.");
+            System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();
         } catch (Exception e) {
             e.printStackTrace();

@@ -2,6 +2,7 @@ package com.metrobot;
 
 import java.awt.*;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -23,22 +24,27 @@ public class RaidBot extends BaseBot {
     public void start() {
         try {
             waitUntilStartTime(startTime);
-            System.out.printf("Старт рейда в %02d:%02d%n", startTime.getHour(), startTime.getMinute());
+            System.out.println("Старт рейда");
 
-            // Подготовительные клики (разово)
             showAllGameWindows();
             Thread.sleep(PAUSE_LONG_MS);
 
-            clickAllWindows("Клан");
-            Thread.sleep(PAUSE_SHORT_MS);
-            clickAllWindows("Рейды");
-            Thread.sleep(PAUSE_SHORT_MS);
-            clickAllWindows("Обновить");
-            Thread.sleep(PAUSE_LONG_MS);
+            Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
+            Counter raidCounter = counters.get("Рейд");
+
+            // Подготовительные клики (разово, если надо)
+            if (raidCounter.getCount() == 0) {
+                clickAllWindows("Клан");
+                Thread.sleep(PAUSE_SHORT_MS);
+                clickAllWindows("Рейды");
+                Thread.sleep(PAUSE_SHORT_MS);
+                clickAllWindows("Обновить");
+                Thread.sleep(PAUSE_LONG_MS);
+            }
 
             // Бои
-            for (int battle = 1; battle <= MAX_BATTLES_RAID; battle++) {
-                System.out.println("\n=== Рейд — бой #" + battle + " ===");
+            for (int battle = (raidCounter.getCount() + 1); battle <= MAX_BATTLES_RAID; battle++) {
+                System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_RAID + " ===");
                 showAllGameWindows();
 
                 clickAllWindows("Рейды");
@@ -46,20 +52,25 @@ public class RaidBot extends BaseBot {
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_BEFORE_BOSS_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
+                Thread.sleep(PAUSE_SHORT_MS);
 
                 System.out.println("Бой " + battle + " завершён.");
                 minimizeAllGameWindows();
 
+                raidCounter.plusOne();
+                CounterStorage.saveCounters(counters);
+                System.out.println("Прошло " + raidCounter.getCount() + " боёв");
+
                 if (battle < MAX_BATTLES_RAID) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - 2);
                 }
             }
 
-            System.out.println("\nРейд завершён. Проведено боёв: " + MAX_BATTLES_RAID);
+            System.out.println("\nРейд завершён. Проведено боёв: " + raidCounter.getCount());
         } catch (InterruptedException ie) {
-            System.out.println("Прервано пользователем.");
+            System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();
         } catch (Exception e) {
             e.printStackTrace();
