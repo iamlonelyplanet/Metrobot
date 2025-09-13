@@ -8,8 +8,6 @@ import java.util.Map;
 import static com.metrobot.WindowConfig.*;
 
 public class RaidBot extends BaseBot {
-
-    private static final int TOTAL_BATTLES = 12;
     private final LocalTime startTime;
 
     public RaidBot(List<Integer> windows, LocalTime timeHHmm) {
@@ -39,7 +37,7 @@ public class RaidBot extends BaseBot {
             Thread.sleep(PAUSE_LONG_MS);
 
             // Бои
-            for (int battle = 1; battle <= TOTAL_BATTLES; battle++) {
+            for (int battle = 1; battle <= MAX_BATTLES_RAID; battle++) {
                 System.out.println("\n=== Рейд — бой #" + battle + " ===");
                 showAllGameWindows();
 
@@ -54,12 +52,12 @@ public class RaidBot extends BaseBot {
                 System.out.println("Бой " + battle + " завершён.");
                 minimizeAllGameWindows();
 
-                if (battle < TOTAL_BATTLES) {
+                if (battle < MAX_BATTLES_RAID) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS);
                 }
             }
 
-            System.out.println("\nРейд завершён. Проведено боёв: " + TOTAL_BATTLES);
+            System.out.println("\nРейд завершён. Проведено боёв: " + MAX_BATTLES_RAID);
         } catch (InterruptedException ie) {
             System.out.println("Прервано пользователем.");
             Thread.currentThread().interrupt();

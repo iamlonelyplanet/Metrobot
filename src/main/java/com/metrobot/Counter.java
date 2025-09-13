@@ -1,5 +1,8 @@
 package com.metrobot;
 
+import java.util.Arrays;
+import java.util.Map;
+
 public class Counter {
     private String name;
     private int count;

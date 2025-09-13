@@ -2,14 +2,13 @@ package com.metrobot;
 
 import java.awt.*;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static com.metrobot.WindowConfig.*;
 
 public class ArenaBot extends BaseBot {
-
-    private static final int TOTAL_BATTLES = 50;
     private final LocalTime startTime;
 
     public ArenaBot(List<Integer> windows, LocalTime timeHHmm) {
@@ -25,15 +24,18 @@ public class ArenaBot extends BaseBot {
     public void start() {
         try {
             waitUntilStartTime(startTime);
-            System.out.printf("Старт Арены в %02d:%02d%n", startTime.getHour(), startTime.getMinute());
+            System.out.print("Старт Арены");
             Thread.sleep(PAUSE_SHORT_MS);
-            Counter arena = new Counter("Арена");
-            int battlesLeft = TOTAL_BATTLES - arena.getCount();
 
-            for (int battle = 1; battle <= battlesLeft; battle++) {
-                System.out.println("\n=== Бой №" + battle + " из " + battlesLeft + " ===");
+            Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
+            Counter arenaCounter = counters.get("Арена");
 
+            int battlesLeft = MAX_BATTLES_ARENA - arenaCounter.getCount();
+
+            for (int battle = (arenaCounter.getCount() + 1); battle <= battlesLeft; battle++) {
+                System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_ARENA + " ===");
                 showAllGameWindows();
+
                 clickAllWindows("Арена");
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Атаковать");
@@ -50,15 +52,18 @@ public class ArenaBot extends BaseBot {
                 System.out.println("Бой " + battle + " завершён.");
                 minimizeAllGameWindows();
 
-                arena.plusOne();
+                arenaCounter.plusOne();
+                CounterStorage.saveCounters(counters);
+                System.out.println("Прошло " + arenaCounter.getCount() + " боёв");
 
-                if (battle < battlesLeft) {
+                if (battle <= MAX_BATTLES_ARENA) {
                     System.out.println("Пауза между боями...");
                     countdown(FIVE_MINUTES_PAUSE_SECONDS + 3);
                 }
             }
 
-            System.out.println(TOTAL_BATTLES + " боёв завершено.");
+            System.out.println(MAX_BATTLES_ARENA + " боёв завершено.");
+
         } catch (InterruptedException e) {
             System.out.println("Interrupted — завершаю.");
             Thread.currentThread().interrupt();

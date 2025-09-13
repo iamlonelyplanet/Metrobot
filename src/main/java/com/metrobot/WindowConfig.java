@@ -12,6 +12,11 @@ public class WindowConfig {
     public static final long FIVE_MINUTES_PAUSE_SECONDS = 282;
     public static final long PAUSE_BEFORE_BOSS_MS = 12_500;
 
+    // --- Максимальное количество боёв ---
+    public static final int MAX_BATTLES_ARENA = 50;
+    public static final int MAX_BATTLES_CLANWAR = 24;
+    public static final int MAX_BATTLES_RAID = 12;
+
     // ===== ОКНА =====
     public static class GameWindow {
         public final String name;
@@ -41,7 +46,7 @@ public class WindowConfig {
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
         put("Арена", new Point(445, 400));
-        put("Атаковать", new Point(390, 605));
+        put("Атаковать", new Point(325, 610));
         put("Пропустить", new Point(510, 130));
         put("Закрыть — Победа", new Point(640, 610));
         put("Закрыть — Поражение", new Point(640, 560));

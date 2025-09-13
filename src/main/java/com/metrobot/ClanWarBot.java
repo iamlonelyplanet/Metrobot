@@ -9,7 +9,6 @@ import static com.metrobot.WindowConfig.*;
 
 public class ClanWarBot extends BaseBot {
 
-    private static final int TOTAL_BATTLES = 24;
     private final LocalTime startTime;
 
     public ClanWarBot(List<Integer> windows, LocalTime timeHHmm) {
@@ -29,9 +28,10 @@ public class ClanWarBot extends BaseBot {
             Thread.sleep(PAUSE_SHORT_MS);
 
             showAllGameWindows();
+            // Однократный подготовительный клик
             clickAllWindows("КВ — Клан");
 
-            for (int battle = 1; battle <= TOTAL_BATTLES; battle++) {
+            for (int battle = 1; battle <= MAX_BATTLES_CLANWAR; battle++) {
                 System.out.println("\n=== Бой №" + battle + " ===");
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
@@ -50,12 +50,12 @@ public class ClanWarBot extends BaseBot {
                 System.out.println("Бой " + battle + " завершён.");
                 minimizeAllGameWindows();
 
-                if (battle < TOTAL_BATTLES) {
+                if (battle < MAX_BATTLES_CLANWAR) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS + 5);
                 }
             }
 
-            System.out.println("\nВсе " + TOTAL_BATTLES + " боёв завершены. КВ окончена.");
+            System.out.println("\nВсе " + MAX_BATTLES_CLANWAR + " боёв завершены. КВ окончена.");
         } catch (InterruptedException ie) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();
