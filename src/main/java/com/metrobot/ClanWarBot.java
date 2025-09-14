@@ -30,20 +30,14 @@ public class ClanWarBot extends BaseBot {
             Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
             Counter kvCounter = counters.get("КВ");
 
-            showAllGameWindows();
-
-            // Однократный подготовительный клик (если нужен)
-            if (kvCounter.getCount() == 0) {
-                clickAllWindows("Клан");
-            }
-
             // Бои
             for (int battle = (kvCounter.getCount() + 1); battle <= MAX_BATTLES_CLANWAR; battle++) {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_CLANWAR + " ===");
-
                 showAllGameWindows();
-                Thread.sleep(PAUSE_SHORT_MS);
 
+                Thread.sleep(PAUSE_SHORT_MS);
+                clickAllWindows("Клан");
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Война");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Атаковать");
