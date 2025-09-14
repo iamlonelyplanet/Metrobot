@@ -56,19 +56,16 @@ public class RaidBot extends BaseBot {
                 clickAllWindows("Закрыть");
                 Thread.sleep(PAUSE_SHORT_MS);
 
-                System.out.println("Бой " + battle + " завершён.");
-                minimizeAllGameWindows();
-
                 raidCounter.plusOne();
                 CounterStorage.saveCounters(counters);
-                System.out.println("Прошло " + raidCounter.getCount() + " боёв");
+                System.out.println(Grammar.getWordEnd(raidCounter.getCount()));
 
                 if (battle < MAX_BATTLES_RAID) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - 2);
                 }
             }
 
-            System.out.println("\nРейд завершён. Проведено боёв: " + raidCounter.getCount());
+            System.out.println("\nРейд завершён. Проведено боёв в автоматическом режиме: " + raidCounter.getCount());
         } catch (InterruptedException ie) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();

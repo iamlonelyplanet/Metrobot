@@ -40,6 +40,7 @@ public class ClanWarBot extends BaseBot {
             // Бои
             for (int battle = (kvCounter.getCount() + 1); battle <= MAX_BATTLES_CLANWAR; battle++) {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_CLANWAR + " ===");
+
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
 
@@ -53,20 +54,18 @@ public class ClanWarBot extends BaseBot {
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("КВ — Погон");
                 Thread.sleep(PAUSE_SHORT_MS);
-
-                System.out.println("Бой " + battle + " завершён.");
                 minimizeAllGameWindows();
 
                 kvCounter.plusOne();
                 CounterStorage.saveCounters(counters);
-                System.out.println("Прошло " + kvCounter.getCount() + " боёв");
+                System.out.println(Grammar.getWordEnd(kvCounter.getCount()));
 
                 if (battle < MAX_BATTLES_CLANWAR) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS + 3);
                 }
             }
 
-            System.out.println("\nВсе " + kvCounter.getCount() + " боёв завершены. КВ окончена.");
+            System.out.println("\nКВ завершена. Проведено боёв в автоматическом режиме: " + kvCounter.getCount());
         } catch (InterruptedException ie) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();

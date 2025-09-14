@@ -13,9 +13,9 @@ public class WindowConfig {
     public static final long PAUSE_BEFORE_BOSS_MS = 14_000;
 
     // --- Максимальное количество боёв ---
-    public static final int MAX_BATTLES_ARENA = 50;
-    public static final int MAX_BATTLES_CLANWAR = 24;
-    public static final int MAX_BATTLES_RAID = 12;
+    public static final byte MAX_BATTLES_ARENA = 50;
+    public static final byte MAX_BATTLES_CLANWAR = 24;
+    public static final byte MAX_BATTLES_RAID = 12;
 
     // ===== ОКНА =====
     public static class GameWindow {
