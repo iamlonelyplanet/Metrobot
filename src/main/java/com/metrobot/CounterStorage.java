@@ -5,7 +5,7 @@ import java.nio.file.*;
 import java.util.*;
 
 public class CounterStorage {
-    private static final String FILE_NAME = "Counters.txt";
+    private static final String FILE_NAME = "config/counters.txt";
 
     // Загружаем счётчики из файла
     public static Map<String, Counter> loadCounters(List<String> names) {

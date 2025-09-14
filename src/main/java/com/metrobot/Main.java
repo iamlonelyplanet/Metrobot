@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Main {
 
-    private static final String CONFIG_FILE = "Config.txt";
+    private static final String CONFIG_FILE = "config/config.txt";
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
     public static void main(String[] args) {
@@ -173,9 +173,9 @@ public class Main {
     // Спрашиваем список окон
     private static List<Integer> askWindows(Scanner scanner, String defaultWindowsStr) {
         if (defaultWindowsStr != null) {
-            System.out.print("Введи номера окон (через пробел) [" + defaultWindowsStr + "]: ");
+            System.out.print("Введи номера окон через пробел. В прошлый раз были: [" + defaultWindowsStr + "]: ");
         } else {
-            System.out.print("Введи номера окон (через пробел). Доступные: 1, 2, 3, 4: ");
+            System.out.print("Введи номера окон через пробел. Доступные: 1, 2, 3, 4: ");
         }
 
         String input = scanner.nextLine().trim();
