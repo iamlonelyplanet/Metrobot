@@ -55,7 +55,7 @@ public class ClanWarBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(kvCounter.getCount()));
 
                 if (battle < MAX_BATTLES_CLANWAR) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 3);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS);
                 }
             }
 
