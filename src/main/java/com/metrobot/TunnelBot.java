@@ -41,7 +41,10 @@ public class TunnelBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
+
                 System.out.println("Убито Ящеров: " + lizards);
+                System.out.println(Grammar.getWord2End(lizards));
+
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - с пропуском");
                 Thread.sleep(PAUSE_LONG_MS);
