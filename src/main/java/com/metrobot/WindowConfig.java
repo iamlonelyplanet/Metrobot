@@ -11,7 +11,7 @@ public class WindowConfig {
     public static final long PAUSE_SHORT_MS = 1200;
     public static final long FIVE_MINUTES_PAUSE_SECONDS = 284;
     public static final long PAUSE_BEFORE_BOSS_MS = 14_000;
-    public static final long PAUSE_TUNNEL_MS = 17_000;
+    public static final long PAUSE_TUNNEL_MS = 18_000;
 
     // --- Максимальное количество боёв ---
     public static final byte MAX_BATTLES_ARENA = 50;
@@ -76,7 +76,7 @@ public class WindowConfig {
 
     // --- Туннель ---
     public static final LinkedHashMap<String, Point> TUNNEL_BUTTONS = new LinkedHashMap<>() {{
-        put("В туннель", new Point(540,370));
+        put("В туннель", new Point(520,370));
         put("Карта-ПК-ФРУ", new Point(440,575));
         put("Карта-КОМ", new Point(440,525));
         put("Карта-УНИ", new Point(440,575));
