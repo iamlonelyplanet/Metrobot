@@ -77,7 +77,7 @@ public class Main {
                     break;
                 case 4:
                     botName = "Туннель";
-                    startTime = askStartTime(scanner, botName, arenaDefault);
+                    startTime = askStartTime(scanner, botName, tunnelDefault);
                     tunnelStart = startTime;
 
                     saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);

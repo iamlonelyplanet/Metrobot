@@ -76,13 +76,13 @@ public class WindowConfig {
 
     // --- Туннель ---
     public static final LinkedHashMap<String, Point> TUNNEL_BUTTONS = new LinkedHashMap<>() {{
-        put("В туннель", new Point(520,370));
+        put("В туннель", new Point(540,370));
         put("Карта-ПК-ФРУ", new Point(440,575));
         put("Карта-КОМ", new Point(440,525));
         put("Карта-УНИ", new Point(440,575));
         put("Карта-ПВ", new Point(440,630));
         put("Карта-КОМ-ФРУ", new Point(440,475));
-        put("Карта-ФРУ-ПК", new Point(330,485));
+        put("Карта-ФРУ-ПК", new Point(340,390));
         put("Войти - с пропуском", new Point(400,470));
         put("Войти - без пропуска", new Point(400,400));
         put("Атаковать", new Point(549, 420));
