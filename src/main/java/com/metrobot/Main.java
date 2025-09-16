@@ -31,11 +31,13 @@ public class Main {
             LocalTime arenaDefault = parseTime(config.get("arena_start"));
             LocalTime kvDefault = parseTime(config.get("kv_start"));
             LocalTime raidDefault = parseTime(config.get("raid_start"));
+            LocalTime tunnelDefault = parseTime(config.get("tunnel_start"));
 
             // Подготовим переменные для записи обратно в конфиг
             LocalTime arenaStart = arenaDefault;
             LocalTime kvStart = kvDefault;
             LocalTime raidStart = raidDefault;
+            LocalTime tunnelStart = tunnelDefault;
 
             // === Запуск бота в зависимости от режима ===
             String botName;
@@ -48,7 +50,7 @@ public class Main {
                     kvStart = startTime; // сохраняем для конфига
 
                     // Сохраняем конфиг (mode, windows, времена)
-                    saveConfig(mode, windows, arenaStart, kvStart, raidStart);
+                    saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);
 
                     ClanWarBot clanWarBot = new ClanWarBot(windows, startTime);
                     clanWarBot.start();
@@ -58,7 +60,7 @@ public class Main {
                     startTime = askStartTime(scanner, botName, raidDefault);
                     raidStart = startTime;
 
-                    saveConfig(mode, windows, arenaStart, kvStart, raidStart);
+                    saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);
 
                     RaidBot raidBot = new RaidBot(windows, startTime);
                     raidBot.start();
@@ -68,10 +70,20 @@ public class Main {
                     startTime = askStartTime(scanner, botName, arenaDefault);
                     arenaStart = startTime;
 
-                    saveConfig(mode, windows, arenaStart, kvStart, raidStart);
+                    saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);
 
                     ArenaBot arenaBot = new ArenaBot(windows, startTime);
                     arenaBot.start();
+                    break;
+                case 4:
+                    botName = "Туннель";
+                    startTime = askStartTime(scanner, botName, arenaDefault);
+                    tunnelStart = startTime;
+
+                    saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);
+
+                    TunnelBot tunnelBot = new TunnelBot(windows, startTime);
+                    tunnelBot.start();
                     break;
                 default:
                     System.out.println("Неизвестный режим. Завершаю.");
@@ -105,13 +117,14 @@ public class Main {
 
     // Сохраняем конфиг
     private static void saveConfig(int mode, List<Integer> windows,
-                                   LocalTime arenaStart, LocalTime kvStart, LocalTime raidStart) {
+                                   LocalTime arenaStart, LocalTime kvStart, LocalTime raidStart, LocalTime tunnelStart) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(CONFIG_FILE))) {
             pw.println("mode=" + mode);
             pw.println("windows=" + windows.toString().replaceAll("[\\[\\],]", ""));
             if (arenaStart != null) pw.println("arena_start=" + arenaStart.format(TIME_FORMAT));
             if (kvStart != null) pw.println("kv_start=" + kvStart.format(TIME_FORMAT));
             if (raidStart != null) pw.println("raid_start=" + raidStart.format(TIME_FORMAT));
+            if (tunnelStart != null) pw.println("tunnel_start=" + tunnelStart.format(TIME_FORMAT));
         } catch (IOException e) {
             System.err.println("Ошибка записи " + CONFIG_FILE + ": " + e.getMessage());
         }
@@ -154,6 +167,7 @@ public class Main {
         System.out.println("1. Клановые войны");
         System.out.println("2. Рейд");
         System.out.println("3. Арена");
+        System.out.println("4. Туннели - Ящеры (40 штук в день)");
 
         if (defaultModeStr != null) {
             System.out.println("(Enter для выбора по умолчанию: " + defaultModeStr + ")");
