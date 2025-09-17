@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-// Конфигурация окон и кнопок относительно верхнего левого угла окна.
+
 public class WindowConfig {
     // --- Паузы ---
     public static final long PAUSE_LONG_MS = 4000;
@@ -44,6 +44,7 @@ public class WindowConfig {
         return m;
     }
 
+    // Конфигурация окон и кнопок относительно верхнего левого угла окна в разных режимах
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
         put("Арена", new Point(445, 400));
@@ -61,7 +62,7 @@ public class WindowConfig {
         put("Атаковать", new Point(540, 385));
         put("Пропустить", new Point(510, 130));
         put("Закрыть", new Point(640, 530));
-        put("КВ — Погон", new Point(640, 590));
+        put("КВ — Погон", new Point(690, 620));
     }};
 
     // --- Рейд ---

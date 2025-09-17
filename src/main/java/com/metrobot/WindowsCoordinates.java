@@ -6,6 +6,9 @@ import com.sun.jna.platform.win32.WinDef.*;
 
 import java.util.*;
 
+// Этот класс - задел на будущее. Пока (15 сентября) не особо используется. Задумка - брать координаты каждого окна из
+// WinAPI вместо того, чтобы задавать их вручную.
+
 public class WindowsCoordinates {
     private static final User32 user32 = User32.INSTANCE;
     private final Map<String, RECT> windowCoordinates = new HashMap<>();
@@ -49,7 +52,7 @@ public class WindowsCoordinates {
         return windowCoordinates.get(window);
     }
 
-    // Пример: получить левый верхний угол
+    // Получить левый верхний угол
     public Point getTopLeft(String window) {
         RECT rect = windowCoordinates.get(window);
         if (rect != null) {

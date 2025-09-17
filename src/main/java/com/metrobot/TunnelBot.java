@@ -140,6 +140,7 @@ public class TunnelBot extends BaseBot {
                 System.out.println("Завершён " + (way + 1) + " пробег до Парка Культуры");
                 Thread.sleep(PAUSE_SHORT_MS * 2);
 
+//              Задел на будущее - счётчик Ящеров
 //                arenaCounter.plusOne();
 //                CounterStorage.saveCounters(counters);
 //                System.out.println(Grammar.getWordEnd(arenaCounter.getCount()));
