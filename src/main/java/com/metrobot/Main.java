@@ -21,8 +21,8 @@ public class Main {
             int mode = askMode(scanner, config.get("mode"));
 
             // === Спрашиваем рабочие окна ("персы"), от 1 до 4, потенциально не ограничено ===
-            List<Integer> windows = askWindows(scanner, config.get("windows"));
-            if (windows.isEmpty()) {
+            List<Integer> activeWindows = askActiveWindows(scanner, config.get("windows"));
+            if (activeWindows.isEmpty()) {
                 System.out.println("Окна не выбраны — выхожу.");
                 return;
             }
@@ -48,9 +48,9 @@ public class Main {
                     startTime = askStartTime(scanner, botName, kvDefault);
 
                     kvStart = startTime;
-                    saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);
+                    saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
 
-                    ClanWarBot clanWarBot = new ClanWarBot(windows, startTime);
+                    ClanWarBot clanWarBot = new ClanWarBot(activeWindows, startTime);
                     clanWarBot.start();
                     break;
                 case 2:
@@ -58,9 +58,9 @@ public class Main {
                     startTime = askStartTime(scanner, botName, raidDefault);
                     raidStart = startTime;
 
-                    saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);
+                    saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
 
-                    RaidBot raidBot = new RaidBot(windows, startTime);
+                    RaidBot raidBot = new RaidBot(activeWindows, startTime);
                     raidBot.start();
                     break;
                 case 3:
@@ -68,9 +68,9 @@ public class Main {
                     startTime = askStartTime(scanner, botName, arenaDefault);
 
                     arenaStart = startTime;
-                    saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);
+                    saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
 
-                    ArenaBot arenaBot = new ArenaBot(windows, startTime);
+                    ArenaBot arenaBot = new ArenaBot(activeWindows, startTime);
                     arenaBot.start();
                     break;
                 case 4:
@@ -78,9 +78,9 @@ public class Main {
                     startTime = askStartTime(scanner, botName, tunnelDefault);
 
                     tunnelStart = startTime;
-                    saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);
+                    saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
 
-                    TunnelBot tunnelBot = new TunnelBot(windows, startTime);
+                    TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime);
                     tunnelBot.start();
                     break;
                 default:
@@ -185,7 +185,7 @@ public class Main {
     }
 
     // Спрашиваем список окон
-    private static List<Integer> askWindows(Scanner scanner, String defaultWindowsStr) {
+    private static List<Integer> askActiveWindows(Scanner scanner, String defaultWindowsStr) {
         if (defaultWindowsStr != null) {
             System.out.print("Введи номера окон через пробел. В прошлый раз были [" + defaultWindowsStr + "]: ");
         } else {

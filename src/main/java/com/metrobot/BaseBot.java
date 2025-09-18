@@ -26,7 +26,7 @@ public abstract class BaseBot {
         try {
             robot = new Robot();
         } catch (AWTException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Не удалось инициализировать Robot", e);
         }
     }
 
@@ -48,13 +48,9 @@ public abstract class BaseBot {
 
     // --- Ожидание времени запуска ---
     protected void waitUntilStartTime(LocalTime startTime) throws InterruptedException {
-        System.out.printf("Ожидание времени запуска: %02d:%02d...\n",
-                startTime.getHour(), startTime.getMinute());
-        while (true) {
-            LocalTime now = LocalTime.now();
-            if (now.getHour() > startTime.getHour()) break;
-            if (now.getHour() == startTime.getHour() && now.getMinute() >= startTime.getMinute()) break;
-            Thread.sleep(PAUSE_SHORT_MS);
+        System.out.println("Бот запустится в " + startTime);
+        while (LocalTime.now().isBefore(startTime)) {
+            Thread.sleep(1000); // Не менять, это эталон секунды в счётчике!
         }
     }
 
@@ -122,7 +118,7 @@ public abstract class BaseBot {
 //            // Масштаб учитываем только для окна 1.
 //            // ВНИМАНИЕ: хотя по замерам зум ≈ 0.913, реально клики совпадают только при 0.96.
 //            // Вероятно, Игромир округляет zoom-шаги (100% → 95% → 80% …). Или дело в масштабировании Windows 10.
-//            if ("1".equals(gw.name)) {
+//            if ("Ф1".equals(gw.name)) {
 //                double scale = 0.96; // калибровка для Ctrl–1
 //                relX = (int) Math.round(relX * scale);
 //                relY = (int) Math.round(relY * scale);

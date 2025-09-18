@@ -18,23 +18,12 @@ public class WindowConfig {
     public static final byte MAX_BATTLES_CLANWAR = 24;
     public static final byte MAX_BATTLES_RAID = 12;
 
-//    // ===== ОКНА =====
-//    public static class GameWindow {
-//        public final String name;
-//        public final Point topLeft;
-//
-//        public GameWindow(String name, int x, int y) {
-//            this.name = name;
-//            this.topLeft = new Point(x, y);
-//        }
-//    }
-
-    // Возвращаем упорядоченную карту: индекс -> окно (1..4)
     public static final GameWindow ANTON = new GameWindow("Антон", 1033, 670);
     public static final GameWindow F1 = new GameWindow("Ф1", 0, 0);
     public static final GameWindow LEHA = new GameWindow("Лёха-156", 1033, 0);
     public static final GameWindow JUAN = new GameWindow("Хуан", 0, 670);
 
+    // Возвращаем упорядоченную карту: индекс -> окно (1..4)
     public static Map<Integer, GameWindow> defaultWindows() {
         Map<Integer, GameWindow> m = new LinkedHashMap<>();
         m.put(1, F1);
