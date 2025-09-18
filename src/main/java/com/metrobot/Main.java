@@ -46,8 +46,8 @@ public class Main {
                 case 1:
                     botName = "КВ";
                     startTime = askStartTime(scanner, botName, kvDefault);
-                    kvStart = startTime;
 
+                    kvStart = startTime;
                     saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);
 
                     ClanWarBot clanWarBot = new ClanWarBot(windows, startTime);
@@ -66,18 +66,18 @@ public class Main {
                 case 3:
                     botName = "Арена";
                     startTime = askStartTime(scanner, botName, arenaDefault);
-                    arenaStart = startTime;
 
+                    arenaStart = startTime;
                     saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);
 
                     ArenaBot arenaBot = new ArenaBot(windows, startTime);
                     arenaBot.start();
                     break;
                 case 4:
-                    botName = "Туннель";
+                    botName = "Туннель"; // TODO: посмотреть грамматику
                     startTime = askStartTime(scanner, botName, tunnelDefault);
-                    tunnelStart = startTime;
 
+                    tunnelStart = startTime;
                     saveConfig(mode, windows, arenaStart, kvStart, raidStart, tunnelStart);
 
                     TunnelBot tunnelBot = new TunnelBot(windows, startTime);

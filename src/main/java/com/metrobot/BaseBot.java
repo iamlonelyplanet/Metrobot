@@ -20,6 +20,7 @@ public abstract class BaseBot {
     protected List<Integer> windows = new ArrayList<>();
     protected Map<Integer, WindowConfig.GameWindow> windowsMap = WindowConfig.defaultWindows();
     protected boolean silentMode = true;
+    protected abstract Map<String, Point> getButtonMap();
 
     // --- Конструкторы ---
     public BaseBot() {
@@ -36,10 +37,10 @@ public abstract class BaseBot {
     }
 
     // --- Таймер (секунды) ---
-    protected void countdown(long seconds) throws InterruptedException {
-        for (long s = seconds; s > 0; s--) {
-            long m = s / 60;
-            long ss = s % 60;
+    protected void countdown(int seconds) throws InterruptedException {
+        for (int s = seconds; s > 0; s--) {
+            int m = s / 60;
+            int ss = s % 60;
             System.out.printf("\rДо следующего боя: %02d:%02d   ", m, ss);
             Thread.sleep(1000); // Не менять, это эталон секунды в счётчике!
         }
@@ -101,8 +102,7 @@ public abstract class BaseBot {
         System.out.println("Свернул окна");
     }
 
-    // === Унификация карт кнопок ===
-    protected abstract Map<String, Point> getButtonMap();
+
 
     // === Единый метод кликов по всем выбранным окнам ===
     protected void clickAllWindows(String buttonName) throws InterruptedException {

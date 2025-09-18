@@ -54,7 +54,6 @@ public class ArenaBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(arenaCounter.getCount()));
 
                 if (battle < MAX_BATTLES_ARENA) {
-                    System.out.println("Пауза между боями...");
                     countdown(FIVE_MINUTES_PAUSE_SECONDS);
                 }
             }

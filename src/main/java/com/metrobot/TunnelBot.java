@@ -23,7 +23,7 @@ public class TunnelBot extends BaseBot {
     public void start() {
         try {
             waitUntilStartTime(startTime);
-            System.out.println("Старт ходьбы по туннелям (Ящер)");
+            System.out.println("Старт ходьбы по туннелям (ящер)");
             Thread.sleep(PAUSE_LONG_MS);
 
 //            Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
