@@ -1,20 +1,19 @@
 package com.metrobot;
 
 public class Grammar {
-    public static void main(String[] args) {
-        for (int i = 1; i < 41; i++) {
-            System.out.println(getWord2End(i));
-        }
-
-    }
+//    public static void main(String[] args) {
+//        for (int i = 1; i < 41; i++) {
+//            System.out.println(getWord2End(i));
+//        }
+//    }
 
     // Метод для определения суффикса глагола и окончания существительного в зависимости от числительного
-// Прошёл 1 бой / Прошло 2 боя / Прошло 11 боёв и т.д.
+    // Прошёл 1 бой / Прошло 2 боя / Прошло 11 боёв и т.д.
     static String getWordEnd(int number) {
         String noun = "";
         String verb = "";
 
-        if (number < 1) {
+        if (isNumberWrong(number)) {
             return "Количество боёв - натуральное число";
         }
 
@@ -47,7 +46,7 @@ public class Grammar {
         String noun;
         String verb;
 
-        if (number < 1) {
+        if (isNumberWrong(number)) {
             return "Количество боёв - натуральное число";
         }
 
@@ -66,5 +65,9 @@ public class Grammar {
             verb = "о ";
         }
         return "Убит" + verb + number + " ящер" + noun;
+    }
+
+    static boolean isNumberWrong(int number) {
+        return number < 1;
     }
 }

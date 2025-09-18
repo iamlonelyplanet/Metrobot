@@ -10,7 +10,6 @@ import java.util.Map;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
-import static com.metrobot.WindowConfig.PAUSE_LONG_MS;
 import static com.metrobot.WindowConfig.PAUSE_SHORT_MS;
 
 public abstract class BaseBot {
@@ -18,7 +17,7 @@ public abstract class BaseBot {
     // === Общее состояние для всех ботов ===
     protected Robot robot;
     protected List<Integer> windows = new ArrayList<>();
-    protected Map<Integer, WindowConfig.GameWindow> windowsMap = WindowConfig.defaultWindows();
+    protected Map<Integer, GameWindow> windowsMap = WindowConfig.defaultWindows();
     protected boolean silentMode = true;
     protected abstract Map<String, Point> getButtonMap();
 
@@ -102,8 +101,6 @@ public abstract class BaseBot {
         System.out.println("Свернул окна");
     }
 
-
-
     // === Единый метод кликов по всем выбранным окнам ===
     protected void clickAllWindows(String buttonName) throws InterruptedException {
         Map<String, Point> buttonMap = getButtonMap();
@@ -115,26 +112,27 @@ public abstract class BaseBot {
 
         for (int i = 0; i < windows.size(); i++) {
             Integer idx = windows.get(i);
-            WindowConfig.GameWindow gw = windowsMap.get(idx);
+            GameWindow gw = windowsMap.get(idx);
             if (gw == null) continue;
 
             int relX = rel.x;
             int relY = rel.y;
 
-//            // Масштаб учитываем только для окна Ф1.
+//            TODO // Попытка в масштабирование окна (Ctrl +/-), пока не удалась.
+//            // Масштаб учитываем только для окна 1.
 //            // ВНИМАНИЕ: хотя по замерам зум ≈ 0.913, реально клики совпадают только при 0.96.
 //            // Вероятно, Игромир округляет zoom-шаги (100% → 95% → 80% …). Или дело в масштабировании Windows 10.
-//            if ("Ф1".equals(gw.name)) {
+//            if ("1".equals(gw.name)) {
 //                double scale = 0.96; // калибровка для Ctrl–1
 //                relX = (int) Math.round(relX * scale);
 //                relY = (int) Math.round(relY * scale);
 //            }
 
-            int x = gw.topLeft.x + relX;
-            int y = gw.topLeft.y + relY;
+            int x = gw.getTopLeftCorner().x + relX;
+            int y = gw.getTopLeftCorner().y + relY;
 
             clickAt(x, y);
-            System.out.printf("%s нажал \"%s\" (%d,%d)%n", gw.name, buttonName, x, y);
+            System.out.printf("%s нажал \"%s\" (%d,%d)%n", gw.getName(), buttonName, x, y);
 
             if (i < windows.size() - 1) Thread.sleep(400);
         }

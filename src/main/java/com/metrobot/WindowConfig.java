@@ -18,16 +18,16 @@ public class WindowConfig {
     public static final byte MAX_BATTLES_CLANWAR = 24;
     public static final byte MAX_BATTLES_RAID = 12;
 
-    // ===== ОКНА =====
-    public static class GameWindow {
-        public final String name;
-        public final Point topLeft;
-
-        public GameWindow(String name, int x, int y) {
-            this.name = name;
-            this.topLeft = new Point(x, y);
-        }
-    }
+//    // ===== ОКНА =====
+//    public static class GameWindow {
+//        public final String name;
+//        public final Point topLeft;
+//
+//        public GameWindow(String name, int x, int y) {
+//            this.name = name;
+//            this.topLeft = new Point(x, y);
+//        }
+//    }
 
     // Возвращаем упорядоченную карту: индекс -> окно (1..4)
     public static final GameWindow ANTON = new GameWindow("Антон", 1033, 670);
@@ -69,7 +69,7 @@ public class WindowConfig {
     public static final LinkedHashMap<String, Point> RAID_BUTTONS = new LinkedHashMap<>() {{
         put("Клан", new Point(440, 155));
         put("Рейды", new Point(180, 510));
-        put("Обновить", new Point(240, 124));
+        put("Обновить", new Point(235, 135));
         put("Атаковать", new Point(549, 420));
         put("Пропустить", new Point(510, 130));
         put("Закрыть", new Point(640, 530));

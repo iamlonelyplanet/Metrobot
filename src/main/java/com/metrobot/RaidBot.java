@@ -48,18 +48,19 @@ public class RaidBot extends BaseBot {
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
 
-                if (battle <= 2) {
+                if (battle == 1) {
                     clickAllWindows("Клан");
                     Thread.sleep(PAUSE_SHORT_MS);
-                    clickAllWindows("Рейды");
-                    Thread.sleep(PAUSE_LONG_MS);
                 }
+                clickAllWindows("Рейды");
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_BEFORE_BOSS_MS);
                 clickAllWindows("Пропустить");
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 Thread.sleep(PAUSE_SHORT_MS);
+                minimizeAllGameWindows();
 
                 raidCounter.plusOne();
                 CounterStorage.saveCounters(counters);
