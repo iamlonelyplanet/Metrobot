@@ -35,6 +35,8 @@ public class ArenaBot extends BaseBot {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_ARENA + " ===");
 
                 showAllGameWindows();
+                clickAllWindows("Клан - Выход");
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Арена");
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Атаковать");
@@ -54,7 +56,7 @@ public class ArenaBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(arenaCounter.getCount()));
 
                 if (battle < MAX_BATTLES_ARENA) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - windows.size());
                 }
             }
 

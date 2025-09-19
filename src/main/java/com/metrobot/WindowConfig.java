@@ -36,6 +36,7 @@ public class WindowConfig {
     // Конфигурация окон и кнопок относительно верхнего левого угла окна в разных режимах
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
+        put("Клан - Выход", new Point(180, 600));
         put("Арена", new Point(445, 400));
         put("Атаковать", new Point(325, 610));
         put("Пропустить", new Point(510, 130));
@@ -51,7 +52,7 @@ public class WindowConfig {
         put("Атаковать", new Point(540, 385));
         put("Пропустить", new Point(510, 130));
         put("Закрыть", new Point(640, 530));
-        put("КВ — Погон", new Point(690, 620));
+        put("Погон", new Point(690, 620));
     }};
 
     // --- Рейд ---

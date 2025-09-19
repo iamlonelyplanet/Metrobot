@@ -34,8 +34,8 @@ public class ClanWarBot extends BaseBot {
             for (int battle = (kvCounter.getCount() + 1); battle <= MAX_BATTLES_CLANWAR; battle++) {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_CLANWAR + " ===");
                 showAllGameWindows();
-
                 Thread.sleep(PAUSE_SHORT_MS);
+
                 clickAllWindows("Клан");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Война");
@@ -46,16 +46,16 @@ public class ClanWarBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 Thread.sleep(PAUSE_SHORT_MS);
-                clickAllWindows("КВ — Погон");
+                clickAllWindows("Погон");
                 Thread.sleep(PAUSE_SHORT_MS);
-                minimizeAllGameWindows();
 
+                minimizeAllGameWindows();
                 kvCounter.plusOne();
                 CounterStorage.saveCounters(counters);
                 System.out.println(Grammar.getWordEnd(kvCounter.getCount()));
 
                 if (battle < MAX_BATTLES_CLANWAR) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS + 2);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - windows.size());
                 }
             }
 
