@@ -101,7 +101,7 @@ public abstract class BaseBot {
         System.out.println("Свернул окна");
     }
 
-    // === Старт режима игры === TODO: унифицировать боты
+    // === Старт режима игры ===
     protected void startGame() throws InterruptedException {
         waitUntilStartTime(startTime);
         System.out.print("Старт режима " + botName);

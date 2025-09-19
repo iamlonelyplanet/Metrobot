@@ -34,7 +34,7 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("Карта-ПК-ФРУ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
 
@@ -43,14 +43,14 @@ public class TunnelBot extends BaseBot {
 
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - с пропуском");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
 
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-КОМ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
@@ -61,26 +61,26 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("Карта-УНИ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_SHORT_MS);
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - с пропуском");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
 
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-ПВ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_TUNNEL_MS);
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
 
                 System.out.println("Завершён " + (way + 1) + " пробег до Проспекта Вернадского");
 
@@ -89,7 +89,7 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("Карта-УНИ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
@@ -100,20 +100,20 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("Карта-КОМ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - с пропуском");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
 
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-КОМ-ФРУ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
@@ -124,14 +124,14 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("Карта-ФРУ-ПК");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_SHORT_MS);
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - без пропуска");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
 
                 System.out.println("Завершён " + (way + 1) + " пробег до Парка Культуры");
                 Thread.sleep(PAUSE_SHORT_MS);

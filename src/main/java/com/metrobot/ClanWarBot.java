@@ -36,9 +36,9 @@ public class ClanWarBot extends BaseBot {
                 clickAllWindows("Клан");
                 clickAllWindows("Война");
                 clickAllWindows("Атаковать");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 clickAllWindows("Погон");
 

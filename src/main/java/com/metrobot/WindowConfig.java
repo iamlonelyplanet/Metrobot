@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class WindowConfig {
     // --- Паузы ---
-    public static final int PAUSE_LONG_MS = 4000;
+    public static final int PAUSE_LONG_MS = 2800;
     public static final int PAUSE_SHORT_MS = 1200;
     public static final int FIVE_MINUTES_PAUSE_SECONDS = 284;
     public static final int PAUSE_BEFORE_BOSS_MS = 14_000;

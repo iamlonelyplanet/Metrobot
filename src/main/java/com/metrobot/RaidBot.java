@@ -47,11 +47,11 @@ public class RaidBot extends BaseBot {
                     clickAllWindows("Клан");
                 }
                 clickAllWindows("Рейды");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_BEFORE_BOSS_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 minimizeAllGameWindows();
 

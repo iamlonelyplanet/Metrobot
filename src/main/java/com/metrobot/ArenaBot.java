@@ -34,11 +34,11 @@ public class ArenaBot extends BaseBot {
                 showAllGameWindows();
                 clickAllWindows("Клан - Выход");
                 clickAllWindows("Арена");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Атаковать");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS - 1200);
+                Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть — Победа");
                 clickAllWindows("Закрыть — Поражение");
                 clickAllWindows("Забрать коллекцию");
