@@ -2,7 +2,6 @@ package com.metrobot;
 
 import java.awt.*;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +46,7 @@ public class ClanWarBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(kvCounter.getCount()));
 
                 if (battle < MAX_BATTLES_CLANWAR) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS - windows.size());
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size());
                 }
             }
 

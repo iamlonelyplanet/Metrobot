@@ -2,7 +2,6 @@ package com.metrobot;
 
 import java.awt.*;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -29,9 +28,7 @@ public class RaidBot extends BaseBot {
             // Подготовительные клики (разово, если надо)
             if (raidCounter.getCount() == 0) {
                 clickAllWindows("Клан");
-                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Рейды");
-                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Обновить");
                 Thread.sleep(PAUSE_LONG_MS);
             }
@@ -42,11 +39,10 @@ public class RaidBot extends BaseBot {
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
 
-                if (battle == 1) {
-                    clickAllWindows("Клан");
-                }
+
+                clickAllWindows("Клан");
                 clickAllWindows("Рейды");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS); // TODO: надо ли?
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_BEFORE_BOSS_MS);
                 clickAllWindows("Пропустить");
@@ -59,7 +55,7 @@ public class RaidBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(raidCounter.getCount()));
 
                 if (battle < MAX_BATTLES_RAID) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS - windows.size() - 2);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 2);
                 }
             }
 

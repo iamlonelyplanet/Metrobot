@@ -17,13 +17,12 @@ public abstract class BaseBot {
 
     // === Общее состояние для всех ботов ===
     protected Robot robot;
-    protected List<Integer> windows = new ArrayList<>();
+    protected List<Integer> activeWindows = new ArrayList<>();
     protected Map<Integer, GameWindow> windowsMap = WindowConfig.defaultWindows();
     protected boolean silentMode = true;
     protected String botName;
     protected LocalTime startTime;
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
-
 
     protected abstract Map<String, Point> getButtonMap();
 
@@ -36,9 +35,9 @@ public abstract class BaseBot {
         }
     }
 
-    public BaseBot(List<Integer> windows) {
+    public BaseBot(List<Integer> activeWindows) {
         this();
-        if (windows != null) this.windows = new ArrayList<>(windows);
+        if (activeWindows != null) this.activeWindows = new ArrayList<>(activeWindows);
     }
 
     // --- Таймер (секунды) ---
@@ -119,8 +118,8 @@ public abstract class BaseBot {
             return;
         }
 
-        for (int i = 0; i < windows.size(); i++) {
-            Integer idx = windows.get(i);
+        for (int i = 0; i < activeWindows.size(); i++) {
+            Integer idx = activeWindows.get(i);
             GameWindow gw = windowsMap.get(idx);
             if (gw == null) continue;
 
@@ -142,7 +141,7 @@ public abstract class BaseBot {
             clickAt(x, y);
             System.out.printf("%s нажал \"%s\" (%d,%d)%n", gw.getName(), buttonName, x, y);
 
-            if (i < windows.size() - 1) Thread.sleep(400);
+            if (i < activeWindows.size() - 1) Thread.sleep(400);
         }
         Thread.sleep(PAUSE_SHORT_MS);
     }

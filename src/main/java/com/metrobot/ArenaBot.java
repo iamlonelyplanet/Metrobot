@@ -2,7 +2,6 @@ package com.metrobot;
 
 import java.awt.*;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +47,7 @@ public class ArenaBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(arenaCounter.getCount()));
 
                 if (battle < MAX_BATTLES_ARENA) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS - windows.size());
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size());
                 }
             }
 

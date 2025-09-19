@@ -21,7 +21,7 @@ public class Main {
             int mode = askMode(scanner, config.get("mode"));
 
             // === Спрашиваем рабочие окна ("персы"), от 1 до 4, потенциально не ограничено ===
-            List<Integer> activeWindows = askActiveWindows(scanner, config.get("windows"));
+            List<Integer> activeWindows = askActiveWindows(scanner, config.get("activeWindows"));
             if (activeWindows.isEmpty()) {
                 System.out.println("Окна не выбраны — выхожу.");
                 return;
@@ -141,7 +141,7 @@ public class Main {
                                    LocalTime raidStart, LocalTime tunnelStart) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(CONFIG_FILE))) {
             pw.println("mode=" + mode);
-            pw.println("windows=" + windows.toString().replaceAll("[\\[\\],]", ""));
+            pw.println("activeWindows=" + windows.toString().replaceAll("[\\[\\],]", ""));
             if (arenaStart != null) pw.println("arena_start=" + arenaStart.format(TIME_FORMAT));
             if (kvStart != null) pw.println("kv_start=" + kvStart.format(TIME_FORMAT));
             if (raidStart != null) pw.println("raid_start=" + raidStart.format(TIME_FORMAT));
