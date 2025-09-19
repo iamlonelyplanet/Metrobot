@@ -24,7 +24,6 @@ public class ArenaBot extends BaseBot {
     public void start() {
         try {
             startGame();
-            Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
             Counter arenaCounter = counters.get(botName);
 
             // Бои

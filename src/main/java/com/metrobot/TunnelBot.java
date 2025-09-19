@@ -22,8 +22,6 @@ public class TunnelBot extends BaseBot {
     public void start() {
         try {
             startGame();
-//            Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
-//            Counter arenaCounter = counters.get("Арена");
             int lizards = 0;
             showAllGameWindows();
 

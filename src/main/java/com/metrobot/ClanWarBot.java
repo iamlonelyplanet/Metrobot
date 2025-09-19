@@ -24,7 +24,6 @@ public class ClanWarBot extends BaseBot {
     public void start() {
         try {
             startGame();
-            Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
             Counter kvCounter = counters.get(botName);
 
             // Бои

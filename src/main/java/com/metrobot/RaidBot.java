@@ -24,7 +24,6 @@ public class RaidBot extends BaseBot {
     public void start() {
         try {
             startGame();
-            Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
             Counter raidCounter = counters.get(botName);
 
             // Подготовительные клики (разово, если надо)

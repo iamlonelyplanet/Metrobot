@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ public abstract class BaseBot {
     protected boolean silentMode = true;
     protected String botName;
     protected LocalTime startTime;
+    protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
 
 
     protected abstract Map<String, Point> getButtonMap();
