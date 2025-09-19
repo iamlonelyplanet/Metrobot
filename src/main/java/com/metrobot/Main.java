@@ -50,7 +50,7 @@ public class Main {
                     kvStart = startTime;
                     saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
 
-                    ClanWarBot clanWarBot = new ClanWarBot(activeWindows, startTime);
+                    ClanWarBot clanWarBot = new ClanWarBot(activeWindows, startTime, botName);
                     clanWarBot.start();
                     break;
                 case 2:
@@ -60,7 +60,7 @@ public class Main {
 
                     saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
 
-                    RaidBot raidBot = new RaidBot(activeWindows, startTime);
+                    RaidBot raidBot = new RaidBot(activeWindows, startTime, botName);
                     raidBot.start();
                     break;
                 case 3:
@@ -70,7 +70,7 @@ public class Main {
                     arenaStart = startTime;
                     saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
 
-                    ArenaBot arenaBot = new ArenaBot(activeWindows, startTime);
+                    ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName);
                     arenaBot.start();
                     break;
                 case 4:
@@ -80,7 +80,7 @@ public class Main {
                     tunnelStart = startTime;
                     saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
 
-                    TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime);
+                    TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName);
                     tunnelBot.start();
                     break;
                 default:

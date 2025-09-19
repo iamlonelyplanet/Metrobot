@@ -9,11 +9,11 @@ import java.util.Map;
 import static com.metrobot.WindowConfig.*;
 
 public class ClanWarBot extends BaseBot {
-    private final LocalTime startTime;
 
-    public ClanWarBot(List<Integer> windows, LocalTime timeHHmm) {
+    public ClanWarBot(List<Integer> windows, LocalTime timeHHmm, String botName) {
         super(windows);
         this.startTime = timeHHmm;
+        this.botName = botName;
     }
 
     @Override
@@ -23,12 +23,9 @@ public class ClanWarBot extends BaseBot {
 
     public void start() {
         try {
-            waitUntilStartTime(startTime);
-            System.out.println("Старт КВ");
-            Thread.sleep(PAUSE_SHORT_MS);
-
+            startGame();
             Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
-            Counter kvCounter = counters.get("КВ");
+            Counter kvCounter = counters.get(botName);
 
             // Бои
             for (int battle = (kvCounter.getCount() + 1); battle <= MAX_BATTLES_CLANWAR; battle++) {
@@ -37,17 +34,13 @@ public class ClanWarBot extends BaseBot {
                 Thread.sleep(PAUSE_SHORT_MS);
 
                 clickAllWindows("Клан");
-                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Война");
-                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Атаковать");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Закрыть");
-                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Погон");
-                Thread.sleep(PAUSE_SHORT_MS);
 
                 minimizeAllGameWindows();
                 kvCounter.plusOne();
@@ -59,7 +52,8 @@ public class ClanWarBot extends BaseBot {
                 }
             }
 
-            System.out.println("\nКВ завершена. Проведено боёв в автоматическом режиме: " + kvCounter.getCount());
+            System.out.println("\nРежим" + botName + " завершён." +
+                    " Проведено боёв в автоматическом режиме: " + kvCounter.getCount());
         } catch (InterruptedException ie) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();

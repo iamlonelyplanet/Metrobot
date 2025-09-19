@@ -8,9 +8,8 @@ import java.util.Map;
 import static com.metrobot.WindowConfig.*;
 
 public class TunnelBot extends BaseBot {
-    private final LocalTime startTime;
 
-    public TunnelBot(List<Integer> windows, LocalTime timeHHmm) {
+    public TunnelBot(List<Integer> windows, LocalTime timeHHmm, String botName) {
         super(windows);
         this.startTime = timeHHmm;
     }
@@ -22,10 +21,7 @@ public class TunnelBot extends BaseBot {
 
     public void start() {
         try {
-            waitUntilStartTime(startTime);
-            System.out.println("Старт ходьбы по туннелям (ящер)");
-            Thread.sleep(PAUSE_LONG_MS);
-
+            startGame();
 //            Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
 //            Counter arenaCounter = counters.get("Арена");
             int lizards = 0;
@@ -34,11 +30,11 @@ public class TunnelBot extends BaseBot {
             // Бои
             for (int way = 0; way < 5; way++) {
                 clickAllWindows("В туннель");
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-ПК-ФРУ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Закрыть");
                 lizards++;
 
@@ -47,98 +43,98 @@ public class TunnelBot extends BaseBot {
 
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - с пропуском");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
 
                 clickAllWindows("В туннель");
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-КОМ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_TUNNEL_MS);
 
                 clickAllWindows("В туннель");
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-УНИ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_SHORT_MS);
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - с пропуском");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
 
                 clickAllWindows("В туннель");
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-ПВ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_TUNNEL_MS);
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
 
                 System.out.println("Завершён " + (way + 1) + " пробег до Проспекта Вернадского");
 
                 clickAllWindows("В туннель");
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-УНИ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_TUNNEL_MS);
 
                 clickAllWindows("В туннель");
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-КОМ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - с пропуском");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
 
                 clickAllWindows("В туннель");
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-КОМ-ФРУ");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_TUNNEL_MS);
 
                 clickAllWindows("В туннель");
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-ФРУ-ПК");
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Закрыть");
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_SHORT_MS);
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - без пропуска");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
 
                 System.out.println("Завершён " + (way + 1) + " пробег до Парка Культуры");
-                Thread.sleep(PAUSE_SHORT_MS * 2);
+                Thread.sleep(PAUSE_SHORT_MS);
 
 //              Задел на будущее - счётчик Ящеров
 //                arenaCounter.plusOne();

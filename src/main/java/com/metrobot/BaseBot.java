@@ -19,6 +19,10 @@ public abstract class BaseBot {
     protected List<Integer> windows = new ArrayList<>();
     protected Map<Integer, GameWindow> windowsMap = WindowConfig.defaultWindows();
     protected boolean silentMode = true;
+    protected String botName;
+    protected LocalTime startTime;
+
+
     protected abstract Map<String, Point> getButtonMap();
 
     // --- Конструкторы ---
@@ -97,6 +101,13 @@ public abstract class BaseBot {
         System.out.println("Свернул окна");
     }
 
+    // === Старт режима игры === TODO: унифицировать боты
+    protected void startGame() throws InterruptedException {
+        waitUntilStartTime(startTime);
+        System.out.print("Старт режима " + botName);
+        Thread.sleep(PAUSE_SHORT_MS);
+    }
+
     // === Единый метод кликов по всем выбранным окнам ===
     protected void clickAllWindows(String buttonName) throws InterruptedException {
         Map<String, Point> buttonMap = getButtonMap();
@@ -126,12 +137,12 @@ public abstract class BaseBot {
 
             int x = gw.getTopLeftCorner().x + relX;
             int y = gw.getTopLeftCorner().y + relY;
-
             clickAt(x, y);
             System.out.printf("%s нажал \"%s\" (%d,%d)%n", gw.getName(), buttonName, x, y);
 
             if (i < windows.size() - 1) Thread.sleep(400);
         }
+        Thread.sleep(PAUSE_SHORT_MS);
     }
 
     // --- Клик ---

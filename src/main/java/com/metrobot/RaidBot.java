@@ -9,11 +9,11 @@ import java.util.Map;
 import static com.metrobot.WindowConfig.*;
 
 public class RaidBot extends BaseBot {
-    private final LocalTime startTime;
 
-    public RaidBot(List<Integer> windows, LocalTime timeHHmm) {
+    public RaidBot(List<Integer> windows, LocalTime timeHHmm, String botName) {
         super(windows);
         this.startTime = timeHHmm;
+        this.botName = botName;
     }
 
     @Override
@@ -23,14 +23,9 @@ public class RaidBot extends BaseBot {
 
     public void start() {
         try {
-            waitUntilStartTime(startTime);
-            System.out.println("Старт рейда");
-
-            showAllGameWindows();
-            Thread.sleep(PAUSE_LONG_MS);
-
+            startGame();
             Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
-            Counter raidCounter = counters.get("Рейд");
+            Counter raidCounter = counters.get(botName);
 
             // Подготовительные клики (разово, если надо)
             if (raidCounter.getCount() == 0) {
@@ -50,16 +45,14 @@ public class RaidBot extends BaseBot {
 
                 if (battle == 1) {
                     clickAllWindows("Клан");
-                    Thread.sleep(PAUSE_SHORT_MS);
                 }
                 clickAllWindows("Рейды");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_BEFORE_BOSS_MS);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Закрыть");
-                Thread.sleep(PAUSE_SHORT_MS);
                 minimizeAllGameWindows();
 
                 raidCounter.plusOne();

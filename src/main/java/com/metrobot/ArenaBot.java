@@ -9,11 +9,11 @@ import java.util.Map;
 import static com.metrobot.WindowConfig.*;
 
 public class ArenaBot extends BaseBot {
-    private final LocalTime startTime;
 
-    public ArenaBot(List<Integer> windows, LocalTime timeHHmm) {
+    public ArenaBot(List<Integer> windows, LocalTime timeHHmm, String botName) {
         super(windows);
         this.startTime = timeHHmm;
+        this.botName = botName;
     }
 
     @Override
@@ -23,12 +23,9 @@ public class ArenaBot extends BaseBot {
 
     public void start() {
         try {
-            waitUntilStartTime(startTime);
-            System.out.print("Старт Арены");
-            Thread.sleep(PAUSE_SHORT_MS);
-
+            startGame();
             Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
-            Counter arenaCounter = counters.get("Арена");
+            Counter arenaCounter = counters.get(botName);
 
             // Бои
             for (int battle = (arenaCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
@@ -36,19 +33,15 @@ public class ArenaBot extends BaseBot {
 
                 showAllGameWindows();
                 clickAllWindows("Клан - Выход");
-                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Арена");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Атаковать");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_LONG_MS - 1200);
                 clickAllWindows("Закрыть — Победа");
-                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Закрыть — Поражение");
-                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Забрать коллекцию");
-                Thread.sleep(PAUSE_SHORT_MS);
                 minimizeAllGameWindows();
 
                 arenaCounter.plusOne();
@@ -60,7 +53,8 @@ public class ArenaBot extends BaseBot {
                 }
             }
 
-            System.out.println("\nАрена завершена. Проведено боёв в автоматическом режиме: " + arenaCounter.getCount());
+            System.out.println("\nРежим" + botName + " завершён." +
+                    " Проведено боёв в автоматическом режиме: " + arenaCounter.getCount());
 
         } catch (InterruptedException e) {
             System.out.println("Прервано — выхожу.");
