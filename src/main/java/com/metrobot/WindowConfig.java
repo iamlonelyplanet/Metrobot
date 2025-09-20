@@ -74,11 +74,17 @@ public class WindowConfig {
         put("Карта-ПВ", new Point(440,630));
         put("Карта-КОМ-ФРУ", new Point(440,475));
         put("Карта-ФРУ-ПК", new Point(340,390));
-        put("Войти - с пропуском", new Point(400,470));
-        put("Войти - без пропуска", new Point(400,400));
+        put("Войти с пропуском", new Point(400,470));
+        put("Войти", new Point(400,400));
         put("Атаковать", new Point(549, 420));
         put("Пропустить", new Point(510, 130));
         put("Закрыть", new Point(640, 610));
+        put("Карта ПК-КРО", new Point(530,440));
+        put("Карта КРО-ПК", new Point(320,490));
+        put("Карта ПКк-ПКг", new Point(310,530));
+        put("Уйти", new Point(0,0));
+
+
     }};
 
 }

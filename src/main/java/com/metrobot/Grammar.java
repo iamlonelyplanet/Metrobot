@@ -3,7 +3,7 @@ package com.metrobot;
 public class Grammar {
 //    public static void main(String[] args) {
 //        for (int i = 1; i < 41; i++) {
-//            System.out.println(getWord2End(i));
+//            System.out.println(getWord2End2(i));
 //        }
 //    }
 
@@ -42,8 +42,7 @@ public class Grammar {
         return "Прош" + verb + " " + number + " бо" + noun;
     }
 
-    static String getWord2End(int number) {
-        String noun;
+    static String getWord2End2(int number, String noun) {
         String verb;
 
         if (isNumberWrong(number)) {
@@ -51,20 +50,20 @@ public class Grammar {
         }
 
         if (number >= 11 && number <= 15) {
-            noun = "ов";
+            noun += "ов";
         }
 
         switch (number % 10) {
-            case 1 -> noun = "";
-            case 2, 3, 4 -> noun = "а";
-            default -> noun = "ов";
+            case 1 -> noun += "";
+            case 2, 3, 4 -> noun += "а";
+            default -> noun += "ов";
         }
-        if (noun.isEmpty()){
+        if (noun.isEmpty()) {
             verb = " ";
         } else {
             verb = "о ";
         }
-        return "Убит" + verb + number + " ящер" + noun;
+        return "Убит" + verb + " " + number + noun;
     }
 
     static boolean isNumberWrong(int number) {

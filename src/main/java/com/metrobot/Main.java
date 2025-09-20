@@ -119,7 +119,8 @@ public class Main {
         System.out.println("1. Клановые войны");
         System.out.println("2. Рейд");
         System.out.println("3. Арена");
-        System.out.println("4. Туннели - Ящеры");
+        System.out.println("4. Туннели (20 пауков + 40 ящеров, " +
+                "старт с Парка Культуры (Ганза), нет работы у Начстанции)");
 
         if (defaultModeStr != null) {
             System.out.println("(Enter для выбора по умолчанию: " + defaultModeStr + ")");

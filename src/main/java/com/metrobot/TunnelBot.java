@@ -24,10 +24,56 @@ public class TunnelBot extends BaseBot {
     public void start() {
         try {
             startGame();
+            // Туннели с пауками
+            // Внимание, тут другой способ, чем в случае с ящерами
+            int spiders = 0;
+            showAllGameWindows();
+            // 10 пауков в туннеле Парк Культуры - Кропоткинская
+            for (int waySpiders1 = 0; waySpiders1 < 5; waySpiders1++) {
+                clickAllWindows("В туннель");
+                Thread.sleep(PAUSE_SHORT_MS);
+                clickAllWindows("Карта ПК-КРО");
+                Thread.sleep(PAUSE_TUNNEL_MS);
+                clickAllWindows("Пропустить");
+                Thread.sleep(PAUSE_LONG_MS);
+                clickAllWindows("Закрыть");
+
+                spiders++;
+                System.out.println(Grammar.getWord2End2(spiders, "паук"));
+
+                Thread.sleep(PAUSE_TUNNEL_MS);
+                clickAllWindows("Войти"); //TODO: ориентир на Ф1, глянуть с недостатком красных
+                Thread.sleep(PAUSE_SHORT_MS);
+                clickAllWindows("В туннель");
+                Thread.sleep(PAUSE_SHORT_MS);
+                clickAllWindows("Карта КРО-ПК");
+                Thread.sleep(PAUSE_TUNNEL_MS);
+                clickAllWindows("Пропустить");
+                Thread.sleep(PAUSE_LONG_MS);
+                clickAllWindows("Закрыть");
+
+                spiders++;
+                System.out.println(Grammar.getWord2End2(spiders, "паук"));
+
+                Thread.sleep(PAUSE_TUNNEL_MS);
+            }
+
+            // переход Парк Культуры ганза - Парк Культуры Красные
+            showAllGameWindows();
+            clickAllWindows("В туннель");
+            Thread.sleep(PAUSE_SHORT_MS);
+            clickAllWindows("Карта ПКк-ПКг");
+            Thread.sleep(PAUSE_LONG_MS);
+            clickAllWindows("Войти с пропуском");
+            Thread.sleep(PAUSE_SHORT_MS);
+
+
+            // 10 Парк Культуры - Киевская, возврат
+
+
+            // Туннели с Ящерами
             int lizards = 0;
             showAllGameWindows();
-
-            // Бои
             for (int way = 0; way < 5; way++) {
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
@@ -36,13 +82,12 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("Пропустить");
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
-                lizards++;
 
-                System.out.println("Убито Ящеров: " + lizards);
-                System.out.println(Grammar.getWord2End(lizards));
+                lizards++;
+                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
 
                 Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Войти - с пропуском");
+                clickAllWindows("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
@@ -52,7 +97,7 @@ public class TunnelBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
-                System.out.println("Убито Ящеров: " + lizards);
+                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
                 Thread.sleep(PAUSE_TUNNEL_MS);
 
                 clickAllWindows("В туннель");
@@ -63,10 +108,10 @@ public class TunnelBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
-                System.out.println("Убито Ящеров: " + lizards);
+                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
                 Thread.sleep(PAUSE_SHORT_MS);
                 Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Войти - с пропуском");
+                clickAllWindows("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
 
                 clickAllWindows("В туннель");
@@ -77,7 +122,7 @@ public class TunnelBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
-                System.out.println("Убито Ящеров: " + lizards);
+                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 Thread.sleep(PAUSE_SHORT_MS);
 
@@ -91,7 +136,7 @@ public class TunnelBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
-                System.out.println("Убито Ящеров: " + lizards);
+                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
                 Thread.sleep(PAUSE_TUNNEL_MS);
 
                 clickAllWindows("В туннель");
@@ -102,9 +147,9 @@ public class TunnelBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
-                System.out.println("Убито Ящеров: " + lizards);
+                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
                 Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Войти - с пропуском");
+                clickAllWindows("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
 
                 clickAllWindows("В туннель");
@@ -115,7 +160,7 @@ public class TunnelBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
-                System.out.println("Убито Ящеров: " + lizards);
+                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
                 Thread.sleep(PAUSE_TUNNEL_MS);
 
                 clickAllWindows("В туннель");
@@ -126,10 +171,10 @@ public class TunnelBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 lizards++;
-                System.out.println("Убито Ящеров: " + lizards);
+                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
                 Thread.sleep(PAUSE_SHORT_MS);
                 Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Войти - без пропуска");
+                clickAllWindows("Войти");
                 Thread.sleep(PAUSE_LONG_MS);
 
                 System.out.println("Завершён " + (way + 1) + " пробег до Парка Культуры");
