@@ -8,10 +8,12 @@ import java.util.Map;
 import static com.metrobot.WindowConfig.*;
 
 public class TunnelBot extends BaseBot {
+    // TODO: переработать по "десятке"
 
     public TunnelBot(List<Integer> windows, LocalTime timeHHmm, String botName) {
         super(windows);
         this.startTime = timeHHmm;
+        this.botName = botName;
     }
 
     @Override
@@ -41,8 +43,7 @@ public class TunnelBot extends BaseBot {
 
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - с пропуском");
-                Thread.sleep(PAUSE_LONG_MS);
-
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-КОМ");
@@ -66,7 +67,7 @@ public class TunnelBot extends BaseBot {
                 Thread.sleep(PAUSE_SHORT_MS);
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - с пропуском");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_SHORT_MS);
 
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
@@ -78,7 +79,7 @@ public class TunnelBot extends BaseBot {
                 lizards++;
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_TUNNEL_MS);
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_SHORT_MS);
 
                 System.out.println("Завершён " + (way + 1) + " пробег до Проспекта Вернадского");
 
@@ -104,7 +105,7 @@ public class TunnelBot extends BaseBot {
                 System.out.println("Убито Ящеров: " + lizards);
                 Thread.sleep(PAUSE_TUNNEL_MS);
                 clickAllWindows("Войти - с пропуском");
-                Thread.sleep(PAUSE_LONG_MS);
+                Thread.sleep(PAUSE_SHORT_MS);
 
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);

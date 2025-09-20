@@ -29,7 +29,6 @@ public class ClanWarBot extends BaseBot {
             for (int battle = (kvCounter.getCount() + 1); battle <= MAX_BATTLES_CLANWAR; battle++) {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_CLANWAR + " ===");
                 showAllGameWindows();
-                Thread.sleep(PAUSE_SHORT_MS);
 
                 clickAllWindows("Клан");
                 clickAllWindows("Война");

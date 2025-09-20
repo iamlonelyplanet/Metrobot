@@ -105,7 +105,7 @@ public abstract class BaseBot {
     // === Старт режима игры ===
     protected void startGame() throws InterruptedException {
         waitUntilStartTime(startTime);
-        System.out.print("Старт режима " + botName);
+        System.out.println("Старт режима " + botName);
         Thread.sleep(PAUSE_SHORT_MS);
     }
 
