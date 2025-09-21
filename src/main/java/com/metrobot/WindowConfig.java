@@ -17,7 +17,7 @@ public class WindowConfig {
     public static final byte MAX_BATTLES_ARENA = 50;
     public static final byte MAX_BATTLES_CLANWAR = 24;
     public static final byte MAX_BATTLES_RAID = 12;
-    public static final byte MAX_WAYS_TUNNEL = 1;
+    public static final byte MAX_WAYS_TUNNEL = 4;
 
     public static final GameWindow ANTON = new GameWindow("Антон", 1033, 670);
     public static final GameWindow F1 = new GameWindow("Ф1", 0, 0);
@@ -89,8 +89,6 @@ public class WindowConfig {
         put("Карта КИЕ-ПКг", new Point(330,530));
         put("Карта ПКг-ПКк", new Point(310,480));
         put("Уйти", new Point(0,0));
-
-
     }};
 
 }

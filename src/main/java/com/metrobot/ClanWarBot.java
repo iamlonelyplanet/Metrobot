@@ -49,8 +49,8 @@ public class ClanWarBot extends BaseBot {
                 }
             }
 
-            System.out.println("\nРежим" + botName + " завершён." +
-                    " Проведено боёв в автоматическом режиме: " + kvCounter.getCount());
+            System.out.println("\nРежим " + botName + " завершён. " +
+                    "Проведено боёв в автоматическом режиме: " + kvCounter.getCount());
         } catch (InterruptedException ie) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();

@@ -110,7 +110,7 @@ public abstract class BaseBot {
         Thread.sleep(PAUSE_SHORT_MS);
     }
 
-    protected void tunnelBattle(int tunnelMonsters) throws InterruptedException {
+    protected void tunnelBattleSpiders(int tunnelMonsters) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
         clickAllWindows("Пропустить");
         Thread.sleep(PAUSE_LONG_MS);
@@ -122,6 +122,16 @@ public abstract class BaseBot {
         Thread.sleep(PAUSE_TUNNEL_MS);
         clickAllWindows("В туннель");
         Thread.sleep(PAUSE_SHORT_MS);
+    }
+    protected void tunnelBattleLizards(int tunnelMonsters) throws InterruptedException {
+        Thread.sleep(PAUSE_TUNNEL_MS);
+        clickAllWindows("Пропустить");
+        Thread.sleep(PAUSE_LONG_MS);
+        clickAllWindows("Закрыть");
+
+        tunnelMonsters++;
+        System.out.println("Убито ящеров: " + tunnelMonsters);
+        Thread.sleep(PAUSE_TUNNEL_MS);
     }
 
     // === Единый метод кликов по всем выбранным окнам ===

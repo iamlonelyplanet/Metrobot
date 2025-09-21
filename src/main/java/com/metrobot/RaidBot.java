@@ -59,8 +59,8 @@ public class RaidBot extends BaseBot {
                 }
             }
 
-            System.out.println("\nРежим" + botName + " завершён." +
-                    " Проведено боёв в автоматическом режиме: " + raidCounter.getCount());
+            System.out.println("\nРежим " + botName + " завершён. " +
+                    "Проведено боёв в автоматическом режиме: " + raidCounter.getCount());
         } catch (InterruptedException ie) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();

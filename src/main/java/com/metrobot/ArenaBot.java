@@ -51,8 +51,8 @@ public class ArenaBot extends BaseBot {
                 }
             }
 
-            System.out.println("\nРежим" + botName + " завершён." +
-                    " Проведено боёв в автоматическом режиме: " + arenaCounter.getCount());
+            System.out.println("\nРежим " + botName + " завершён. " +
+                    "Проведено боёв в автоматическом режиме: " + arenaCounter.getCount());
 
         } catch (InterruptedException e) {
             System.out.println("Прервано — выхожу.");

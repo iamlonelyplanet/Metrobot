@@ -28,6 +28,7 @@ public class TunnelBot extends BaseBot {
             // === Туннели с пауками ===
             // Внимание, тут другой способ, чем в случае с ящерами
             Counter spiders = new Counter("Пауки");
+            Counter lizards = new Counter("Ящеры");
             showAllGameWindows();
 
 //            // 10 пауков в туннеле Парк Культуры - Кропоткинская
@@ -35,10 +36,10 @@ public class TunnelBot extends BaseBot {
 //                clickAllWindows("В туннель");
 //                Thread.sleep(pauseShortForTunnels);
 //                clickAllWindows("Карта ПК-КРО");
-//                tunnelBattle(spiders.getCount());
+//                tunnelBattleSpiders(spiders.getCount());
 //                spiders.plusOne();
 //                clickAllWindows("Карта КРО-ПК");
-//                tunnelBattle(spiders.getCount());
+//                tunnelBattleSpiders(spiders.getCount());
 //                spiders.plusOne();
 //            }
 //
@@ -55,10 +56,10 @@ public class TunnelBot extends BaseBot {
 //                clickAllWindows("В туннель");
 //                Thread.sleep(pauseShortForTunnels);
 //                clickAllWindows("Карта ПКг-КИЕ");
-//                tunnelBattle(spiders.getCount());
+//                tunnelBattleSpiders(spiders.getCount());
 //                spiders.plusOne();
 //                clickAllWindows("Карта КИЕ-ПКг");
-//                tunnelBattle(spiders.getCount());
+//                tunnelBattleSpiders(spiders.getCount());
 //                spiders.plusOne();
 //            }
 //
@@ -71,117 +72,77 @@ public class TunnelBot extends BaseBot {
 //            System.out.println("Пауки закончились, идём к ящерам");
 
             // === Туннели с Ящерами ===
-            int lizards = 0;
             showAllGameWindows();
+
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-ПК-ФРУ");
-                Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Закрыть");
-
-                lizards++;
-                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
-
-                Thread.sleep(PAUSE_TUNNEL_MS);
+                tunnelBattleLizards(lizards.getCount());
+                lizards.plusOne();
+                Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
+
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-КОМ");
-                Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Закрыть");
-                lizards++;
-                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
-                Thread.sleep(PAUSE_TUNNEL_MS);
+                tunnelBattleLizards(lizards.getCount());
+                lizards.plusOne();
+                Thread.sleep(pauseShortForTunnels);
 
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-УНИ");
-                Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Закрыть");
-                lizards++;
-                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
-                Thread.sleep(PAUSE_SHORT_MS);
-                Thread.sleep(PAUSE_TUNNEL_MS);
+                tunnelBattleLizards(lizards.getCount());
+                lizards.plusOne();
+                Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
 
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-ПВ");
-                Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Закрыть");
-                lizards++;
-                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
-                Thread.sleep(PAUSE_TUNNEL_MS);
-                Thread.sleep(PAUSE_SHORT_MS);
+                tunnelBattleLizards(lizards.getCount());
+                lizards.plusOne();
 
-                System.out.println("Завершён " + (way + 1) + " пробег до Проспекта Вернадского");
+                System.out.println("Завершено пробегов до Проспекта Вернадского: " + (way + 1));
 
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-УНИ");
-                Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Закрыть");
-                lizards++;
-                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
-                Thread.sleep(PAUSE_TUNNEL_MS);
+                tunnelBattleLizards(lizards.getCount());
+                lizards.plusOne();
 
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-КОМ");
-                Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Закрыть");
-                lizards++;
-                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
-                Thread.sleep(PAUSE_TUNNEL_MS);
+                tunnelBattleLizards(lizards.getCount());
+                lizards.plusOne();
+                Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
 
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-КОМ-ФРУ");
-                Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Закрыть");
-                lizards++;
-                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
-                Thread.sleep(PAUSE_TUNNEL_MS);
+                tunnelBattleLizards(lizards.getCount());
+                lizards.plusOne();
 
                 clickAllWindows("В туннель");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickAllWindows("Карта-ФРУ-ПК");
-                Thread.sleep(PAUSE_TUNNEL_MS);
-                clickAllWindows("Пропустить");
-                Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Закрыть");
-                lizards++;
-                System.out.println(Grammar.getWord2End2(lizards, "ящер"));
-                Thread.sleep(PAUSE_SHORT_MS);
-                Thread.sleep(PAUSE_TUNNEL_MS);
+                tunnelBattleLizards(lizards.getCount());
+                Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Войти");
-                Thread.sleep(PAUSE_LONG_MS);
 
-                System.out.println("Завершён " + (way + 1) + " пробег до Парка Культуры");
-                Thread.sleep(PAUSE_SHORT_MS);
+                System.out.println("Завершено пробегов до Парка Культуры: " + (way + 1));
+                Thread.sleep(pauseShortForTunnels);
             }
 
             minimizeAllGameWindows();
-            System.out.println("\nПоход по тоннелям завершён. Убито Ящеров: " + lizards);
+            System.out.println("\nРежим " + botName + " завершён. " + "Убито пауков: " + spiders.getCount() +
+                    " . Убито Ящеров: " + lizards.getCount());
 
         } catch (InterruptedException e) {
             System.out.println("Прервано — выхожу.");
