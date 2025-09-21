@@ -9,14 +9,15 @@ public class WindowConfig {
     // --- Паузы ---
     public static final int PAUSE_LONG_MS = 2800;
     public static final int PAUSE_SHORT_MS = 1200;
-    public static final int FIVE_MINUTES_PAUSE_SECONDS = 284;
+    public static final int FIVE_MINUTES_PAUSE_SECONDS = 285;
     public static final int PAUSE_BEFORE_BOSS_MS = 12_800;
-    public static final int PAUSE_TUNNEL_MS = 18_000;
+    public static final int PAUSE_TUNNEL_MS = 16_000;
 
     // --- Максимально допустимое количество боёв ---
     public static final byte MAX_BATTLES_ARENA = 50;
     public static final byte MAX_BATTLES_CLANWAR = 24;
     public static final byte MAX_BATTLES_RAID = 12;
+    public static final byte MAX_WAYS_TUNNEL = 1;
 
     public static final GameWindow ANTON = new GameWindow("Антон", 1033, 670);
     public static final GameWindow F1 = new GameWindow("Ф1", 0, 0);
@@ -59,7 +60,9 @@ public class WindowConfig {
     public static final LinkedHashMap<String, Point> RAID_BUTTONS = new LinkedHashMap<>() {{
         put("Клан", new Point(440, 155));
         put("Рейды", new Point(180, 510));
+        put("Война", new Point(180, 400));
         put("Обновить", new Point(235, 135));
+        put("Обновить2", new Point(650, 140));
         put("Атаковать", new Point(549, 420));
         put("Пропустить", new Point(510, 130));
         put("Закрыть", new Point(640, 530));
@@ -82,6 +85,9 @@ public class WindowConfig {
         put("Карта ПК-КРО", new Point(530,440));
         put("Карта КРО-ПК", new Point(320,490));
         put("Карта ПКк-ПКг", new Point(310,530));
+        put("Карта ПКг-КИЕ", new Point(350,400));
+        put("Карта КИЕ-ПКг", new Point(330,530));
+        put("Карта ПКг-ПКк", new Point(310,480));
         put("Уйти", new Point(0,0));
 
 

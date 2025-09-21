@@ -11,7 +11,8 @@ import java.util.Map;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
-import static com.metrobot.WindowConfig.PAUSE_SHORT_MS;
+import static com.metrobot.WindowConfig.*;
+import static com.metrobot.WindowConfig.PAUSE_TUNNEL_MS;
 
 public abstract class BaseBot {
 
@@ -106,6 +107,20 @@ public abstract class BaseBot {
     protected void startGame() throws InterruptedException {
         waitUntilStartTime(startTime);
         System.out.println("Старт режима " + botName);
+        Thread.sleep(PAUSE_SHORT_MS);
+    }
+
+    protected void tunnelBattle(int tunnelMonsters) throws InterruptedException {
+        Thread.sleep(PAUSE_TUNNEL_MS);
+        clickAllWindows("Пропустить");
+        Thread.sleep(PAUSE_LONG_MS);
+        clickAllWindows("Закрыть");
+
+        tunnelMonsters++;
+        System.out.println("Убито пауков: " + tunnelMonsters);
+
+        Thread.sleep(PAUSE_TUNNEL_MS);
+        clickAllWindows("В туннель");
         Thread.sleep(PAUSE_SHORT_MS);
     }
 

@@ -63,7 +63,7 @@ public class Grammar {
         } else {
             verb = "о ";
         }
-        return "Убит" + verb + " " + number + noun;
+        return "Убит" + verb + number + " " + noun;
     }
 
     static boolean isNumberWrong(int number) {

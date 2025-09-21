@@ -29,8 +29,9 @@ public class RaidBot extends BaseBot {
             if (raidCounter.getCount() == 0) {
                 showAllGameWindows();
                 clickAllWindows("Клан");
+                clickAllWindows("Война");
+                clickAllWindows("Обновить2");
                 clickAllWindows("Рейды");
-                clickAllWindows("Обновить");
                 Thread.sleep(PAUSE_LONG_MS);
             }
 
@@ -58,7 +59,8 @@ public class RaidBot extends BaseBot {
                 }
             }
 
-            System.out.println("\nРейд завершён. Проведено боёв в автоматическом режиме: " + raidCounter.getCount());
+            System.out.println("\nРежим" + botName + " завершён." +
+                    " Проведено боёв в автоматическом режиме: " + raidCounter.getCount());
         } catch (InterruptedException ie) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();
