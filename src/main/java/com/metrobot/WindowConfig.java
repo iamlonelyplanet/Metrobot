@@ -4,9 +4,6 @@ import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.metrobot.WindowsCoordinates;
-
-
 public class WindowConfig {
     // --- Паузы ---
     public static final int PAUSE_LONG_MS = 2800;
@@ -19,19 +16,28 @@ public class WindowConfig {
     public static final byte MAX_BATTLES_ARENA = 50;
     public static final byte MAX_BATTLES_CLANWAR = 24;
     public static final byte MAX_BATTLES_RAID = 12;
-    public static final byte MAX_WAYS_TUNNEL = 1;
+    public static final byte MAX_WAYS_TUNNEL = 5;
 
 
-    // --- Координаты верхних левых углов ---
-    public static final Point TOP_LEFT_1 = new Point(125, 97);
-    public static final Point TOP_LEFT_2 = new Point(125 + 1033, 97 + 0);
-    public static final Point TOP_LEFT_3 = new Point(125 + 0, 97 + 670);
-    public static final Point TOP_LEFT_4 = new Point(125 + 1033, 97 + 670);
+    // --- Координаты верхних левых углов рабочего поля внутри окна ---
+    // Площадь рабочего поля в окне: 764×650, та же самая в ВК, та же при разрешениях 1366x768 и 1080
+    // Площадь окна: 1033x670
+    // Ширина полосы прокрутки (элемента Windows): 18
+    // Формула для расчёта "нуля" рабочего поля: x = (ширина окна - 764 - 18) / 2
+    public static final int X_COORDINATE = 125;
+    public static final int Y_COORDINATE = 97;
+    public static final int WINDOW_SIZE_X = 1033;
+    public static final int WINDOW_SIZE_Y = 670;
 
-    public static final GameWindow WINDOW_1 = new GameWindow("Ф1", TOP_LEFT_1);
-    public static final GameWindow WINDOW_2 = new GameWindow("Лёха-156", TOP_LEFT_2);
-    public static final GameWindow WINDOW_3 = new GameWindow("Хуан", TOP_LEFT_3);
-    public static final GameWindow WINDOW_4 = new GameWindow("Антон", TOP_LEFT_4);
+    public static Point topLeft1 = new Point(X_COORDINATE, Y_COORDINATE);
+    public static Point topLeft2 = new Point(WINDOW_SIZE_X + X_COORDINATE, Y_COORDINATE);
+    public static Point topLeft3 = new Point(X_COORDINATE, WINDOW_SIZE_Y + Y_COORDINATE);
+    public static Point topLeft4 = new Point(WINDOW_SIZE_X + X_COORDINATE, WINDOW_SIZE_Y + Y_COORDINATE);
+
+    public static final GameWindow WINDOW_1 = new GameWindow("Ф1", topLeft1);
+    public static final GameWindow WINDOW_2 = new GameWindow("Лёха-156", topLeft2);
+    public static final GameWindow WINDOW_3 = new GameWindow("Хуан", topLeft3);
+    public static final GameWindow WINDOW_4 = new GameWindow("Антон", topLeft4);
 
     // Возвращаем упорядоченную карту: индекс -> окно (1..4)
     public static Map<Integer, GameWindow> defaultWindows() {
@@ -43,7 +49,7 @@ public class WindowConfig {
         return m;
     }
 
-    // Конфигурация окон и кнопок относительно верхнего левого угла окна в разных режимах
+    // === Координаты кнопок относительно верхнего левого угла рабочего поля ===
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
         put("Клан - Выход", new Point(55,503));
@@ -72,7 +78,7 @@ public class WindowConfig {
         put("Война", new Point(55,303));
         put("Обновить", new Point(110,38));
         put("Обновить2", new Point(525,43));
-        put("Атаковать", new Point(424,323));
+        put("Атаковать", new Point(425,323));
         put("Пропустить", new Point(385,33));
         put("Закрыть", new Point(515,433));
     }};
@@ -88,7 +94,7 @@ public class WindowConfig {
         put("Карта-ФРУ-ПК", new Point(215,293));
         put("Войти с пропуском", new Point(275,373));
         put("Войти", new Point(275,303));
-        put("Атаковать", new Point(424,323));
+        put("Атаковать", new Point(425,323));
         put("Пропустить", new Point(385,33));
         put("Закрыть", new Point(515,513));
         put("Карта ПК-КРО", new Point(405,343));
@@ -98,12 +104,4 @@ public class WindowConfig {
         put("Карта КИЕ-ПКг", new Point(205,433));
         put("Карта ПКг-ПКк", new Point(185,383));
     }};
-
-
-
-
-
-
-
-
 }

@@ -25,51 +25,50 @@ public class TunnelBot extends BaseBot {
     public void start() {
         try {
             startGame();
-
             Counter spiders = new Counter("Пауки");
             Counter lizards = new Counter("Ящеры");
-//            showAllGameWindows();
-//
-//            // === Туннели с пауками ===
-//            // 10 пауков в туннеле Парк Культуры - Кропоткинская
-//            for (int waySpiders1 = 0; waySpiders1 < MAX_WAYS_TUNNEL; waySpiders1++) {
-//                clickAllWindows("В туннель");
-//                Thread.sleep(pauseShortForTunnels);
-//                clickAllWindows("Карта ПК-КРО");
-//                fightSpiders(spiders.getCount());
-//                spiders.plusOne();
-//                clickAllWindows("Карта КРО-ПК");
-//                fightSpiders(spiders.getCount());
-//                spiders.plusOne();
-//            }
-//
-//            // Переход Парк Культуры Красные - Парк Культуры Ганза
-//            clickAllWindows("В туннель");
-//            Thread.sleep(PAUSE_SHORT_MS);
-//            clickAllWindows("Карта ПКк-ПКг");
-//            Thread.sleep(PAUSE_SHORT_MS);
-//            clickAllWindows("Войти с пропуском");
-//            Thread.sleep(pauseShortForTunnels);
-//
-//            // 10 пауков в тоннеле Парк Культуры - Киевская
-//            for (int waySpiders2 = 0; waySpiders2 < MAX_WAYS_TUNNEL; waySpiders2++) {
-//                clickAllWindows("В туннель");
-//                Thread.sleep(pauseShortForTunnels);
-//                clickAllWindows("Карта ПКг-КИЕ");
-//                fightSpiders(spiders.getCount());
-//                spiders.plusOne();
-//                clickAllWindows("Карта КИЕ-ПКг");
-//                fightSpiders(spiders.getCount());
-//                spiders.plusOne();
-//            }
-//
-//            // Переход Парк Культуры Красные - Парк Культуры Ганза
-//            clickAllWindows("В туннель");
-//            Thread.sleep(pauseShortForTunnels);
-//            clickAllWindows("Карта ПКг-ПКк");
-//            Thread.sleep(PAUSE_SHORT_MS);
-//            clickAllWindows("Войти");
-//            System.out.println("Пауки закончились, идём к ящерам");
+
+            showAllGameWindows();
+            // === Туннели с пауками ===
+            // 10 пауков в туннеле Парк Культуры - Кропоткинская
+            for (int waySpiders1 = 0; waySpiders1 < MAX_WAYS_TUNNEL; waySpiders1++) {
+                clickAllWindows("В туннель");
+                Thread.sleep(pauseShortForTunnels);
+                clickAllWindows("Карта ПК-КРО");
+                fightSpiders(spiders.getCount());
+                spiders.plusOne();
+                clickAllWindows("Карта КРО-ПК");
+                fightSpiders(spiders.getCount());
+                spiders.plusOne();
+            }
+
+            // Переход Парк Культуры Красные - Парк Культуры Ганза
+            clickAllWindows("В туннель");
+            Thread.sleep(PAUSE_SHORT_MS);
+            clickAllWindows("Карта ПКк-ПКг");
+            Thread.sleep(PAUSE_SHORT_MS);
+            clickAllWindows("Войти с пропуском");
+            Thread.sleep(pauseShortForTunnels);
+
+            // 10 пауков в тоннеле Парк Культуры - Киевская
+            for (int waySpiders2 = 0; waySpiders2 < MAX_WAYS_TUNNEL; waySpiders2++) {
+                clickAllWindows("В туннель");
+                Thread.sleep(pauseShortForTunnels);
+                clickAllWindows("Карта ПКг-КИЕ");
+                fightSpiders(spiders.getCount());
+                spiders.plusOne();
+                clickAllWindows("Карта КИЕ-ПКг");
+                fightSpiders(spiders.getCount());
+                spiders.plusOne();
+            }
+
+            // Переход Парк Культуры Красные - Парк Культуры Ганза
+            clickAllWindows("В туннель");
+            Thread.sleep(pauseShortForTunnels);
+            clickAllWindows("Карта ПКг-ПКк");
+            Thread.sleep(PAUSE_SHORT_MS);
+            clickAllWindows("Войти");
+            System.out.println("Пауки закончились, идём к ящерам");
 
             // === Туннели с Ящерами ===
             showAllGameWindows();

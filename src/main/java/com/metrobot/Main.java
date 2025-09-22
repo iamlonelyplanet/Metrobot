@@ -17,10 +17,10 @@ public class Main {
             // === Загружаем конфиг, если есть ===
             Map<String, String> config = loadConfig();
 
-            // === Спрашиваем режим игры ===
+            // === Запрашиваем режим игры ===
             int mode = askMode(scanner, config.get("mode"));
 
-            // === Спрашиваем рабочие окна ("персы"), от 1 до 4, потенциально не ограничено ===
+            // === Запрашиваем рабочие окна ("персы"), от 1 до 4, потенциально не ограничено ===
             List<Integer> activeWindows = askActiveWindows(scanner, config.get("activeWindows"));
             if (activeWindows.isEmpty()) {
                 System.out.println("Окна не выбраны — выхожу.");
@@ -33,13 +33,13 @@ public class Main {
             LocalTime raidDefault = parseTime(config.get("raid_start"));
             LocalTime tunnelDefault = parseTime(config.get("tunnel_start"));
 
-            // Подготовим переменные для записи обратно в конфиг
+            // Подготовим переменные времени для записи обратно в конфиг
             LocalTime arenaStart = arenaDefault;
             LocalTime kvStart = kvDefault;
             LocalTime raidStart = raidDefault;
             LocalTime tunnelStart = tunnelDefault;
 
-            // === Запуск бота в зависимости от режима игры ===
+            // === Запуск бота в зависимости от выбранного режима игры ===
             String botName;
             LocalTime startTime;
             switch (mode) {
@@ -91,7 +91,7 @@ public class Main {
         }
     }
 
-    // Дальше идут методы-утилиты
+    // === Дальше идут методы-утилиты ===
 
     // Загружаем конфиг из файла в Map
     private static Map<String, String> loadConfig() {
@@ -119,8 +119,7 @@ public class Main {
         System.out.println("1. Клановые войны");
         System.out.println("2. Рейд");
         System.out.println("3. Арена");
-        System.out.println("4. Туннели (20 пауков + 40 ящеров, " +
-                "старт с Парка Культуры (Ганза), нет работы у Начстанции)");
+        System.out.println("4. Туннели (бьём туннельных пауков и ящеров");
 
         if (defaultModeStr != null) {
             System.out.println("(Enter для выбора по умолчанию: " + defaultModeStr + ")");
@@ -133,7 +132,7 @@ public class Main {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            return 1;
+            return 3; // Пусть по умолчанию будет Арена
         }
     }
 
@@ -152,7 +151,7 @@ public class Main {
         }
     }
 
-    // Парсим время. TODO: разделители.
+    // Парсим время. TODO: разделители помимо двоеточия: точка? пробел?
     private static LocalTime parseTime(String value) {
         if (value == null || value.isEmpty()) return null;
         try {
@@ -162,7 +161,7 @@ public class Main {
         }
     }
 
-    // Спрашиваем время старта с дефолтным значением (если есть). Enter = оставить дефолт.
+    // Запрашиваем время старта с дефолтным значением (если есть). Enter = оставить дефолт.
     private static LocalTime askStartTime(Scanner scanner, String botName, LocalTime defaultTime) {
         while (true) {
             if (defaultTime != null) {
@@ -185,7 +184,7 @@ public class Main {
         }
     }
 
-    // Спрашиваем список окон
+    // Запрашиваем список окон
     private static List<Integer> askActiveWindows(Scanner scanner, String defaultWindowsStr) {
         if (defaultWindowsStr != null) {
             System.out.print("Введи номера окон через пробел. В прошлый раз были [" + defaultWindowsStr + "]: ");
