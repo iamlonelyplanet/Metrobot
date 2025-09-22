@@ -62,10 +62,10 @@ public class WindowsCoordinates {
     }
 
     // Вспомогательный класс для точки
-        public record Point(int x, int y) {
+    public record Point(int x, int y) {
         @Override
-            public String toString() {
-                return "(" + x + "," + y + ")";
-            }
+        public String toString() {
+            return "(" + x + "," + y + ")";
         }
+    }
 }

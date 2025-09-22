@@ -20,7 +20,7 @@ public class TunnelBot extends BaseBot {
     protected Map<String, Point> getButtonMap() {
         return WindowConfig.TUNNEL_BUTTONS;
     }
-    int pauseShortForTunnels = PAUSE_SHORT_MS / 2;
+    int pauseShortForTunnels = PAUSE_SHORT_MS / 2; // TODO: не переделать ли в константу?
 
     public void start() {
         try {
