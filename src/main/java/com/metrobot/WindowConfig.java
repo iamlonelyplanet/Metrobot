@@ -17,7 +17,7 @@ public class WindowConfig {
     public static final byte MAX_BATTLES_ARENA = 50;
     public static final byte MAX_BATTLES_CLANWAR = 24;
     public static final byte MAX_BATTLES_RAID = 12;
-    public static final byte MAX_WAYS_TUNNEL = 4;
+    public static final byte MAX_WAYS_TUNNEL = 5;
 
     public static final GameWindow ANTON = new GameWindow("Антон", 1033, 670);
     public static final GameWindow F1 = new GameWindow("Ф1", 0, 0);
