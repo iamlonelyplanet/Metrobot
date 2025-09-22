@@ -110,7 +110,7 @@ public abstract class BaseBot {
         Thread.sleep(PAUSE_SHORT_MS);
     }
 
-    protected void tunnelBattleSpiders(int tunnelMonsters) throws InterruptedException {
+    protected void fightSpiders(int tunnelMonsters) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
         clickAllWindows("Пропустить");
         Thread.sleep(PAUSE_LONG_MS);
@@ -123,7 +123,7 @@ public abstract class BaseBot {
         clickAllWindows("В туннель");
         Thread.sleep(PAUSE_SHORT_MS);
     }
-    protected void tunnelBattleLizards(int tunnelMonsters) throws InterruptedException {
+    protected void fightLizards(int tunnelMonsters) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
         clickAllWindows("Пропустить");
         Thread.sleep(PAUSE_LONG_MS);

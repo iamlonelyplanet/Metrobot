@@ -36,10 +36,10 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта ПК-КРО");
-                tunnelBattleSpiders(spiders.getCount());
+                fightSpiders(spiders.getCount());
                 spiders.plusOne();
                 clickAllWindows("Карта КРО-ПК");
-                tunnelBattleSpiders(spiders.getCount());
+                fightSpiders(spiders.getCount());
                 spiders.plusOne();
             }
 
@@ -47,7 +47,7 @@ public class TunnelBot extends BaseBot {
             clickAllWindows("В туннель");
             Thread.sleep(pauseShortForTunnels);
             clickAllWindows("Карта ПКк-ПКг");
-            Thread.sleep(pauseShortForTunnels);
+            Thread.sleep(PAUSE_SHORT_MS);
             clickAllWindows("Войти с пропуском");
             Thread.sleep(pauseShortForTunnels);
 
@@ -56,10 +56,10 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта ПКг-КИЕ");
-                tunnelBattleSpiders(spiders.getCount());
+                fightSpiders(spiders.getCount());
                 spiders.plusOne();
                 clickAllWindows("Карта КИЕ-ПКг");
-                tunnelBattleSpiders(spiders.getCount());
+                fightSpiders(spiders.getCount());
                 spiders.plusOne();
             }
 
@@ -67,7 +67,7 @@ public class TunnelBot extends BaseBot {
             clickAllWindows("В туннель");
             Thread.sleep(pauseShortForTunnels);
             clickAllWindows("Карта ПКг-ПКк");
-            Thread.sleep(pauseShortForTunnels);
+            Thread.sleep(PAUSE_SHORT_MS);
             clickAllWindows("Войти");
             System.out.println("Пауки закончились, идём к ящерам");
 
@@ -78,7 +78,7 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта-ПК-ФРУ");
-                tunnelBattleLizards(lizards.getCount());
+                fightLizards(lizards.getCount());
                 lizards.plusOne();
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Войти с пропуском");
@@ -87,14 +87,14 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта-КОМ");
-                tunnelBattleLizards(lizards.getCount());
+                fightLizards(lizards.getCount());
                 lizards.plusOne();
                 Thread.sleep(pauseShortForTunnels);
 
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта-УНИ");
-                tunnelBattleLizards(lizards.getCount());
+                fightLizards(lizards.getCount());
                 lizards.plusOne();
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Войти с пропуском");
@@ -103,7 +103,7 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта-ПВ");
-                tunnelBattleLizards(lizards.getCount());
+                fightLizards(lizards.getCount());
                 lizards.plusOne();
 
                 System.out.println("Завершено пробегов до Проспекта Вернадского: " + (way + 1));
@@ -111,13 +111,13 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта-УНИ");
-                tunnelBattleLizards(lizards.getCount());
+                fightLizards(lizards.getCount());
                 lizards.plusOne();
 
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта-КОМ");
-                tunnelBattleLizards(lizards.getCount());
+                fightLizards(lizards.getCount());
                 lizards.plusOne();
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Войти с пропуском");
@@ -126,13 +126,13 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта-КОМ-ФРУ");
-                tunnelBattleLizards(lizards.getCount());
+                fightLizards(lizards.getCount());
                 lizards.plusOne();
 
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта-ФРУ-ПК");
-                tunnelBattleLizards(lizards.getCount());
+                fightLizards(lizards.getCount());
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Войти");
 
