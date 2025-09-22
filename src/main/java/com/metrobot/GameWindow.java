@@ -6,9 +6,9 @@ public class GameWindow {
     private final String name;
     private final Point topLeftCorner;
 
-    public GameWindow(String name, int x, int y) {
+    public GameWindow(String name, Point topLeftCorner) {
         this.name = name;
-        this.topLeftCorner = new Point(x, y);
+        this.topLeftCorner = topLeftCorner;
     }
 
     public String getName() {
