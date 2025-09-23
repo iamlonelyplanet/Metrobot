@@ -18,21 +18,23 @@ public class WindowConfig {
     public static final byte MAX_BATTLES_RAID = 12;
     public static final byte MAX_WAYS_TUNNEL = 5;
 
+    static WindowsCoordinates wc = new WindowsCoordinates();
+    public static int windowWidth = wc.getWidth("Ф1");
+    WindowsCoordinates.Point topLeft = wc.getTopLeft("Ф1");
 
     // --- Координаты верхних левых углов рабочего поля внутри окна ---
     // Площадь рабочего поля в окне: 764×650, та же самая в ВК, та же при разрешениях 1366x768 и 1080
     // Площадь окна: 1033x670
-    // Ширина полосы прокрутки (элемента Windows): 18
-    // Формула для расчёта "нуля" рабочего поля: x = (ширина окна - 764 - 18) / 2
-    public static final int X_COORDINATE = 125;
-    public static final int Y_COORDINATE = 97;
-    public static final int WINDOW_SIZE_X = 1033;
-    public static final int WINDOW_SIZE_Y = 670;
+    // Ширина полосы прокрутки (элемента Windows): 19
 
-    public static Point topLeft1 = new Point(X_COORDINATE, Y_COORDINATE);
-    public static Point topLeft2 = new Point(WINDOW_SIZE_X + X_COORDINATE, Y_COORDINATE);
-    public static Point topLeft3 = new Point(X_COORDINATE, WINDOW_SIZE_Y + Y_COORDINATE);
-    public static Point topLeft4 = new Point(WINDOW_SIZE_X + X_COORDINATE, WINDOW_SIZE_Y + Y_COORDINATE);
+    public static int windowHeight = 670;
+    public static int xMoveRight = 125; // Расчёт "нуля" рабочего поля: x = (windowWidth - 764 - 19) / 2
+    public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных - смотреть
+
+    public static Point topLeft1 = new Point(xMoveRight, yMoveDown);
+    public static Point topLeft2 = new Point(windowWidth + xMoveRight, yMoveDown);
+    public static Point topLeft3 = new Point(xMoveRight, windowHeight + yMoveDown);
+    public static Point topLeft4 = new Point(windowWidth + xMoveRight, windowHeight + yMoveDown);
 
     public static final GameWindow WINDOW_1 = new GameWindow("Ф1", topLeft1);
     public static final GameWindow WINDOW_2 = new GameWindow("Лёха-156", topLeft2);
@@ -56,7 +58,7 @@ public class WindowConfig {
         put("Арена", new Point(320,303));
         put("Атаковать", new Point(200,513));
         put("Пропустить", new Point(385,33));
-        put("Закрыть — Победа", new Point(515,513));
+        put("Закрыть — Победа", new Point(515,520));
         put("Закрыть — Поражение", new Point(515,463));
         put("Забрать коллекцию", new Point(515,463));
     }};
@@ -96,7 +98,7 @@ public class WindowConfig {
         put("Войти", new Point(275,303));
         put("Атаковать", new Point(425,323));
         put("Пропустить", new Point(385,33));
-        put("Закрыть", new Point(515,513));
+        put("Закрыть", new Point(515,520));
         put("Карта ПК-КРО", new Point(405,343));
         put("Карта КРО-ПК", new Point(195,393));
         put("Карта ПКк-ПКг", new Point(185,433));

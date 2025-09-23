@@ -61,6 +61,15 @@ public class WindowsCoordinates {
         return null;
     }
 
+    // Получить ширину окна
+    public int getWidth(String window) {
+        RECT rect = windowCoordinates.get(window);
+        if (rect != null) {
+            return rect.right - rect.left;
+        }
+        return -1; // или бросать исключение
+    }
+    
     // Вспомогательный класс для точки
     public record Point(int x, int y) {
         @Override

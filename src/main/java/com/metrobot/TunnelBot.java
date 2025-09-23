@@ -31,9 +31,9 @@ public class TunnelBot extends BaseBot {
             showAllGameWindows();
             // === Туннели с пауками ===
             // 10 пауков в туннеле Парк Культуры - Кропоткинская
+            clickAllWindows("В туннель");
+            Thread.sleep(pauseShortForTunnels);
             for (int waySpiders1 = 0; waySpiders1 < MAX_WAYS_TUNNEL; waySpiders1++) {
-                clickAllWindows("В туннель");
-                Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта ПК-КРО");
                 fightSpiders(spiders.getCount());
                 spiders.plusOne();
@@ -42,18 +42,18 @@ public class TunnelBot extends BaseBot {
                 spiders.plusOne();
             }
 
-            // Переход Парк Культуры Красные - Парк Культуры Ганза
-            clickAllWindows("В туннель");
-            Thread.sleep(PAUSE_SHORT_MS);
+            // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
+//            clickAllWindows("В туннель");
+//            Thread.sleep(PAUSE_SHORT_MS);
             clickAllWindows("Карта ПКк-ПКг");
             Thread.sleep(PAUSE_SHORT_MS);
             clickAllWindows("Войти с пропуском");
             Thread.sleep(pauseShortForTunnels);
 
             // 10 пауков в тоннеле Парк Культуры - Киевская
+            clickAllWindows("В туннель");
+            Thread.sleep(pauseShortForTunnels);
             for (int waySpiders2 = 0; waySpiders2 < MAX_WAYS_TUNNEL; waySpiders2++) {
-                clickAllWindows("В туннель");
-                Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта ПКг-КИЕ");
                 fightSpiders(spiders.getCount());
                 spiders.plusOne();
@@ -62,9 +62,9 @@ public class TunnelBot extends BaseBot {
                 spiders.plusOne();
             }
 
-            // Переход Парк Культуры Красные - Парк Культуры Ганза
-            clickAllWindows("В туннель");
-            Thread.sleep(pauseShortForTunnels);
+            // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
+//            clickAllWindows("В туннель");
+//            Thread.sleep(pauseShortForTunnels);
             clickAllWindows("Карта ПКг-ПКк");
             Thread.sleep(PAUSE_SHORT_MS);
             clickAllWindows("Войти");
