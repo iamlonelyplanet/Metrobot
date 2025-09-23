@@ -28,7 +28,7 @@ public class WindowConfig {
     // Ширина полосы прокрутки (элемента Windows): 19
 
     public static int windowHeight = 670;
-    public static int xMoveRight = 125; // Расчёт "нуля" рабочего поля: x = (windowWidth - 764 - 19) / 2
+    public static int xMoveRight = (windowWidth - 764 - 19) / 2; // Расчёт "нуля" рабочего поля
     public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных - смотреть
 
     public static Point topLeft1 = new Point(xMoveRight, yMoveDown);
