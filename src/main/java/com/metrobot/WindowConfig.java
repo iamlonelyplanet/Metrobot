@@ -19,14 +19,13 @@ public class WindowConfig {
     public static final byte MAX_WAYS_TUNNEL = 5;
 
     static WindowsCoordinates wc = new WindowsCoordinates();
-    public static int windowWidth = wc.getWidth("Ф1");
     WindowsCoordinates.Point topLeft = wc.getTopLeft("Ф1");
 
     // --- Координаты верхних левых углов рабочего поля внутри окна ---
     // Площадь рабочего поля в окне: 764×650, та же самая в ВК, та же при разрешениях 1366x768 и 1080
     // Площадь окна: 1033x670
     // Ширина полосы прокрутки (элемента Windows): 19
-
+    public static int windowWidth = 1033;
     public static int windowHeight = 670;
     public static int xMoveRight = 125; // Расчёт "нуля" рабочего поля
     public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных - смотреть
