@@ -2,6 +2,7 @@ package com.metrobot;
 
 import java.awt.*;
 import java.time.LocalTime;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ public class TunnelBot extends BaseBot {
     public void start() {
         try {
             startGame();
+            LocalTime startTime = LocalTime.now();
             Counter spiders = new Counter("Пауки");
             Counter lizards = new Counter("Ящеры");
 
@@ -69,6 +71,10 @@ public class TunnelBot extends BaseBot {
             Thread.sleep(PAUSE_SHORT_MS);
             clickAllWindows("Войти");
             System.out.println("Пауки закончились, идём к ящерам");
+            LocalTime endSpiderTime = LocalTime.now();
+            Duration spidersDuration = Duration.between(startTime, endSpiderTime);
+            long secondsSpiders = spidersDuration.getSeconds();
+            System.out.println("На пауков потрачено " + secondsSpiders + " сек");
 
             // === Туннели с Ящерами ===
             showAllGameWindows();
@@ -142,6 +148,10 @@ public class TunnelBot extends BaseBot {
             }
 
             minimizeAllGameWindows();
+            Duration lizardDuration = Duration.between(LocalTime.now(), endSpiderTime);
+            long secondsLizard = lizardDuration.getSeconds();
+            System.out.println("На ящеров потрачено " + secondsLizard + " сек");
+            System.out.println("Итого на режим " + botName + " затрачено " + secondsSpiders + secondsLizard + " сек");
             System.out.println("\nРежим " + botName + " завершён. " + "Убито пауков: " + spiders.getCount() +
                     " . Убито Ящеров: " + lizards.getCount());
 
