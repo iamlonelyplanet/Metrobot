@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.util.Map;
 
 /**
- * OverlayTest — показывает все точки выбранного режима (берёт Map из WindowConfig).
+ * OverlayTest — показывает все точки выбранного режима (берёт Map из Buttons).
  * Красные — 100% (оригинал), зелёные — 95% (масштаб).
  */
 public class OverlayTest {
@@ -31,21 +31,21 @@ public class OverlayTest {
         );
         String mode = choice >= 0 ? options[choice] : options[0];
 
-        // выбираем Map из WindowConfig в зависимости от режима
+        // выбираем Map из Buttons в зависимости от режима
         final Map<String, Point> buttonsMap;
         switch (mode) {
             case "КВ":
-                buttonsMap = WindowConfig.KV_BUTTONS;
+                buttonsMap = Buttons.KV_BUTTONS;
                 break;
             case "Рейд":
-                buttonsMap = WindowConfig.RAID_BUTTONS;
+                buttonsMap = Buttons.RAID_BUTTONS;
                 break;
             case "Туннели":
-                buttonsMap = WindowConfig.TUNNEL_BUTTONS;
+                buttonsMap = Buttons.TUNNEL_BUTTONS;
                 break;
             case "Арена":
             default:
-                buttonsMap = WindowConfig.ARENA_BUTTONS;
+                buttonsMap = Buttons.ARENA_BUTTONS;
                 break;
         }
 

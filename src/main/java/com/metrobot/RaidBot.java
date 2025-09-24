@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-import static com.metrobot.WindowConfig.*;
+import static com.metrobot.Buttons.*;
 
 public class RaidBot extends BaseBot {
 
@@ -17,7 +17,7 @@ public class RaidBot extends BaseBot {
 
     @Override
     protected Map<String, Point> getButtonMap() {
-        return WindowConfig.RAID_BUTTONS;
+        return Buttons.RAID_BUTTONS;
     }
 
     public void start() {

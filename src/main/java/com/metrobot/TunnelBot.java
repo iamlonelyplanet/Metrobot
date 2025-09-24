@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-import static com.metrobot.WindowConfig.*;
+import static com.metrobot.Buttons.*;
 
 public class TunnelBot extends BaseBot {
     // TODO: Переработать ящеров при помощи ООП.
@@ -18,7 +18,7 @@ public class TunnelBot extends BaseBot {
 
     @Override
     protected Map<String, Point> getButtonMap() {
-        return WindowConfig.TUNNEL_BUTTONS;
+        return Buttons.TUNNEL_BUTTONS;
     }
     int pauseShortForTunnels = PAUSE_SHORT_MS / 2; // TODO: не переделать ли в константу?
 

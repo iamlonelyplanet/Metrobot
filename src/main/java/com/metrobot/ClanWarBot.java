@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-import static com.metrobot.WindowConfig.*;
+import static com.metrobot.Buttons.*;
 
 public class ClanWarBot extends BaseBot {
 
@@ -17,7 +17,7 @@ public class ClanWarBot extends BaseBot {
 
     @Override
     protected Map<String, Point> getButtonMap() {
-        return WindowConfig.KV_BUTTONS;
+        return Buttons.KV_BUTTONS;
     }
 
     public void start() {

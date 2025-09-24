@@ -11,15 +11,15 @@ import java.util.Map;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
-import static com.metrobot.WindowConfig.*;
-import static com.metrobot.WindowConfig.PAUSE_TUNNEL_MS;
+import static com.metrobot.Buttons.*;
+import static com.metrobot.Buttons.PAUSE_TUNNEL_MS;
 
 public abstract class BaseBot {
 
     // === Общее состояние для всех ботов ===
     protected Robot robot;
     protected List<Integer> activeWindows = new ArrayList<>();
-    protected Map<Integer, GameWindow> windowsMap = WindowConfig.defaultWindows();
+    protected Map<Integer, GameWindow> windowsMap = Buttons.defaultWindows();
     protected boolean silentMode = true;
     protected String botName;
     protected LocalTime startTime;
@@ -139,7 +139,7 @@ public abstract class BaseBot {
         Map<String, Point> buttonMap = getButtonMap();
         Point rel = buttonMap.get(buttonName);
         if (rel == null) {
-            System.err.println("⚠ Кнопка \"" + buttonName + "\" не найдена в WindowConfig");
+            System.err.println("⚠ Кнопка \"" + buttonName + "\" не найдена в Buttons");
             return;
         }
 

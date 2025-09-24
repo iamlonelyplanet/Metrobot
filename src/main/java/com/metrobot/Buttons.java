@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class WindowConfig {
+public class Buttons {
     // --- Паузы ---
     public static final int PAUSE_LONG_MS = 2800;
     public static final int PAUSE_SHORT_MS = 1200;

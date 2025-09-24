@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-import static com.metrobot.WindowConfig.*;
+import static com.metrobot.Buttons.*;
 
 public class ArenaBot extends BaseBot {
 
@@ -17,7 +17,7 @@ public class ArenaBot extends BaseBot {
 
     @Override
     protected Map<String, Point> getButtonMap() {
-        return WindowConfig.ARENA_BUTTONS;
+        return Buttons.ARENA_BUTTONS;
     }
 
     public void start() {
