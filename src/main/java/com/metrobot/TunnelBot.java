@@ -45,8 +45,6 @@ public class TunnelBot extends BaseBot {
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
-//            clickAllWindows("В туннель");
-//            Thread.sleep(PAUSE_SHORT_MS);
             clickAllWindows("Карта ПКк-ПКг");
             Thread.sleep(PAUSE_SHORT_MS);
             clickAllWindows("Войти с пропуском");
@@ -65,8 +63,6 @@ public class TunnelBot extends BaseBot {
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
-//            clickAllWindows("В туннель");
-//            Thread.sleep(pauseShortForTunnels);
             clickAllWindows("Карта ПКг-ПКк");
             Thread.sleep(PAUSE_SHORT_MS);
             clickAllWindows("Войти");
