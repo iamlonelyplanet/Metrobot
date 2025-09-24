@@ -133,6 +133,7 @@ public class TunnelBot extends BaseBot {
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта-ФРУ-ПК");
                 fightLizards(lizards.getCount());
+                lizards.plusOne();
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Войти");
 
