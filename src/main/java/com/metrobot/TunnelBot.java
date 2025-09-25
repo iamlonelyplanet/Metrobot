@@ -69,8 +69,8 @@ public class TunnelBot extends BaseBot {
             System.out.println("Пауки закончились, идём к ящерам");
             LocalTime endSpiderTime = LocalTime.now();
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
-            long secondsSpiders = spidersDuration.getSeconds();
-            System.out.println("На пауков потрачено " + secondsSpiders + " сек");
+            long secondsSpider = spidersDuration.getSeconds();
+            System.out.println("На пауков потрачено: " + secondsSpider / 60 + " мин " + secondsSpider % 60 + " сек");
 
             // === Туннели с Ящерами ===
             showAllGameWindows();
@@ -144,10 +144,12 @@ public class TunnelBot extends BaseBot {
             }
 
             minimizeAllGameWindows();
-            Duration lizardDuration = Duration.between(LocalTime.now(), endSpiderTime);
+
+            Duration lizardDuration = Duration.between(endSpiderTime, LocalTime.now());
             long secondsLizard = lizardDuration.getSeconds();
-            System.out.println("На ящеров потрачено " + secondsLizard + " сек");
-            System.out.println("Итого на режим " + botName + " затрачено " + secondsSpiders + secondsLizard + " сек");
+            System.out.println("\nНа пауков затрачено: " + secondsLizard / 60 + " мин " + secondsLizard % 60 + " сек");
+            System.out.println("Итого на режим " + botName + " затрачено " +
+                    (secondsSpider + secondsLizard) / 60 + " мин " + (secondsSpider + secondsLizard) % 60 + " сек");
             System.out.println("\nРежим " + botName + " завершён. " + "Убито пауков: " + spiders.getCount() +
                     " . Убито Ящеров: " + lizards.getCount());
 

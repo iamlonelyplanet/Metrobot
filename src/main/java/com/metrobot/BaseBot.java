@@ -112,23 +112,22 @@ public abstract class BaseBot {
 
     protected void fightSpiders(int tunnelMonsters) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
+//        clickAllWindows("Питомец"); // опционально
         clickAllWindows("Пропустить");
         Thread.sleep(PAUSE_LONG_MS);
         clickAllWindows("Закрыть");
-
         tunnelMonsters++;
         System.out.println("Убито пауков: " + tunnelMonsters);
-
         Thread.sleep(PAUSE_TUNNEL_MS);
         clickAllWindows("В туннель");
         Thread.sleep(PAUSE_SHORT_MS);
     }
     protected void fightLizards(int tunnelMonsters) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
+//        clickAllWindows("Питомец"); // опционально
         clickAllWindows("Пропустить");
         Thread.sleep(PAUSE_LONG_MS);
         clickAllWindows("Закрыть");
-
         tunnelMonsters++;
         System.out.println("Убито ящеров: " + tunnelMonsters);
         Thread.sleep(PAUSE_TUNNEL_MS);

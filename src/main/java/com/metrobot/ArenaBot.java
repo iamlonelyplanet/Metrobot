@@ -35,6 +35,7 @@ public class ArenaBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_LONG_MS);
+//                clickAllWindows("Питомец"); // опционально
                 clickAllWindows("Пропустить");
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть — Победа");
