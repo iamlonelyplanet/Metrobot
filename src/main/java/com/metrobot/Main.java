@@ -119,7 +119,7 @@ public class Main {
         System.out.println("1. Клановые войны");
         System.out.println("2. Рейд");
         System.out.println("3. Арена");
-        System.out.println("4. Туннели (бьём туннельных пауков и ящеров");
+        System.out.println("4. Туннели (бьём пауков и ящеров)");
 
         if (defaultModeStr != null) {
             System.out.println("(Enter для выбора по умолчанию: " + defaultModeStr + ")");

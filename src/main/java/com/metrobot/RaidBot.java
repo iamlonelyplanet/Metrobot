@@ -31,8 +31,9 @@ public class RaidBot extends BaseBot {
                 clickAllWindows("Клан");
                 clickAllWindows("Война");
                 clickAllWindows("Обновить");
-                clickAllWindows("Рейды");
                 Thread.sleep(PAUSE_LONG_MS);
+                clickAllWindows("Рейды");
+                Thread.sleep(PAUSE_SHORT_MS);
             }
 
             // Бои
@@ -41,8 +42,10 @@ public class RaidBot extends BaseBot {
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
 
+                // Обдумать 2 нижние строки на предмет ненужного/вредного повтора при battle == 1
                 clickAllWindows("Клан");
                 clickAllWindows("Рейды");
+
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_BEFORE_BOSS_MS);
                 clickAllWindows("Пропустить");
@@ -55,7 +58,7 @@ public class RaidBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(raidCounter.getCount()));
 
                 if (battle < MAX_BATTLES_RAID) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 3);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 5);
                 }
             }
 

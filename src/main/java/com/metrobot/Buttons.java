@@ -73,9 +73,9 @@ public class Buttons {
     // --- Рейд ---
     public static final LinkedHashMap<String, Point> RAID_BUTTONS = new LinkedHashMap<>() {{
         put("Клан", new Point(315,58));
+        put("Война", new Point(55,303));
         put("Рейды", new Point(55,413));
-        put("Война", new Point(55,505));
-        put("Обновить", new Point(525,43));
+        put("Обновить", new Point(520,40));
         put("Атаковать", new Point(425,323));
         put("Пропустить", new Point(385,33));
         put("Закрыть", new Point(515,433));
