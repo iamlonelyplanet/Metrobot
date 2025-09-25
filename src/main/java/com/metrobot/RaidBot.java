@@ -30,7 +30,7 @@ public class RaidBot extends BaseBot {
                 showAllGameWindows();
                 clickAllWindows("Клан");
                 clickAllWindows("Война");
-                clickAllWindows("Обновить2");
+                clickAllWindows("Обновить");
                 clickAllWindows("Рейды");
                 Thread.sleep(PAUSE_LONG_MS);
             }

@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Main {
 
-    private static final String CONFIG_FILE = "config/config.txt";
+    private static final String CONFIG_FILE = "config.txt";
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
     public static void main(String[] args) {
@@ -33,7 +33,7 @@ public class Main {
             LocalTime raidDefault = parseTime(config.get("raid_start"));
             LocalTime tunnelDefault = parseTime(config.get("tunnel_start"));
 
-            // Подготовим переменные времени для записи обратно в конфиг
+            // === Подготовим переменные времени для записи обратно в конфиг ===
             LocalTime arenaStart = arenaDefault;
             LocalTime kvStart = kvDefault;
             LocalTime raidStart = raidDefault;

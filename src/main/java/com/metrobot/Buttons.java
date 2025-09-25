@@ -18,9 +18,6 @@ public class Buttons {
     public static final byte MAX_BATTLES_RAID = 12;
     public static final byte MAX_WAYS_TUNNEL = 5;
 
-    static WindowsCoordinates wc = new WindowsCoordinates();
-    WindowsCoordinates.Point topLeft = wc.getTopLeft("Ф1");
-
     // --- Координаты верхних левых углов рабочего поля внутри окна ---
     // Площадь рабочего поля в окне: 764×650, та же самая в ВК, та же при разрешениях 1366x768 и 1080
     // Площадь окна: 1033x670
@@ -78,8 +75,7 @@ public class Buttons {
         put("Клан", new Point(315,58));
         put("Рейды", new Point(55,413));
         put("Война", new Point(55,505));
-        put("Обновить", new Point(110,38));
-        put("Обновить2", new Point(525,43));
+        put("Обновить", new Point(525,43));
         put("Атаковать", new Point(425,323));
         put("Пропустить", new Point(385,33));
         put("Закрыть", new Point(515,433));
