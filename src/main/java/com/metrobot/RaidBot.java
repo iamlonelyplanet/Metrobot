@@ -42,7 +42,7 @@ public class RaidBot extends BaseBot {
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
 
-                // Обдумать 2 нижние строки на предмет ненужного/вредного повтора при battle == 1
+                // TODO: Обдумать 2 нижние строки на предмет ненужного/вредного повтора при battle == 1
                 clickAllWindows("Клан");
                 clickAllWindows("Рейды");
 
