@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import java.time.Instant;
 
 import static com.metrobot.Buttons.*;
 
@@ -26,7 +27,7 @@ public class TunnelBot extends BaseBot {
     public void start() {
         try {
             startGame();
-            LocalTime startTime = LocalTime.now();
+            Instant startTime = Instant.now();
             Counter spiders = new Counter("Пауки");
             Counter lizards = new Counter("Ящеры");
 
@@ -67,7 +68,7 @@ public class TunnelBot extends BaseBot {
             Thread.sleep(PAUSE_SHORT_MS);
             clickAllWindows("Войти");
             System.out.println("Пауки закончились, идём к ящерам");
-            LocalTime endSpiderTime = LocalTime.now();
+            Instant endSpiderTime = Instant.now();
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
             long secondsSpider = spidersDuration.getSeconds();
             System.out.println("На пауков потрачено: " + secondsSpider / 60 + " мин " + secondsSpider % 60 + " сек");
@@ -145,7 +146,7 @@ public class TunnelBot extends BaseBot {
 
             minimizeAllGameWindows();
 
-            Duration lizardDuration = Duration.between(endSpiderTime, LocalTime.now());
+            Duration lizardDuration = Duration.between(endSpiderTime, Instant.now());
             long secondsLizard = lizardDuration.getSeconds();
             System.out.println("\nНа пауков затрачено: " + secondsLizard / 60 + " мин " + secondsLizard % 60 + " сек");
             System.out.println("Итого на режим " + botName + " затрачено " +
