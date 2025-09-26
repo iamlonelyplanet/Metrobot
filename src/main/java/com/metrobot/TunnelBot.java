@@ -158,9 +158,7 @@ public class TunnelBot extends BaseBot {
             System.out.println("Итого на режим " + botName + " затрачено " +
                     (secondsSpider + secondsLizard) / 60 + " мин " + (secondsSpider + secondsLizard) % 60 + " сек");
 
-            playFinalSound();
-            System.out.println("\nРежим " + botName + " завершён. " + "Убито пауков: " + spiders +
-                    ". Убито Ящеров: " + (unificatedCounter.getCount() - spiders));
+            endGame();
 
         } catch (InterruptedException e) {
             System.out.println("Прервано — выхожу.");

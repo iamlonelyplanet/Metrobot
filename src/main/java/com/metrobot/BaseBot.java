@@ -120,6 +120,14 @@ public abstract class BaseBot {
         // TODO изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
     }
 
+    // === Конец режима игры ===
+    protected void endGame() throws InterruptedException {
+        playFinalSound();
+        System.out.println("\nРежим " + botName + " завершён. " +
+                "Проведено боёв в автоматическом режиме: " + unificatedCounter.getCount());
+    }
+
+
     protected void fightSpiders(int tunnelMonsters) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
 //        clickAllWindows("Питомец"); // опционально

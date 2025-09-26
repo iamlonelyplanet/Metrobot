@@ -40,7 +40,6 @@ public class RaidBot extends BaseBot {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_RAID + " ===");
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
-
                 // TODO: Обдумать 2 нижние строки на предмет ненужного/вредного повтора при battle == 1
                 clickAllWindows("Клан");
                 clickAllWindows("Рейды");
@@ -61,9 +60,7 @@ public class RaidBot extends BaseBot {
                 }
             }
 
-            playFinalSound();
-            System.out.println("\nРежим " + botName + " завершён. " +
-                    "Проведено боёв в автоматическом режиме: " + unificatedCounter.getCount());
+            endGame();
         } catch (InterruptedException ie) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();

@@ -8,7 +8,6 @@ import java.util.Map;
 import static com.metrobot.Buttons.*;
 
 public class ClanWarBot extends BaseBot {
-
     public ClanWarBot(List<Integer> windows, LocalTime timeHHmm, String botName) {
         super(windows);
         this.startTime = timeHHmm;
@@ -27,7 +26,6 @@ public class ClanWarBot extends BaseBot {
             // Бои
             for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_CLANWAR; battle++) {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_CLANWAR + " ===");
-
                 showAllGameWindows();
                 clickAllWindows("Клан");
                 clickAllWindows("Война");
@@ -46,9 +44,8 @@ public class ClanWarBot extends BaseBot {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size());
                 }
             }
-            playFinalSound();
-            System.out.println("\nРежим " + botName + " завершён. " +
-                    "Проведено боёв в автоматическом режиме: " + unificatedCounter.getCount());
+
+            endGame();
         } catch (InterruptedException ie) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();

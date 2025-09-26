@@ -8,7 +8,6 @@ import java.util.Map;
 import static com.metrobot.Buttons.*;
 
 public class ArenaBot extends BaseBot {
-
     public ArenaBot(List<Integer> windows, LocalTime timeHHmm, String botName) {
         super(windows);
         this.startTime = timeHHmm;
@@ -27,7 +26,6 @@ public class ArenaBot extends BaseBot {
             // Бои
             for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_ARENA + " ===");
-
                 showAllGameWindows();
                 clickAllWindows("Клан - Выход");
                 clickAllWindows("Арена");
@@ -51,10 +49,7 @@ public class ArenaBot extends BaseBot {
                 }
             }
 
-            playFinalSound();
-            System.out.println("\nРежим " + botName + " завершён. " +
-                    "Проведено боёв в автоматическом режиме: " + unificatedCounter.getCount()); //+ getCount(botName)
-
+            endGame();
         } catch (InterruptedException e) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();
