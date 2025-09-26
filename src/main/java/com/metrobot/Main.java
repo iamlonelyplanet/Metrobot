@@ -8,12 +8,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
+/* Главный метод. Спрашивает режим игры, активные окна, время старта каждого режима. Метод слишком огромный, это косяк
+ и некрасиво. Но если каждую некрасивость исправлять, то опять будет бесконечное предрелизное состояние. Зато отметил
+ эти методы-утилиты комментом "// === Дальше идут методы-утилиты для Main ==="
+ TODO: вынести методы-утилиты в отдельный класс.
+ */
+
 public class Main {
     private static final String CONFIG_FILE = "config.txt"; // не подходит для хранения в Resources
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
     public static void main(String[] args) {
-
         try {
             // переключатель для ввода режима, выбора рабочих окон, времени старта: true = GUI, false = консольный ввод
             boolean useGui = true;
@@ -22,21 +27,17 @@ public class Main {
             // === Загружаем конфиг, если есть ===
             Map<String, String> config = loadConfig();
 
-            // === Запрашиваем режим игры ===
+            // === Запрашиваем режим игры в режиме GUI/консоль ===
             int mode;
-            if (useGui) {
-                mode = askModeGui();
-            } else {
-                mode = askMode(scanner, config.get("mode"));
-            }
+            mode = useGui
+                    ? askModeGui()
+                    : askMode(scanner, config.get("mode"));
 
-            // === Запрашиваем рабочие окна ("персы"), от 1 до 4, потенциально не ограничено ===
+            // === Запрашиваем рабочие окна в режиме GUI/консоль ("персы"), от 1 до 4, потенциально не ограничено ===
             List<Integer> activeWindows;
-            if (useGui) {
-                activeWindows = askActiveWindowsGui(config.get("activeWindows"));
-            } else {
-                activeWindows = askActiveWindows(scanner, config.get("activeWindows"));
-            }
+            activeWindows = useGui
+                    ? askActiveWindowsGui(config.get("activeWindows"))
+                    : askActiveWindows(scanner, config.get("activeWindows"));
 
             // === Читаем времена стартов из конфига (если есть). Не трогать, пока хоть как-то работает ===
             LocalTime arenaDefault = parseTime(config.get("arena_start"));
@@ -332,7 +333,8 @@ public class Main {
                     if (idx >= 0 && idx < boxes.length) {
                         boxes[idx].setSelected(true);
                     }
-                } catch (NumberFormatException ignored) {}
+                } catch (NumberFormatException ignored) {
+                }
             }
         }
 
@@ -363,7 +365,8 @@ public class Main {
             for (String part : defaultWindowsStr.split(" ")) {
                 try {
                     windows.add(Integer.parseInt(part.trim()));
-                } catch (NumberFormatException ignored) {}
+                } catch (NumberFormatException ignored) {
+                }
             }
         }
         return windows;
