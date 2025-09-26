@@ -2,12 +2,17 @@ package com.metrobot;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.sampled.*;
+import javax.sound.sampled.*;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
@@ -122,6 +127,7 @@ public abstract class BaseBot {
         clickAllWindows("В туннель");
         Thread.sleep(PAUSE_SHORT_MS);
     }
+
     protected void fightLizards(int tunnelMonsters) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
 //        clickAllWindows("Питомец"); // опционально
@@ -131,6 +137,23 @@ public abstract class BaseBot {
         tunnelMonsters++;
         System.out.println("Убито ящеров: " + tunnelMonsters);
         Thread.sleep(PAUSE_TUNNEL_MS);
+    }
+
+    // === Проигрываем звук по окончанию режима игры ===
+    protected static void playFinalSound() {
+        try (InputStream inputStream = BaseBot.class.getResourceAsStream("/sound.wav")) {
+            if (inputStream == null) {
+                System.err.println("Файл звука не найден: sound.wav");
+                return;
+            }
+            try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(inputStream)) {
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioIn);
+                clip.start();
+            }
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 
     // === Единый метод кликов по всем выбранным окнам ===

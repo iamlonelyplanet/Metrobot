@@ -8,10 +8,16 @@ import java.util.Map;
 import java.time.Instant;
 
 import static com.metrobot.Buttons.*;
+/* Режим "Туннели": ежедневная прогулка перса по туннелям с особыми монстрами: Ящерами и Пауками. Полное прохождение:
+порядка 45 минут. В этом режиме  окна не сворачиваются, работа пользователя в Windows не допускается. Запись
+счётчика в файл здесь не нужна.
+Допустимы, уже написаны и протестированы сражения с прокачкой питомца: при необходимости убрать коммент в методах
+fightSpiders и fightLizards.
+TODO: Переработать ящеров при помощи ООП, либо для начала перегрузкой методов. Пауков можно не трогать.
+ Текст закинуть в единый метод. Подумать о паузах по команде пользователя.
+ */
 
 public class TunnelBot extends BaseBot {
-    // TODO: Переработать ящеров при помощи ООП.
-
     public TunnelBot(List<Integer> windows, LocalTime timeHHmm, String botName) {
         super(windows);
         this.startTime = timeHHmm;
@@ -148,11 +154,13 @@ public class TunnelBot extends BaseBot {
 
             Duration lizardDuration = Duration.between(endSpiderTime, Instant.now());
             long secondsLizard = lizardDuration.getSeconds();
-            System.out.println("\nНа пауков затрачено: " + secondsLizard / 60 + " мин " + secondsLizard % 60 + " сек");
+            System.out.println("\nНа ящеров затрачено: " + secondsLizard / 60 + " мин " + secondsLizard % 60 + " сек");
             System.out.println("Итого на режим " + botName + " затрачено " +
                     (secondsSpider + secondsLizard) / 60 + " мин " + (secondsSpider + secondsLizard) % 60 + " сек");
+
+            playFinalSound();
             System.out.println("\nРежим " + botName + " завершён. " + "Убито пауков: " + spiders.getCount() +
-                    " . Убито Ящеров: " + lizards.getCount());
+                    ". Убито Ящеров: " + lizards.getCount());
 
         } catch (InterruptedException e) {
             System.out.println("Прервано — выхожу.");

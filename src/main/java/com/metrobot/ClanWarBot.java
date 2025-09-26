@@ -47,7 +47,7 @@ public class ClanWarBot extends BaseBot {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size());
                 }
             }
-
+            playFinalSound();
             System.out.println("\nРежим " + botName + " завершён. " +
                     "Проведено боёв в автоматическом режиме: " + kvCounter.getCount());
         } catch (InterruptedException ie) {
