@@ -123,11 +123,12 @@ public abstract class BaseBot {
     }
 
     // Конец любого игрового режима
-    protected void endGame() throws InterruptedException {
+    protected void endGame() {
         playFinalSound();
         System.out.println("\nРежим " + botName + " завершён. " +
                 "Проведено боёв в автоматическом режиме: " + unificatedCounter.getCount());
     }
+
 
     // Два метода для дурного режима про туннели
     //TODO: совместить бы два следующих метода (туннели). Но надо курить игровую механику.

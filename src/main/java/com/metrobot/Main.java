@@ -46,10 +46,8 @@ public class Main {
                 case 1:
                     botName = "КВ";
                     startTime = askStartTime(scanner, botName, kvDefault);
-
                     kvStart = startTime;
                     saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
-
                     ClanWarBot clanWarBot = new ClanWarBot(activeWindows, startTime, botName);
                     clanWarBot.start();
                     break;
