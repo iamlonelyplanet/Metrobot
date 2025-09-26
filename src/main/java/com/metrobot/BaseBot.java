@@ -127,7 +127,7 @@ public abstract class BaseBot {
                 "Проведено боёв в автоматическом режиме: " + unificatedCounter.getCount());
     }
 
-
+    //TODO: совместить бы два следующих метода (туннели).
     protected void fightSpiders(int tunnelMonsters) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
 //        clickAllWindows("Питомец"); // опционально
