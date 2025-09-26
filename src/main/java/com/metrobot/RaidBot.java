@@ -40,6 +40,7 @@ public class RaidBot extends BaseBot {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_RAID + " ===");
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
+
                 // TODO: Обдумать 2 нижние строки на предмет ненужного/вредного повтора при battle == 1
                 clickAllWindows("Клан");
                 clickAllWindows("Рейды");
