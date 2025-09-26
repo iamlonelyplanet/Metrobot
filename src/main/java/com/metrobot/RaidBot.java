@@ -23,10 +23,9 @@ public class RaidBot extends BaseBot {
     public void start() {
         try {
             startGame();
-            Counter raidCounter = counters.get(botName);
 
             // Подготовительные клики (разово, если надо)
-            if (raidCounter.getCount() == 0) {
+            if (unificatedCounter.getCount() == 0) {
                 showAllGameWindows();
                 clickAllWindows("Клан");
                 clickAllWindows("Война");
@@ -37,7 +36,7 @@ public class RaidBot extends BaseBot {
             }
 
             // Бои
-            for (int battle = (raidCounter.getCount() + 1); battle <= MAX_BATTLES_RAID; battle++) {
+            for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_RAID; battle++) {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_RAID + " ===");
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
@@ -53,9 +52,9 @@ public class RaidBot extends BaseBot {
                 clickAllWindows("Закрыть");
                 minimizeAllGameWindows();
 
-                raidCounter.plusOne();
+                unificatedCounter.plusOne();
                 CounterStorage.saveCounters(counters);
-                System.out.println(Grammar.getWordEnd(raidCounter.getCount()));
+                System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
 
                 if (battle < MAX_BATTLES_RAID) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 5);
@@ -64,7 +63,7 @@ public class RaidBot extends BaseBot {
 
             playFinalSound();
             System.out.println("\nРежим " + botName + " завершён. " +
-                    "Проведено боёв в автоматическом режиме: " + raidCounter.getCount());
+                    "Проведено боёв в автоматическом режиме: " + unificatedCounter.getCount());
         } catch (InterruptedException ie) {
             System.out.println("Прервано — выхожу.");
             Thread.currentThread().interrupt();

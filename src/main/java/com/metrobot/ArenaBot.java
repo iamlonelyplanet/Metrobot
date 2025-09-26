@@ -23,10 +23,9 @@ public class ArenaBot extends BaseBot {
     public void start() {
         try {
             startGame();
-            Counter arenaCounter = counters.get(botName);
 
             // Бои
-            for (int battle = (arenaCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
+            for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
                 System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_ARENA + " ===");
 
                 showAllGameWindows();
@@ -43,9 +42,9 @@ public class ArenaBot extends BaseBot {
                 clickAllWindows("Забрать коллекцию");
                 minimizeAllGameWindows();
 
-                arenaCounter.plusOne();
+                unificatedCounter.plusOne();
                 CounterStorage.saveCounters(counters);
-                System.out.println(Grammar.getWordEnd(arenaCounter.getCount()));
+                System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
 
                 if (battle < MAX_BATTLES_ARENA) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size());
@@ -54,7 +53,7 @@ public class ArenaBot extends BaseBot {
 
             playFinalSound();
             System.out.println("\nРежим " + botName + " завершён. " +
-                    "Проведено боёв в автоматическом режиме: " + arenaCounter.getCount()); //+ getCount(botName)
+                    "Проведено боёв в автоматическом режиме: " + unificatedCounter.getCount()); //+ getCount(botName)
 
         } catch (InterruptedException e) {
             System.out.println("Прервано — выхожу.");

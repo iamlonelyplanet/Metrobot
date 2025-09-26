@@ -31,7 +31,6 @@ public class CounterStorage {
         } catch (IOException e) {
             System.out.println("Файл счётчиков не найден, будут использованы значения по умолчанию (0).");
         }
-
         return counters;
     }
 

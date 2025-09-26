@@ -2,7 +2,6 @@ package com.metrobot;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalTime;
@@ -108,11 +107,17 @@ public abstract class BaseBot {
         System.out.println("Свернул окна");
     }
 
+    protected Counter unificatedCounter;
+    protected Counter getUnificatedCounter() {
+        return counters.computeIfAbsent(botName, Counter::new);
+    }
     // === Старт режима игры ===
     protected void startGame() throws InterruptedException {
         waitUntilStartTime(startTime);
         System.out.println("Старт режима " + botName);
         Thread.sleep(PAUSE_SHORT_MS);
+        this.unificatedCounter = counters.computeIfAbsent(botName, name -> new Counter(name));
+        // TODO изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
     }
 
     protected void fightSpiders(int tunnelMonsters) throws InterruptedException {
