@@ -27,19 +27,19 @@ public class Main {
                 return;
             }
 
-            // === Читаем времена стартов из конфига (если есть) ===
+            // === Читаем времена стартов из конфига (если есть). Не трогать, пока хоть как-то работает ===
             LocalTime arenaDefault = parseTime(config.get("arena_start"));
             LocalTime kvDefault = parseTime(config.get("kv_start"));
             LocalTime raidDefault = parseTime(config.get("raid_start"));
             LocalTime tunnelDefault = parseTime(config.get("tunnel_start"));
 
-            // === Подготовим переменные времени для записи обратно в конфиг ===
+            // === Готовим переменные времени для записи обратно в конфиг. Не трогать, пока хоть как-то работает ===
             LocalTime arenaStart = arenaDefault;
             LocalTime kvStart = kvDefault;
             LocalTime raidStart = raidDefault;
             LocalTime tunnelStart = tunnelDefault;
 
-            // === Запуск бота в зависимости от выбранного режима игры ===
+            // === Запуск выбранного режима игры ===
             String botName;
             LocalTime startTime;
             switch (mode) {
@@ -57,29 +57,23 @@ public class Main {
                     botName = "Рейд";
                     startTime = askStartTime(scanner, botName, raidDefault);
                     raidStart = startTime;
-
                     saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
-
                     RaidBot raidBot = new RaidBot(activeWindows, startTime, botName);
                     raidBot.start();
                     break;
                 case 3:
                     botName = "Арена";
                     startTime = askStartTime(scanner, botName, arenaDefault);
-
                     arenaStart = startTime;
                     saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
-
                     ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName);
                     arenaBot.start();
                     break;
                 case 4:
-                    botName = "Туннель"; // TODO: посмотреть грамматику
+                    botName = "Туннель";
                     startTime = askStartTime(scanner, botName, tunnelDefault);
-
                     tunnelStart = startTime;
                     saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
-
                     TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName);
                     tunnelBot.start();
                     break;
@@ -91,8 +85,7 @@ public class Main {
         }
     }
 
-    // === Дальше идут методы-утилиты ===
-
+    // === Дальше идут методы-утилиты для Main ===
     // Загружаем конфиг из файла в Map
     private static Map<String, String> loadConfig() {
         Map<String, String> config = new HashMap<>();
@@ -161,7 +154,7 @@ public class Main {
         }
     }
 
-    // Запрашиваем время старта с дефолтным значением (если есть). Enter = оставить дефолт.
+    // Запрашиваем время старта с дефолтным значением (при наличии). Enter = оставить дефолт.
     private static LocalTime askStartTime(Scanner scanner, String botName, LocalTime defaultTime) {
         while (true) {
             if (defaultTime != null) {
@@ -184,7 +177,8 @@ public class Main {
         }
     }
 
-    // Запрашиваем список окон
+    // Запрашиваем список активных окон. Игровых окон может быть пока до 4, но не все из них могут быть активными для
+    // работы программы! Так надо игрокам.
     private static List<Integer> askActiveWindows(Scanner scanner, String defaultWindowsStr) {
         if (defaultWindowsStr != null) {
             System.out.print("Введи номера окон через пробел. В прошлый раз были [" + defaultWindowsStr + "]: ");

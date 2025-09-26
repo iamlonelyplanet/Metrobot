@@ -4,6 +4,10 @@ import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/* Набор координат для кнопок, коллекция пауз между кликами, координаты окон.
+TODO:
+ */
+
 public class Buttons {
     // --- Паузы ---
     public static final int PAUSE_LONG_MS = 2800;
@@ -12,20 +16,21 @@ public class Buttons {
     public static final int PAUSE_BEFORE_BOSS_MS = 12_800;
     public static final int PAUSE_TUNNEL_MS = 16_000;
 
-    // --- Максимально допустимое количество боёв ---
+    // --- Максимально допустимое количество боёв. Почему byte? Где ещё их использовать, если не на учёбе! ---
     public static final byte MAX_BATTLES_ARENA = 50;
     public static final byte MAX_BATTLES_CLANWAR = 24;
     public static final byte MAX_BATTLES_RAID = 12;
     public static final byte MAX_WAYS_TUNNEL = 5;
 
     // --- Координаты верхних левых углов рабочего поля внутри окна ---
-    // Площадь рабочего поля в окне: 764×650, та же самая в ВК, та же при разрешениях 1366x768 и 1080
-    // Площадь окна: 1033x670
-    // Ширина полосы прокрутки (элемента Windows): 19
+    // Площадь рабочего поля в окне Игромира: 764×650, та же самая в ВК, та же при разрешениях 1366x768, 1080 и 1440.
+    // Продолжаем собирать статистику по разрешениям.
+    // Площадь стянутого до минимума окна Игромира: 1033x670
+    // Ширина полосы прокрутки (элемента окон Windows): 19
     public static int windowWidth = 1033;
     public static int windowHeight = 670;
     public static int xMoveRight = 125; // Расчёт "нуля" рабочего поля
-    public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных - смотреть
+    public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных - смотреть...
 
     public static Point topLeft1 = new Point(xMoveRight, yMoveDown);
     public static Point topLeft2 = new Point(windowWidth + xMoveRight, yMoveDown);
@@ -47,7 +52,7 @@ public class Buttons {
         return m;
     }
 
-    // === Координаты кнопок относительно верхнего левого угла рабочего поля ===
+    // === Координаты кнопок относительно верхнего левого угла рабочего поля (не окна!) ===
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
         put("Клан - Выход", new Point(55,505));
@@ -81,7 +86,7 @@ public class Buttons {
         put("Закрыть", new Point(515,433));
     }};
 
-    // --- Туннель ---
+    // --- Туннели ---
     public static final LinkedHashMap<String, Point> TUNNEL_BUTTONS = new LinkedHashMap<>() {{
         put("В туннель", new Point(415,273));
         put("Войти", new Point(275,303));

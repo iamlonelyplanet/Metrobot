@@ -5,6 +5,8 @@ import java.nio.file.*;
 import java.util.*;
 
 public class CounterStorage {
+    /* Чтение и запись счётчиков в txt-файл. Снова и снова читать урок!
+     */
     private static final String FILE_NAME = "counters.txt";
 
     // Загружаем счётчики из файла

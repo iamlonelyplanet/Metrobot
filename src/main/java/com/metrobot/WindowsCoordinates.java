@@ -40,10 +40,10 @@ public class WindowsCoordinates {
                 .thenComparingInt(r -> r.left));
 
         if (foundWindows.size() >= 4) {
-            windowCoordinates.put("Ф1", foundWindows.get(0));        // левое верхнее
-            windowCoordinates.put("Лёха-156", foundWindows.get(1)); // правое верхнее
-            windowCoordinates.put("Хуан", foundWindows.get(2));     // левое нижнее
-            windowCoordinates.put("Антон", foundWindows.get(3));    // правое нижнее
+            windowCoordinates.put("1", foundWindows.get(0)); // левое верхнее
+            windowCoordinates.put("2", foundWindows.get(1)); // правое верхнее
+            windowCoordinates.put("3", foundWindows.get(2)); // левое нижнее
+            windowCoordinates.put("4", foundWindows.get(3)); // правое нижнее
         }
     }
 
@@ -67,10 +67,10 @@ public class WindowsCoordinates {
         if (rect != null) {
             return rect.right - rect.left;
         }
-        return -1; // или бросать исключение
+        return -1;
     }
     
-    // Вспомогательный класс для точки
+    // Улилитарный класс для точки
     public record Point(int x, int y) {
         @Override
         public String toString() {

@@ -1,6 +1,10 @@
 package com.metrobot;
 
 public class Grammar {
+    /* Не особо нужный модуль подгона грамматики в зависимости от падежей, склонений, родов и т.п. Больше для учёбы.
+ */
+
+    // Для тестирования корректности работы грамматического модуля
 //    public static void main(String[] args) {
 //        for (int i = 1; i < 41; i++) {
 //            System.out.println(getWord2End2(i));

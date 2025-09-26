@@ -1,8 +1,6 @@
 package com.metrobot;
-
-import java.util.Arrays;
-import java.util.Map;
-
+/* Класс-счётчик. Практически копия урока 8!
+ */
 public class Counter {
     private String name;
     private int count;
