@@ -59,13 +59,9 @@ public class RaidBot extends BaseBot {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 5);
                 }
             }
-
             endGame();
-        } catch (InterruptedException ie) {
-            System.out.println("Прервано — выхожу.");
-            Thread.currentThread().interrupt();
         } catch (Exception e) {
-            e.printStackTrace();
+            handleExceptions(e);
         }
     }
 }

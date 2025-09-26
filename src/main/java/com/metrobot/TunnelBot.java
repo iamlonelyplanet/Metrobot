@@ -34,14 +34,14 @@ public class TunnelBot extends BaseBot {
     public void start() {
         try {
             startGame();
-            Instant startTime = Instant.now();
+            Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
 
             showAllGameWindows();
             // === Туннели с пауками ===
             // 10 пауков в туннеле Парк Культуры - Кропоткинская
             clickAllWindows("В туннель");
             Thread.sleep(pauseShortForTunnels);
-            for (int waySpiders1 = 0; waySpiders1 < MAX_WAYS_TUNNEL; waySpiders1++) {
+            for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 clickAllWindows("Карта ПК-КРО");
                 fightSpiders(unificatedCounter.getCount());
                 unificatedCounter.plusOne();
@@ -59,7 +59,7 @@ public class TunnelBot extends BaseBot {
             // 10 пауков в тоннеле Парк Культуры - Киевская
             clickAllWindows("В туннель");
             Thread.sleep(pauseShortForTunnels);
-            for (int waySpiders2 = 0; waySpiders2 < MAX_WAYS_TUNNEL; waySpiders2++) {
+            for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 clickAllWindows("Карта ПКг-КИЕ");
                 fightSpiders(unificatedCounter.getCount());
                 unificatedCounter.plusOne();
@@ -72,12 +72,13 @@ public class TunnelBot extends BaseBot {
             clickAllWindows("Карта ПКг-ПКк");
             Thread.sleep(PAUSE_SHORT_MS);
             clickAllWindows("Войти");
-            System.out.println("\nПауки закончились, идём к ящерам");
-            int spiders = unificatedCounter.getCount();
+            System.out.println("\nПауки закончились, прибито " + unificatedCounter.getCount() + ". Идём к ящерам");
+
+            // Пока надо для таймера, потом можно удалить
             Instant endSpiderTime = Instant.now();
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
             long secondsSpider = spidersDuration.getSeconds();
-            System.out.println("На пауков потрачено: " + secondsSpider / 60 + " мин " + secondsSpider % 60 + " сек");
+            System.out.println("На пауков затрачено: " + (secondsSpider / 60) + " мин " + (secondsSpider % 60) + " сек");
 
             // === Туннели с Ящерами ===
             showAllGameWindows();
@@ -152,6 +153,7 @@ public class TunnelBot extends BaseBot {
 
             minimizeAllGameWindows();
 
+            // Пока надо для таймера, потом можно удалить
             Duration lizardDuration = Duration.between(endSpiderTime, Instant.now());
             long secondsLizard = lizardDuration.getSeconds();
             System.out.println("\nНа ящеров затрачено: " + secondsLizard / 60 + " мин " + secondsLizard % 60 + " сек");
@@ -159,12 +161,8 @@ public class TunnelBot extends BaseBot {
                     (secondsSpider + secondsLizard) / 60 + " мин " + (secondsSpider + secondsLizard) % 60 + " сек");
 
             endGame();
-
-        } catch (InterruptedException e) {
-            System.out.println("Прервано — выхожу.");
-            Thread.currentThread().interrupt();
         } catch (Exception e) {
-            e.printStackTrace();
+            handleExceptions(e);
         }
     }
 }

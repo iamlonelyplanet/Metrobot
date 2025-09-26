@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.sound.sampled.*;
-import javax.sound.sampled.*;
+
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
@@ -204,6 +204,15 @@ public abstract class BaseBot {
             if (i < activeWindows.size() - 1) Thread.sleep(400);
         }
         Thread.sleep(PAUSE_SHORT_MS);
+    }
+
+    protected void handleExceptions(Exception e) {
+        if (e instanceof InterruptedException) {
+            System.out.println("Прервано — выхожу.");
+            Thread.currentThread().interrupt(); // восстанавливаем статус прерывания
+        } else {
+            e.printStackTrace();
+        }
     }
 
     // --- Клик ---
