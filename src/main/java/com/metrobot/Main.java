@@ -8,26 +8,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
-/* Главный класс. Спрашивает в GUI/консоли: режим игры, активные окна, время старта каждого режима. Класс получился
-слишком огромным, это косяк и некрасиво. Но если каждую некрасивость исправлять, то опять будет бесконечное предрелизное
-состояние. Зато отметил эти методы-утилиты комментом "// === Дальше идут методы-утилиты для Main ===".
-TODO: вынести методы-утилиты в отдельный класс.
+/* "Чтобы понять, что происходит, надо вернуться на 2 года назад..." (с) Max Payne
+Просимо пане ревьюеров и прочих провокаторов сначала заглянуть в Readme.
+
+Главный класс. Спрашивает в GUI/консоли: чо там за режим игры, каковы активные окна, что решим с временем старта
+каждого режима. Класс получился безумно огромным, это косяк и некрасиво. Но если каждую некрасивость исправлять,
+то опять будет бесконечное предрелизное состояние.
+Зато отметил эти методы-утилиты комментом "// === Дальше идут методы-утилиты для Main ===".
+TODO: вынести методы-утилиты в отдельный класс. Сделать окончание режимов вместо break.
  */
 
 public class Main {
     private static final String CONFIG_FILE = "config.txt"; // не подходит для хранения в Resources
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
-
     public static void main(String[] args) {
         try {
-            // переключатель для ввода режима, выбора рабочих окон, времени старта: true = GUI, false = консольный ввод
-            boolean useGui = true;
             Scanner scanner = new Scanner(System.in);
+
+            // Переключатель GUI/консоль, выбора рабочих окон, времени старта: true = GUI, false = консольный ввод
+            boolean useGui = true;
 
             // === Загружаем конфиг, если есть ===
             Map<String, String> config = loadConfig();
 
-            // === Запрашиваем режим игры в режиме GUI/консоль ===
+            // === Запрашиваем режим игры в режиме GUI/консоль. Тернарник - красава ===
             int mode;
             mode = useGui
                     ? askModeGui()
@@ -52,6 +56,7 @@ public class Main {
             LocalTime tunnelStart = tunnelDefault;
 
             // === Запуск выбранного режима игры ===
+            // TODO: унифицировать же!
             String botName;
             LocalTime startTime;
             switch (mode) {
@@ -104,7 +109,7 @@ public class Main {
     }
 
     // === Дальше идут методы-утилиты для Main ===
-    // Загружаем конфиг из сервера/файла в Map. Сервер пока удалён, но всё получилось!
+    // Загружаем конфиг из сервера/файла в Map. Сервер пока удалён, но всё с ним получилось!
     private static Map<String, String> loadConfig() {
         Map<String, String> config = new HashMap<>();
         File file = new File(CONFIG_FILE);
@@ -139,7 +144,7 @@ public class Main {
         }
     }
 
-    // Спрашиваем режим черезо консоль, с возможностью оставить по умолчанию
+    // Спрашиваем режим игры черезо консоль, с возможностью оставить по умолчанию
     private static int askMode(Scanner scanner, String defaultModeStr) {
         System.out.println("Выбери режим и введи цифру:");
         System.out.println("1. Клановые войны");

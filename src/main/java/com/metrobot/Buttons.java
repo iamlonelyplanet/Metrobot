@@ -55,57 +55,57 @@ public class Buttons {
     // === Координаты кнопок относительно верхнего левого угла рабочего поля (не окна!) ===
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
-        put("Клан - Выход", new Point(55,505));
-        put("Арена", new Point(320,303));
-        put("Атаковать", new Point(200,513));
-        put("Питомец", new Point(55,505)); // опционально
-        put("Пропустить", new Point(385,33));
-        put("Закрыть — Победа", new Point(515,520));
-        put("Закрыть — Поражение", new Point(515,463));
-        put("Забрать коллекцию", new Point(515,463));
+        put("Клан - Выход", new Point(55, 505));
+        put("Арена", new Point(320, 303));
+        put("Атаковать", new Point(200, 513));
+        put("Питомец", new Point(55, 505)); // опционально
+        put("Пропустить", new Point(385, 33));
+        put("Закрыть — Победа", new Point(515, 520));
+        put("Закрыть — Поражение", new Point(515, 463));
+        put("Забрать коллекцию", new Point(515, 463));
     }};
 
     // --- Клановая война ---
     public static final LinkedHashMap<String, Point> KV_BUTTONS = new LinkedHashMap<>() {{
-        put("Клан", new Point(315,58));
-        put("Война", new Point(55,303));
-        put("Атаковать", new Point(415,288));
-        put("Пропустить", new Point(385,33));
-        put("Закрыть", new Point(515,433));
-        put("Погон", new Point(565,523));
+        put("Клан", new Point(315, 58));
+        put("Война", new Point(55, 303));
+        put("Атаковать", new Point(415, 288));
+        put("Пропустить", new Point(385, 33));
+        put("Закрыть", new Point(515, 433));
+        put("Погон", new Point(565, 523));
     }};
 
     // --- Рейд ---
     public static final LinkedHashMap<String, Point> RAID_BUTTONS = new LinkedHashMap<>() {{
-        put("Клан", new Point(315,58));
-        put("Война", new Point(55,303));
-        put("Рейды", new Point(55,413));
-        put("Обновить", new Point(520,40));
-        put("Атаковать", new Point(425,323));
-        put("Пропустить", new Point(385,33));
-        put("Закрыть", new Point(515,433));
+        put("Клан", new Point(315, 58));
+        put("Война", new Point(55, 303));
+        put("Рейды", new Point(55, 413));
+        put("Обновить", new Point(520, 40));
+        put("Атаковать", new Point(425, 323));
+        put("Пропустить", new Point(385, 33));
+        put("Закрыть", new Point(515, 433));
     }};
 
     // --- Туннели ---
     public static final LinkedHashMap<String, Point> TUNNEL_BUTTONS = new LinkedHashMap<>() {{
-        put("В туннель", new Point(415,273));
-        put("Войти", new Point(275,303));
-        put("Войти с пропуском", new Point(275,373));
-        put("Атаковать", new Point(425,323));
-        put("Пропустить", new Point(385,33));
-        put("Закрыть", new Point(515,520));
-        put("Карта-ПК-ФРУ", new Point(315,478));
-        put("Карта-КОМ", new Point(315,428));
-        put("Карта-УНИ", new Point(315,478));
-        put("Карта-ПВ", new Point(315,533));
-        put("Карта-КОМ-ФРУ", new Point(315,378));
-        put("Карта-ФРУ-ПК", new Point(215,293));
-        put("Карта ПК-КРО", new Point(405,343));
-        put("Карта КРО-ПК", new Point(195,393));
-        put("Карта ПКк-ПКг", new Point(185,433));
-        put("Карта ПКг-КИЕ", new Point(225,303));
-        put("Карта КИЕ-ПКг", new Point(205,433));
-        put("Карта ПКг-ПКк", new Point(185,383));
-        put("Питомец", new Point(55,505)); // опционально
+        put("В туннель", new Point(415, 273));
+        put("Войти", new Point(275, 303));
+        put("Войти с пропуском", new Point(275, 373));
+        put("Атаковать", new Point(425, 323));
+        put("Пропустить", new Point(385, 33));
+        put("Закрыть", new Point(515, 520));
+        put("Карта-ПК-ФРУ", new Point(315, 478));
+        put("Карта-КОМ", new Point(315, 428));
+        put("Карта-УНИ", new Point(315, 478));
+        put("Карта-ПВ", new Point(315, 533));
+        put("Карта-КОМ-ФРУ", new Point(315, 378));
+        put("Карта-ФРУ-ПК", new Point(215, 293));
+        put("Карта ПК-КРО", new Point(405, 343));
+        put("Карта КРО-ПК", new Point(195, 393));
+        put("Карта ПКк-ПКг", new Point(185, 433));
+        put("Карта ПКг-КИЕ", new Point(225, 303));
+        put("Карта КИЕ-ПКг", new Point(205, 433));
+        put("Карта ПКг-ПКк", new Point(185, 383));
+        put("Питомец", new Point(55, 505)); // опционально
     }};
 }
