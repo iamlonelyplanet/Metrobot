@@ -139,7 +139,7 @@ public abstract class BaseBot {
         Thread.sleep(PAUSE_LONG_MS);
         clickAllWindows("Закрыть");
         tunnelMonsters++;
-        System.out.println("Убито пауков: " + tunnelMonsters);
+        System.out.println("Убито тоннельных монстров: " + tunnelMonsters);
         Thread.sleep(PAUSE_TUNNEL_MS);
         clickAllWindows("В туннель");
         Thread.sleep(PAUSE_SHORT_MS);
@@ -152,7 +152,7 @@ public abstract class BaseBot {
         Thread.sleep(PAUSE_LONG_MS);
         clickAllWindows("Закрыть");
         tunnelMonsters++;
-        System.out.println("Убито ящеров: " + tunnelMonsters);
+        System.out.println("Убито тоннельных монстров: " + tunnelMonsters);
         Thread.sleep(PAUSE_TUNNEL_MS);
     }
 
