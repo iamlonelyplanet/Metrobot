@@ -37,7 +37,7 @@ public class ClanWarBot extends BaseBot {
 
             // Бои
             for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_CLANWAR; battle++) {
-                System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_CLANWAR + " ===");
+                System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_CLANWAR + " ===");
                 showAllGameWindows();
                 clickAllWindows("Клан");
                 clickAllWindows("Война");

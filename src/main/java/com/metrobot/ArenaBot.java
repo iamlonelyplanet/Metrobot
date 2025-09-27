@@ -38,14 +38,14 @@ public class ArenaBot extends BaseBot {
 
             // Бои
             for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
-                System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_ARENA + " ===");
+                System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_ARENA + " ==="); // глянуть battle = 0
                 showAllGameWindows();
                 clickAllWindows("Клан - Выход");
                 clickAllWindows("Арена");
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Атаковать");
                 Thread.sleep(PAUSE_LONG_MS);
-//                clickAllWindows("Питомец"); // Опционально. Можно сделать целый отдельный режим игры!
+//                clickAllWindows("Питомец"); // Опционально. Можно сделать целый отдельный режим, перегрузкой методов!
                 clickAllWindows("Пропустить");
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть — Победа");

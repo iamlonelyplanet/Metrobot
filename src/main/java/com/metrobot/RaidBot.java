@@ -48,7 +48,7 @@ public class RaidBot extends BaseBot {
 
             // Бои
             for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_RAID; battle++) {
-                System.out.println("\n=== Бой №" + battle + " из " + MAX_BATTLES_RAID + " ===");
+                System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_RAID + " ===");
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
 
