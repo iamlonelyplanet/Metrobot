@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
-/* Главный класс. Спрашивает в GUI или консоли: режим игры, активные окна, время старта каждого режима. Метод слишком
-огромный, это косяк и некрасиво. Но если каждую некрасивость исправлять, то опять будет бесконечное предрелизное
-состояние. Зато отметил эти методы-утилиты комментом "// === Дальше идут методы-утилиты для Main ==="
+/* Главный класс. Спрашивает в GUI/консоли: режим игры, активные окна, время старта каждого режима. Класс получился
+слишком огромным, это косяк и некрасиво. Но если каждую некрасивость исправлять, то опять будет бесконечное предрелизное
+состояние. Зато отметил эти методы-утилиты комментом "// === Дальше идут методы-утилиты для Main ===".
 TODO: вынести методы-утилиты в отдельный класс.
  */
 
@@ -104,7 +104,7 @@ public class Main {
     }
 
     // === Дальше идут методы-утилиты для Main ===
-    // Загружаем конфиг из файла в Map
+    // Загружаем конфиг из сервера/файла в Map. Сервер пока удалён, но всё получилось!
     private static Map<String, String> loadConfig() {
         Map<String, String> config = new HashMap<>();
         File file = new File(CONFIG_FILE);
@@ -124,7 +124,7 @@ public class Main {
         return config;
     }
 
-    // Сохраняем конфиг в файл
+    // Сохраняем конфиг в локальный файл, без взаимодействия с сервером
     private static void saveConfig(int mode, List<Integer> windows, LocalTime arenaStart, LocalTime kvStart,
                                    LocalTime raidStart, LocalTime tunnelStart) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(CONFIG_FILE))) {
