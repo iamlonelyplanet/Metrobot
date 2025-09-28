@@ -24,14 +24,10 @@ public class Main {
     public static void main(String[] args) {
         try {
             Scanner scanner = new Scanner(System.in);
+            boolean useGui = true; // Переключатель GUI/консоль, выбора рабочих окон, времени старта.
+            Map<String, String> config = loadConfig(); // Загружаем конфиг при наличии
 
-            // Переключатель GUI/консоль, выбора рабочих окон, времени старта: true = GUI, false = консольный ввод
-            boolean useGui = true;
-
-            // === Загружаем конфиг, если есть ===
-            Map<String, String> config = loadConfig();
-
-            // === Запрашиваем режим игры в режиме GUI/консоль. Тернарник - красава ===
+            // === Запрашиваем режим игры в режиме GUI/консоль. ===
             int mode;
             mode = useGui
                     ? askModeGui()
@@ -56,7 +52,7 @@ public class Main {
             LocalTime tunnelStart = tunnelDefault;
 
             // === Запуск выбранного режима игры ===
-            // TODO: унифицировать же!
+            // TODO: унифицировать!
             String botName;
             LocalTime startTime;
             switch (mode) {

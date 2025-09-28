@@ -68,7 +68,7 @@ public class RaidBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
 
                 if (battle < MAX_BATTLES_RAID) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 5);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 7);
                 }
             }
             endGame();
