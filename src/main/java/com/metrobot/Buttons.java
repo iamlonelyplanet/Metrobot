@@ -22,25 +22,26 @@ public class Buttons {
     public static final byte MAX_BATTLES_RAID = 12;
     public static final byte MAX_WAYS_TUNNEL = 5;
 
-    // --- Координаты верхних левых углов рабочего поля внутри окна ---
-    // Площадь рабочего поля в окне Игромира: 764×650, та же самая в ВК, та же при разрешениях 1366x768, 1080 и 1440.
-    // Продолжаем собирать статистику по разрешениям.
-    // Площадь стянутого до минимума окна Игромира: 1033x670
-    // Ширина полосы прокрутки (элемента окон Windows): 19
+    /*  --- Координаты верхних левых углов рабочего поля внутри окна ---
+    Площадь рабочего поля в окне Игромира и ВК: 764×650; одинакова при разрешениях 768, 1080 и 1440.
+    Продолжаем собирать статистику по разрешениям.
+    Площадь стянутого до минимума ("приведённого") окна Игромира: 1033x670
+    Ширина полосы прокрутки (элемента окон Windows): 19 в Игромире, собрать стату в других разрешениях
+    */
     public static int windowWidth = 1033;
     public static int windowHeight = 670;
-    public static int xMoveRight = 125; // Расчёт "нуля" рабочего поля
-    public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных - смотреть...
+    public static int xMoveRight = (windowWidth - 764 - 19) / 2; // Расчёт "нуля" рабочего поля
+    public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных собирать статистику
 
     public static Point topLeft1 = new Point(xMoveRight, yMoveDown);
     public static Point topLeft2 = new Point(windowWidth + xMoveRight, yMoveDown);
     public static Point topLeft3 = new Point(xMoveRight, windowHeight + yMoveDown);
     public static Point topLeft4 = new Point(windowWidth + xMoveRight, windowHeight + yMoveDown);
 
-    public static final GameWindow WINDOW_1 = new GameWindow("Ф1", topLeft1);
-    public static final GameWindow WINDOW_2 = new GameWindow("Лёха-156", topLeft2);
-    public static final GameWindow WINDOW_3 = new GameWindow("Хуан", topLeft3);
-    public static final GameWindow WINDOW_4 = new GameWindow("Антон", topLeft4);
+    public static final GameWindow WINDOW_1 = new GameWindow("Боец 1", topLeft1);
+    public static final GameWindow WINDOW_2 = new GameWindow("Боец 2", topLeft2);
+    public static final GameWindow WINDOW_3 = new GameWindow("Боец 3", topLeft3);
+    public static final GameWindow WINDOW_4 = new GameWindow("Боец 4", topLeft4);
 
     // Возвращаем упорядоченную карту: индекс -> окно (1..4)
     public static Map<Integer, GameWindow> defaultWindows() {
