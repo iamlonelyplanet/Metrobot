@@ -82,13 +82,15 @@ public class TunnelBot extends BaseBot {
             Instant endSpiderTime = Instant.now();
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
             long secondsSpider = spidersDuration.getSeconds();
-            System.out.println("На пауков затрачено: " + (secondsSpider / 60) + " мин " + (secondsSpider % 60) + " сек");
+            System.out.println("На пауков затрачено " + (secondsSpider / 60) + " мин " + (secondsSpider % 60) + " сек");
 
             // === Туннели с Ящерами ===
+            unificatedCounter.setCount(0);
             showAllGameWindows(); // можно удалить, но лучше оставить для внутреннего тестирования
             Thread.sleep(pauseShortForTunnels);
 
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
+                // 4 ящерицы в тоннеле Парк Культуры - Проспект Вернадского
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта-ПК-ФРУ");
@@ -122,6 +124,7 @@ public class TunnelBot extends BaseBot {
 
                 System.out.println("\nЗавершено пробегов до Проспекта Вернадского: " + (way + 1));
 
+                // 4 ящерицы в тоннеле Проспект Вернадского - Парк Культуры
                 clickAllWindows("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта-УНИ");

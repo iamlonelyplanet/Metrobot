@@ -12,7 +12,7 @@ public class Buttons {
     // --- Паузы ---
     public static final int PAUSE_LONG_MS = 2800;
     public static final int PAUSE_SHORT_MS = 1200;
-    public static final int FIVE_MINUTES_PAUSE_SECONDS = 285;
+    public static final int FIVE_MINUTES_PAUSE_SECONDS = 284;
     public static final int PAUSE_BEFORE_BOSS_MS = 12_800;
     public static final int PAUSE_TUNNEL_MS = 16_000;
 
@@ -73,7 +73,7 @@ public class Buttons {
         put("Атаковать", new Point(415, 288));
         put("Пропустить", new Point(385, 33));
         put("Закрыть", new Point(515, 433));
-        put("Погон", new Point(565, 523));
+        put("Погон", new Point(565, 555));
     }};
 
     // --- Рейд ---

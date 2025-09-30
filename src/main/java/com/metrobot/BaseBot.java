@@ -113,7 +113,7 @@ public abstract class BaseBot {
         System.out.println("Свернул окна");
     }
 
-    // === Старт любого игрового режима ===
+    // Старт любого игрового режима
     protected void startGame() throws InterruptedException {
         waitUntilStartTime(startTime);
         System.out.println("Старт режима " + botName);
@@ -139,7 +139,7 @@ public abstract class BaseBot {
         Thread.sleep(PAUSE_LONG_MS);
         clickAllWindows("Закрыть");
         tunnelMonsters++;
-        System.out.println("Убито тоннельных монстров: " + tunnelMonsters);
+        System.out.println("Убито пауков: " + tunnelMonsters);
         Thread.sleep(PAUSE_TUNNEL_MS);
         clickAllWindows("В туннель");
         Thread.sleep(PAUSE_SHORT_MS);
@@ -152,7 +152,7 @@ public abstract class BaseBot {
         Thread.sleep(PAUSE_LONG_MS);
         clickAllWindows("Закрыть");
         tunnelMonsters++;
-        System.out.println("Убито тоннельных монстров: " + tunnelMonsters);
+        System.out.println("Убито ящеров: " + tunnelMonsters);
         Thread.sleep(PAUSE_TUNNEL_MS);
     }
 
@@ -179,7 +179,7 @@ public abstract class BaseBot {
         Map<String, Point> buttonMap = getButtonMap();
         Point rel = buttonMap.get(buttonName);
         if (rel == null) {
-            System.err.println("⚠ Кнопка \"" + buttonName + "\" не найдена в Buttons");
+            System.err.println("⚠ Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
             return;
         }
 
