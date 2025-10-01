@@ -14,7 +14,7 @@ public class Buttons {
     public static final int PAUSE_SHORT_MS = 1200;
     public static final int FIVE_MINUTES_PAUSE_SECONDS = 284;
     public static final int PAUSE_BEFORE_BOSS_MS = 12_800;
-    public static final int PAUSE_TUNNEL_MS = 16_000;
+    public static final int PAUSE_TUNNEL_MS = 16_000; // Для альтернативных скоростей: 16_000, 5_000, 8_000
 
     // --- Максимально допустимое количество боёв. Почему byte? Где ещё их использовать, если не на учёбе! ---
     public static final byte MAX_BATTLES_ARENA = 50;
