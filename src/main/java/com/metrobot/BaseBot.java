@@ -122,7 +122,7 @@ public abstract class BaseBot {
         // TODO изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
     }
 
-    // Конец любого игрового режима
+    // Конец любого игрового режима, это не bot.stop()
     protected void endGame() {
         playFinalSound();
         System.out.println("\nРежим " + botName + " завершён. " +
