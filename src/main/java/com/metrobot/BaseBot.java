@@ -68,19 +68,6 @@ public abstract class BaseBot {
         }
     }
 
-    // Ищет в Windows все окна с названием игрушки. Первый вариант для соцсети МойМир, второй для ВКонтакте
-    protected List<HWND> findGameWindows() {
-        List<HWND> res = new ArrayList<>();
-        User32.INSTANCE.EnumWindows((hWnd, data) -> {
-            char[] buffer = new char[512];
-            User32.INSTANCE.GetWindowText(hWnd, buffer, 512);
-            String title = new String(buffer).trim();
-            if (title.contains("Игроклуб") || title.contains("2033")) res.add(hWnd);
-            return true;
-        }, null);
-        return res;
-    }
-
     // Разворачиваем все игровые окна, даже незадействованные. Так надо.
     protected void showAllGameWindows() {
         List<HWND> wins = findGameWindows();
@@ -111,6 +98,19 @@ public abstract class BaseBot {
             }
         }
         System.out.println("Свернул окна");
+    }
+
+    // Ищет в Windows все окна с названием игрушки. Первый вариант для соцсети МойМир, второй для ВКонтакте
+    protected List<HWND> findGameWindows() {
+        List<HWND> res = new ArrayList<>();
+        User32.INSTANCE.EnumWindows((hWnd, data) -> {
+            char[] buffer = new char[512];
+            User32.INSTANCE.GetWindowText(hWnd, buffer, 512);
+            String title = new String(buffer).trim();
+            if (title.contains("Игроклуб") || title.contains("2033")) res.add(hWnd);
+            return true;
+        }, null);
+        return res;
     }
 
     // Старт любого игрового режима
@@ -179,7 +179,7 @@ public abstract class BaseBot {
         Map<String, Point> buttonMap = getButtonMap();
         Point rel = buttonMap.get(buttonName);
         if (rel == null) {
-            System.err.println("⚠ Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
+            System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
             return;
         }
 

@@ -52,10 +52,12 @@ public class ClanWarBot extends BaseBot {
                 unificatedCounter.plusOne();
                 CounterStorage.saveCounters(counters);
                 System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
+
                 if (battle < MAX_BATTLES_CLANWAR) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size());
                 }
             }
+
             endGame();
         } catch (Exception e) {
             handleExceptions(e);

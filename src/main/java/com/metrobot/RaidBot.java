@@ -52,7 +52,7 @@ public class RaidBot extends BaseBot {
                 showAllGameWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
 
-                // TODO: Обдумать 2 нижние строки на предмет ненужного/вредного повтора при battle == 1
+                // TODO: Обдумать 2 нижние строки на предмет паразитного повтора при battle == 1
                 clickAllWindows("Клан");
                 clickAllWindows("Рейды");
 
@@ -71,6 +71,7 @@ public class RaidBot extends BaseBot {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 6);
                 }
             }
+
             endGame();
         } catch (Exception e) {
             handleExceptions(e);

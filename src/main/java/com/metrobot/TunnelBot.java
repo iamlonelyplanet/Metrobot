@@ -168,6 +168,7 @@ public class TunnelBot extends BaseBot {
                     (secondsSpider + secondsLizard) / 60 + " мин " + (secondsSpider + secondsLizard) % 60 + " сек");
 
             endGame();
+
         } catch (Exception e) {
             handleExceptions(e);
         }

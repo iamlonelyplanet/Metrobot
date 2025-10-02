@@ -61,6 +61,7 @@ public class ArenaBot extends BaseBot {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size());
                 }
             }
+
             endGame();
         } catch (Exception e) {
             handleExceptions(e);
