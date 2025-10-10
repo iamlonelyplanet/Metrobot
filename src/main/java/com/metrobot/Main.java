@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /* "Чтобы понять, что происходит, надо вернуться на 2 года назад..." (с) Max Payne
 
@@ -40,9 +41,7 @@ public class Main {
 
             // === Запрашиваем рабочие окна ("персы") в режиме GUI/консоль, от 1 до 4, потенциально не ограничено ===
             List<Integer> activeWindows;
-            activeWindows = useGui
-                    ? askActiveWindowsGui(config.get("activeWindows"))
-                    : askActiveWindows(scanner, config.get("activeWindows"));
+            activeWindows = askActiveWindows(config.get("activeWindows"));
 
             // === Читаем времена стартов из конфига (если есть). Не трогать, пока хоть как-то работает ===
             LocalTime arenaDefault = parseTime(config.get("arena_start"));
@@ -143,7 +142,7 @@ public class Main {
         // создаём список на 4 окна (возможные позиции)
         List<WinDef.HWND> ordered = new ArrayList<>(Arrays.asList(null, null, null, null));
 
-        // определяем размеры экрана
+        // определяем разрешение монитора и примерное расположение окон на экране
         int screenWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
 
@@ -183,15 +182,6 @@ public class Main {
 
         return ordered;
     }
-
-
-
-    // Вспомогательный метод для определения середины экрана
-    private static int getScreenMidX() {
-        return java.awt.Toolkit.getDefaultToolkit().getScreenSize().width / 2;
-    }
-
-
 
     // Загружаем конфиг из сервера/файла в Map. Сервер пока удалён, но всё с ним получилось!
     private static Map<String, String> loadConfig() {
@@ -251,7 +241,7 @@ public class Main {
         }
     }
 
-    // Спрашиваем режим через GUI, с возможностью оставить по умолчанию
+    // Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию
     private static int askModeGui() {
         String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели"};
         int choice = javax.swing.JOptionPane.showOptionDialog(
@@ -306,13 +296,12 @@ public class Main {
         }
     }
 
-
-    // GUI-запрос времени старта
+    // GUI-запрос времени старта, при помощи окна-спиннера
     private static LocalTime askStartTimeGui(String botName, LocalTime defaultTime) {
         SpinnerDateModel model = new SpinnerDateModel(); // Оставить, несмотря на подчёркивания IDEA. Изучить.
         JSpinner spinner = new JSpinner(model);
 
-        // Наконец-то паттерн HH:mm
+        // Наконец-то HH:mm!
         JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "HH:mm");
         spinner.setEditor(editor);
 
@@ -346,29 +335,10 @@ public class Main {
         return defaultTime;
     }
 
-    // 2 метода подряд: ввод GUI или консоль. Запрашиваем список активных окон. Игровых окон может быть пока до 4,
-    // но не все из них могут быть активными для работы программы! Так надо игрокам.
-    private static List<Integer> askActiveWindows(Scanner scanner, String defaultWindowsStr) {
-        if (defaultWindowsStr != null) {
-            System.out.print("Введи номера окон через пробел. В прошлый раз были [" + defaultWindowsStr + "]: ");
-        } else {
-            System.out.print("Введи номера окон через пробел. Доступные: 1, 2, 3, 4: ");
-        }
-
-        String input = scanner.nextLine().trim();
-        if (input.isEmpty() && defaultWindowsStr != null) input = defaultWindowsStr;
-
-        List<Integer> windows = new ArrayList<>();
-        for (String part : input.split(" ")) {
-            try {
-                windows.add(Integer.parseInt(part.trim()));
-            } catch (NumberFormatException ignored) {
-            }
-        }
-        return windows;
-    }
-
-    private static List<Integer> askActiveWindowsGui(String defaultWindowsStr) {
+    /* Спрашиваем список активных окон, основываясь на автоматически найденных. Игровых окон может быть пока до 4.
+    Некоторые из найденных окон могут быть неактивными, пусть такие работают сами, без участия программы. Так надо.
+     */
+    private static List<Integer> askActiveWindows(String defaultWindowsStr) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
 
