@@ -184,32 +184,16 @@ public abstract class BaseBot {
         }
 
         for (int i = 0; i < activeWindows.size(); i++) {
-            Integer idx = activeWindows.get(i);
-            GameWindow gw = windowsMap.get(idx);
-            if (gw == null) continue;
-
-            int relX = rel.x;
-            int relY = rel.y;
-
-            //  Неудавшаяся попытка с багом игрушки. Недобраузер "Игромир" не отображает чат игры при масштабе 100%.
-            //  Для чата надо менять масштаб, что приводит к сбою координат кнопок, и прога становится бесполезной.
-//            TODO: Попытка в масштабирование окна (Ctrl +/-), пока не удалась.
-//            Масштаб учитываем только для окна 1.
-//            ВНИМАНИЕ: хотя по замерам зум ≈ 0.913, реально клики совпадают только при 0.96. И то не все. Фиг знает.
-//            Вероятно, округляет zoom-шаги (100% → 95% → 80% ...). Или дело в масштабировании Windows 10.
-
-//            if ("Боец 1".equals(gw.name)) {
-//                double scale = 0.96; // калибровка для Ctrl–
-//                relX = (int) Math.round(relX * scale);
-//                relY = (int) Math.round(relY * scale);
-//            }
-
-            int x = gw.getTopLeftCorner().x + relX;
-            int y = gw.getTopLeftCorner().y + relY;
+            int slot = i + 1; // 1..4
+            GameWindow gw = windowsMap.get(slot);
+            if (gw == null || gw.getTopLeftCorner() == null) {
+                System.err.printf("Нет координат для слота %d — пропускаю%n", slot);
+                continue;
+            }
+            int x = gw.getTopLeftCorner().x + rel.x;
+            int y = gw.getTopLeftCorner().y + rel.y;
             clickAt(x, y);
-            System.out.printf("%s нажал \"%s\" (%d,%d)%n", gw.getName(), buttonName, x, y);
-
-            if (i < activeWindows.size() - 1) Thread.sleep(400);
+            Thread.sleep(400);
         }
         Thread.sleep(PAUSE_SHORT_MS);
     }

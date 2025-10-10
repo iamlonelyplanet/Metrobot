@@ -193,7 +193,7 @@ public class Main {
         }
     }
 
-    // 2-3 метода подряд: ввод GUI или консоль. Запрашиваем время старта с дефолтным значением (при наличии).
+    // 2 метода подряд: ввод GUI или консоль. Запрашиваем время старта с дефолтным значением (при наличии).
     // Enter = оставить дефолт.
     private static LocalTime askStartTime(Scanner scanner, String botName, LocalTime defaultTime) {
         while (true) {
@@ -217,43 +217,8 @@ public class Main {
         }
     }
 
-//    // Примитивный GUI-запрос времени старта. Тупо строка, некрасиво, но работало. Пока закомментировано.
-//    private static LocalTime askStartTimeGui2(String botName, LocalTime defaultTime) {
-//        while (true) {
-//            String message;
-//            if (defaultTime != null) {
-//                message = "Введи время старта для режима " + botName +
-//                        " (по умолчанию " + defaultTime.format(TIME_FORMAT) + "):";
-//            } else {
-//                message = "Введи время старта для режима " + botName +
-//                        " (например 20:00):";
-//            }
-//
-//            String input = javax.swing.JOptionPane.showInputDialog(null, message, "Метробот 2033",
-//                    javax.swing.JOptionPane.QUESTION_MESSAGE);
-//
-//            if (input == null) {
-//                if (defaultTime != null) return defaultTime;
-//                else continue; // без времени по дефолту спрашиваем снова
-//            }
-//
-//            input = input.trim();
-//            if (input.isEmpty()) {
-//                if (defaultTime != null) return defaultTime;
-//                else continue;
-//            }
-//
-//            try {
-//                return LocalTime.parse(input, TIME_FORMAT);
-//            } catch (Exception e) {
-//                javax.swing.JOptionPane.showMessageDialog(null,
-//                        "Неверный формат времени. Нужно ЧЧ:мм, например 20:45.",
-//                        "Ошибка", javax.swing.JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
-//    }
 
-    // Более продвинутый GUI-запрос времени старта. Основной способ.
+    // GUI-запрос времени старта
     private static LocalTime askStartTimeGui(String botName, LocalTime defaultTime) {
         SpinnerDateModel model = new SpinnerDateModel(); // Оставить, несмотря на подчёркивания IDEA. Изучить.
         JSpinner spinner = new JSpinner(model);
