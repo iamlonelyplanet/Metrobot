@@ -1,5 +1,9 @@
 package com.metrobot;
 
+import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinDef;
+import com.sun.jna.platform.win32.WinDef.RECT;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -31,6 +35,8 @@ public class Main {
             mode = useGui
                     ? askModeGui()
                     : askMode(scanner, config.get("mode"));
+
+            List<WinDef.HWND> foundWindows = findGameWindows();
 
             // === Запрашиваем рабочие окна ("персы") в режиме GUI/консоль, от 1 до 4, потенциально не ограничено ===
             List<Integer> activeWindows;
@@ -104,6 +110,89 @@ public class Main {
     }
 
     // === Дальше идут методы-утилиты для Main ===
+    /* Ищем в Windows все окна с названием игры. Первый вариант для соцсети МойМир, второй для ВКонтакте. Затем
+    сортируем список в порядке: верх - слева направо, низ - слева направо.
+    */
+    protected static List<WinDef.HWND> findGameWindows() {
+        User32 user32 = User32.INSTANCE;
+        List<WinDef.HWND> found = new ArrayList<>();
+
+        user32.EnumWindows((hWnd, data) -> {
+            char[] buffer = new char[512];
+            user32.GetWindowText(hWnd, buffer, 512);
+            String title = new String(buffer).trim();
+            if (title.contains("Игроклуб") || title.contains("2033")) {
+                found.add(hWnd);
+            }
+            return true;
+        }, null);
+
+        // сортируем по координатам
+        found.sort((h1, h2) -> {
+            RECT r1 = new RECT();
+            RECT r2 = new RECT();
+            user32.GetWindowRect(h1, r1);
+            user32.GetWindowRect(h2, r2);
+            if (r1.top != r2.top) {
+                return Integer.compare(r1.top, r2.top);
+            } else {
+                return Integer.compare(r1.left, r2.left);
+            }
+        });
+
+        // создаём список на 4 окна (возможные позиции)
+        List<WinDef.HWND> ordered = new ArrayList<>(Arrays.asList(null, null, null, null));
+
+        // определяем размеры экрана
+        int screenWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+        int screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+
+        int midX = screenWidth / 2;
+        int midY = screenHeight / 2;
+
+        for (WinDef.HWND hWnd : found) {
+            RECT r = new RECT();
+            user32.GetWindowRect(hWnd, r);
+
+            int centerX = (r.left + r.right) / 2;
+            int centerY = (r.top + r.bottom) / 2;
+
+            boolean top = centerY < midY;
+            boolean left = centerX < midX;
+
+            int index;
+            if (top && left) index = 0;       // Окно 1
+            else if (top) index = 1;          // Окно 2
+            else if (left) index = 2;         // Окно 3
+            else index = 3;                   // Окно 4
+
+            ordered.set(index, hWnd);
+        }
+
+        System.out.println("=== Найденные игровые окна (позиции 1–4) ===");
+        for (int i = 0; i < 4; i++) {
+            if (ordered.get(i) != null) {
+                RECT r = new RECT();
+                user32.GetWindowRect(ordered.get(i), r);
+                System.out.printf("Окно %d: (%d, %d) — (%d, %d)%n",
+                        i + 1, r.left, r.top, r.right, r.bottom);
+            } else {
+                System.out.printf("Окно %d: [не найдено]%n", i + 1);
+            }
+        }
+
+        return ordered;
+    }
+
+
+
+    // Вспомогательный метод для определения середины экрана
+    private static int getScreenMidX() {
+        return java.awt.Toolkit.getDefaultToolkit().getScreenSize().width / 2;
+    }
+
+
+
     // Загружаем конфиг из сервера/файла в Map. Сервер пока удалён, но всё с ним получилось!
     private static Map<String, String> loadConfig() {
         Map<String, String> config = new HashMap<>();
