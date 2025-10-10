@@ -3,6 +3,7 @@ package com.metrobot;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinDef.RECT;
+import com.sun.jna.platform.win32.WinDef.HWND;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /* "Чтобы понять, что происходит, надо вернуться на 2 года назад..." (с) Max Payne
 
@@ -40,7 +40,7 @@ public class Main {
             List<WinDef.HWND> foundWindows = findGameWindows();
 
             // === Запрашиваем рабочие окна ("персы") в режиме GUI/консоль, от 1 до 4, потенциально не ограничено ===
-            List<Integer> activeWindows;
+            List<HWND> activeWindows;
             activeWindows = askActiveWindows(foundWindows, config.get("activeWindows"));
 
             // === Читаем времена стартов из конфига (если есть). Не трогать, пока хоть как-то работает ===
@@ -204,7 +204,7 @@ public class Main {
     }
 
     // Сохраняем конфиг в локальный файл, без взаимодействия с сервером
-    private static void saveConfig(int mode, List<Integer> windows, LocalTime arenaStart, LocalTime kvStart,
+    private static void saveConfig(int mode, List<HWND> windows, LocalTime arenaStart, LocalTime kvStart,
                                    LocalTime raidStart, LocalTime tunnelStart) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(CONFIG_FILE))) {
             pw.println("mode=" + mode);
@@ -338,23 +338,35 @@ public class Main {
     /* Спрашиваем список активных окон, основываясь на автоматически найденных. Игровых окон может быть пока до 4.
     Некоторые из найденных окон могут быть неактивными, пусть такие работают сами, без участия программы. Так надо.
      */
-    private static List<Integer> askActiveWindows(List<WinDef.HWND> foundWindows, String defaultWindowsStr) {
+    private static List<WinDef.HWND> askActiveWindows(List<WinDef.HWND> foundWindows, String defaultWindowsStr) {
+        User32 user32 = User32.INSTANCE;
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
 
-        JCheckBox[] boxes = {
-                new JCheckBox("Окно 1"),
-                new JCheckBox("Окно 2"),
-                new JCheckBox("Окно 3"),
-                new JCheckBox("Окно 4")
-        };
+        JCheckBox[] boxes = new JCheckBox[foundWindows.size()];
 
-        // Если есть дефолт — отмечаем соответствующие окна галочкой (GUI)
+        // Формируем подписи с координатами найденных окон
+        for (int i = 0; i < foundWindows.size(); i++) {
+            String label;
+            WinDef.HWND hWnd = foundWindows.get(i);
+            if (hWnd != null) {
+                WinDef.RECT r = new WinDef.RECT();
+                user32.GetWindowRect(hWnd, r);
+                label = String.format("Окно %d: (%d, %d) — (%d, %d)", i + 1, r.left, r.top, r.right, r.bottom);
+            } else {
+                label = String.format("Окно %d: [не найдено]", i + 1);
+            }
+            boxes[i] = new JCheckBox(label);
+            if (hWnd == null) boxes[i].setEnabled(false); // нельзя выбрать несуществующее окно
+            panel.add(boxes[i]);
+        }
+
+        // Если есть дефолт — отмечаем соответствующие окна
         if (defaultWindowsStr != null && !defaultWindowsStr.isEmpty()) {
             for (String part : defaultWindowsStr.split(" ")) {
                 try {
-                    int idx = Integer.parseInt(part.trim()) - 1; // индексация от 0
-                    if (idx >= 0 && idx < boxes.length) {
+                    int idx = Integer.parseInt(part.trim()) - 1;
+                    if (idx >= 0 && idx < boxes.length && boxes[idx].isEnabled()) {
                         boxes[idx].setSelected(true);
                     }
                 } catch (NumberFormatException ignored) {
@@ -362,37 +374,43 @@ public class Main {
             }
         }
 
-        for (JCheckBox box : boxes) {
-            panel.add(box);
-        }
         int result = JOptionPane.showConfirmDialog(
                 null,
                 panel,
-                "Выбери активные окна",
+                "Найдены игровые окна. С какими работаем?",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
-        List<Integer> windows = getIntegers(defaultWindowsStr, result, boxes);
-        return windows;
+
+        return getSelectedWindows(foundWindows, defaultWindowsStr, result, boxes);
     }
 
-    private static List<Integer> getIntegers(String defaultWindowsStr, int result, JCheckBox[] boxes) {
-        List<Integer> windows = new ArrayList<>();
+    private static List<WinDef.HWND> getSelectedWindows(List<WinDef.HWND> foundWindows,
+                                                        String defaultWindowsStr,
+                                                        int result,
+                                                        JCheckBox[] boxes) {
+        List<WinDef.HWND> selected = new ArrayList<>();
+
         if (result == JOptionPane.OK_OPTION) {
             for (int i = 0; i < boxes.length; i++) {
-                if (boxes[i].isSelected()) {
-                    windows.add(i + 1);
+                if (boxes[i].isSelected() && foundWindows.get(i) != null) {
+                    selected.add(foundWindows.get(i));
                 }
             }
-        } else if (defaultWindowsStr != null) {
-            // Если нажали Cancel — вернуть дефолт
+        } else if (defaultWindowsStr != null && !defaultWindowsStr.isEmpty()) {
+            // Если нажали Cancel — восстановим из конфига
             for (String part : defaultWindowsStr.split(" ")) {
                 try {
-                    windows.add(Integer.parseInt(part.trim()));
+                    int idx = Integer.parseInt(part.trim()) - 1;
+                    if (idx >= 0 && idx < foundWindows.size() && foundWindows.get(idx) != null) {
+                        selected.add(foundWindows.get(idx));
+                    }
                 } catch (NumberFormatException ignored) {
                 }
             }
         }
-        return windows;
+
+        return selected;
     }
+
 }

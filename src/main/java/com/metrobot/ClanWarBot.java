@@ -1,5 +1,7 @@
 package com.metrobot;
 
+import com.sun.jna.platform.win32.WinDef;
+
 import java.awt.*;
 import java.time.LocalTime;
 import java.util.List;
@@ -20,7 +22,7 @@ TODO: совместить 3 основных класса (боты Арена,
  */
 
 public class ClanWarBot extends BaseBot {
-    public ClanWarBot(List<Integer> windows, LocalTime timeHHmm, String botName) {
+    public ClanWarBot(List<WinDef.HWND> windows, LocalTime timeHHmm, String botName) {
         super(windows);
         this.startTime = timeHHmm;
         this.botName = botName;

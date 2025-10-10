@@ -25,7 +25,7 @@ public abstract class BaseBot {
 
     // === Общее состояние для всех ботов ===
     protected Robot robot;
-    protected List<Integer> activeWindows = new ArrayList<>();
+    protected List<HWND> activeWindows = new ArrayList<>();
     protected Map<Integer, GameWindow> windowsMap = Buttons.defaultWindows();
     protected boolean silentMode = true;
     protected String botName;
@@ -44,7 +44,7 @@ public abstract class BaseBot {
         }
     }
 
-    public BaseBot(List<Integer> activeWindows) {
+    public BaseBot(List<HWND> activeWindows) {
         this();
         if (activeWindows != null) this.activeWindows = new ArrayList<>(activeWindows);
     }
