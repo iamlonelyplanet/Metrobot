@@ -41,7 +41,7 @@ public class Main {
 
             // === Запрашиваем рабочие окна ("персы") в режиме GUI/консоль, от 1 до 4, потенциально не ограничено ===
             List<Integer> activeWindows;
-            activeWindows = askActiveWindows(config.get("activeWindows"));
+            activeWindows = askActiveWindows(foundWindows, config.get("activeWindows"));
 
             // === Читаем времена стартов из конфига (если есть). Не трогать, пока хоть как-то работает ===
             LocalTime arenaDefault = parseTime(config.get("arena_start"));
@@ -338,7 +338,7 @@ public class Main {
     /* Спрашиваем список активных окон, основываясь на автоматически найденных. Игровых окон может быть пока до 4.
     Некоторые из найденных окон могут быть неактивными, пусть такие работают сами, без участия программы. Так надо.
      */
-    private static List<Integer> askActiveWindows(String defaultWindowsStr) {
+    private static List<Integer> askActiveWindows(List<WinDef.HWND> foundWindows, String defaultWindowsStr) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
 
