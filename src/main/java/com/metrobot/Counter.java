@@ -1,4 +1,5 @@
 package com.metrobot;
+
 /* Класс-счётчик. Практически копия урока 8!
  */
 public class Counter {

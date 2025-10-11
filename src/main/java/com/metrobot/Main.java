@@ -23,11 +23,12 @@ TODO: вынести методы-утилиты в отдельный клас�
 public class Main {
     private static final String CONFIG_FILE = "config.txt"; // не подходит для хранения в Resources
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
+
     public static void main(String[] args) {
         try {
             Scanner scanner = new Scanner(System.in);
             boolean useGui = true; // Переключатель GUI/консоль, для ввода рабочих окон, режима, времени старта.
-            Map<String, String> config = loadConfig(); // Загружаем конфиг при наличии
+            Map<String, String> config = loadConfig(); // Загружаем конфиг из файла, при наличии
 
             // === Запрашиваем режим игры в режиме GUI/консоль. ===
             int mode;
@@ -38,7 +39,7 @@ public class Main {
             restoreAllGameWindows();
             List<HWND> foundWindows = findGameWindows();
 
-            // === Запрашиваем рабочие окна ("персы") от 1 до 4, только в режиме GUI ===
+            // === Запрашиваем рабочие окна ("персы", "бойцы") от 1 до 4, только в режиме GUI ===
             List<HWND> activeWindows;
             activeWindows = askActiveWindows(foundWindows, config.get("activeWindows"));
 
@@ -109,7 +110,7 @@ public class Main {
 
     // === Методы-утилиты для Main ===
 
-    /* Ищем в Windows все окна с названием игры. "Игроклуб" для соцсети МойМир, "2033" для ВКонтакте. Затем
+    /* Ищем в Windows все окна с заголовком игры: "Игроклуб" для соцсети МойМир, "2033" для ВКонтакте. Затем
     сортируем список: сначала верх - слева направо, затем низ - слева направо.
     */
     protected static List<HWND> findGameWindows() {
@@ -265,9 +266,9 @@ public class Main {
         );
 
         if (choice >= 0) { // при нажатии Esc = закрытии окна-диалога значение будет -1
-            return (choice + 1); // индексы в "человеческий" формат 1–4 для понятности и совместимости
+            return (choice + 1); // переводим индексы в "человеческий" формат 1–4 для понятности
         } else {
-            return 3; // По умолчанию будет Арена
+            return 3; // По умолчанию стартует режим Арена
         }
     }
 
@@ -396,9 +397,9 @@ public class Main {
     }
 
     private static List<HWND> getSelectedWindows(List<HWND> foundWindows,
-                                                        String defaultWindowsStr,
-                                                        int result,
-                                                        JCheckBox[] boxes) {
+                                                 String defaultWindowsStr,
+                                                 int result,
+                                                 JCheckBox[] boxes) {
         List<HWND> selected = new ArrayList<>();
 
         if (result == JOptionPane.OK_OPTION) {

@@ -17,7 +17,7 @@ import com.sun.jna.platform.win32.WinDef.RECT;
 import static com.metrobot.Buttons.*;
 
 /* Родительский класс для четырёх режимов. Здесь находится набор унифицированных методов.
-TODO: надо бы унифицировать параметр в Thread.sleep(200).
+TODO: надо бы унифицировать параметр в Thread.sleep(200). Разобраться в импортах.
  */
 
 public abstract class BaseBot {
