@@ -54,7 +54,6 @@ public class ArenaBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть — Победа");
                 clickAllWindows("Закрыть — Поражение");
-                clickAllWindows("Забрать коллекцию");
                 minimizeAllGameWindows();
 
                 unificatedCounter.plusOne();
@@ -62,7 +61,7 @@ public class ArenaBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
 
                 if (battle < MAX_BATTLES_ARENA) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size());
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() + 1);
                 }
             }
 

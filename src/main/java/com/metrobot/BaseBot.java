@@ -14,6 +14,7 @@ import javax.sound.sampled.*;
 
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
+import com.sun.jna.platform.win32.WinDef.RECT;
 
 import static com.metrobot.Buttons.*;
 
@@ -164,21 +165,22 @@ public abstract class BaseBot {
             System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
             return;
         }
-
-        for (HWND hWnd : activeWindows) {
+        for (int i = 0; i < activeWindows.size(); i++) {
+            HWND hWnd = activeWindows.get(i);
             if (hWnd == null) continue;
 
-            // Получаем координаты реального окна
-            com.sun.jna.platform.win32.WinDef.RECT rect = new com.sun.jna.platform.win32.WinDef.RECT();
+            int fighterNum = i + 1; // индексация от 1
+
+            RECT rect = new RECT();
             User32.INSTANCE.GetWindowRect(hWnd, rect);
 
-            int x = rect.left + rel.x;
-            int y = rect.top + rel.y;
+            int x = rect.left + Buttons.xMoveRight + rel.x;
+            int y = rect.top + Buttons.yMoveDown + rel.y;
 
+            System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", fighterNum, buttonName, x, y);
             clickAt(x, y);
             Thread.sleep(400);
         }
-
         Thread.sleep(PAUSE_SHORT_MS);
     }
 
@@ -192,7 +194,7 @@ public abstract class BaseBot {
         }
     }
 
-    // Клик. Собственно, ядро всей программы. Интерфейс? Изучить, подумать.
+    // Клик. Собственно, ядро всей программы. Интерфейс? Изучить, подумать. Расширить паузами, сведя их в этот метод.
     protected void clickAt(int x, int y) {
         if (robot == null) return;
         robot.mouseMove(x, y);

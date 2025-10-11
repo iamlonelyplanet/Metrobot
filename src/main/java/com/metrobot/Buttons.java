@@ -73,7 +73,7 @@ public class Buttons {
         put("Атаковать", new Point(415, 288));
         put("Пропустить", new Point(385, 33));
         put("Закрыть", new Point(515, 433));
-        put("Погон", new Point(565, 555));
+        put("Погон", new Point(555, 525));
     }};
 
     // --- Рейд ---
