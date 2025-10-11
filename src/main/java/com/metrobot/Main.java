@@ -1,11 +1,5 @@
 package com.metrobot;
 
-import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.WinDef;
-import com.sun.jna.platform.win32.WinDef.RECT;
-import com.sun.jna.platform.win32.WinDef.HWND;
-
-import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.time.LocalTime;
@@ -13,12 +7,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
-/* "Чтобы понять, что происходит, надо вернуться на 2 года назад..." (с) Max Payne
+import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinDef.RECT;
+import com.sun.jna.platform.win32.WinDef.HWND;
 
-Главный класс. Спрашивает в GUI/консоли: что за режим игры, каковы активные окна, что со временем старта каждого режима.
-Класс получился безумно огромным, это косяк и некрасиво. Но если каждую некрасивость исправлять, то опять будет
+import javax.swing.*;
+
+/* Главный класс. Спрашивает в GUI/консоли: режим игры, активные окна, временя старта каждого режима.
+Класс получился огромным, это косяк и некрасиво. Но если каждую некрасивость исправлять, то опять будет
 бесконечное предрелизное состояние.
-Зато отметил эти утилиты комментом "// === Дальше идут методы-утилиты для Main ===".
+Зато отметил эти утилиты комментом "// === Методы-утилиты для Main ===".
 TODO: вынести методы-утилиты в отдельный класс. Сделать окончание режимов вместо break.
  */
 
@@ -28,7 +26,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             Scanner scanner = new Scanner(System.in);
-            boolean useGui = true; // Переключатель GUI/консоль, выбора рабочих окон, времени старта.
+            boolean useGui = true; // Переключатель GUI/консоль, для ввода рабочих окон, режима, времени старта.
             Map<String, String> config = loadConfig(); // Загружаем конфиг при наличии
 
             // === Запрашиваем режим игры в режиме GUI/консоль. ===
@@ -38,9 +36,9 @@ public class Main {
                     : askMode(scanner, config.get("mode"));
 
             restoreAllGameWindows();
-            List<WinDef.HWND> foundWindows = findGameWindows();
+            List<HWND> foundWindows = findGameWindows();
 
-            // === Запрашиваем рабочие окна ("персы") в режиме GUI/консоль, от 1 до 4, потенциально не ограничено ===
+            // === Запрашиваем рабочие окна ("персы") от 1 до 4, только в режиме GUI ===
             List<HWND> activeWindows;
             activeWindows = askActiveWindows(foundWindows, config.get("activeWindows"));
 
@@ -109,14 +107,14 @@ public class Main {
         }
     }
 
-    // === Дальше идут методы-утилиты для Main ===
+    // === Методы-утилиты для Main ===
 
-    /* Ищем в Windows все окна с названием игры. Первый вариант для соцсети МойМир, второй для ВКонтакте. Затем
-    сортируем список в порядке: верх - слева направо, низ - слева направо.
+    /* Ищем в Windows все окна с названием игры. "Игроклуб" для соцсети МойМир, "2033" для ВКонтакте. Затем
+    сортируем список: сначала верх - слева направо, затем низ - слева направо.
     */
-    protected static List<WinDef.HWND> findGameWindows() {
+    protected static List<HWND> findGameWindows() {
         User32 user32 = User32.INSTANCE;
-        List<WinDef.HWND> found = new ArrayList<>();
+        List<HWND> found = new ArrayList<>();
 
         user32.EnumWindows((hWnd, data) -> {
             char[] buffer = new char[512];
@@ -128,7 +126,7 @@ public class Main {
             return true;
         }, null);
 
-        // Сортируем по координатам по принципу: сначала верх - слева направо, затем низ - слева направо.
+        // Сортируем найденные окна по координатам по принципу: сначала верх - слева направо, затем низ - слева направо.
         found.sort((h1, h2) -> {
             RECT r1 = new RECT();
             RECT r2 = new RECT();
@@ -141,17 +139,18 @@ public class Main {
             }
         });
 
-        // создаём список на 4 окна (возможные позиции)
-        List<WinDef.HWND> ordered = new ArrayList<>(Arrays.asList(null, null, null, null));
+        // Создаём список на 4 окна (возможные позиции)
+        List<HWND> ordered = new ArrayList<>(Arrays.asList(null, null, null, null));
 
-        // определяем разрешение монитора и примерное расположение окон на экране
-        int screenWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
-        int screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+        // Определяем разрешение монитора и примерное расположение окон на экране
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screen.width;
+        int screenHeight = screen.height;
 
         int midX = screenWidth / 2;
         int midY = screenHeight / 2;
 
-        for (WinDef.HWND hWnd : found) {
+        for (HWND hWnd : found) {
             RECT r = new RECT();
             user32.GetWindowRect(hWnd, r);
 
@@ -175,8 +174,8 @@ public class Main {
             if (ordered.get(i) != null) {
                 RECT r = new RECT();
                 user32.GetWindowRect(ordered.get(i), r);
-                System.out.printf("Окно %d: (%d, %d) — (%d, %d)%n",
-                        i + 1, r.left, r.top, r.right, r.bottom);
+                System.out.printf("Окно %d: (%d, %d)%n",
+                        i + 1, r.left, r.top);
             } else {
                 System.out.printf("Окно %d: [не найдено]%n", i + 1);
             }
@@ -276,6 +275,7 @@ public class Main {
 
     // 2 метода подряд: ввод GUI или консоль. Запрашиваем время старта с дефолтным значением (при наличии).
     // Enter = оставить дефолт.
+    // Консольный запрос времени старта
     private static LocalTime askStartTime(Scanner scanner, String botName, LocalTime defaultTime) {
         while (true) {
             if (defaultTime != null) {
@@ -340,7 +340,7 @@ public class Main {
     /* Спрашиваем список активных окон, основываясь на автоматически найденных. Игровых окон может быть пока до 4.
     Некоторые из найденных окон могут быть неактивными, пусть такие работают сами, без участия программы. Так надо.
      */
-    private static List<WinDef.HWND> askActiveWindows(List<WinDef.HWND> foundWindows, String defaultWindowsStr) {
+    private static List<HWND> askActiveWindows(List<HWND> foundWindows, String defaultWindowsStr) {
         User32 user32 = User32.INSTANCE;
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
@@ -350,11 +350,11 @@ public class Main {
         // Формируем подписи с координатами найденных окон
         for (int i = 0; i < foundWindows.size(); i++) {
             String label;
-            WinDef.HWND hWnd = foundWindows.get(i);
+            HWND hWnd = foundWindows.get(i);
             if (hWnd != null) {
-                WinDef.RECT r = new WinDef.RECT();
+                RECT r = new RECT();
                 user32.GetWindowRect(hWnd, r);
-                label = String.format("Окно %d: (%d, %d) — (%d, %d)", i + 1, r.left, r.top, r.right, r.bottom);
+                label = String.format("Окно %d: (%d, %d)", i + 1, r.left, r.top);
             } else {
                 label = String.format("Окно %d: [не найдено]", i + 1);
             }
@@ -379,7 +379,7 @@ public class Main {
         int result = JOptionPane.showConfirmDialog(
                 null,
                 panel,
-                "Найдены игровые окна. С какими работаем?",
+                "С какими окнами работаем?",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
@@ -387,11 +387,11 @@ public class Main {
         return getSelectedWindows(foundWindows, defaultWindowsStr, result, boxes);
     }
 
-    private static List<WinDef.HWND> getSelectedWindows(List<WinDef.HWND> foundWindows,
+    private static List<HWND> getSelectedWindows(List<HWND> foundWindows,
                                                         String defaultWindowsStr,
                                                         int result,
                                                         JCheckBox[] boxes) {
-        List<WinDef.HWND> selected = new ArrayList<>();
+        List<HWND> selected = new ArrayList<>();
 
         if (result == JOptionPane.OK_OPTION) {
             for (int i = 0; i < boxes.length; i++) {

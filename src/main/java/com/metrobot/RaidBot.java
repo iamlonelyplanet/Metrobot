@@ -1,11 +1,10 @@
 package com.metrobot;
 
-import com.sun.jna.platform.win32.WinDef;
-
 import java.awt.*;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import com.sun.jna.platform.win32.WinDef.HWND;
 
 import static com.metrobot.Buttons.*;
 /* Режим "Клановые войны": бои перса в коллективной ("клановой") движухе.
@@ -22,7 +21,7 @@ TODO: совместить 3 основных класса (боты Арена,
 
 public class RaidBot extends BaseBot {
 
-    public RaidBot(List<WinDef.HWND> windows, LocalTime timeHHmm, String botName) throws AWTException {
+    public RaidBot(List<HWND> windows, LocalTime timeHHmm, String botName) throws AWTException {
         super(windows);
         {
             this.startTime = timeHHmm;

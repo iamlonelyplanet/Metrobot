@@ -5,10 +5,8 @@ import java.awt.event.InputEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import javax.sound.sampled.*;
 

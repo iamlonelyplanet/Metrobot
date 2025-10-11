@@ -1,13 +1,12 @@
 package com.metrobot;
 
-import com.sun.jna.platform.win32.WinDef;
-
 import java.awt.*;
-import java.time.LocalTime;
-import java.time.Duration;
+import java.time.*;
 import java.util.List;
 import java.util.Map;
-import java.time.Instant;
+import com.sun.jna.platform.win32.WinDef.HWND;
+
+
 
 import static com.metrobot.Buttons.*;
 
@@ -24,7 +23,7 @@ TODO: Переработать ящеров при помощи ООП, либо
  */
 
 public class TunnelBot extends BaseBot {
-    public TunnelBot(List<WinDef.HWND> windows, LocalTime timeHHmm, String botName) throws AWTException {
+    public TunnelBot(List<HWND> windows, LocalTime timeHHmm, String botName) throws AWTException {
         super(windows);
         {
             this.startTime = timeHHmm;

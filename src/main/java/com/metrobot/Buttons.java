@@ -31,7 +31,7 @@ public class Buttons {
     public static int xMoveRight = (windowWidth - 764 - 19) / 2; // Расчёт "нуля" рабочего поля
     public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных собирать статистику
 
-    // === Координаты кнопок относительно верхнего левого угла рабочего поля (не окна!) ===
+    // === Координаты кнопок относительно верхнего левого угла "рабочего поля" (не окна!) ===
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
         put("Клан - Выход", new Point(55, 505));
