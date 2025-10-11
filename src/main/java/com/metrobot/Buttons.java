@@ -2,9 +2,8 @@ package com.metrobot;
 
 import java.awt.*;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
-/* Набор координат для кнопок, коллекция пауз между кликами, координаты окон.
+/* Набор координат для кнопок и пауз между кликами. В конце файла закомменчены старые координаты окон, оставить.
 TODO: объединить все кнопки (координаты) в единое? Повторов хватает. Кнопок не так много. Но и сейчас смотрится красиво.
  */
 
@@ -29,29 +28,8 @@ public class Buttons {
     Ширина полосы прокрутки (элемента окон Windows): 19 в Игромире, собрать стату в других разрешениях
     */
     public static int windowWidth = 1033;
-    public static int windowHeight = 670;
     public static int xMoveRight = (windowWidth - 764 - 19) / 2; // Расчёт "нуля" рабочего поля
     public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных собирать статистику
-
-//    public static Point topLeft1 = new Point(xMoveRight, yMoveDown);
-//    public static Point topLeft2 = new Point(windowWidth + xMoveRight, yMoveDown);
-//    public static Point topLeft3 = new Point(xMoveRight, windowHeight + yMoveDown);
-//    public static Point topLeft4 = new Point(windowWidth + xMoveRight, windowHeight + yMoveDown);
-
-//    public static final GameWindow WINDOW_1 = new GameWindow("Боец 1", topLeft1);
-//    public static final GameWindow WINDOW_2 = new GameWindow("Боец 2", topLeft2);
-//    public static final GameWindow WINDOW_3 = new GameWindow("Боец 3", topLeft3);
-//    public static final GameWindow WINDOW_4 = new GameWindow("Боец 4", topLeft4);
-
-//    // Возвращаем упорядоченную карту: индекс -> окно (1..4)
-//    public static Map<Integer, GameWindow> defaultWindows() {
-//        Map<Integer, GameWindow> m = new LinkedHashMap<>();
-//        m.put(1, WINDOW_1);
-//        m.put(2, WINDOW_2);
-//        m.put(3, WINDOW_3);
-//        m.put(4, WINDOW_4);
-//        return m;
-//    }
 
     // === Координаты кнопок относительно верхнего левого угла рабочего поля (не окна!) ===
     // --- Арена ---
@@ -109,4 +87,27 @@ public class Buttons {
         put("Карта ПКг-ПКк", new Point(185, 383));
         put("Питомец", new Point(55, 505)); // опционально
     }};
+
+    /* Ниже идёт старый код, который работал только на моём мониторе, а для других разрешений приходилось подгонять
+     координаты и карты окон вручную. Оставить для размышлений.
+     */
+//    public static Point topLeft1 = new Point(xMoveRight, yMoveDown);
+//    public static Point topLeft2 = new Point(windowWidth + xMoveRight, yMoveDown);
+//    public static Point topLeft3 = new Point(xMoveRight, windowHeight + yMoveDown);
+//    public static Point topLeft4 = new Point(windowWidth + xMoveRight, windowHeight + yMoveDown);
+
+//    public static final GameWindow WINDOW_1 = new GameWindow("Боец 1", topLeft1);
+//    public static final GameWindow WINDOW_2 = new GameWindow("Боец 2", topLeft2);
+//    public static final GameWindow WINDOW_3 = new GameWindow("Боец 3", topLeft3);
+//    public static final GameWindow WINDOW_4 = new GameWindow("Боец 4", topLeft4);
+
+//    // Возвращаем упорядоченную карту: индекс -> окно (1..4)
+//    public static Map<Integer, GameWindow> defaultWindows() {
+//        Map<Integer, GameWindow> m = new LinkedHashMap<>();
+//        m.put(1, WINDOW_1);
+//        m.put(2, WINDOW_2);
+//        m.put(3, WINDOW_3);
+//        m.put(4, WINDOW_4);
+//        return m;
+//    }
 }
