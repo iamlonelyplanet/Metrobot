@@ -9,7 +9,8 @@ public class CounterStorage {
      */
     private static final String FILE_NAME = "counters.txt";
 
-    // Загружаем счётчики из файла
+    /** Загружаем счётчики из файла
+    */
     public static Map<String, Counter> loadCounters(List<String> names) {
         Map<String, Counter> counters = new HashMap<>();
 
