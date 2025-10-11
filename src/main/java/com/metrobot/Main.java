@@ -27,12 +27,13 @@ public class Main {
     public static void main(String[] args) {
         try {
             Scanner scanner = new Scanner(System.in);
+            String botName;
+            LocalTime startTime;
             boolean useGui = true; // Переключатель GUI/консоль, для ввода рабочих окон, режима, времени старта.
             Map<String, String> config = loadConfig(); // Загружаем конфиг из файла, при наличии
 
             // === Запрашиваем режим игры в режиме GUI/консоль. ===
-            int mode;
-            mode = useGui
+            int mode = useGui
                     ? askModeGui()
                     : askMode(scanner, config.get("mode"));
 
@@ -40,8 +41,7 @@ public class Main {
             List<HWND> foundWindows = findGameWindows();
 
             // === Запрашиваем рабочие окна ("персы", "бойцы") от 1 до 4, только в режиме GUI ===
-            List<HWND> activeWindows;
-            activeWindows = askActiveWindows(foundWindows, config.get("activeWindows"));
+            List<HWND> activeWindows = askActiveWindows(foundWindows, config.get("activeWindows"));
 
             // === Читаем времена стартов из конфига (если есть). Не трогать, пока хоть как-то работает ===
             LocalTime arenaDefault = parseTime(config.get("arena_start"));
@@ -57,8 +57,6 @@ public class Main {
 
             // === Запуск выбранного режима игры ===
             // TODO: унифицировать!
-            String botName;
-            LocalTime startTime;
             switch (mode) {
                 case 1:
                     botName = "КВ";
