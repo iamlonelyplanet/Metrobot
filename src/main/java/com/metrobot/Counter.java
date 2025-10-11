@@ -1,6 +1,6 @@
 package com.metrobot;
 
-/* Класс-счётчик. Практически копия урока 8!
+/** Класс-счётчик. Практически копия урока 8!
  */
 public class Counter {
     private String name;
