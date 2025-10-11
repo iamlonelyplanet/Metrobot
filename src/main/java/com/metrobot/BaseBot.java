@@ -36,15 +36,11 @@ public abstract class BaseBot {
     protected abstract Map<String, Point> getButtonMap();
 
     // --- Конструкторы ---
-    public BaseBot() {
-        try {
-            robot = new Robot();
-        } catch (AWTException e) {
-            throw new IllegalStateException("Не удалось инициализировать Robot", e);
-        }
+    public BaseBot() throws AWTException {
+        robot = new Robot();
     }
 
-    public BaseBot(List<HWND> activeWindows) {
+    public BaseBot(List<HWND> activeWindows) throws AWTException {
         this();
         if (activeWindows != null) this.activeWindows = new ArrayList<>(activeWindows);
     }
@@ -187,7 +183,7 @@ public abstract class BaseBot {
             int slot = i + 1; // 1..4
             GameWindow gw = windowsMap.get(slot);
             if (gw == null || gw.getTopLeftCorner() == null) {
-                System.err.printf("Нет координат для слота %d — пропускаю%n", slot);
+                System.err.printf("Нет координат для окна %d — пропускаю%n", slot);
                 continue;
             }
             int x = gw.getTopLeftCorner().x + rel.x;
@@ -215,9 +211,4 @@ public abstract class BaseBot {
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
-
-    // Попытка на будущее, пока не разобрался в синтаксисе. Почитать.
-//    protected Counter getUnificatedCounter() {
-//        return counters.computeIfAbsent(botName, Counter::new);
-//    }
 }
