@@ -209,7 +209,15 @@ public class Main {
                                    LocalTime raidStart, LocalTime tunnelStart) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(CONFIG_FILE))) {
             pw.println("mode=" + mode);
-            pw.println("activeWindows=" + windows.toString().replaceAll("[\\[\\],]", ""));
+
+            // Преобразуем HWND в индексы (1–4, не 0-3)
+            List<Integer> windowInds = new ArrayList<>();
+            for (HWND hwnd : windows) {
+                int index = windows.indexOf(hwnd) + 1;
+                if (index > 0) windowInds.add(index);
+            }
+            pw.println("activeWindows=" + windowInds.toString().replaceAll("[\\[\\],]", ""));
+
             if (arenaStart != null) pw.println("arena_start=" + arenaStart.format(TIME_FORMAT));
             if (kvStart != null) pw.println("kv_start=" + kvStart.format(TIME_FORMAT));
             if (raidStart != null) pw.println("raid_start=" + raidStart.format(TIME_FORMAT));
