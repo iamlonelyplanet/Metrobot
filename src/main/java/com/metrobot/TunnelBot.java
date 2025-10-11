@@ -24,10 +24,12 @@ TODO: Переработать ящеров при помощи ООП, либо
  */
 
 public class TunnelBot extends BaseBot {
-    public TunnelBot(List<WinDef.HWND> windows, LocalTime timeHHmm, String botName) {
+    public TunnelBot(List<WinDef.HWND> windows, LocalTime timeHHmm, String botName) throws AWTException {
         super(windows);
-        this.startTime = timeHHmm;
-        this.botName = botName;
+        {
+            this.startTime = timeHHmm;
+            this.botName = botName;
+        }
     }
 
     @Override

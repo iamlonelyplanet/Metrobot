@@ -23,10 +23,12 @@ TODO: совместить 3 основных класса (боты Арена,
  */
 
 public class ArenaBot extends BaseBot {
-    public ArenaBot(List<WinDef.HWND> windows, LocalTime timeHHmm, String botName) {
+    public ArenaBot(List<WinDef.HWND> windows, LocalTime timeHHmm, String botName) throws AWTException {
         super(windows);
-        this.startTime = timeHHmm;
-        this.botName = botName;
+        {
+            this.startTime = timeHHmm;
+            this.botName = botName;
+        }
     }
 
     @Override

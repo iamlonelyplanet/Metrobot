@@ -26,7 +26,6 @@ public abstract class BaseBot {
     // === Общее состояние для всех ботов ===
     protected Robot robot;
     protected List<HWND> activeWindows = new ArrayList<>();
-    protected Map<Integer, GameWindow> windowsMap = Buttons.defaultWindows();
     protected boolean silentMode = true;
     protected String botName;
     protected LocalTime startTime;
@@ -66,8 +65,8 @@ public abstract class BaseBot {
 
     // Разворачиваем все игровые окна, даже незадействованные. Так надо.
     protected void showAllGameWindows() {
-        List<HWND> wins = findGameWindows();
-        for (HWND hWnd : wins) {
+        for (HWND hWnd : activeWindows) {
+            if (hWnd == null) continue;
             User32.INSTANCE.ShowWindow(hWnd, User32.SW_RESTORE);
             User32.INSTANCE.SetForegroundWindow(hWnd);
             try {
@@ -79,13 +78,13 @@ public abstract class BaseBot {
         System.out.println("Развернул окна");
     }
 
+
     // Сворачиваем все игровые окна (даже незадействованные), если включён silentMode. После сворачивания до следующего
     // события проходит почти 5 минут, в это время пользователь продолжает заниматься своей работой.
     protected void minimizeAllGameWindows() {
         if (!silentMode) return;
-
-        List<HWND> wins = findGameWindows();
-        for (HWND hWnd : wins) {
+        for (HWND hWnd : activeWindows) {
+            if (hWnd == null) continue;
             User32.INSTANCE.ShowWindow(hWnd, User32.SW_MINIMIZE);
             try {
                 Thread.sleep(200);
@@ -94,19 +93,6 @@ public abstract class BaseBot {
             }
         }
         System.out.println("Свернул окна");
-    }
-
-    // Ищет в Windows все окна с названием игрушки. Первый вариант для соцсети МойМир, второй для ВКонтакте
-    protected List<HWND> findGameWindows() {
-        List<HWND> res = new ArrayList<>();
-        User32.INSTANCE.EnumWindows((hWnd, data) -> {
-            char[] buffer = new char[512];
-            User32.INSTANCE.GetWindowText(hWnd, buffer, 512);
-            String title = new String(buffer).trim();
-            if (title.contains("Игроклуб") || title.contains("2033")) res.add(hWnd);
-            return true;
-        }, null);
-        return res;
     }
 
     // Старт любого игрового режима
@@ -179,18 +165,20 @@ public abstract class BaseBot {
             return;
         }
 
-        for (int i = 0; i < activeWindows.size(); i++) {
-            int slot = i + 1; // 1..4
-            GameWindow gw = windowsMap.get(slot);
-            if (gw == null || gw.getTopLeftCorner() == null) {
-                System.err.printf("Нет координат для окна %d — пропускаю%n", slot);
-                continue;
-            }
-            int x = gw.getTopLeftCorner().x + rel.x;
-            int y = gw.getTopLeftCorner().y + rel.y;
+        for (HWND hWnd : activeWindows) {
+            if (hWnd == null) continue;
+
+            // Получаем координаты реального окна
+            com.sun.jna.platform.win32.WinDef.RECT rect = new com.sun.jna.platform.win32.WinDef.RECT();
+            User32.INSTANCE.GetWindowRect(hWnd, rect);
+
+            int x = rect.left + rel.x;
+            int y = rect.top + rel.y;
+
             clickAt(x, y);
             Thread.sleep(400);
         }
+
         Thread.sleep(PAUSE_SHORT_MS);
     }
 

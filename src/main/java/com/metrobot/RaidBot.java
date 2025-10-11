@@ -22,10 +22,12 @@ TODO: совместить 3 основных класса (боты Арена,
 
 public class RaidBot extends BaseBot {
 
-    public RaidBot(List<WinDef.HWND> windows, LocalTime timeHHmm, String botName) {
+    public RaidBot(List<WinDef.HWND> windows, LocalTime timeHHmm, String botName) throws AWTException {
         super(windows);
-        this.startTime = timeHHmm;
-        this.botName = botName;
+        {
+            this.startTime = timeHHmm;
+            this.botName = botName;
+        }
     }
 
     @Override
