@@ -37,6 +37,7 @@ public class Main {
                     ? askModeGui()
                     : askMode(scanner, config.get("mode"));
 
+            restoreAllGameWindows();
             List<WinDef.HWND> foundWindows = findGameWindows();
 
             // === Запрашиваем рабочие окна ("персы") в режиме GUI/консоль, от 1 до 4, потенциально не ограничено ===
@@ -413,4 +414,18 @@ public class Main {
         return selected;
     }
 
+    private static void restoreAllGameWindows() {
+        User32 user32 = User32.INSTANCE;
+
+        user32.EnumWindows((hWnd, data) -> {
+            char[] buffer = new char[512];
+            user32.GetWindowText(hWnd, buffer, 512);
+            String title = new String(buffer).trim();
+
+            if (title.contains("Игроклуб") || title.contains("2033")) {
+                user32.ShowWindow(hWnd, User32.SW_RESTORE);
+            }
+            return true;
+        }, null);
+    }
 }
