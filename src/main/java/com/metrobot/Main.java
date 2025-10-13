@@ -25,6 +25,9 @@ public class Main {
             String botName;
             LocalTime startTime;
             boolean useGui = true; // Переключатель GUI/консоль, для ввода рабочих окон, режима, времени старта.
+
+            // Обнуляем файл счётчиков при первом запуске программы каждый день после 03:00 по Мск, так надо.
+            ConfigManager.autoResetCounters();
             Map<String, String> config = ConfigManager.loadConfig(); // Загружаем конфиг из файла, при наличии
 
             // === Запрашиваем режим игры в режиме GUI/консоль ===
