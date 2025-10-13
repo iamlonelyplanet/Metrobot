@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<p>====================================== M E T R O B O T v1.00
+======================================</p>
+<h2 id="назначение">Назначение:</h2>
+<p>Программа “MetroBot” — это автоматический помощник-кликер для
+браузерной Flash-игрушки Метро 2033. Работает с игровыми приложениями в
+соцсетях МойМир и ВКонтакте. Программа кликает вместо игрока по заранее
+определённым координатам кнопок и выдерживает паузы до следующей серии
+кликов. Для удобства повседневной работы за компьютером, после серии
+кликов программа сворачивает игровые окна, а через ~5 минут снова
+разворачивает их для очередного сражения. В это время можно полноценно
+использовать ПК.</p>
+<p>Поддерживается до 4 игровых окон (бойцов). Возможна работа только с
+выбранными окнами из числа открытых. Например, когда в одном из окон
+активирован VIP-режим, то нет смысла автоматизации режима Арена: игра
+сама проводит автобои.</p>
+<p>В версии 1.0 доступны следующие режимы: - бои на Арене; - бои в
+Клановых войнах; - участие в Рейдах; - набивание туннельных монстров
+(Ящеров и Пауков) в Туннелях.</p>
+<h2 id="об-игре">Об игре:</h2>
+<p>“Метро 2033” - это не знаменитая 3D-игра с сиквелами, а примитивная
+игрушка класса “Моя любимая ферма”. Основана на книгах матёрого
+экстремиста Дмитрия Глуховского, игра написана при его участии.
+Большинство задач игры сводятся к 5-10 кликам раз в 5 минут, что у
+активного игрока занимает по 5..6 часов в сутки.</p>
+<figure>
+<img src="img_3.png" alt="img_3.png" />
+<figcaption aria-hidden="true">img_3.png</figcaption>
+</figure>
+<table style="width:54%;">
+<colgroup>
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">До запуска программы МетроБот</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Программа написана на языке Java. Чтобы
+запустить её, требуется скачать и установить JDK (Java Development Kit)
+отсюда: https://www.oracle.com/java/technologies/downloads/ Нужна версия
+для Windows x64.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><img src="img_1.png"
+alt="img_1.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;">Запустите установщик, нажимайте Next и
+т.п. В процессе установки убедитесь, что стоит галочка “Set JAVA_HOME
+variable” — это нужно, чтобы система знала, где лежит Java.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="основные-функции">Основные функции</h2>
+<ul>
+<li>Автоматически разворачивает и сворачивает нужные окна.</li>
+<li>Нажимает правильные кнопки (“Атаковать”, “Пропустить”, “Закрыть”, и
+т.д.).</li>
+<li>Считает количество боёв, чтобы не допустить расход игровых
+жетонов.</li>
+<li>Сохраняет конфигурацию предыдущего запуска (активные окна, время
+стартов и режим).</li>
+</ul>
+<figure>
+<img src="animation-kv.gif" alt="animation-kv.gif" />
+<figcaption aria-hidden="true">animation-kv.gif</figcaption>
+</figure>
+<table>
+<tbody>
+<tr>
+<td style="text-align: left;">Запуск программы МетроБот</td>
+</tr>
+</tbody>
+</table>
+<ol type="1">
+<li>Перед запуском МетроБота убедитесь, что запущены все окна “Игроклуб”
+(или браузера с игрой ВК). МетроБот найдёт их самостоятельно, даже если
+они свёрнуты.</li>
+<li>Избавьтесь от глючной чёрной полоски, которая находится между
+заголовком окна Игроклуба и игровым полем.</li>
+</ol>
+<figure>
+<img src="blackstripe.gif" alt="blackstripe.gif" />
+<figcaption aria-hidden="true">blackstripe.gif</figcaption>
+</figure>
+<p>Перетащите ползунок окна вниз так, чтобы полоска полностью скрылась
+из вида (допустимы 2-3 пикселя). 3. Запустите файл Start.bat. 4. При
+первом запуске появятся диалоговые окна с выбором режима, активных
+бойцов, указанием времени старта режимов.</p>
+<figure>
+<img src="img_5.png" alt="img_5.png" />
+<figcaption aria-hidden="true">img_5.png</figcaption>
+</figure>
+<figure>
+<img src="img_6.png" alt="img_6.png" />
+<figcaption aria-hidden="true">img_6.png</figcaption>
+</figure>
+<figure>
+<img src="img_7.png" alt="img_7.png" />
+<figcaption aria-hidden="true">img_7.png</figcaption>
+</figure>
+<p>МетроБот развернёт игровые окна в течение 1-2 секунд после установки
+времени (нажатия ОК в окне выбора времени).</p>
+<p>Время старта: ваше местное, не московское. При выборе времени старта:
+если указать прошедшие часы:минуты, то МетроБот начнёт выбранный режим
+сразу после нажатия на кнопку Ок. Если указать будущие часы:минуты, то
+МетроБот стартует выбранный режим в указанное время. Для режимов КВ и
+Рейд рекомендуется устанавливать время старта с запасом в 1 минуту.
+Например, если КВ начинается в 17:40, то следует установить время старта
+на 17:41.</p>
+<table style="width:54%;">
+<colgroup>
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Режимы игры</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Для всех режимов: - время устанавливайте
+своё локальное (НЕ московское!); - для КВ и Рейдов ставьте время с
+запасом в 1 минуту. Если движуха начинается в 17:30, то установите
+17:31; - МетроБот не учитывает сражения, сделанные вами самостоятельно!
+К примеру, если вы сами настреляли 10 боёв на Арене, а затем включили
+Метробот, то он сделает все 50 доступных боёв, т.е. будет тратить ваши
+жетоны;</td>
+</tr>
+<tr>
+<td style="text-align: left;"><img src="img_9.png"
+alt="img_9.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;">- чтобы избежать этого, откройте файл
+counters.txt и вручную добавьте пройденные вами бои. Например, если игра
+говорит, что прошло 9 боёв, то откройте файл и впишите в строку Арена
+число 9 (без пробелов). То же самое про КВ и Рейды. - Метробот не умеет
+закрывать окна-«нежданчики», например – завершённую ежедневку, повышение
+уровня бойца или питомца, «аномалии» и т.п. Программа просто игнорирует
+их. Программа умеет закрывать уведомления о завершённой работе у
+Начальников станций, возвращаясь к кликам.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><img src="img_8.png"
+alt="img_8.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;">- В режимах КВ, Рейд и Арена отсчёт
+времени идёт до следующего разворота окон, а не до выстрела. От
+разворота до «Атаковать» проходит ещё 3-5 секунд.</td>
+</tr>
+<tr>
+<td style="text-align: left;">1. Клановые войны. До 24 боёв в
+автоматическом режиме. Автоматически разворачивает окна до серии кликов,
+кликает, забирает погон, сворачивает окна до следующей пятиминутки.
+Время старта устанавливайте с запасом в 1 минуту (см. выше). 2. Рейд. До
+12 боёв. Время старта устанавливайте с запасом в 1 минуту (см. выше).
+Окна разворачиваются и сворачиваются автоматически. 3. Арена. Проводит
+до 50 боёв в автоматическом режиме, раз в 5 минут. Разворачивает окна до
+начала серии кликов «Атаковать-Закрыть», кликает, собирает предмет
+коллекции, сворачивает окна. Не стоит включать этот режим при
+активированном VIP.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><img src="img_4.png"
+alt="img_4.png" /></td>
+</tr>
+<tr>
+<td style="text-align: left;">4. Туннели: набивание туннельных монстров
+– ящеров и пауков в соответствующих тоннелях. В день доступно 20 пауков
+и 40 ящеров. Этот режим строго требует нахождение бойца на станции Парк
+Культуры (красные), а также отсутствие работы у Начстанции. Боец должен
+быть готов сразу же выйти в туннели! По окончании режима боец
+возвращается на станцию Парк Культуры (красные). Прохождение режима
+«Туннели» занимает порядка 45 минут, во время которых нежелательно
+пользоваться ПК: окна не сворачиваются и не разворачиваются, а программа
+кликает по ним раз в 10-15 секунд. Разумеется, требуется наличие всех
+необходимых пропусков вплоть до Проспекта Вернадского. Репутация у
+фракций не нужна. В этом режиме удобно прокачивать питомцев, однако
+МетроБот пока не умеет закрывать уведомление о достижении питомцем
+следующего уровня.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="файлы-и-настройки">Файлы и настройки</h2>
+<p>config.txt - хранит параметры предыдущего запуска программы: mode=3
+activeWindows=1 3 arena_start=20:00 kv_start=21:00</p>
+<p>Время местное. Файл можно редактировать вручную, когда программа не
+запущена.</p>
+<p>counters.txt - хранит счётчики работы программы, количество боёв на
+Арене, в Рейдах и в КВ. Рейд=0 Арена=36 КВ=22</p>
+<p>Файл можно редактировать вручную, когда программа не запущена.</p>
+<table style="width:54%;">
+<colgroup>
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Системные требования</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">- Windows 7 или выше, x64 - Java 21 или
+выше</td>
+</tr>
+</tbody>
+</table>
+<h2 id="автор-и-благодарности">Автор и благодарности</h2>
+<p>Автор: Алексей Низамов</p>
+<p>Благодарности: Большое спасибо Егору, автору бесплатного Java-курса
+“Дорогу осилит идущий”: https://t.me/ViamSupervadetVadens и коммьюнити
+этого курса. Ссылка на GitHub: https://github.com/KFalcon2022/lessons
+Спасибо автору мира Метро-2033 Дмитрию Глуховскому :-) А также всем
+тестерам, которые помогали при разработке МетроБота.</p>
+<table style="width:54%;">
+<colgroup>
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Контакты и обратная связь</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Сообщить о проблеме или предложить идею
+можно через: e-mail: aleksey.nizamov@gmail.com Telegram: <span
+class="citation" data-cites="LeGrandeMojave">@LeGrandeMojave</span></td>
+</tr>
+</tbody>
+</table>
+<p>(с) 2025</p>
+</body>
+</html>
