@@ -1,0 +1,6 @@
+mode=3
+activeWindows=1 2
+arena_start=12:50
+kv_start=18:32
+raid_start=19:27
+tunnel_start=06:57
