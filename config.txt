@@ -1,6 +1,6 @@
-mode=3
-activeWindows=1 2
-arena_start=12:50
-kv_start=18:32
+mode=1
+activeWindows=1 2 3 4
+arena_start=20:03
+kv_start=20:38
 raid_start=19:27
 tunnel_start=06:57

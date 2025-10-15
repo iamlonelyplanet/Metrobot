@@ -52,6 +52,7 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("Карта ПК-КРО");
                 fightSpiders(unificatedCounter.getCount());
                 unificatedCounter.plusOne();
+                Thread.sleep(pauseShortForTunnels);
                 clickAllWindows("Карта КРО-ПК");
                 fightSpiders(unificatedCounter.getCount());
                 unificatedCounter.plusOne();
@@ -124,6 +125,7 @@ public class TunnelBot extends BaseBot {
                 clickAllWindows("Карта-ПВ");
                 fightLizards(unificatedCounter.getCount());
                 unificatedCounter.plusOne();
+                Thread.sleep(pauseShortForTunnels);
 
                 System.out.println("\nЗавершено пробегов до Проспекта Вернадского: " + (way + 1));
 
