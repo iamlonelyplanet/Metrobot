@@ -36,35 +36,36 @@ public class Buttons {
     // === Координаты кнопок относительно нуля (верхнего левого угла) "рабочего поля" (не окна!) ===
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
-        put("Клан - Выход", new Point(55, 505));
+        put("Клан - Выход", new Point(80, 505));
         put("Арена", new Point(320, 303));
         put("Атаковать", new Point(200, 513));
-        put("Питомец", new Point(55, 505)); // опционально
+        put("Питомец", new Point(80, 505)); // опционально
         put("Пропустить", new Point(385, 33));
-        put("Закрыть — Победа", new Point(515, 520));
-        put("Закрыть — Поражение", new Point(515, 463));
-        put("Забрать коллекцию", new Point(515, 463)); // совпадает с предыдущей кнопкой
+        put("Закрыть — Победа", new Point(460, 520));
+        put("Закрыть — Поражение", new Point(460, 463));
+        put("Забрать коллекцию", new Point(460, 463)); // совпадает с предыдущей кнопкой
     }};
 
     // --- Клановая война ---
     public static final LinkedHashMap<String, Point> KV_BUTTONS = new LinkedHashMap<>() {{
         put("Клан", new Point(315, 58));
-        put("Война", new Point(55, 303));
+        put("Война", new Point(80, 303));
         put("Атаковать", new Point(415, 288));
         put("Пропустить", new Point(385, 33));
-        put("Закрыть", new Point(515, 433));
-        put("Погон", new Point(520, 480));
+        put("Закрыть", new Point(460, 433));
+        put("Погон", new Point(460, 565)); // проверить
+        put("Погон - Коллекция", new Point(480, 460)); // проверить
     }};
 
     // --- Рейд ---
     public static final LinkedHashMap<String, Point> RAID_BUTTONS = new LinkedHashMap<>() {{
         put("Клан", new Point(315, 58));
-        put("Война", new Point(55, 303));
-        put("Рейды", new Point(55, 413));
+        put("Война", new Point(80, 303));
+        put("Рейды", new Point(80, 413));
         put("Обновить", new Point(520, 40));
         put("Атаковать", new Point(425, 323));
         put("Пропустить", new Point(385, 33));
-        put("Закрыть", new Point(515, 433));
+        put("Закрыть", new Point(460, 433));
     }};
 
     // --- Туннели ---
@@ -74,7 +75,7 @@ public class Buttons {
         put("Войти с пропуском", new Point(275, 373));
         put("Атаковать", new Point(425, 323));
         put("Пропустить", new Point(385, 33));
-        put("Закрыть", new Point(515, 520));
+        put("Закрыть", new Point(460, 520));
         put("Карта-ПК-ФРУ", new Point(315, 478));
         put("Карта-КОМ", new Point(315, 428));
         put("Карта-УНИ", new Point(315, 478));
@@ -87,29 +88,7 @@ public class Buttons {
         put("Карта ПКг-КИЕ", new Point(225, 303));
         put("Карта КИЕ-ПКг", new Point(205, 433));
         put("Карта ПКг-ПКк", new Point(185, 383));
-        put("Питомец", new Point(55, 505)); // опционально
+        put("Питомец", new Point(80, 505)); // опционально
     }};
 
-    /** Ниже идёт старый код, который работал только на моём мониторе, а для других разрешений приходилось подгонять
-     координаты и карты окон вручную. Оставить для размышлений.
-     */
-//    public static Point topLeft1 = new Point(xMoveRight, yMoveDown);
-//    public static Point topLeft2 = new Point(windowWidth + xMoveRight, yMoveDown);
-//    public static Point topLeft3 = new Point(xMoveRight, windowHeight + yMoveDown);
-//    public static Point topLeft4 = new Point(windowWidth + xMoveRight, windowHeight + yMoveDown);
-
-//    public static final GameWindow WINDOW_1 = new GameWindow("Боец 1", topLeft1);
-//    public static final GameWindow WINDOW_2 = new GameWindow("Боец 2", topLeft2);
-//    public static final GameWindow WINDOW_3 = new GameWindow("Боец 3", topLeft3);
-//    public static final GameWindow WINDOW_4 = new GameWindow("Боец 4", topLeft4);
-
-//    // Возвращаем упорядоченную карту: индекс -> окно (1..4)
-//    public static Map<Integer, GameWindow> defaultWindows() {
-//        Map<Integer, GameWindow> m = new LinkedHashMap<>();
-//        m.put(1, WINDOW_1);
-//        m.put(2, WINDOW_2);
-//        m.put(3, WINDOW_3);
-//        m.put(4, WINDOW_4);
-//        return m;
-//    }
 }

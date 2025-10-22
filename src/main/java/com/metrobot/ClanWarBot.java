@@ -53,6 +53,7 @@ public class ClanWarBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickAllWindows("Закрыть");
                 clickAllWindows("Погон");
+                clickAllWindows("Погон - Коллекция");
                 minimizeAllGameWindows();
 
                 unificatedCounter.plusOne();
