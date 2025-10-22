@@ -16,8 +16,9 @@ import com.sun.jna.platform.win32.WinDef.RECT;
 
 import static com.metrobot.Buttons.*;
 
-/** Родительский класс для четырёх режимов. Здесь находится набор унифицированных методов.
-TODO: надо бы унифицировать параметр в Thread.sleep(200). Разобраться в импортах.
+/**
+ * Родительский класс для четырёх режимов. Здесь находится набор унифицированных методов.
+ * TODO: надо бы унифицировать параметр в Thread.sleep(200). Разобраться в импортах.
  */
 
 public abstract class BaseBot {
@@ -113,9 +114,11 @@ public abstract class BaseBot {
 
     // Два метода для дурного режима про туннели
     //TODO: совместить бы два следующих метода (туннели). Но надо курить игровую механику.
-    protected void fightSpiders(int tunnelMonsters) throws InterruptedException {
+    protected void fightSpiders(int tunnelMonsters, boolean usePet) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
-//        clickAllWindows("Питомец"); // опционально
+        if (usePet) {
+            clickAllWindows("Питомец");
+        }
         clickAllWindows("Пропустить");
         Thread.sleep(PAUSE_LONG_MS);
         clickAllWindows("Закрыть");
@@ -126,9 +129,11 @@ public abstract class BaseBot {
         Thread.sleep(PAUSE_SHORT_MS);
     }
 
-    protected void fightLizards(int tunnelMonsters) throws InterruptedException {
+    protected void fightLizards(int tunnelMonsters, boolean usePet) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
-//        clickAllWindows("Питомец"); // опционально
+        if (usePet) {
+            clickAllWindows("Питомец");
+        }
         clickAllWindows("Пропустить");
         Thread.sleep(PAUSE_LONG_MS);
         clickAllWindows("Закрыть");
