@@ -16,13 +16,11 @@ import javax.swing.*;
  * Здесь и в следующих классах прошу ориентироваться на комментарии перед методами.
  * TODO: сделать окончание режимов вместо break.
  * TODO: унифицировать switch/case! В отдельный класс?
- * TODO: допилить консольные методы ввода до актуальных GUI-методов.
  */
 
 public class Main {
     public static void main(String[] args) {
         try {
-            Scanner scanner = new Scanner(System.in);
             String botName;
             LocalTime startTime;
 
