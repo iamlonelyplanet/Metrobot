@@ -27,6 +27,7 @@ public abstract class BaseBot {
     protected Robot robot;
     protected List<HWND> activeWindows = new ArrayList<>();
     protected boolean silentMode = true;
+    protected boolean usePet = false;
     protected String botName;
     protected LocalTime startTime;
     protected Counter unificatedCounter;

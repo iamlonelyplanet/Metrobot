@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Вспомогательные методы для GUI и консольных запросов (режим, окна, время).
+ * Вспомогательные методы для GUI запросов (режим, окна, время).
  */
 public class Utilites {
     public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
@@ -75,31 +75,6 @@ public class Utilites {
         }
     }
 
-    // 2 метода подряд: ввод GUI или консоль. Запрашиваем время старта с дефолтным значением (при наличии).
-    // Enter = оставить дефолт.
-    // Консольный запрос времени старта
-    public static LocalTime askStartTime(Scanner scanner, String botName, LocalTime defaultTime) {
-        while (true) {
-            if (defaultTime != null) {
-                System.out.print("Введи время старта для режима " + botName + " (по умолчанию " +
-                        defaultTime.format(TIME_FORMAT) + "): ");
-            } else {
-                System.out.print("Введи время старта для режима " + botName + " (например 20:00): ");
-            }
-            String input = scanner.nextLine().trim();
-            if (input.isEmpty()) {
-                if (defaultTime != null) return defaultTime;
-                System.out.println("Время обязательно. Давай ещё раз?");
-                continue;
-            }
-            try {
-                return LocalTime.parse(input, TIME_FORMAT);
-            } catch (Exception e) {
-                System.out.println("Неверный формат времени, ожидалось HH:mm (ЧЧ:мм). Давай ещё раз?");
-            }
-        }
-    }
-
     // Парсим время. TODO: разделители помимо двоеточия: точка? пробел?
     public static LocalTime parseTime(String value) {
         if (value == null || value.isEmpty()) return null;
@@ -110,7 +85,7 @@ public class Utilites {
         }
     }
 
-    // GUI-запрос времени старта, при помощи окна-спиннера
+    // GUI-запрос времени старта, при помощи окна-спиннера с дефолтным значением (при наличии). Enter = оставить дефолт.
     public static LocalTime askStartTimeGui(String botName, LocalTime defaultTime) {
         SpinnerDateModel model = new SpinnerDateModel(); // Оставить, несмотря на подчёркивания IDEA. Изучить.
         JSpinner spinner = new JSpinner(model);

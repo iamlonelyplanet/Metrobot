@@ -25,7 +25,6 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             String botName;
             LocalTime startTime;
-            boolean useGui = true; // Переключатель GUI/консоль, для ввода рабочих окон, режима, времени старта.
 
             // === Обнуляем файл счётчиков каждый день при первом запуске программы после 03:00 по Мск, так надо.
             ConfigManager.autoResetCounters();
@@ -60,9 +59,7 @@ public class Main {
             switch (mode) {
                 case 1:
                     botName = "КВ";
-                    startTime = useGui
-                            ? Utilites.askStartTimeGui(botName, kvDefault)
-                            : Utilites.askStartTime(scanner, botName, kvDefault);
+                    startTime = Utilites.askStartTimeGui(botName, kvDefault);
                     kvStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     ClanWarBot clanWarBot = new ClanWarBot(activeWindows, startTime, botName);
@@ -70,9 +67,7 @@ public class Main {
                     break;
                 case 2:
                     botName = "Рейд";
-                    startTime = useGui
-                            ? Utilites.askStartTimeGui(botName, raidDefault)
-                            : Utilites.askStartTime(scanner, botName, raidDefault);
+                    startTime = Utilites.askStartTimeGui(botName, raidDefault);
                     raidStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     RaidBot raidBot = new RaidBot(activeWindows, startTime, botName);
@@ -80,9 +75,7 @@ public class Main {
                     break;
                 case 3:
                     botName = "Арена";
-                    startTime = useGui
-                            ? Utilites.askStartTimeGui(botName, arenaDefault)
-                            : Utilites.askStartTime(scanner, botName, arenaDefault);
+                    startTime = Utilites.askStartTimeGui(botName, arenaDefault);
                     arenaStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName);
@@ -90,9 +83,7 @@ public class Main {
                     break;
                 case 4:
                     botName = "Туннель";
-                    startTime = useGui
-                            ? Utilites.askStartTimeGui(botName, tunnelDefault)
-                            : Utilites.askStartTime(scanner, botName, tunnelDefault);
+                    startTime = Utilites.askStartTimeGui(botName, tunnelDefault);
                     tunnelStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName);
