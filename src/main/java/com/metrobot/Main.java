@@ -9,7 +9,6 @@ import java.util.List;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
 import javax.swing.*;
-import javax.swing.text.Utilities;
 
 /**
  * Главный класс. Спрашивает в GUI/консоли: режим игры, активные окна, время старта каждого режима. Обнуляет счётчики
