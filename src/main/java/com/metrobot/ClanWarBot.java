@@ -44,17 +44,17 @@ public class ClanWarBot extends BaseBot {
             // Бои
             for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_CLANWAR; battle++) {
                 System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_CLANWAR + " ===");
-                showAllGameWindows();
-                clickAllWindows("Клан");
-                clickAllWindows("Война");
-                clickAllWindows("Атаковать");
+                showActiveWindows();
+                clickButton("Клан");
+                clickButton("Война");
+                clickButton("Атаковать");
                 Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Пропустить");
+                clickButton("Пропустить");
                 Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Закрыть");
-                clickAllWindows("Погон");
-                clickAllWindows("Погон - Коллекция");
-                minimizeAllGameWindows();
+                clickButton("Закрыть");
+                clickButton("Погон");
+                clickButton("Погон - Коллекция");
+                minimizeActiveWindows();
 
                 unificatedCounter.plusOne();
                 CounterStorage.saveCounters(counters);

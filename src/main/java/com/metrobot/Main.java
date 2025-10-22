@@ -1,14 +1,10 @@
 package com.metrobot;
 
-import java.awt.*;
-import java.io.*;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.List;
 
 import com.sun.jna.platform.win32.WinDef.HWND;
-
-import javax.swing.*;
 
 /**
  * Главный класс. Спрашивает в GUI/консоли: режим игры, активные окна, время старта каждого режима. Обнуляет счётчики
@@ -29,7 +25,7 @@ public class Main {
             Map<String, String> config = ConfigManager.loadConfig(); // Загружаем конфиг из файла при наличии
 
             // === Запрашиваем режим игры в режиме GUI/консоль ===
-            int mode = Utilites.askModeGui();
+            int mode = Utilites.askMode();
             boolean usePet = Utilites.usePet;
 
             // === Разворачиваем окна игры по заголовку. Каждое окно = "перс"/"боец") ===
@@ -57,7 +53,7 @@ public class Main {
             switch (mode) {
                 case 1:
                     botName = "КВ";
-                    startTime = Utilites.askStartTimeGui(botName, kvDefault);
+                    startTime = Utilites.askStartTime(botName, kvDefault);
                     kvStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     ClanWarBot clanWarBot = new ClanWarBot(activeWindows, startTime, botName);
@@ -65,7 +61,7 @@ public class Main {
                     break;
                 case 2:
                     botName = "Рейд";
-                    startTime = Utilites.askStartTimeGui(botName, raidDefault);
+                    startTime = Utilites.askStartTime(botName, raidDefault);
                     raidStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     RaidBot raidBot = new RaidBot(activeWindows, startTime, botName);
@@ -73,7 +69,7 @@ public class Main {
                     break;
                 case 3:
                     botName = "Арена";
-                    startTime = Utilites.askStartTimeGui(botName, arenaDefault);
+                    startTime = Utilites.askStartTime(botName, arenaDefault);
                     arenaStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName, usePet);
@@ -81,7 +77,7 @@ public class Main {
                     break;
                 case 4:
                     botName = "Туннель";
-                    startTime = Utilites.askStartTimeGui(botName, tunnelDefault);
+                    startTime = Utilites.askStartTime(botName, tunnelDefault);
                     tunnelStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName, usePet);

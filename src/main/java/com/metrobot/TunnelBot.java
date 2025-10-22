@@ -45,43 +45,43 @@ public class TunnelBot extends BaseBot {
             startGame();
             Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
 
-            showAllGameWindows();
+            showActiveWindows();
             // === Туннели с пауками ===
             // 10 пауков в туннеле Парк Культуры - Кропоткинская
-            clickAllWindows("В туннель");
+            clickButton("В туннель");
             Thread.sleep(pauseShortForTunnels);
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
-                clickAllWindows("Карта ПК-КРО");
+                clickButton("Карта ПК-КРО");
                 fightSpiders(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Карта КРО-ПК");
+                clickButton("Карта КРО-ПК");
                 fightSpiders(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
-            clickAllWindows("Карта ПКк-ПКг");
+            clickButton("Карта ПКк-ПКг");
             Thread.sleep(PAUSE_SHORT_MS);
-            clickAllWindows("Войти с пропуском");
+            clickButton("Войти с пропуском");
             Thread.sleep(pauseShortForTunnels);
 
             // 10 пауков в тоннеле Парк Культуры - Киевская
-            clickAllWindows("В туннель");
+            clickButton("В туннель");
             Thread.sleep(pauseShortForTunnels);
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
-                clickAllWindows("Карта ПКг-КИЕ");
+                clickButton("Карта ПКг-КИЕ");
                 fightSpiders(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
-                clickAllWindows("Карта КИЕ-ПКг");
+                clickButton("Карта КИЕ-ПКг");
                 fightSpiders(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
-            clickAllWindows("Карта ПКг-ПКк");
+            clickButton("Карта ПКг-ПКк");
             Thread.sleep(PAUSE_SHORT_MS);
-            clickAllWindows("Войти");
+            clickButton("Войти");
             System.out.println("\nПауки закончились, прибито " + unificatedCounter.getCount() + ". Идём к ящерам");
 
             // Пока надо для таймера, потом можно удалить
@@ -92,39 +92,39 @@ public class TunnelBot extends BaseBot {
 
             // === Туннели с Ящерами ===
             unificatedCounter.setCount(0);
-            showAllGameWindows(); // можно удалить, но лучше оставить для внутреннего тестирования
+            showActiveWindows(); // можно удалить, но лучше оставить для внутреннего тестирования
             Thread.sleep(pauseShortForTunnels);
 
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 // 4 ящерицы в тоннеле Парк Культуры - Проспект Вернадского
-                clickAllWindows("В туннель");
+                clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Карта-ПК-ФРУ");
+                clickButton("Карта-ПК-ФРУ");
                 fightLizards(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Войти с пропуском");
+                clickButton("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
 
-                clickAllWindows("В туннель");
+                clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Карта-КОМ");
+                clickButton("Карта-КОМ");
                 fightLizards(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
 
-                clickAllWindows("В туннель");
+                clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Карта-УНИ");
+                clickButton("Карта-УНИ");
                 fightLizards(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Войти с пропуском");
+                clickButton("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
 
-                clickAllWindows("В туннель");
+                clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Карта-ПВ");
+                clickButton("Карта-ПВ");
                 fightLizards(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
@@ -132,40 +132,40 @@ public class TunnelBot extends BaseBot {
                 System.out.println("\nЗавершено пробегов до Проспекта Вернадского: " + (way + 1));
 
                 // 4 ящерицы в тоннеле Проспект Вернадского - Парк Культуры
-                clickAllWindows("В туннель");
+                clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Карта-УНИ");
+                clickButton("Карта-УНИ");
                 fightLizards(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
 
-                clickAllWindows("В туннель");
+                clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Карта-КОМ");
+                clickButton("Карта-КОМ");
                 fightLizards(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Войти с пропуском");
+                clickButton("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
 
-                clickAllWindows("В туннель");
+                clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Карта-КОМ-ФРУ");
+                clickButton("Карта-КОМ-ФРУ");
                 fightLizards(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
 
-                clickAllWindows("В туннель");
+                clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Карта-ФРУ-ПК");
+                clickButton("Карта-ФРУ-ПК");
                 fightLizards(unificatedCounter.getCount(), usePet);
                 unificatedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
-                clickAllWindows("Войти");
+                clickButton("Войти");
 
                 System.out.println("\nЗавершено пробегов до Парка Культуры: " + (way + 1));
                 Thread.sleep(pauseShortForTunnels);
             }
 
-            minimizeAllGameWindows();
+            minimizeActiveWindows();
 
             // Пока надо для таймера, потом можно удалить
             Duration lizardDuration = Duration.between(endSpiderTime, Instant.now());

@@ -19,7 +19,7 @@ public class Utilites {
     public static boolean usePet = false;
 
     // Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию
-    public static int askModeGui() {
+    public static int askMode() {
         String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели"};
 
         JComboBox<String> modeCombo = new JComboBox<>(options);
@@ -86,7 +86,7 @@ public class Utilites {
     }
 
     // GUI-запрос времени старта, при помощи окна-спиннера с дефолтным значением (при наличии). Enter = оставить дефолт.
-    public static LocalTime askStartTimeGui(String botName, LocalTime defaultTime) {
+    public static LocalTime askStartTime(String botName, LocalTime defaultTime) {
         SpinnerDateModel model = new SpinnerDateModel(); // Оставить, несмотря на подчёркивания IDEA. Изучить.
         JSpinner spinner = new JSpinner(model);
 

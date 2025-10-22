@@ -44,31 +44,31 @@ public class RaidBot extends BaseBot {
 
             // Подготовительные клики (разово, если надо)
             if (unificatedCounter.getCount() == 0) {
-                showAllGameWindows();
-                clickAllWindows("Клан");
-                clickAllWindows("Война");
-                clickAllWindows("Обновить");
+                showActiveWindows();
+                clickButton("Клан");
+                clickButton("Война");
+                clickButton("Обновить");
                 Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Рейды");
+                clickButton("Рейды");
                 Thread.sleep(PAUSE_SHORT_MS);
             }
 
             // Бои
             for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_RAID; battle++) {
                 System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_RAID + " ===");
-                showAllGameWindows();
+                showActiveWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
 
                 // TODO: Обдумать 2 нижние строки на предмет паразитного повтора при battle == 1
-                clickAllWindows("Клан");
-                clickAllWindows("Рейды");
+                clickButton("Клан");
+                clickButton("Рейды");
 
-                clickAllWindows("Атаковать");
+                clickButton("Атаковать");
                 Thread.sleep(PAUSE_BEFORE_BOSS_MS);
-                clickAllWindows("Пропустить");
+                clickButton("Пропустить");
                 Thread.sleep(PAUSE_LONG_MS);
-                clickAllWindows("Закрыть");
-                minimizeAllGameWindows();
+                clickButton("Закрыть");
+                minimizeActiveWindows();
 
                 unificatedCounter.plusOne();
                 CounterStorage.saveCounters(counters);

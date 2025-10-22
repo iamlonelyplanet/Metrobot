@@ -65,7 +65,7 @@ public abstract class BaseBot {
     }
 
     // Разворачиваем все игровые окна, даже незадействованные. Так надо.
-    protected void showAllGameWindows() {
+    protected void showActiveWindows() {
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
             User32.INSTANCE.ShowWindow(hWnd, User32.SW_RESTORE);
@@ -82,7 +82,7 @@ public abstract class BaseBot {
 
     // Сворачиваем все игровые окна (даже незадействованные), если включён silentMode. После сворачивания до следующего
     // события проходит почти 5 минут, в это время пользователь продолжает заниматься своей работой.
-    protected void minimizeAllGameWindows() {
+    protected void minimizeActiveWindows() {
         if (!silentMode) return;
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
@@ -118,26 +118,26 @@ public abstract class BaseBot {
     protected void fightSpiders(int tunnelMonsters, boolean usePet) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
         if (usePet) {
-            clickAllWindows("Питомец");
+            clickButton("Питомец");
         }
-        clickAllWindows("Пропустить");
+        clickButton("Пропустить");
         Thread.sleep(PAUSE_LONG_MS);
-        clickAllWindows("Закрыть");
+        clickButton("Закрыть");
         tunnelMonsters++;
         System.out.println("Убито пауков: " + tunnelMonsters);
         Thread.sleep(PAUSE_TUNNEL_MS);
-        clickAllWindows("В туннель");
+        clickButton("В туннель");
         Thread.sleep(PAUSE_SHORT_MS);
     }
 
     protected void fightLizards(int tunnelMonsters, boolean usePet) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
         if (usePet) {
-            clickAllWindows("Питомец");
+            clickButton("Питомец");
         }
-        clickAllWindows("Пропустить");
+        clickButton("Пропустить");
         Thread.sleep(PAUSE_LONG_MS);
-        clickAllWindows("Закрыть");
+        clickButton("Закрыть");
         tunnelMonsters++;
         System.out.println("Убито ящеров: " + tunnelMonsters);
         Thread.sleep(PAUSE_TUNNEL_MS);
@@ -162,7 +162,7 @@ public abstract class BaseBot {
 
     // Единый метод кликов по всем выбранным окнам. Ох, и долго же я его писал и переписывал. Учился. Это самый центр
     // всей проги.
-    protected void clickAllWindows(String buttonName) throws InterruptedException {
+    protected void clickButton(String buttonName) throws InterruptedException {
         Map<String, Point> buttonMap = getButtonMap();
         Point rel = buttonMap.get(buttonName);
         if (rel == null) {
