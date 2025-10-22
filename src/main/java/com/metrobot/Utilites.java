@@ -16,48 +16,62 @@ import java.util.List;
  */
 public class Utilites {
     public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
-
-    // Спрашиваем режим игры черезо консоль, с возможностью оставить по умолчанию
-    public static int askMode(Scanner scanner, String defaultModeStr) {
-        System.out.println("Выбери режим и введи цифру:");
-        System.out.println("1. Клановые войны");
-        System.out.println("2. Рейд");
-        System.out.println("3. Арена");
-        System.out.println("4. Туннели (бьём пауков и ящеров)");
-
-        if (defaultModeStr != null) {
-            System.out.println("(Enter для выбора по умолчанию: " + defaultModeStr + ")");
-        }
-
-        String input = scanner.nextLine().trim();
-        if (input.isEmpty() && defaultModeStr != null) {
-            return Integer.parseInt(defaultModeStr);
-        }
-        try {
-            return Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            return 3; // По умолчанию будет Арена
-        }
-    }
+    public static boolean usePet = false;
 
     // Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию
     public static int askModeGui() {
         String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели"};
-        int choice = javax.swing.JOptionPane.showOptionDialog(
+
+        JComboBox<String> modeCombo = new JComboBox<>(options);
+        modeCombo.setSelectedIndex(2); // по умолчанию Арена
+
+        JCheckBox petCheck = new JCheckBox("С питомцем");
+
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+        panel.add(new JLabel("Выбери режим:"));
+        panel.add(modeCombo);
+        panel.add(petCheck);
+
+        // Локальная функция обновления чекбокса по выбранному режиму
+        Runnable applyState = () -> {
+            int idx = modeCombo.getSelectedIndex();
+            switch (idx) {
+                case 0: // Клановые войны
+                case 1: // Рейд
+                    petCheck.setSelected(false);
+                    petCheck.setEnabled(false);
+                    break;
+                case 2: // Арена
+                    petCheck.setSelected(false);
+                    petCheck.setEnabled(true);
+                    break;
+                case 3: // Туннели
+                    petCheck.setSelected(true);
+                    petCheck.setEnabled(true);
+                    break;
+            }
+        };
+
+        applyState.run(); // первичная инициализация
+        modeCombo.addActionListener(e -> applyState.run());
+
+        int result = JOptionPane.showConfirmDialog(
                 null,
-                "Выбери режим:",
+                panel,
                 "Метробот",
-                javax.swing.JOptionPane.DEFAULT_OPTION,
-                javax.swing.JOptionPane.INFORMATION_MESSAGE,
-                null,
-                options,
-                options[2]
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE
         );
 
-        if (choice >= 0) { // при нажатии Esc = закрытии окна-диалога значение будет -1
-            return (choice + 1); // переводим индексы в "человеческий" формат 1–4 для понятности
+        if (result == JOptionPane.OK_OPTION) {
+            int idx = modeCombo.getSelectedIndex();
+            // Флажок учитывается только для Арены/Туннелей
+            usePet = (idx == 2 || idx == 3) && petCheck.isSelected();
+            return idx + 1; // 1–4
         } else {
-            return 3; // По умолчанию стартует режим Арена
+            // Esc/Cancel -> по умолчанию Арена без питомца
+            usePet = false;
+            return 3;
         }
     }
 

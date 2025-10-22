@@ -9,6 +9,7 @@ import java.util.List;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
 import javax.swing.*;
+import javax.swing.text.Utilities;
 
 /**
  * Главный класс. Спрашивает в GUI/консоли: режим игры, активные окна, время старта каждого режима. Обнуляет счётчики
@@ -32,9 +33,8 @@ public class Main {
             Map<String, String> config = ConfigManager.loadConfig(); // Загружаем конфиг из файла при наличии
 
             // === Запрашиваем режим игры в режиме GUI/консоль ===
-            int mode = useGui
-                    ? Utilites.askModeGui()
-                    : Utilites.askMode(scanner, config.get("mode"));
+            int mode = Utilites.askModeGui();
+            boolean usePet = Utilites.usePet;
 
             // === Разворачиваем окна игры по заголовку. Каждое окно = "перс"/"боец") ===
             Utilites.restoreAllGameWindows();
