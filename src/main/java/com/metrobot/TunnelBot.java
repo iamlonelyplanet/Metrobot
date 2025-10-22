@@ -23,11 +23,12 @@ TODO: Переработать ящеров при помощи ООП, либо
  */
 
 public class TunnelBot extends BaseBot {
-    public TunnelBot(List<HWND> windows, LocalTime timeHHmm, String botName) throws AWTException {
+    public TunnelBot(List<HWND> windows, LocalTime timeHHmm, String botName, boolean usePet) throws AWTException {
         super(windows);
         {
             this.startTime = timeHHmm;
             this.botName = botName;
+            this.usePet = usePet;
         }
     }
 
@@ -37,7 +38,6 @@ public class TunnelBot extends BaseBot {
     }
 
     int pauseShortForTunnels = PAUSE_SHORT_MS / 2; // TODO: не переделать ли в константу?
-    boolean usePet = true; // с питомцем
 
     public void start() {
         try {

@@ -76,7 +76,7 @@ public class Main {
                     startTime = Utilites.askStartTimeGui(botName, arenaDefault);
                     arenaStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
-                    ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName);
+                    ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName, usePet);
                     arenaBot.start();
                     break;
                 case 4:
@@ -84,7 +84,7 @@ public class Main {
                     startTime = Utilites.askStartTimeGui(botName, tunnelDefault);
                     tunnelStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
-                    TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName);
+                    TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName, usePet);
                     tunnelBot.start();
                     break;
                 default:
