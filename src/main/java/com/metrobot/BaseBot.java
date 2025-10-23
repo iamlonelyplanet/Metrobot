@@ -64,7 +64,7 @@ public abstract class BaseBot {
         }
     }
 
-    // Разворачиваем все игровые окна, даже незадействованные. Так надо.
+    // Разворачиваем активные окна.
     protected void showActiveWindows() {
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
@@ -79,9 +79,8 @@ public abstract class BaseBot {
         System.out.println("Развернул окна");
     }
 
-
-    // Сворачиваем все игровые окна (даже незадействованные), если включён silentMode. После сворачивания до следующего
-    // события проходит почти 5 минут, в это время пользователь продолжает заниматься своей работой.
+    // Сворачиваем активные окна, если включён silentMode. После сворачивания до следующего события проходит почти
+    // 5 минут, в это время пользователь продолжает заниматься своей работой.
     protected void minimizeActiveWindows() {
         if (!silentMode) return;
         for (HWND hWnd : activeWindows) {
@@ -112,36 +111,56 @@ public abstract class BaseBot {
                 "Проведено боёв в автоматическом режиме: " + unificatedCounter.getCount());
     }
 
+    // Экспериментальный метод для обоих видов монстров
+    //TODO: совместить бы два следующих метода (туннели). Но надо курить игровую механику.
+    protected void fightMonsters(int tunnelMonsters, boolean usePet) throws InterruptedException {
+        Thread.sleep(PAUSE_TUNNEL_MS);
+        if (usePet) {
+            clickButton("Питомец");
+        }
+        clickButton("Пропустить");
+        Thread.sleep(PAUSE_LONG_MS);
+        clickButton("Закрыть");
+        tunnelMonsters++;
+        if (tunnelMonsters <= MAX_WAYS_TUNNEL * 4) {
+            System.out.println("Убито пауков: " + tunnelMonsters);
+            Thread.sleep(PAUSE_TUNNEL_MS);
+            clickButton("В туннель");
+            Thread.sleep(PAUSE_SHORT_MS);
+        } else {
+            System.out.println("Убито ящеров: " + (tunnelMonsters - MAX_WAYS_TUNNEL * 4));
+            Thread.sleep(PAUSE_TUNNEL_MS);
+        }
+    }
 
     // Два метода для дурного режима про туннели
-    //TODO: совместить бы два следующих метода (туннели). Но надо курить игровую механику.
-    protected void fightSpiders(int tunnelMonsters, boolean usePet) throws InterruptedException {
-        Thread.sleep(PAUSE_TUNNEL_MS);
-        if (usePet) {
-            clickButton("Питомец");
-        }
-        clickButton("Пропустить");
-        Thread.sleep(PAUSE_LONG_MS);
-        clickButton("Закрыть");
-        tunnelMonsters++;
-        System.out.println("Убито пауков: " + tunnelMonsters);
-        Thread.sleep(PAUSE_TUNNEL_MS);
-        clickButton("В туннель");
-        Thread.sleep(PAUSE_SHORT_MS);
-    }
-
-    protected void fightLizards(int tunnelMonsters, boolean usePet) throws InterruptedException {
-        Thread.sleep(PAUSE_TUNNEL_MS);
-        if (usePet) {
-            clickButton("Питомец");
-        }
-        clickButton("Пропустить");
-        Thread.sleep(PAUSE_LONG_MS);
-        clickButton("Закрыть");
-        tunnelMonsters++;
-        System.out.println("Убито ящеров: " + tunnelMonsters);
-        Thread.sleep(PAUSE_TUNNEL_MS);
-    }
+//    protected void fightSpiders(int tunnelMonsters, boolean usePet) throws InterruptedException {
+//        Thread.sleep(PAUSE_TUNNEL_MS);
+//        if (usePet) {
+//            clickButton("Питомец");
+//        }
+//        clickButton("Пропустить");
+//        Thread.sleep(PAUSE_LONG_MS);
+//        clickButton("Закрыть");
+//        tunnelMonsters++;
+//        System.out.println("Убито пауков: " + tunnelMonsters);
+//        Thread.sleep(PAUSE_TUNNEL_MS);
+//        clickButton("В туннель");
+//        Thread.sleep(PAUSE_SHORT_MS);
+//    }
+//
+//    protected void fightLizards(int tunnelMonsters, boolean usePet) throws InterruptedException {
+//        Thread.sleep(PAUSE_TUNNEL_MS);
+//        if (usePet) {
+//            clickButton("Питомец");
+//        }
+//        clickButton("Пропустить");
+//        Thread.sleep(PAUSE_LONG_MS);
+//        clickButton("Закрыть");
+//        tunnelMonsters++;
+//        System.out.println("Убито ящеров: " + tunnelMonsters);
+//        Thread.sleep(PAUSE_TUNNEL_MS);
+//    }
 
     // Проигрываем звук по окончанию режима игры. Бесполезная свистоперделка ради учёбы и пасхалка для олдов.
     protected static void playFinalSound() {
