@@ -277,7 +277,7 @@ public class Utilites {
             ordered.set(index, hWnd);
         }
 
-        System.out.println("=== Найденные игровые окна (позиции 1–4) ===");
+        System.out.println("=== Найдены игровые окна (позиции 1–4) ===");
         for (int i = 0; i < 4; i++) {
             if (ordered.get(i) != null) {
                 WinDef.RECT r = new WinDef.RECT();

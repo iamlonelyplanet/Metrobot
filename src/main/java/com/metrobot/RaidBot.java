@@ -59,9 +59,10 @@ public class RaidBot extends BaseBot {
                 showActiveWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
 
-                // TODO: Обдумать 2 нижние строки на предмет паразитного повтора при battle == 1
-                clickButton("Клан");
-                clickButton("Рейды");
+                if (battle != 1) {
+                    clickButton("Клан");
+                    clickButton("Рейды");
+                }
 
                 clickButton("Атаковать");
                 Thread.sleep(PAUSE_BEFORE_BOSS_MS);
@@ -75,7 +76,7 @@ public class RaidBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
 
                 if (battle < MAX_BATTLES_RAID) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 5);
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 6);
                 }
             }
 

@@ -104,7 +104,7 @@ public abstract class BaseBot {
         // TODO изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
     }
 
-    // Конец любого игрового режима, это не bot.stop(). Проверить туннельный режим
+    // Конец любого игрового режима, это не bot.stop()
     protected void endGame() {
         playFinalSound();
         System.out.println("\nРежим " + botName + " завершён. " +
@@ -112,7 +112,6 @@ public abstract class BaseBot {
     }
 
     // Бои с туннельными монстрами
-    //TODO: совместить бы два следующих метода (туннели). Но надо курить игровую механику.
     protected void fightMonsters(int tunnelMonsters, boolean usePet) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
         if (usePet) {

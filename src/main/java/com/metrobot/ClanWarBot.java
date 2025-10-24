@@ -61,7 +61,7 @@ public class ClanWarBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
 
                 if (battle < MAX_BATTLES_CLANWAR) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() + 2); // попробовать 2*size
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size()); // попробовать 2*size
                 }
             }
 
