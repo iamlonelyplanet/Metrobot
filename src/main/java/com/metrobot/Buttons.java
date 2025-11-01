@@ -39,7 +39,7 @@ public class Buttons {
         put("Клан - Выход", new Point(80, 505));
         put("Арена", new Point(320, 303));
         put("Атаковать", new Point(200, 513));
-        put("Питомец", new Point(80, 505)); // опционально
+        put("Питомец", new Point(80, 505));
         put("Пропустить", new Point(385, 33));
         put("Закрыть — Победа", new Point(460, 520));
         put("Закрыть — Поражение", new Point(460, 463));
