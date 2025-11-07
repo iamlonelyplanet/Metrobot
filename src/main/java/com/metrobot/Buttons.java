@@ -53,7 +53,7 @@ public class Buttons {
         put("Атаковать", new Point(415, 288));
         put("Пропустить", new Point(385, 33));
         put("Закрыть", new Point(460, 433));
-        put("Погон", new Point(460, 525)); // проверить
+        put("Погон", new Point(460, 555)); // проверить
         put("Погон - Коллекция", new Point(480, 460)); // проверить
     }};
 
