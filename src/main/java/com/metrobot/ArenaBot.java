@@ -60,8 +60,6 @@ public class ArenaBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickButton("Закрыть — Победа");
                 Thread.sleep(PAUSE_SHORT_MS);
-                clickButton("Забрать коллекцию");
-                Thread.sleep(PAUSE_SHORT_MS);
                 clickButton("Закрыть — Поражение");
                 minimizeActiveWindows();
 
@@ -70,7 +68,7 @@ public class ArenaBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
 
                 if (battle < MAX_BATTLES_ARENA) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size());
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() + 1);
                 }
             }
 
