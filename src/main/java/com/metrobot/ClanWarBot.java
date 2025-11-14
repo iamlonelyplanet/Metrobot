@@ -53,6 +53,7 @@ public class ClanWarBot extends BaseBot {
                 Thread.sleep(PAUSE_LONG_MS);
                 clickButton("Закрыть");
                 clickButton("Погон");
+                clickButton("Погон 2");
                 clickButton("Погон - Коллекция");
                 minimizeActiveWindows();
 
@@ -61,7 +62,7 @@ public class ClanWarBot extends BaseBot {
                 System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
 
                 if (battle < MAX_BATTLES_CLANWAR) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size()); // попробовать 2*size
+                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 1); // попробовать 2*size
                 }
             }
 
