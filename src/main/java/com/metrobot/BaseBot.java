@@ -18,7 +18,6 @@ import static com.metrobot.Buttons.*;
 
 /**
  * Родительский класс для четырёх режимов. Здесь находится набор унифицированных методов.
- * TODO: надо бы унифицировать параметр в Thread.sleep(200). Разобраться в импортах.
  */
 
 public abstract class BaseBot {
@@ -73,7 +72,7 @@ public abstract class BaseBot {
             User32.INSTANCE.ShowWindow(hWnd, User32.SW_RESTORE);
             User32.INSTANCE.SetForegroundWindow(hWnd);
             try {
-                Thread.sleep(200);
+                Thread.sleep(PAUSE_MICRO_MS);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -89,7 +88,7 @@ public abstract class BaseBot {
             if (hWnd == null) continue;
             User32.INSTANCE.ShowWindow(hWnd, User32.SW_MINIMIZE);
             try {
-                Thread.sleep(200);
+                Thread.sleep(PAUSE_MICRO_MS);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -202,7 +201,7 @@ public abstract class BaseBot {
 
             System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", fighterNum, buttonName, x, y);
             clickAt(x, y);
-            Thread.sleep(400);
+            Thread.sleep(PAUSE_MICRO_MS);
         }
         Thread.sleep(PAUSE_SHORT_MS);
     }
