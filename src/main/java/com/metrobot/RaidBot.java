@@ -10,7 +10,7 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 import static com.metrobot.Buttons.*;
 
 /**
- * Режим "Клановые войны": бои перса в коллективной ("клановой") движухе.
+ * Режим "Рейд": бои перса в коллективной ("клановой") движухе.
  * Вручную занимало у пользователей до 1 часа, раз в 5 минут требуя внимания, притом сильно требуя: коллектив же.
  * <p>
  * Полное прохождение: тоже до 1 часа, но полностью автоматически.
@@ -42,6 +42,10 @@ public class RaidBot extends BaseBot {
         try {
             startGame();
 
+            LocalTime endTime = startTime.plusHours(1);
+            int battle = unificatedCounter.getCount() + 1;
+            boolean isGameGoingOn = LocalTime.now().isBefore(endTime) && ((battle <= MAX_BATTLES_RAID));
+
             // Подготовительные клики (разово, если надо)
             if (unificatedCounter.getCount() == 0) {
                 showActiveWindows();
@@ -54,7 +58,7 @@ public class RaidBot extends BaseBot {
             }
 
             // Бои
-            for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_RAID; battle++) {
+            while (isGameGoingOn) {
                 System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_RAID + " ===");
                 showActiveWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
@@ -78,7 +82,35 @@ public class RaidBot extends BaseBot {
                 if (battle < MAX_BATTLES_RAID) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 6);
                 }
+                battle++;
+                isGameGoingOn = LocalTime.now().isBefore(endTime) && ((battle <= MAX_BATTLES_RAID));
             }
+
+//            for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_RAID; battle++) {
+//                System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_RAID + " ===");
+//                showActiveWindows();
+//                Thread.sleep(PAUSE_SHORT_MS);
+//
+//                if (battle != 1) {
+//                    clickButton("Клан");
+//                    clickButton("Рейды");
+//                }
+//
+//                clickButton("Атаковать");
+//                Thread.sleep(PAUSE_BEFORE_BOSS_MS);
+//                clickButton("Пропустить");
+//                Thread.sleep(PAUSE_LONG_MS);
+//                clickButton("Закрыть");
+//                minimizeActiveWindows();
+//
+//                unificatedCounter.plusOne();
+//                CounterStorage.saveCounters(counters);
+//                System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
+//
+//                if (battle < MAX_BATTLES_RAID) {
+//                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 6);
+//                }
+//            }
 
             endGame();
         } catch (Exception e) {
