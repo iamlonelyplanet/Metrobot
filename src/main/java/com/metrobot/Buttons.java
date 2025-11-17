@@ -89,7 +89,7 @@ public class Buttons {
         put("Карта ПКг-КИЕ", new Point(225, 303));
         put("Карта КИЕ-ПКг", new Point(205, 433));
         put("Карта ПКг-ПКк", new Point(185, 383));
-        put("Питомец", new Point(80, 505)); // опционально
+        put("Питомец", new Point(80, 505));
     }};
 
 }

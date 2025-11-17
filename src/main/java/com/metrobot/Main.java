@@ -20,7 +20,7 @@ public class Main {
             String botName;
             LocalTime startTime;
 
-            // === Обнуляем файл счётчиков каждый день при первом запуске программы после 03:00 по Мск, так надо.
+            // === Обнуляем файл счётчиков каждый день при первом запуске программы после 03:00 по Мск, так надо. ===
             ConfigManager.autoResetCounters();
             Map<String, String> config = ConfigManager.loadConfig(); // Загружаем конфиг из файла при наличии
 
