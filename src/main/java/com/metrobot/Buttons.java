@@ -1,5 +1,8 @@
 package com.metrobot;
 
+import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinDef;
+
 import java.awt.*;
 import java.util.LinkedHashMap;
 
@@ -12,7 +15,7 @@ public class Buttons {
     // --- Паузы ---
     public static final int PAUSE_LONG_MS = 2800;
     public static final int PAUSE_SHORT_MS = 1200;
-    public static final int PAUSE_MICRO_MS = 200;
+    public static final int PAUSE_MICRO_MS = 300;
     public static final int FIVE_MINUTES_PAUSE_SECONDS = 283;
     public static final int PAUSE_BEFORE_BOSS_MS = 12_800;
     public static final int PAUSE_TUNNEL_MS = 16_000; // Для альтернативных скоростей: 16_000, 5_000, 8_000
@@ -30,6 +33,21 @@ public class Buttons {
      * Продолжаем собирать статистику по разрешениям.
      * Ширина полосы прокрутки (элемента окон Windows): 19 в Игроклубе, собрать статистику в других разрешениях
      */
+//    protected int findWidth() {
+//        for (int i = 0; i < activeWindows.size(); i++) {
+//            WinDef.HWND hWnd = activeWindows.get(i);
+//            if (hWnd == null) continue;
+//
+//            int fighterNum = i + 1; // индексация от 1
+//
+//            WinDef.RECT rect = new WinDef.RECT();
+//            User32.INSTANCE.GetWindowRect(hWnd, rect);
+//
+//            int width = rect.right - rect.left;
+//        }
+//        return width;
+//    }
+
     public static int windowWidth = 1033;
     public static int xMoveRight = (windowWidth - 764 - 19) / 2; // Расчёт "нуля" (верхней левой точки) рабочего поля
     public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных собирать статистику
@@ -55,6 +73,7 @@ public class Buttons {
         put("Закрыть", new Point(460, 433));
         put("Погон", new Point(480, 480)); // проверить
         put("Погон 2", new Point(480, 525)); // проверить
+        put("Погон 3", new Point(480, 560)); // проверить
         put("Погон - Коллекция", new Point(480, 465)); // проверить
     }};
 

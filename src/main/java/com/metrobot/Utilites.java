@@ -157,7 +157,7 @@ public class Utilites {
             if (hWnd != null) {
                 WinDef.RECT r = new WinDef.RECT();
                 user32.GetWindowRect(hWnd, r);
-                label = String.format("Окно %d: (%d, %d)", i + 1, r.left, r.top);
+                label = String.format("Окно %d: (%d, %d). Ширина: %d" , i + 1, r.left, r.top, (r.right - r.left));
             } else {
                 label = String.format("Окно %d: [не найдено]", i + 1);
             }
@@ -178,6 +178,7 @@ public class Utilites {
                 }
             }
         }
+
 
         int result = JOptionPane.showConfirmDialog(
                 null,
@@ -282,8 +283,8 @@ public class Utilites {
             if (ordered.get(i) != null) {
                 WinDef.RECT r = new WinDef.RECT();
                 user32.GetWindowRect(ordered.get(i), r);
-                System.out.printf("Окно %d: (%d, %d)%n",
-                        i + 1, r.left, r.top);
+                System.out.printf("Окно %d: (%d, %d). Ширина: %d.%n",
+                        i + 1, r.left, r.top, (r.right - r.left));
             } else {
                 System.out.printf("Окно %d: [не найдено]%n", i + 1);
             }

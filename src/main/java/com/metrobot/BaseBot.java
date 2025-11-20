@@ -11,6 +11,7 @@ import java.util.List;
 import javax.sound.sampled.*;
 
 import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.RECT;
 
@@ -44,6 +45,22 @@ public abstract class BaseBot {
     public BaseBot(List<HWND> activeWindows) throws AWTException {
         this();
         if (activeWindows != null) this.activeWindows = new ArrayList<>(activeWindows);
+    }
+
+    protected int[] exp (List<HWND> activeWindows) {
+        int[] width = new int[activeWindows.size()];
+        for (int i = 0; i < activeWindows.size(); i++) {
+            HWND w = activeWindows.get(i);
+            WinDef.RECT r = new WinDef.RECT();
+            boolean ok = User32.INSTANCE.GetWindowRect(w, r);
+            if (!ok) {
+                width[i] = -1;   // вдруг окно закрыто, будет видно
+                continue;
+            }
+            width[i] = r.right - r.left;
+        }
+        System.out.println(Arrays.toString(width));
+        return width;
     }
 
     // Таймер (секунды), отсчитывает короткие промежутки времени, выводит в консоль обновление раз в секунду
@@ -99,7 +116,7 @@ public abstract class BaseBot {
     // Старт любого игрового режима
     protected void startGame() throws InterruptedException {
         waitUntilStartTime(startTime);
-        System.out.println("Старт режима " + botName);
+        System.out.println("\nСтарт режима " + botName);
         Thread.sleep(PAUSE_SHORT_MS);
         this.unificatedCounter = counters.computeIfAbsent(botName, name -> new Counter(name));
         // TODO изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
