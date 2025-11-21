@@ -25,6 +25,53 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <executions>
+          <execution>
+            <id>copy-extra-files</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/jpackage-res</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}</directory>
+                  <includes>
+                    <include>counters.txt</include>
+                    <include>config.txt</include>
+                    <include>sound.wav</include>
+                    <include>readme.md</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.panteleyev</groupId>
+        <artifactId>jpackage-maven-plugin</artifactId>
+        <version>1.7.1</version>
+        <configuration>
+          <name>Metrobot</name>
+          <appVersion>1.0.5</appVersion>
+          <vendor>Aleksey Nizamov</vendor>
+          <type>app-image</type>
+          <icon>${project.basedir}/res/metrobot.ico</icon>
+          <winConsole>false</winConsole>
+          <input>${project.build.directory}</input>
+          <mainJar>${project.artifactId}-${project.version}-shaded.jar</mainJar>
+          <destination>${project.build.directory}/jpackage</destination>
+          <resourceDir>${project.build.directory}/jpackage-res</resourceDir>
+          <javaOptions>
+            <javaOption>-Dfile.encoding=UTF-8</javaOption>
+          </javaOptions>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencyManagement>
@@ -37,6 +84,7 @@
     </dependencies>
   </dependencyManagement>
   <properties>
+    <maven.compiler.release>23</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>23</maven.compiler.target>
     <maven.compiler.source>23</maven.compiler.source>

@@ -47,22 +47,6 @@ public abstract class BaseBot {
         if (activeWindows != null) this.activeWindows = new ArrayList<>(activeWindows);
     }
 
-    protected int[] exp (List<HWND> activeWindows) {
-        int[] width = new int[activeWindows.size()];
-        for (int i = 0; i < activeWindows.size(); i++) {
-            HWND w = activeWindows.get(i);
-            WinDef.RECT r = new WinDef.RECT();
-            boolean ok = User32.INSTANCE.GetWindowRect(w, r);
-            if (!ok) {
-                width[i] = -1;   // вдруг окно закрыто, будет видно
-                continue;
-            }
-            width[i] = r.right - r.left;
-        }
-        System.out.println(Arrays.toString(width));
-        return width;
-    }
-
     // Таймер (секунды), отсчитывает короткие промежутки времени, выводит в консоль обновление раз в секунду
     protected void countdown(int seconds) throws InterruptedException {
         for (int s = seconds; s > 0; s--) {
@@ -89,7 +73,7 @@ public abstract class BaseBot {
             User32.INSTANCE.ShowWindow(hWnd, User32.SW_RESTORE);
             User32.INSTANCE.SetForegroundWindow(hWnd);
             try {
-                Thread.sleep(PAUSE_MICRO_MS);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -105,7 +89,7 @@ public abstract class BaseBot {
             if (hWnd == null) continue;
             User32.INSTANCE.ShowWindow(hWnd, User32.SW_MINIMIZE);
             try {
-                Thread.sleep(PAUSE_MICRO_MS);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

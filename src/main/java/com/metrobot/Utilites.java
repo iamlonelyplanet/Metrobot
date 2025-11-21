@@ -3,6 +3,7 @@ package com.metrobot;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinDef.HWND;
+import com.sun.jna.platform.win32.WinUser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -124,6 +125,9 @@ public class Utilites {
         return defaultTime;
     }
 
+    /**
+     Сужаем размер окна до минимально возможного, 1033 на 768
+     */
     public static void restoreAllGameWindows() {
         User32 user32 = User32.INSTANCE;
 
@@ -133,10 +137,29 @@ public class Utilites {
             String title = new String(buffer).trim();
 
             if (title.contains("Игроклуб") || title.contains("2033")) {
+                resizeWindows(hWnd);
                 user32.ShowWindow(hWnd, User32.SW_RESTORE);
             }
             return true;
         }, null);
+    }
+
+    public static void resizeWindows(HWND hwnd) {
+        WinDef.RECT r = new WinDef.RECT();
+        User32.INSTANCE.GetWindowRect(hwnd, r);
+        if (r.right - r.left == Buttons.windowWidth) {
+            return;
+        }
+
+        User32.INSTANCE.SetWindowPos(
+                hwnd,
+                null,
+                r.left,        // сохраняем позицию
+                r.top,
+                Buttons.windowWidth,
+                Buttons.windowHeight,
+                WinUser.SWP_NOZORDER | WinUser.SWP_SHOWWINDOW
+        );
     }
 
     /**
@@ -157,7 +180,7 @@ public class Utilites {
             if (hWnd != null) {
                 WinDef.RECT r = new WinDef.RECT();
                 user32.GetWindowRect(hWnd, r);
-                label = String.format("Окно %d: (%d, %d). Ширина: %d" , i + 1, r.left, r.top, (r.right - r.left));
+                label = String.format("Окно %d: (%d, %d)" , i + 1, r.left, r.top);
             } else {
                 label = String.format("Окно %d: [не найдено]", i + 1);
             }
@@ -178,7 +201,6 @@ public class Utilites {
                 }
             }
         }
-
 
         int result = JOptionPane.showConfirmDialog(
                 null,
@@ -283,8 +305,8 @@ public class Utilites {
             if (ordered.get(i) != null) {
                 WinDef.RECT r = new WinDef.RECT();
                 user32.GetWindowRect(ordered.get(i), r);
-                System.out.printf("Окно %d: (%d, %d). Ширина: %d.%n",
-                        i + 1, r.left, r.top, (r.right - r.left));
+                System.out.printf("Окно %d: (%d, %d)",
+                        i + 1, r.left, r.top);
             } else {
                 System.out.printf("Окно %d: [не найдено]%n", i + 1);
             }

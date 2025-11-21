@@ -1,8 +1,5 @@
 package com.metrobot;
 
-import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.WinDef;
-
 import java.awt.*;
 import java.util.LinkedHashMap;
 
@@ -18,7 +15,7 @@ public class Buttons {
     public static final int PAUSE_MICRO_MS = 300;
     public static final int FIVE_MINUTES_PAUSE_SECONDS = 283;
     public static final int PAUSE_BEFORE_BOSS_MS = 12_800;
-    public static final int PAUSE_TUNNEL_MS = 16_000; // Для альтернативных скоростей: 16_000, 5_000, 8_000
+    public static final int PAUSE_TUNNEL_MS = 16_000; // Для альтернативных скоростей: 16_000, 4_000, 8_000
 
     // --- Максимально допустимое количество боёв. Почему byte? Где ещё их использовать, если не на учёбе! ---
     public static final byte MAX_BATTLES_ARENA = 50;
@@ -28,9 +25,8 @@ public class Buttons {
 
     /**
      * --- Координаты верхних левых углов рабочего поля внутри окна ---
-     * Площадь стянутого до минимума ("приведённого") окна Игроклуба: 1033x670
-     * Площадь "рабочего поля" в окне Игроклуба и ВК: 764×650; одинакова при разрешениях 768, 1080 и 1440.
-     * Продолжаем собирать статистику по разрешениям.
+     * Площадь стянутого до минимума ("приведённого") окна Игроклуба: 1033x768
+     * Площадь "рабочего поля" в окне Игроклуба и ВК: 764×650; одинакова при всех разрешениях.
      * Ширина полосы прокрутки (элемента окон Windows): 19 в Игроклубе, собрать статистику в других разрешениях
      */
 //    protected int findWidth() {
@@ -49,6 +45,7 @@ public class Buttons {
 //    }
 
     public static int windowWidth = 1033;
+    public static int windowHeight = 768;
     public static int xMoveRight = (windowWidth - 764 - 19) / 2; // Расчёт "нуля" (верхней левой точки) рабочего поля
     public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных собирать статистику
 
