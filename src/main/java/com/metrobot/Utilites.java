@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Вспомогательные методы для GUI запросов (режим, окна, время).
  */
+
 public class Utilites {
     public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
     public static boolean usePet = false;
@@ -126,7 +127,7 @@ public class Utilites {
     }
 
     /**
-     Сужаем размер окна до минимально возможного, 1033 на 768
+     * Сужаем размер окна до минимально возможного, 1033 на 768
      */
     public static void restoreAllGameWindows() {
         User32 user32 = User32.INSTANCE;
@@ -180,7 +181,7 @@ public class Utilites {
             if (hWnd != null) {
                 WinDef.RECT r = new WinDef.RECT();
                 user32.GetWindowRect(hWnd, r);
-                label = String.format("Окно %d: (%d, %d)" , i + 1, r.left, r.top);
+                label = String.format("Окно %d: (%d, %d)", i + 1, r.left, r.top);
             } else {
                 label = String.format("Окно %d: [не найдено]", i + 1);
             }
@@ -275,11 +276,9 @@ public class Utilites {
 
         // Определяем разрешение монитора и примерное расположение окон на экране
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        int screenWidth = screen.width;
-        int screenHeight = screen.height;
 
-        int midX = screenWidth / 2;
-        int midY = screenHeight / 2;
+        int midX = screen.width / 2;
+        int midY = screen.height / 2;
 
         for (HWND hWnd : found) {
             WinDef.RECT r = new WinDef.RECT();
