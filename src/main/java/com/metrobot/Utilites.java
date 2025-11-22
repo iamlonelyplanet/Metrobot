@@ -304,7 +304,7 @@ public class Utilites {
             if (ordered.get(i) != null) {
                 WinDef.RECT r = new WinDef.RECT();
                 user32.GetWindowRect(ordered.get(i), r);
-                System.out.printf("Окно %d: (%d, %d)",
+                System.out.printf("Окно %d: (%d, %d)%n",
                         i + 1, r.left, r.top);
             } else {
                 System.out.printf("Окно %d: [не найдено]%n", i + 1);

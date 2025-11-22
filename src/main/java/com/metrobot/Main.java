@@ -60,7 +60,6 @@ public class Main {
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     ClanWarBot clanWarBot = new ClanWarBot(activeWindows, startTime, botName);
                     clanWarBot.start();
-                    break;
                 case 2:
                     botName = "Рейд";
                     startTime = Utilites.askStartTime(botName, raidDefault);
@@ -68,7 +67,6 @@ public class Main {
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     RaidBot raidBot = new RaidBot(activeWindows, startTime, botName);
                     raidBot.start();
-                    break;
                 case 3:
                     botName = "Арена";
                     startTime = Utilites.askStartTime(botName, arenaDefault);
@@ -76,7 +74,6 @@ public class Main {
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName, usePet);
                     arenaBot.start();
-                    break;
                 case 4:
                     botName = "Туннель";
                     startTime = Utilites.askStartTime(botName, tunnelDefault);
@@ -84,7 +81,6 @@ public class Main {
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
                     TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName, usePet);
                     tunnelBot.start();
-                    break;
                 default:
                     System.out.println("Неизвестный режим. Завершаю.");
             }
