@@ -42,6 +42,7 @@ public class ClanWarBot extends BaseBot {
             startGame();
 
             LocalTime endTime = startTime.plusHours(2);
+            endTime = endTime.minusSeconds(300); // проверить
             int battle = unificatedCounter.getCount() + 1;
             boolean isGameGoingOn = LocalTime.now().isBefore(endTime) && ((battle <= MAX_BATTLES_CLANWAR));
 
@@ -71,30 +72,6 @@ public class ClanWarBot extends BaseBot {
                 battle++;
                 isGameGoingOn = LocalTime.now().isBefore(endTime) && ((battle <= MAX_BATTLES_CLANWAR));
             }
-
-//            for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_CLANWAR; battle++) {
-//                System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_CLANWAR + " ===");
-//                showActiveWindows();
-//                clickButton("Клан");
-//                clickButton("Война");
-//                clickButton("Атаковать");
-//                Thread.sleep(PAUSE_LONG_MS);
-//                clickButton("Пропустить");
-//                Thread.sleep(PAUSE_LONG_MS);
-//                clickButton("Закрыть");
-//                clickButton("Погон");
-//                clickButton("Погон 2");
-//                clickButton("Погон - Коллекция");
-//                minimizeActiveWindows();
-//
-//                unificatedCounter.plusOne();
-//                CounterStorage.saveCounters(counters);
-//                System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
-//
-//                if (battle < MAX_BATTLES_CLANWAR) {
-//                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 1);
-//                }
-//            }
 
             endGame();
         } catch (Exception e) {

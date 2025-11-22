@@ -43,6 +43,7 @@ public class RaidBot extends BaseBot {
             startGame();
 
             LocalTime endTime = startTime.plusHours(1);
+            endTime = endTime.minusSeconds(300); // проверить
             int battle = unificatedCounter.getCount() + 1;
             boolean isGameGoingOn = LocalTime.now().isBefore(endTime) && ((battle <= MAX_BATTLES_RAID));
 
@@ -85,32 +86,6 @@ public class RaidBot extends BaseBot {
                 battle++;
                 isGameGoingOn = LocalTime.now().isBefore(endTime) && ((battle <= MAX_BATTLES_RAID));
             }
-
-//            for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_RAID; battle++) {
-//                System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_RAID + " ===");
-//                showActiveWindows();
-//                Thread.sleep(PAUSE_SHORT_MS);
-//
-//                if (battle != 1) {
-//                    clickButton("Клан");
-//                    clickButton("Рейды");
-//                }
-//
-//                clickButton("Атаковать");
-//                Thread.sleep(PAUSE_BEFORE_BOSS_MS);
-//                clickButton("Пропустить");
-//                Thread.sleep(PAUSE_LONG_MS);
-//                clickButton("Закрыть");
-//                minimizeActiveWindows();
-//
-//                unificatedCounter.plusOne();
-//                CounterStorage.saveCounters(counters);
-//                System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
-//
-//                if (battle < MAX_BATTLES_RAID) {
-//                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 6);
-//                }
-//            }
 
             endGame();
         } catch (Exception e) {
