@@ -44,45 +44,58 @@ public class Main {
             LocalTime kvDefault = Utilites.parseTime(config.get("kv_start"));
             LocalTime raidDefault = Utilites.parseTime(config.get("raid_start"));
             LocalTime tunnelDefault = Utilites.parseTime(config.get("tunnel_start"));
+            LocalTime ratDefault = Utilites.parseTime(config.get("rat_start"));
 
             // === Готовим переменные времени для записи обратно в конфиг. Не трогать, пока хоть как-то работает ===
             LocalTime arenaStart = arenaDefault;
             LocalTime kvStart = kvDefault;
             LocalTime raidStart = raidDefault;
             LocalTime tunnelStart = tunnelDefault;
+            LocalTime ratStart = ratDefault;
 
             // === Запуск выбранного режима игры ===
             switch (mode) {
-                case 1:
+                case 1 -> {
                     botName = "КВ";
                     startTime = Utilites.askStartTime(botName, kvDefault);
                     kvStart = startTime;
-                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
+                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
                     ClanWarBot clanWarBot = new ClanWarBot(activeWindows, startTime, botName);
                     clanWarBot.start();
-                case 2:
+                }
+                case 2 -> {
                     botName = "Рейд";
                     startTime = Utilites.askStartTime(botName, raidDefault);
                     raidStart = startTime;
-                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
+                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
                     RaidBot raidBot = new RaidBot(activeWindows, startTime, botName);
                     raidBot.start();
-                case 3:
+                }
+                case 3 -> {
                     botName = "Арена";
                     startTime = Utilites.askStartTime(botName, arenaDefault);
                     arenaStart = startTime;
-                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
+                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
                     ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName, usePet);
                     arenaBot.start();
-                case 4:
+                }
+                case 4 -> {
                     botName = "Туннель";
                     startTime = Utilites.askStartTime(botName, tunnelDefault);
                     tunnelStart = startTime;
-                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart);
+                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
                     TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName, usePet);
                     tunnelBot.start();
-                default:
-                    System.out.println("Неизвестный режим. Завершаю.");
+                }
+                case 5 -> {
+                    botName = "Крысы";
+                    startTime = Utilites.askStartTime(botName, ratDefault);
+                    ratStart = startTime;
+                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
+                    RatBot ratBot = new RatBot(activeWindows, startTime, botName, usePet);
+                    ratBot.start();
+                }
+                default -> System.out.println("Неизвестный режим. Завершаю.");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -22,7 +22,7 @@ public class Utilites {
 
     // Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию
     public static int askMode() {
-        String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели"};
+        String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели", "Крысы"};
 
         JComboBox<String> modeCombo = new JComboBox<>(options);
         modeCombo.setSelectedIndex(2); // по умолчанию Арена
@@ -51,6 +51,10 @@ public class Utilites {
                     petCheck.setSelected(true);
                     petCheck.setEnabled(true);
                     break;
+                case 4: // Крысы
+                    petCheck.setSelected(true);
+                    petCheck.setEnabled(true);
+                    break;
             }
         };
 
@@ -67,9 +71,9 @@ public class Utilites {
 
         if (result == JOptionPane.OK_OPTION) {
             int idx = modeCombo.getSelectedIndex();
-            // Флажок учитывается только для Арены/Туннелей
-            usePet = (idx == 2 || idx == 3) && petCheck.isSelected();
-            return idx + 1; // 1–4
+            // Флажок учитывается только для Арены/Туннелей/Крыс
+            usePet = (idx == 2 || idx == 3 || idx == 4 ) && petCheck.isSelected();
+            return idx + 1; // 1–5
         } else {
             // Esc/Cancel -> по умолчанию Арена без питомца
             usePet = false;

@@ -109,4 +109,15 @@ public class Buttons {
         put("Питомец", new Point(80, 505));
     }};
 
+    // --- Крысы ---
+    public static final LinkedHashMap<String, Point> RAT_BUTTONS = new LinkedHashMap<>() {{
+        put("Клан - Выход", new Point(80, 505));
+        put("Начстанции", new Point(100, 350));
+        put("Крыса", new Point(465, 235));
+        put("Пропустить", new Point(385, 33));
+        put("Закрыть — Победа", new Point(460, 520));
+        put("Закрыть — Поражение", new Point(480, 463));
+        put("Питомец", new Point(80, 505));
+    }};
+
 }

@@ -43,7 +43,7 @@ public class ConfigManager {
 
     // Сохраняем конфиг в локальный файл, без взаимодействия с сервером
     public static void saveConfig(int mode, List<WinDef.HWND> windows, LocalTime arenaStart, LocalTime kvStart,
-                                  LocalTime raidStart, LocalTime tunnelStart) {
+                                  LocalTime raidStart, LocalTime tunnelStart, LocalTime ratStart) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(CONFIG_FILE))) {
             pw.println("mode=" + mode);
 
@@ -59,6 +59,7 @@ public class ConfigManager {
             if (kvStart != null) pw.println("kv_start=" + kvStart.format(TIME_FORMAT));
             if (raidStart != null) pw.println("raid_start=" + raidStart.format(TIME_FORMAT));
             if (tunnelStart != null) pw.println("tunnel_start=" + tunnelStart.format(TIME_FORMAT));
+            if (ratStart != null) pw.println("rat_start=" + ratStart.format(TIME_FORMAT));
         } catch (IOException e) {
             System.err.println("Ошибка записи " + CONFIG_FILE + ": " + e.getMessage());
         }
@@ -75,14 +76,13 @@ public class ConfigManager {
                 String last = Files.readString(LAST_RESET_FILE).trim();
                 if (!last.isEmpty()) {
                     LocalDate lastDate = LocalDate.parse(last, DateTimeFormatter.ISO_LOCAL_DATE);
-                    // если уже сбрасывали сегодня, ничего не делаем
                     if (lastDate.isEqual(todayMsk)) return;
                 }
             }
 
             // если после 03:00 Мск — делаем сброс файла со счётчиками.
             if (nowMsk.isAfter(LocalTime.of(3, 0))) {
-                System.out.println("Новый день после 03:00 МСК: counters.txt обнуляется");
+                System.out.println("Новый день после 03:00 МСК: обнулены все счётчики в файле counters.txt");
                 resetCounters();
                 Files.writeString(LAST_RESET_FILE, todayMsk.toString());
             }
@@ -98,7 +98,6 @@ public class ConfigManager {
             Files.createFile(COUNTERS_FILE);
         }
         Files.writeString(COUNTERS_FILE, defaultCounters);
-        System.out.println("Счётчики в файле counters.txt обнулены.");
     }
 
 }

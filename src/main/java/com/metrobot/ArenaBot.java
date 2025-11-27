@@ -23,6 +23,7 @@ import static com.metrobot.Buttons.*;
  * <p>
  * TODO: совместить 3 основных класса (боты Арена, КВ и Рейд) в единый. ООП же! Глянуть на "завершение работы" у
  * начстанции.
+ * TODO: режим не работает на станциях Проспект Вернадского, Университет, Коммунистическая из-за иных координат Арены.
  */
 
 public class ArenaBot extends BaseBot {
@@ -46,7 +47,7 @@ public class ArenaBot extends BaseBot {
 
             // Бои
             for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
-                System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_ARENA + " ==="); // глянуть battle = 0
+                System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_ARENA + " ===");
                 showActiveWindows();
                 clickButton("Клан - Выход");
                 clickButton("Арена");
