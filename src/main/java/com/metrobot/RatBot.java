@@ -35,16 +35,22 @@ public class RatBot extends BaseBot {
             showActiveWindows();
 
             // Бои
-            for (int battle = 1; battle <= 50; battle++) {
-                System.out.println("\n=== Бой " + battle + " из " + 50 + " ===");
-//                showActiveWindows();
+            for (int battle = 1; battle <= MAX_ENERGY; battle++) {
+                System.out.println("\n=== Бой " + battle + " из " + MAX_ENERGY + " ===");
+                if (isSilentMode) {
+                    showActiveWindows();
+                }
 //                clickButton("Клан - Выход");
                 clickButton("Начстанции");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickButton("Крыса");
-//                minimizeActiveWindows();
-                Thread.sleep(20_000); // обычно 60_000, VIP: 30_000
-//                showActiveWindows();
+                if (isSilentMode) {
+                    minimizeActiveWindows();
+                }
+                countdown(42); // стандарт: 60, стандарт + штаны: 42, стандарт + комплект: 30, VIP: 30, VIP + комплект: 20
+                if (isSilentMode) {
+                    showActiveWindows();
+                }
                 if (usePet) {
                     clickButton("Питомец");
                 }

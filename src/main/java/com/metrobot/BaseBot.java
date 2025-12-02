@@ -25,11 +25,11 @@ public abstract class BaseBot {
     // === Общее состояние для всех ботов ===
     protected Robot robot;
     protected List<HWND> activeWindows = new ArrayList<>();
-    protected boolean silentMode = true;
+    protected boolean isSilentMode = true;
     protected boolean usePet = false;
     protected String botName;
     protected LocalTime startTime;
-    protected Counter unificatedCounter;
+    protected Counter unifiedCounter;
     protected Counter counterSpiders;
     protected Counter counterLizards;
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
@@ -83,7 +83,7 @@ public abstract class BaseBot {
     // Сворачиваем активные окна, если включён silentMode. После сворачивания до следующего события проходит почти
     // 5 минут, в это время пользователь продолжает заниматься своей работой.
     protected void minimizeActiveWindows() {
-        if (!silentMode) return;
+        if (!isSilentMode) return;
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
             User32.INSTANCE.ShowWindow(hWnd, User32.SW_MINIMIZE);
@@ -101,7 +101,7 @@ public abstract class BaseBot {
         waitUntilStartTime(startTime);
         System.out.println("\nСтарт режима " + botName);
         Thread.sleep(PAUSE_SHORT_MS);
-        this.unificatedCounter = counters.computeIfAbsent(botName, name -> new Counter(name));
+        this.unifiedCounter = counters.computeIfAbsent(botName, name -> new Counter(name));
         // TODO изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
     }
 
@@ -109,7 +109,7 @@ public abstract class BaseBot {
     protected void endGame() {
         playFinalSound();
         System.out.println("\nРежим " + botName + " завершён. " +
-                "Проведено боёв в автоматическом режиме: " + unificatedCounter.getCount());
+                "Проведено боёв в автоматическом режиме: " + unifiedCounter.getCount());
     }
 
     // Бои с туннельными монстрами
@@ -199,8 +199,8 @@ public abstract class BaseBot {
             int x = rect.left + Buttons.xMoveRight + rel.x;
             int y = rect.top + Buttons.yMoveDown + rel.y;
             if (Objects.equals(botName, "Крысы") && Objects.equals(buttonName, "Питомец")) {
-                System.out.println("Режим: Крысы, вызов питомца, ждём " + PAUSE_LONG_MS/1000 + " сек");
-                Thread.sleep(PAUSE_LONG_MS);
+                System.out.println("Режим: Крысы, вызов питомца, ждём " + PAUSE_SHORT_MS/1000 + " сек");
+                Thread.sleep(PAUSE_SHORT_MS);
             }
 
             System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", fighterNum, buttonName, x, y);

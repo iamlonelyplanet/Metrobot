@@ -49,12 +49,12 @@ public class TunnelBot extends BaseBot {
             Thread.sleep(pauseShortForTunnels);
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 clickButton("Карта ПК-КРО");
-                fightSpiders(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightSpiders(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Карта КРО-ПК");
-                fightSpiders(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightSpiders(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
@@ -68,18 +68,18 @@ public class TunnelBot extends BaseBot {
             Thread.sleep(pauseShortForTunnels);
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 clickButton("Карта ПКг-КИЕ");
-                fightSpiders(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightSpiders(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
                 clickButton("Карта КИЕ-ПКг");
-                fightSpiders(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightSpiders(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
             clickButton("Карта ПКг-ПКк");
             Thread.sleep(PAUSE_SHORT_MS);
             clickButton("Войти");
-            System.out.println("\nПауки закончились, прибито " + unificatedCounter.getCount() + ". Идём к ящерам");
+            System.out.println("\nПауки закончились, прибито " + unifiedCounter.getCount() + ". Идём к ящерам");
 
             // Пока надо для таймера, потом можно удалить
             Instant endSpiderTime = Instant.now();
@@ -88,7 +88,7 @@ public class TunnelBot extends BaseBot {
             System.out.println("На пауков затрачено " + (secondsSpider / 60) + " мин " + (secondsSpider % 60) + " сек");
 
             // === Туннели с Ящерами ===
-            unificatedCounter.setCount(0);
+            unifiedCounter.setCount(0);
             showActiveWindows(); // можно удалить, но лучше оставить для внутреннего тестирования
             Thread.sleep(pauseShortForTunnels);
 
@@ -97,8 +97,8 @@ public class TunnelBot extends BaseBot {
                 clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Карта-ПК-ФРУ");
-                fightLizards(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightLizards(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
@@ -106,15 +106,15 @@ public class TunnelBot extends BaseBot {
                 clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Карта-КОМ");
-                fightLizards(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightLizards(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
 
                 clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Карта-УНИ");
-                fightLizards(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightLizards(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
@@ -122,8 +122,8 @@ public class TunnelBot extends BaseBot {
                 clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Карта-ПВ");
-                fightLizards(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightLizards(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
 
                 System.out.println("\nЗавершено пробегов до Проспекта Вернадского: " + (way + 1));
@@ -132,14 +132,14 @@ public class TunnelBot extends BaseBot {
                 clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Карта-УНИ");
-                fightLizards(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightLizards(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
 
                 clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Карта-КОМ");
-                fightLizards(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightLizards(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Войти с пропуском");
                 Thread.sleep(PAUSE_SHORT_MS);
@@ -147,14 +147,14 @@ public class TunnelBot extends BaseBot {
                 clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Карта-КОМ-ФРУ");
-                fightLizards(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightLizards(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
 
                 clickButton("В туннель");
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Карта-ФРУ-ПК");
-                fightLizards(unificatedCounter.getCount(), usePet);
-                unificatedCounter.plusOne();
+                fightLizards(unifiedCounter.getCount(), usePet);
+                unifiedCounter.plusOne();
                 Thread.sleep(pauseShortForTunnels);
                 clickButton("Войти");
 

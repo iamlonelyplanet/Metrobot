@@ -43,12 +43,11 @@ public class RaidBot extends BaseBot {
             startGame();
 
             LocalTime endTime = startTime.plusHours(1);
-            endTime = endTime.minusSeconds(300); // проверить
-            int battle = unificatedCounter.getCount() + 1;
-            boolean isGameGoingOn = LocalTime.now().isBefore(endTime) && ((battle <= MAX_BATTLES_RAID));
+            endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS); // проверить
+            boolean isGameGoingOn = LocalTime.now().isBefore(endTime) && ((unifiedCounter.getCount() < MAX_BATTLES_RAID));
 
             // Подготовительные клики (разово, если надо)
-            if (unificatedCounter.getCount() == 0) {
+            if (unifiedCounter.getCount() == 0) {
                 showActiveWindows();
                 clickButton("Клан");
                 clickButton("Война");
@@ -60,11 +59,11 @@ public class RaidBot extends BaseBot {
 
             // Бои
             while (isGameGoingOn) {
-                System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_RAID + " ===");
+                System.out.println("\n=== Бой " + (unifiedCounter.getCount() + 1) + " из " + MAX_BATTLES_RAID + " ===");
                 showActiveWindows();
                 Thread.sleep(PAUSE_SHORT_MS);
 
-                if (battle != 1) {
+                if (unifiedCounter.getCount() != 0) {
                     clickButton("Клан");
                     clickButton("Рейды");
                 }
@@ -76,15 +75,14 @@ public class RaidBot extends BaseBot {
                 clickButton("Закрыть");
                 minimizeActiveWindows();
 
-                unificatedCounter.plusOne();
+                unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);
-                System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
+                System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
+                isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < MAX_BATTLES_RAID);
 
-                if (battle < MAX_BATTLES_RAID) {
+                if (isGameGoingOn) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 6);
                 }
-                battle++;
-                isGameGoingOn = LocalTime.now().isBefore(endTime) && ((battle <= MAX_BATTLES_RAID));
             }
 
             endGame();

@@ -46,7 +46,7 @@ public class ArenaBot extends BaseBot {
             startGame();
 
             // Бои
-            for (int battle = (unificatedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
+            for (int battle = (unifiedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
                 System.out.println("\n=== Бой " + battle + " из " + MAX_BATTLES_ARENA + " ===");
                 showActiveWindows();
                 clickButton("Клан - Выход");
@@ -64,9 +64,9 @@ public class ArenaBot extends BaseBot {
                 clickButton("Закрыть — Поражение");
                 minimizeActiveWindows();
 
-                unificatedCounter.plusOne();
+                unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);
-                System.out.println(Grammar.getWordEnd(unificatedCounter.getCount()));
+                System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
 
                 if (battle < MAX_BATTLES_ARENA) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() + 1);
