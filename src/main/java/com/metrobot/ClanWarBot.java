@@ -19,8 +19,6 @@ import static com.metrobot.Buttons.*;
  * Счётчик режима записывается в файл.
  * <p>
  * Приличное количество методов для трёх классов-ботов унифицировано и вынесено в родительский BaseBot.
- * <p>
- * TODO: совместить 3 основных класса (боты Арена, КВ и Рейд) в единый. ООП же!
  */
 
 public class ClanWarBot extends BaseBot {
@@ -43,11 +41,12 @@ public class ClanWarBot extends BaseBot {
 
             LocalTime endTime = startTime.plusHours(2);
             endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS); // проверить
-            boolean isGameGoingOn = LocalTime.now().isBefore(endTime) && ((unifiedCounter.getCount() < MAX_BATTLES_CLANWAR));
+            boolean isGameGoingOn = LocalTime.now().isBefore(endTime)
+                    && ((unifiedCounter.getCount() < MAX_BATTLES_CW));
 
             // Бои
             while (isGameGoingOn) {
-                System.out.println("\n=== Бой " + (unifiedCounter.getCount() + 1) + " из " + MAX_BATTLES_CLANWAR + " ===");
+                System.out.println("\n=== Бой " + (unifiedCounter.getCount() + 1) + " из " + MAX_BATTLES_CW + " ===");
                 showActiveWindows();
                 clickButton("Клан");
                 clickButton("Война");
@@ -64,7 +63,7 @@ public class ClanWarBot extends BaseBot {
                 unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);
                 System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
-                isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < MAX_BATTLES_CLANWAR);
+                isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < MAX_BATTLES_CW);
 
                 if (isGameGoingOn) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 1);

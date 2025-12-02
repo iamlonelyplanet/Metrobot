@@ -19,7 +19,7 @@ public class Buttons {
 
     // --- Максимально допустимое количество боёв. Почему byte? Где ещё их использовать, если не на учёбе! ---
     public static final byte MAX_BATTLES_ARENA = 50;
-    public static final byte MAX_BATTLES_CLANWAR = 24;
+    public static final byte MAX_BATTLES_CW = 24;
     public static final byte MAX_BATTLES_RAID = 12;
     public static final byte MAX_WAYS_TUNNEL = 5;
     public static final byte MAX_ENERGY = 30; // 50 при VIP

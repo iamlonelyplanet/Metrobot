@@ -19,8 +19,6 @@ import static com.metrobot.Buttons.*;
  * Счётчик режима записывается в файл.
  * <p>
  * Приличное количество методов для трёх классов-ботов унифицировано и вынесено в родительский BaseBot.
- * <p>
- * TODO: совместить 3 основных класса (боты Арена, КВ и Рейд) в единый. ООП же!
  */
 
 public class RaidBot extends BaseBot {
@@ -44,7 +42,7 @@ public class RaidBot extends BaseBot {
 
             LocalTime endTime = startTime.plusHours(1);
             endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS); // проверить
-            boolean isGameGoingOn = LocalTime.now().isBefore(endTime) && ((unifiedCounter.getCount() < MAX_BATTLES_RAID));
+            boolean isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < MAX_BATTLES_RAID);
 
             // Подготовительные клики (разово, если надо)
             if (unifiedCounter.getCount() == 0) {

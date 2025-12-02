@@ -47,7 +47,7 @@ public class RatBot extends BaseBot {
                 if (isSilentMode) {
                     minimizeActiveWindows();
                 }
-                countdown(42); // стандарт: 60, стандарт + штаны: 42, стандарт + комплект: 30, VIP: 30, VIP + комплект: 20
+                countdown(42); // стандарт: 60, ст + штаны: 42, ст + комплект: 30, VIP: 30, VIP + комплект: 20
                 if (isSilentMode) {
                     showActiveWindows();
                 }
