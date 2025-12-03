@@ -30,8 +30,9 @@ public abstract class BaseBot {
     protected String botName;
     protected LocalTime startTime;
     protected Counter unifiedCounter;
-    protected Counter counterSpiders;
-    protected Counter counterLizards;
+    protected enum MonsterKind { SPIDER, LIZARD }
+//    protected enum activeWindows {WINDOW_1, WINDOW_2, WINDOWS_3, WINDOW_4};
+//    protected int counterLizards = 1;
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
 
     protected abstract Map<String, Point> getButtonMap();
@@ -59,7 +60,7 @@ public abstract class BaseBot {
 
     // Ожидание времени запуска. Отсчитывает большие промежутки времени, без обновляемого вывода в консоль
     protected void waitUntilStartTime(LocalTime startTime) throws InterruptedException {
-        System.out.println("Бот запустится в " + startTime);
+        System.out.println("\nБот запустится в " + startTime);
         while (LocalTime.now().isBefore(startTime)) {
             Thread.sleep(1000); // Не менять число на переменную, это эталон секунды в счётчике!
         }
@@ -77,7 +78,7 @@ public abstract class BaseBot {
                 Thread.currentThread().interrupt();
             }
         }
-        System.out.println("Развернул окна");
+        System.out.println("\nРазвернул окна");
     }
 
     // Сворачиваем активные окна, если включён silentMode. После сворачивания до следующего события проходит почти
@@ -93,13 +94,13 @@ public abstract class BaseBot {
                 Thread.currentThread().interrupt();
             }
         }
-        System.out.println("Свернул окна");
+        System.out.println("Свернул окна\n");
     }
 
     // Старт любого игрового режима
     protected void startGame() throws InterruptedException {
         waitUntilStartTime(startTime);
-        System.out.printf("\nСтарт режима %s", botName);
+        System.out.printf("\nСтарт режима %s \n", botName);
         Thread.sleep(PAUSE_SHORT_MS);
         this.unifiedCounter = counters.computeIfAbsent(botName, name -> new Counter(name));
         // TODO изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
@@ -113,7 +114,7 @@ public abstract class BaseBot {
     }
 
     // Бои с туннельными монстрами
-    protected void fightMonsters(int tunnelMonsters, boolean usePet) throws InterruptedException {
+    protected void fightMonsters(MonsterKind kind, boolean usePet) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
         if (usePet) {
             clickButton("Питомец");
@@ -121,13 +122,15 @@ public abstract class BaseBot {
         clickButton("Пропустить");
         Thread.sleep(PAUSE_LONG_MS);
         clickButton("Закрыть");
-        if (tunnelMonsters <= MAX_WAYS_TUNNEL * 4) {
-            System.out.println("Убито пауков: " + tunnelMonsters);
+        if (kind == MonsterKind.SPIDER) {
+            unifiedCounter.plusOne();
+            System.out.printf("Убито пауков: %d%n%n", unifiedCounter.getCount());
             Thread.sleep(PAUSE_TUNNEL_MS);
             clickButton("В туннель");
             Thread.sleep(PAUSE_SHORT_MS);
         } else {
-            System.out.println("Убито ящеров: " + (tunnelMonsters - MAX_WAYS_TUNNEL * 4));
+            unifiedCounter.plusOne();
+            System.out.printf("Убито ящеров: %d%n%n", unifiedCounter.getCount());
             Thread.sleep(PAUSE_TUNNEL_MS);
         }
     }
