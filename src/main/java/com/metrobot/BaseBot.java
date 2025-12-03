@@ -99,7 +99,7 @@ public abstract class BaseBot {
     // Старт любого игрового режима
     protected void startGame() throws InterruptedException {
         waitUntilStartTime(startTime);
-        System.out.println("\nСтарт режима " + botName);
+        System.out.printf("\nСтарт режима %s", botName);
         Thread.sleep(PAUSE_SHORT_MS);
         this.unifiedCounter = counters.computeIfAbsent(botName, name -> new Counter(name));
         // TODO изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
@@ -108,8 +108,8 @@ public abstract class BaseBot {
     // Конец любого игрового режима, это не bot.stop()
     protected void endGame() {
         playFinalSound();
-        System.out.println("\nРежим " + botName + " завершён. " +
-                "Проведено боёв в автоматическом режиме: " + unifiedCounter.getCount());
+        System.out.printf("\nРежим %s завершён. Проведено боёв в автоматическом режиме: %d",
+                botName, unifiedCounter.getCount());
     }
 
     // Бои с туннельными монстрами
@@ -199,7 +199,7 @@ public abstract class BaseBot {
             int x = rect.left + Buttons.xMoveRight + rel.x;
             int y = rect.top + Buttons.yMoveDown + rel.y;
             if (Objects.equals(botName, "Крысы") && Objects.equals(buttonName, "Питомец")) {
-                System.out.println("Режим: Крысы, вызов питомца, ждём " + PAUSE_SHORT_MS/1000 + " сек");
+                System.out.println("Режим: Крысы, вызов питомца, ждём " + PAUSE_SHORT_MS / 1000 + " сек");
                 Thread.sleep(PAUSE_SHORT_MS);
             }
 
