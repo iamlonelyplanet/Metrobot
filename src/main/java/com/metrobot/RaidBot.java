@@ -67,7 +67,7 @@ public class RaidBot extends BaseBot {
                 }
 
                 clickButton("Атаковать");
-                Thread.sleep(PAUSE_BEFORE_BOSS_MS);
+                Thread.sleep(PAUSE_RAID_BOSS_MS);
                 clickButton("Пропустить");
                 Thread.sleep(PAUSE_LONG_MS);
                 clickButton("Закрыть");
