@@ -122,4 +122,20 @@ public class Buttons {
         put("Питомец", new Point(80, 505));
     }};
 
+    // --- Совмещённые кнопки ---
+    public static final LinkedHashMap<String, Point> ALL_BUTTONS = new LinkedHashMap<>() {{
+        put("Клан", new Point(315, 58));
+        put("Война", new Point(80, 303));
+        put("Атаковать врага", new Point(415, 288));
+        put("Пропустить", new Point(385, 33));
+        put("Закрыть", new Point(460, 433));
+        put("Погон", new Point(480, 480));
+        put("Погон 2", new Point(480, 525));
+        put("Погон 3", new Point(480, 560));
+        put("Погон - Коллекция", new Point(480, 465));
+        put("Рейды", new Point(80, 413));
+        put("Обновить", new Point(520, 40));
+        put("Атаковать босса", new Point(425, 323));
+    }};
+
 }
