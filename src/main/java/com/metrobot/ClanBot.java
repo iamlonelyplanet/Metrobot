@@ -11,7 +11,16 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 import static com.metrobot.Buttons.*;
 
 /**
- * Унификация классов RaidBot и ClanWarBot
+ * Унификация старых классов RaidBot и ClanWarBot
+ * Режим "Клановые войны": бои перса в коллективной ("клановой") движухе.
+ * Вручную занимало у пользователей порядка 2 часов (КВ) и часа (рейд), раз в 5 минут требуя внимания, притом сильно:
+ * коллектив же.
+ * <p>
+ * Полное прохождение: то же время, полностью автоматически.
+ * В режимах работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
+ * Повседневная работа пользователя в Windows прерывается раз в 5 минут всего на 10-12 секунд.
+ * Счётчик боёв записывается в файл.
+ * Приличное количество методов для всех классов-ботов унифицировано и вынесено в родительский BaseBot.
  */
 
 public class ClanBot extends BaseBot {
@@ -26,8 +35,9 @@ public class ClanBot extends BaseBot {
 
     @Override
     protected Map<String, Point> getButtonMap() {
-        return Buttons.ALL_BUTTONS;
+        return Buttons.CLAN_BUTTONS;
     }
+
     public int totalBattles;
     public int lastSecondsCountdown;
     public int hoursToAdd;
@@ -41,7 +51,9 @@ public class ClanBot extends BaseBot {
                 hoursToAdd = 1;
                 totalBattles = MAX_BATTLES_RAID;
                 lastSecondsCountdown = 6;
-            } else {
+            }
+
+            if (Objects.equals(botName, "КВ")) {
                 hoursToAdd = 2;
                 totalBattles = MAX_BATTLES_CW;
                 lastSecondsCountdown = 1;
@@ -50,7 +62,6 @@ public class ClanBot extends BaseBot {
             endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS); // проверить
             isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
 
-            // Бои в рейде
             if (Objects.equals(botName, "Рейд")) {
                 // Подготовительные клики (разово, если надо)
                 if (unifiedCounter.getCount() == 0) {
@@ -62,13 +73,11 @@ public class ClanBot extends BaseBot {
                     clickButton("Рейды");
                     Thread.sleep(PAUSE_SHORT_MS);
                 }
-
                 while (isGameGoingOn) {
                     fightWithClan(BotType.RAID);
                 }
             }
 
-            // Бои КВ
             if (Objects.equals(botName, "КВ")) {
                 while (isGameGoingOn) {
                     fightWithClan(BotType.CW);

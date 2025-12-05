@@ -30,9 +30,13 @@ public abstract class BaseBot {
     protected String botName;
     protected LocalTime startTime;
     protected Counter unifiedCounter;
-    protected enum MonsterKind { SPIDER, LIZARD }
-    protected enum BotType { RAID, CW };
-//    protected int counterLizards = 1;
+
+    protected enum MonsterKind {SPIDER, LIZARD}
+
+    protected enum BotType {RAID, CW}
+
+    ;
+    //    protected int counterLizards = 1;
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
 
     protected abstract Map<String, Point> getButtonMap();
@@ -133,35 +137,6 @@ public abstract class BaseBot {
             Thread.sleep(PAUSE_TUNNEL_MS);
         }
     }
-
-//    //     Два метода для дурного режима про туннели
-//    protected void fightSpiders(int tunnelMonsters, boolean usePet) throws InterruptedException {
-//        Thread.sleep(PAUSE_TUNNEL_MS);
-//        if (usePet) {
-//            clickButton("Питомец");
-//        }
-//        clickButton("Пропустить");
-//        Thread.sleep(PAUSE_LONG_MS);
-//        clickButton("Закрыть");
-//        tunnelMonsters++;
-//        System.out.println("Убито пауков: " + tunnelMonsters);
-//        Thread.sleep(PAUSE_TUNNEL_MS);
-//        clickButton("В туннель");
-//        Thread.sleep(PAUSE_SHORT_MS);
-//    }
-//
-//    protected void fightLizards(int tunnelMonsters, boolean usePet) throws InterruptedException {
-//        Thread.sleep(PAUSE_TUNNEL_MS);
-//        if (usePet) {
-//            clickButton("Питомец");
-//        }
-//        clickButton("Пропустить");
-//        Thread.sleep(PAUSE_LONG_MS);
-//        clickButton("Закрыть");
-//        tunnelMonsters++;
-//        System.out.println("Убито ящеров: " + tunnelMonsters);
-//        Thread.sleep(PAUSE_TUNNEL_MS);
-//    }
 
     // Проигрываем звук по окончанию режима игры. Бесполезная свистоперделка ради учёбы и пасхалка для олдов.
     protected static void playFinalSound() {

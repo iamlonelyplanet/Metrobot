@@ -33,7 +33,7 @@ public class RaidBot extends BaseBot {
 
     @Override
     protected Map<String, Point> getButtonMap() {
-        return Buttons.RAID_BUTTONS;
+        return CLAN_BUTTONS;
     }
 
     public void start() {

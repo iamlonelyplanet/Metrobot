@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.LinkedHashMap;
 
 /**
- * Набор координат для кнопок и пауз между кликами. В конце файла закомменчены старые координаты окон, оставить.
+ * Набор координат для кнопок и пауз между кликами.
  * TODO: объединить кнопки (координаты) в единое? Повторов хватает. Кнопок не так много. Но и сейчас смотрится красиво.
  */
 
@@ -31,22 +31,6 @@ public class Buttons {
      * Площадь "рабочего поля" в окне Игроклуба и ВК: 764×650; одинакова при всех разрешениях.
      * Ширина полосы прокрутки (элемента окон Windows): 19 в Игроклубе, собрать статистику в других разрешениях
      */
-
-//    protected int findWidth() {
-//        for (int i = 0; i < activeWindows.size(); i++) {
-//            WinDef.HWND hWnd = activeWindows.get(i);
-//            if (hWnd == null) continue;
-//
-//            int fighterNum = i + 1; // индексация от 1
-//
-//            WinDef.RECT rect = new WinDef.RECT();
-//            User32.INSTANCE.GetWindowRect(hWnd, rect);
-//
-//            int width = rect.right - rect.left;
-//        }
-//        return width;
-//    }
-
     public static int windowWidth = 1033;
     public static int windowHeight = 768;
     public static int xMoveRight = (windowWidth - 764 - 19) / 2; // Расчёт "нуля" (верхней левой точки) рабочего поля
@@ -62,30 +46,6 @@ public class Buttons {
         put("Пропустить", new Point(385, 33));
         put("Закрыть — Победа", new Point(460, 520));
         put("Закрыть — Поражение", new Point(480, 463));
-    }};
-
-    // --- Клановая война ---
-    public static final LinkedHashMap<String, Point> KV_BUTTONS = new LinkedHashMap<>() {{
-        put("Клан", new Point(315, 58));
-        put("Война", new Point(80, 303));
-        put("Атаковать", new Point(415, 288));
-        put("Пропустить", new Point(385, 33));
-        put("Закрыть", new Point(460, 433));
-        put("Погон", new Point(480, 480));
-        put("Погон 2", new Point(480, 525));
-        put("Погон 3", new Point(480, 560));
-        put("Погон - Коллекция", new Point(480, 465)); // проверить
-    }};
-
-    // --- Рейд ---
-    public static final LinkedHashMap<String, Point> RAID_BUTTONS = new LinkedHashMap<>() {{
-        put("Клан", new Point(315, 58));
-        put("Война", new Point(80, 303));
-        put("Рейды", new Point(80, 413));
-        put("Обновить", new Point(520, 40));
-        put("Атаковать", new Point(425, 323));
-        put("Пропустить", new Point(385, 33));
-        put("Закрыть", new Point(460, 433));
     }};
 
     // --- Туннели ---
@@ -122,8 +82,8 @@ public class Buttons {
         put("Питомец", new Point(80, 505));
     }};
 
-    // --- Совмещённые кнопки ---
-    public static final LinkedHashMap<String, Point> ALL_BUTTONS = new LinkedHashMap<>() {{
+    // --- КВ и рейды ---
+    public static final LinkedHashMap<String, Point> CLAN_BUTTONS = new LinkedHashMap<>() {{
         put("Клан", new Point(315, 58));
         put("Война", new Point(80, 303));
         put("Атаковать врага", new Point(415, 288));
@@ -137,5 +97,4 @@ public class Buttons {
         put("Обновить", new Point(520, 40));
         put("Атаковать босса", new Point(425, 323));
     }};
-
 }

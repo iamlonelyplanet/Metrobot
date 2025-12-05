@@ -11,7 +11,6 @@ import static com.metrobot.Buttons.*;
 
 /**
  * Режим "Бой с крысами". Пока экспериментальный
-
  */
 
 public class RatBot extends BaseBot {
