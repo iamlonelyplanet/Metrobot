@@ -60,16 +60,16 @@ public class Main {
                     startTime = Utilites.askStartTime(botName, kvDefault);
                     kvStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-                    ClanWarBot clanWarBot = new ClanWarBot(activeWindows, startTime, botName);
-                    clanWarBot.start();
+                    ClanBot clanBot = new ClanBot(activeWindows, startTime, botName);
+                    clanBot.start();
                 }
                 case 2 -> {
                     botName = "Рейд";
                     startTime = Utilites.askStartTime(botName, raidDefault);
                     raidStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-                    RaidBot raidBot = new RaidBot(activeWindows, startTime, botName);
-                    raidBot.start();
+                    ClanBot clanBot = new ClanBot(activeWindows, startTime, botName);
+                    clanBot.start();
                 }
                 case 3 -> {
                     botName = "Арена";

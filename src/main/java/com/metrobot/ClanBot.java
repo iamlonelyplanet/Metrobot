@@ -28,22 +28,27 @@ public class ClanBot extends BaseBot {
     protected Map<String, Point> getButtonMap() {
         return Buttons.ALL_BUTTONS;
     }
+    public int totalBattles;
+    public int lastSecondsCountdown;
+    public int hoursToAdd;
+    public boolean isGameGoingOn;
+    public LocalTime endTime;
 
     public void start() {
         try {
             startGame();
-            int hoursToAdd;
-            int totalBattles;
             if (Objects.equals(botName, "Рейд")) {
                 hoursToAdd = 1;
                 totalBattles = MAX_BATTLES_RAID;
+                lastSecondsCountdown = 6;
             } else {
                 hoursToAdd = 2;
                 totalBattles = MAX_BATTLES_CW;
+                lastSecondsCountdown = 1;
             }
-            LocalTime endTime = startTime.plusHours(hoursToAdd);
+            endTime = startTime.plusHours(hoursToAdd);
             endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS); // проверить
-            boolean isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
+            isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
 
             // Бои в рейде
             if (Objects.equals(botName, "Рейд")) {
@@ -59,22 +64,14 @@ public class ClanBot extends BaseBot {
                 }
 
                 while (isGameGoingOn) {
-                    fightWithClan(BotType.RAID, totalBattles);
-                    isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
-                    if (isGameGoingOn) {
-                        countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 6);
-                    }
+                    fightWithClan(BotType.RAID);
                 }
             }
 
             // Бои КВ
             if (Objects.equals(botName, "КВ")) {
                 while (isGameGoingOn) {
-                    fightWithClan(BotType.CW, totalBattles);
-                    isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
-                    if (isGameGoingOn) {
-                        countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - 1);
-                    }
+                    fightWithClan(BotType.CW);
                 }
             }
 
@@ -84,7 +81,7 @@ public class ClanBot extends BaseBot {
         }
     }
 
-    public void fightWithClan(BotType type, int totalBattles) throws InterruptedException {
+    public void fightWithClan(BotType type) throws InterruptedException {
         if (type == BotType.CW) {
             System.out.println("\n=== Бой " + (unifiedCounter.getCount() + 1) + " из " + totalBattles + " ===");
             showActiveWindows();
@@ -100,6 +97,7 @@ public class ClanBot extends BaseBot {
             clickButton("Погон - Коллекция");
             minimizeActiveWindows();
         }
+
         if (type == BotType.RAID) {
             System.out.println("\n=== Бой " + (unifiedCounter.getCount() + 1) + " из " + totalBattles + " ===");
             showActiveWindows();
@@ -117,8 +115,13 @@ public class ClanBot extends BaseBot {
             clickButton("Закрыть");
             minimizeActiveWindows();
         }
+
         unifiedCounter.plusOne();
         CounterStorage.saveCounters(counters);
         System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
+        isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
+        if (isGameGoingOn) {
+            countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - lastSecondsCountdown);
+        }
     }
 }
