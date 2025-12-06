@@ -38,11 +38,11 @@ public class ClanBot extends BaseBot {
         return Buttons.CLAN_BUTTONS;
     }
 
-    public int totalBattles;
-    public int lastSecondsCountdown;
-    public int hoursToAdd;
-    public boolean isGameGoingOn;
-    public LocalTime endTime;
+    private int totalBattles;
+    private int lastSecondsCountdown;
+    private int hoursToAdd;
+    private boolean isGameGoingOn;
+    private LocalTime endTime;
 
     public void start() {
         try {
@@ -74,13 +74,13 @@ public class ClanBot extends BaseBot {
                     Thread.sleep(PAUSE_SHORT_MS);
                 }
                 while (isGameGoingOn) {
-                    fightWithClan(BotType.RAID);
+                    fightInClan(BotType.RAID);
                 }
             }
 
             if (Objects.equals(botName, "КВ")) {
                 while (isGameGoingOn) {
-                    fightWithClan(BotType.CW);
+                    fightInClan(BotType.CW);
                 }
             }
 
@@ -90,7 +90,7 @@ public class ClanBot extends BaseBot {
         }
     }
 
-    public void fightWithClan(BotType type) throws InterruptedException {
+    public void fightInClan(BotType type) throws InterruptedException {
         if (type == BotType.CW) {
             System.out.println("\n=== Бой " + (unifiedCounter.getCount() + 1) + " из " + totalBattles + " ===");
             showActiveWindows();
