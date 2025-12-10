@@ -185,8 +185,15 @@ public abstract class BaseBot {
             Thread.sleep(PAUSE_MICRO_MS);
         }
         Thread.sleep(PAUSE_SHORT_MS);
-        if (Objects.equals(buttonName, "Обновить") || Objects.equals(buttonName, "Атаковать врага") ||
-                Objects.equals(buttonName, "Пропустить")) {
+
+        Set<String> LONG_PAUSE_BUTTONS = Set.of(
+                "Обновить",
+                "Атаковать врага",
+                "Пропустить",
+                "Атаковать",
+                "Арена"
+        );
+        if (LONG_PAUSE_BUTTONS.contains(buttonName)) {
             Thread.sleep(PAUSE_LONG_MS);
         }
     }

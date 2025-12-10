@@ -50,9 +50,7 @@ public class ArenaBot extends BaseBot {
                 showActiveWindows();
                 clickButton("Клан - Выход");
                 clickButton("Арена");
-                Thread.sleep(PAUSE_LONG_MS);
                 clickButton("Атаковать");
-                Thread.sleep(PAUSE_LONG_MS);
                 if (usePet) {
                     clickButton("Питомец");
                 }
