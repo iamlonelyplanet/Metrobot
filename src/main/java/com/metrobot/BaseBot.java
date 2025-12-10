@@ -174,6 +174,7 @@ public abstract class BaseBot {
 
             int x = rect.left + Buttons.xMoveRight + rel.x;
             int y = rect.top + Buttons.yMoveDown + rel.y;
+
             if (Objects.equals(botName, "Крысы") && Objects.equals(buttonName, "Питомец")) {
                 System.out.println("Режим: Крысы, вызов питомца, ждём " + PAUSE_SHORT_MS / 1000 + " сек");
                 Thread.sleep(PAUSE_SHORT_MS);

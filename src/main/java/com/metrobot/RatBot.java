@@ -25,7 +25,7 @@ public class RatBot extends BaseBot {
 
     @Override
     protected Map<String, Point> getButtonMap() {
-        return Buttons.RAT_BUTTONS;
+        return RAT_BUTTONS;
     }
 
     public void start() {

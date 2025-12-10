@@ -37,7 +37,7 @@ public class ArenaBot extends BaseBot {
 
     @Override
     protected Map<String, Point> getButtonMap() {
-        return Buttons.ARENA_BUTTONS;
+        return ARENA_BUTTONS;
     }
 
     public void start() {

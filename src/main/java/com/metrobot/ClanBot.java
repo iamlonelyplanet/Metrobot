@@ -35,7 +35,7 @@ public class ClanBot extends BaseBot {
 
     @Override
     protected Map<String, Point> getButtonMap() {
-        return Buttons.CLAN_BUTTONS;
+        return CLAN_BUTTONS;
     }
 
     private int totalBattles;
@@ -100,6 +100,7 @@ public class ClanBot extends BaseBot {
             clickButton("Закрыть");
             clickButton("Погон");
             clickButton("Погон 2");
+            clickButton("Погон 3");
             clickButton("Погон - Коллекция");
             minimizeActiveWindows();
         }

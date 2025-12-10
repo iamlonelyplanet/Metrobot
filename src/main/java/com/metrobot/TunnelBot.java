@@ -33,7 +33,7 @@ public class TunnelBot extends BaseBot {
 
     @Override
     protected Map<String, Point> getButtonMap() {
-        return Buttons.TUNNEL_BUTTONS;
+        return TUNNEL_BUTTONS;
     }
 
     public void start() {
