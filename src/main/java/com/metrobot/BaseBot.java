@@ -124,7 +124,6 @@ public abstract class BaseBot {
             clickButton("Питомец");
         }
         clickButton("Пропустить");
-        Thread.sleep(PAUSE_LONG_MS);
         clickButton("Закрыть");
         unifiedCounter.plusOne();
         if (kind == MonsterKind.SPIDER) {
@@ -185,6 +184,10 @@ public abstract class BaseBot {
             Thread.sleep(PAUSE_MICRO_MS);
         }
         Thread.sleep(PAUSE_SHORT_MS);
+        if (Objects.equals(buttonName, "Обновить") || Objects.equals(buttonName, "Атаковать врага") ||
+                Objects.equals(buttonName, "Пропустить")) {
+            Thread.sleep(PAUSE_LONG_MS);
+        }
     }
 
     // Обработка исключений. Учебная штука.

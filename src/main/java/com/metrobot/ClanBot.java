@@ -11,7 +11,7 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 import static com.metrobot.Buttons.*;
 
 /**
- * Унификация старых классов RaidBot и ClanWarBot
+ * Унификация старых классов Raid и War
  * Режим "Клановые войны": бои перса в коллективной ("клановой") движухе.
  * Вручную занимало у пользователей порядка 2 часов (КВ) и часа (рейд), раз в 5 минут требуя внимания, притом сильно:
  * коллектив же.
@@ -69,7 +69,6 @@ public class ClanBot extends BaseBot {
                     clickButton("Клан");
                     clickButton("Война");
                     clickButton("Обновить");
-                    Thread.sleep(PAUSE_LONG_MS);
                     clickButton("Рейды");
                     Thread.sleep(PAUSE_SHORT_MS);
                 }
@@ -97,9 +96,7 @@ public class ClanBot extends BaseBot {
             clickButton("Клан");
             clickButton("Война");
             clickButton("Атаковать врага");
-            Thread.sleep(PAUSE_LONG_MS);
             clickButton("Пропустить");
-            Thread.sleep(PAUSE_LONG_MS);
             clickButton("Закрыть");
             clickButton("Погон");
             clickButton("Погон 2");
@@ -120,7 +117,6 @@ public class ClanBot extends BaseBot {
             clickButton("Атаковать босса");
             Thread.sleep(PAUSE_RAID_BOSS_MS);
             clickButton("Пропустить");
-            Thread.sleep(PAUSE_LONG_MS);
             clickButton("Закрыть");
             minimizeActiveWindows();
         }

@@ -14,7 +14,7 @@ public class Buttons {
     public static final int PAUSE_SHORT_MS = 1200;
     public static final int PAUSE_SHORT_TUNNELS_MS = 600;
     public static final int PAUSE_MICRO_MS = 300;
-    public static final int FIVE_MINUTES_PAUSE_SECONDS = 283;
+    public static final int FIVE_MINUTES_PAUSE_SECONDS = 283; //286 для релизов
     public static final int PAUSE_RAID_BOSS_MS = 12_800;
     public static final int PAUSE_TUNNEL_MS = 16_000; // Для альтернативных скоростей: 6_000, 4_000, 8_000
 
