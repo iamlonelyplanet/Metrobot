@@ -117,7 +117,7 @@ public class TunnelBot extends BaseBot {
                 fightMonsters(MonsterKind.LIZARD, usePet);
                 Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
-                System.out.printf("Завершено пробегов до Проспекта Вернадского: %d\n", (way + 1));
+                System.out.printf("Завершено пробегов до Проспекта Вернадского: %d\n\n", (way + 1));
 
                 // 4 ящерицы в тоннеле Проспект Вернадского - Парк Культуры
                 clickButton("В туннель");
@@ -145,7 +145,7 @@ public class TunnelBot extends BaseBot {
                 Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
                 clickButton("Войти");
 
-                System.out.printf("\nЗавершено пробегов до Парка Культуры: %d%n", (way + 1));
+                System.out.printf("\nЗавершено пробегов до Парка Культуры: %d\n\n", (way + 1));
                 Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
             }
 
