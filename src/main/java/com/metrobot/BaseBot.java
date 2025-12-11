@@ -159,6 +159,14 @@ public abstract class BaseBot {
     protected void clickButton(String buttonName) throws InterruptedException {
         Map<String, Point> buttonMap = getButtonMap();
         Point rel = buttonMap.get(buttonName);
+        Set<String> LONG_PAUSE_BUTTONS = Set.of(
+                "Обновить",
+                "Атаковать врага",
+                "Пропустить",
+                "Атаковать",
+                "Арена"
+        );
+
         if (rel == null) {
             System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
             return;
@@ -176,7 +184,6 @@ public abstract class BaseBot {
             int y = rect.top + Buttons.yMoveDown + rel.y;
 
             if (Objects.equals(botName, "Крысы") && Objects.equals(buttonName, "Питомец")) {
-                System.out.println("Режим: Крысы, вызов питомца, ждём " + PAUSE_SHORT_MS / 1000 + " сек");
                 Thread.sleep(PAUSE_SHORT_MS);
             }
 
@@ -184,15 +191,11 @@ public abstract class BaseBot {
             clickAt(x, y);
             Thread.sleep(PAUSE_MICRO_MS);
         }
-        Thread.sleep(PAUSE_SHORT_MS);
 
-        Set<String> LONG_PAUSE_BUTTONS = Set.of(
-                "Обновить",
-                "Атаковать врага",
-                "Пропустить",
-                "Атаковать",
-                "Арена"
-        );
+        if (!Objects.equals(botName, "Рейд") && !Objects.equals(buttonName, "Закрыть")) {
+            Thread.sleep(PAUSE_SHORT_MS);
+        }
+
         if (LONG_PAUSE_BUTTONS.contains(buttonName)) {
             Thread.sleep(PAUSE_LONG_MS);
         }

@@ -61,6 +61,8 @@ public class ClanBot extends BaseBot {
             endTime = startTime.plusHours(hoursToAdd);
             endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS); // проверить
             isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
+            System.out.println("Игра? " + isGameGoingOn + ". Сейчас " + LocalTime.now() + ". Кончится в " + endTime +
+                    ", а боёв прошло " + unifiedCounter.getCount());
 
             if (Objects.equals(botName, "Рейд")) {
                 // Подготовительные клики (разово, если надо)
