@@ -192,9 +192,7 @@ public abstract class BaseBot {
             Thread.sleep(PAUSE_MICRO_MS);
         }
 
-        if (!Objects.equals(botName, "Рейд") && !Objects.equals(buttonName, "Закрыть")) {
-            Thread.sleep(PAUSE_SHORT_MS);
-        }
+        Thread.sleep(PAUSE_SHORT_MS);
 
         if (LONG_PAUSE_BUTTONS.contains(buttonName)) {
             Thread.sleep(PAUSE_LONG_MS);
