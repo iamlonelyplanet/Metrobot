@@ -50,19 +50,17 @@ public class ClanBot extends BaseBot {
             if (Objects.equals(botName, "Рейд")) {
                 hoursToAdd = 1;
                 totalBattles = MAX_BATTLES_RAID;
-                lastSecondsCountdown = 6;
+                lastSecondsCountdown = 7;
             }
 
             if (Objects.equals(botName, "КВ")) {
                 hoursToAdd = 2;
                 totalBattles = MAX_BATTLES_CW;
-                lastSecondsCountdown = 3;
+                lastSecondsCountdown = 7;
             }
             endTime = startTime.plusHours(hoursToAdd);
             endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS); // проверить
             isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
-            System.out.println("Игра? " + isGameGoingOn + ". Сейчас " + LocalTime.now() + ". Кончится в " + endTime +
-                    ", а боёв прошло " + unifiedCounter.getCount());
 
             if (Objects.equals(botName, "Рейд")) {
                 // Подготовительные клики (разово, если надо)
@@ -72,7 +70,7 @@ public class ClanBot extends BaseBot {
                     clickButton("Война");
                     clickButton("Обновить");
                     clickButton("Рейды");
-                    Thread.sleep(PAUSE_SHORT_MS);
+//                    Thread.sleep(PAUSE_SHORT_MS);
                 }
                 while (isGameGoingOn) {
                     fightInClan(BotType.RAID);
