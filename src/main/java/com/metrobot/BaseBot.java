@@ -113,8 +113,8 @@ public abstract class BaseBot {
     // Конец любого игрового режима, это не bot.stop()
     protected void endGame() {
         playFinalSound();
-        System.out.printf("\nРежим %s завершён. Проведено боёв в автоматическом режиме: %d",
-                botName, unifiedCounter.getCount());
+        System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d",
+                botName, LocalTime.now().withNano(0), unifiedCounter.getCount());
     }
 
     // Бои с туннельными монстрами
