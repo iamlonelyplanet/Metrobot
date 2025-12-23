@@ -50,13 +50,13 @@ public class ClanBot extends BaseBot {
             if (Objects.equals(botName, "Рейд")) {
                 hoursToAdd = 1;
                 totalBattles = MAX_BATTLES_RAID;
-                lastSecondsCountdown = 7;
+                lastSecondsCountdown = 4;
             }
 
             if (Objects.equals(botName, "КВ")) {
                 hoursToAdd = 2;
                 totalBattles = MAX_BATTLES_CW;
-                lastSecondsCountdown = 7;
+                lastSecondsCountdown = 4;
             }
             endTime = startTime.plusHours(hoursToAdd);
             endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS); // проверить
