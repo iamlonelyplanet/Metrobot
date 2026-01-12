@@ -19,29 +19,26 @@ import javax.swing.text.Utilities;
 public class Main {
     public static void main(String[] args) {
         try {
-//            String botName;
-//            LocalTime startTime;
-
             // === Обнуляем файл счётчиков каждый день при первом запуске программы после 03:00 по Мск, так надо. ===
             ConfigManager.autoResetCounters();
 
             // === Загружаем конфиг из файла при наличии ===
             Map<String, String> config = ConfigManager.loadConfig();
 
+            // === Спрашиваем у пользователя режим, рабочие окна, время старта ===
             Optional<BotStartConfig> result =
                     BotStartWizard.askUser(config);
 
             if (result.isEmpty()) {
-                System.out.println("Запуск отменён пользователем.");
+                System.out.println("Запуск отменён пользователем."); // Cancel/крестик на любом этапе - остановка работы
                 return;
             }
 
             BotStartConfig cfg = result.get();
-            ConfigManager.saveConfig(
-                    cfg.getMode(),
-                    cfg.getActiveWindows(),
-                    // тут пока можешь оставить старую логику времён
-            );
+//            ConfigManager.saveConfig(
+//                    cfg.getMode(),
+//                    cfg.getActiveWindows(),
+//            );
 
 //            BotFactory.start(cfg);
 
@@ -53,12 +50,16 @@ public class Main {
 //            System.out.println("windows = " + cfg.getActiveWindows().size());
 //            System.out.println("============================");
 
+            int mode = cfg.getMode();
+            String botName;
+            LocalTime startTime = cfg.getStartTime();
+            boolean usePet = cfg.isUsePet();
+            List<HWND> activeWindows = cfg.getActiveWindows();
 
-//            // === Запрашиваем режим игры в режиме GUI ===
+
+
+            // === Запрашиваем режим игры в режиме GUI ===
 //            Utilites.ModeSelection selection = Utilites.askModeSelection();
-
-//            int mode = Utilites.askMode();
-//            boolean usePet = Utilites.usePet;
 //
 //            // === Разворачиваем окна игры по заголовку. Каждое окно = перс/боец ===
 //            Utilites.restoreAllGameWindows();
@@ -87,7 +88,6 @@ public class Main {
             switch (mode) {
                 case 1 -> {
                     botName = "КВ";
-                    startTime = Utilites.askStartTime(botName, kvDefault);
                     kvStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
                     ClanBot clanBot = new ClanBot(activeWindows, startTime, botName);
@@ -95,7 +95,6 @@ public class Main {
                 }
                 case 2 -> {
                     botName = "Рейд";
-                    startTime = Utilites.askStartTime(botName, raidDefault);
                     raidStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
                     ClanBot clanBot = new ClanBot(activeWindows, startTime, botName);
@@ -103,7 +102,6 @@ public class Main {
                 }
                 case 3 -> {
                     botName = "Арена";
-                    startTime = Utilites.askStartTime(botName, arenaDefault);
                     arenaStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
                     ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName, usePet);
@@ -111,7 +109,6 @@ public class Main {
                 }
                 case 4 -> {
                     botName = "Туннель";
-                    startTime = Utilites.askStartTime(botName, tunnelDefault);
                     tunnelStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
                     TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName, usePet);
@@ -119,7 +116,6 @@ public class Main {
                 }
                 case 5 -> {
                     botName = "Крысы";
-                    startTime = Utilites.askStartTime(botName, ratDefault);
                     ratStart = startTime;
                     ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
                     RatBot ratBot = new RatBot(activeWindows, startTime, botName, usePet);

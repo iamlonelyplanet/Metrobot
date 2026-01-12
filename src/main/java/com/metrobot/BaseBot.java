@@ -30,15 +30,9 @@ public abstract class BaseBot {
     protected String botName;
     protected LocalTime startTime;
     protected Counter unifiedCounter;
-
     protected enum MonsterKind {SPIDER, LIZARD}
-
-    protected enum BotType {RAID, CW}
-
-    ;
-    //    protected int counterLizards = 1;
+    public enum BotType {RAID, CW}
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
-
     protected abstract Map<String, Point> getButtonMap();
 
     // --- Конструкторы ---
@@ -62,7 +56,7 @@ public abstract class BaseBot {
         System.out.println();
     }
 
-    // Ожидание времени запуска. Отсчитывает большие промежутки времени, без обновляемого вывода в консоль
+    // Ожидание времени старта. Отсчитывает большие промежутки времени, без обновляемого вывода в консоль
     protected void waitUntilStartTime(LocalTime startTime) throws InterruptedException {
         System.out.println("\nБот запустится в " + startTime);
         while (LocalTime.now().isBefore(startTime)) {
@@ -70,7 +64,7 @@ public abstract class BaseBot {
         }
     }
 
-    // Разворачиваем активные окна.
+    // Разворачиваем активные окна
     protected void showActiveWindows() {
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
@@ -114,7 +108,9 @@ public abstract class BaseBot {
     protected void endGame() {
         playFinalSound();
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d",
-                botName, LocalTime.now().withNano(0), unifiedCounter.getCount());
+                botName,
+                LocalTime.now().withNano(0),
+                unifiedCounter.getCount());
     }
 
     // Бои с туннельными монстрами
@@ -209,7 +205,7 @@ public abstract class BaseBot {
         }
     }
 
-    // Клик. Собственно, ядро всей программы. Интерфейс? Изучить, подумать. Расширить паузами, сведя их в этот метод.
+    // Клик. Собственно, ядро всей программы. Интерфейс? Изучить, подумать. Дополнить паузами, сведя их в этот метод.
     protected void clickAt(int x, int y) {
         if (robot == null) return;
         robot.mouseMove(x, y);

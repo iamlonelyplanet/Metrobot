@@ -77,7 +77,7 @@ public class Utilites {
             int idx = modeCombo.getSelectedIndex();
             // Флажок учитывается только для Арены/Туннелей/Крыс
             usePet = (idx == 2 || idx == 3 || idx == 4) && petCheck.isSelected();
-            return idx + 1; // 1–5, в человеческом режиме.
+            return idx + 1; // 1–5, в человеческом режиме
         } else {
             // Esc/Cancel -> выход из программы (-1), подхватывается null.
             usePet = false;
@@ -230,7 +230,7 @@ public class Utilites {
         );
 
         if (result != JOptionPane.OK_OPTION) {
-            return null; // ← ВОТ ОНО
+            return null;
         }
 
         return getSelectedWindows(foundWindows, defaultWindowsStr, boxes);
@@ -247,7 +247,6 @@ public class Utilites {
             }
         }
 
-        // OK, но ничего не выбрано → отмена
         if (selected.isEmpty()) {
             return null;
         }

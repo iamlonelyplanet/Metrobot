@@ -18,7 +18,7 @@ public class Buttons {
     public static final int PAUSE_RAID_BOSS_MS = 12_800;
     public static final int PAUSE_TUNNEL_MS = 16_000; // Для альтернативных скоростей: 6_000, 4_000, 8_000
 
-    // --- Максимально допустимое количество боёв. Почему byte? Где ещё их использовать, если не на учёбе! ---
+    // --- Максимально допустимое количество боёв. Почему byte? Где ещё их использовать, если не в учёбе! ---
     public static final byte MAX_BATTLES_ARENA = 50;
     public static final byte MAX_BATTLES_CW = 24;
     public static final byte MAX_BATTLES_RAID = 12;
@@ -89,7 +89,7 @@ public class Buttons {
         put("Атаковать врага", new Point(415, 288));
         put("Пропустить", new Point(385, 33));
         put("Закрыть", new Point(460, 433));
-        put("Погон", new Point(480, 480));
+        put("Погон 1", new Point(480, 480));
         put("Погон 2", new Point(480, 525));
         put("Погон 3", new Point(480, 560));
         put("Погон - Коллекция", new Point(480, 465));

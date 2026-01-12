@@ -58,9 +58,9 @@
         <version>1.7.1</version>
         <configuration>
           <name>Metrobot</name>
-          <appVersion>1.0.5</appVersion>
+          <appVersion>1.1.0</appVersion>
           <vendor>Aleksey Nizamov</vendor>
-          <type>app-image</type>
+          <type>APP_IMAGE</type>
           <icon>${project.basedir}/res/metrobot.ico</icon>
           <winConsole>false</winConsole>
           <input>${project.build.directory}</input>
