@@ -20,6 +20,10 @@ public class Utilites {
     public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
     public static boolean usePet = false;
 
+    public record ModeSelection(int mode, boolean usePet) {
+    }
+
+
     // Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию
     public static int askMode() {
         String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели", "Крысы"};
@@ -72,14 +76,24 @@ public class Utilites {
         if (result == JOptionPane.OK_OPTION) {
             int idx = modeCombo.getSelectedIndex();
             // Флажок учитывается только для Арены/Туннелей/Крыс
-            usePet = (idx == 2 || idx == 3 || idx == 4 ) && petCheck.isSelected();
-            return idx + 1; // 1–5
+            usePet = (idx == 2 || idx == 3 || idx == 4) && petCheck.isSelected();
+            return idx + 1; // 1–5, в человеческом режиме.
         } else {
-            // Esc/Cancel -> по умолчанию Арена без питомца
+            // Esc/Cancel -> выход из программы (-1), подхватывается null.
             usePet = false;
-            return 3;
+            return -1;
         }
     }
+
+    public static ModeSelection askModeSelection() {
+        int mode = askMode();      // старый метод
+        if (mode <= 0) {
+            return null;
+        }
+        boolean pet = usePet;      // старое статическое поле
+        return new ModeSelection(mode, pet);
+    }
+
 
     // Парсим время. TODO: разделители помимо двоеточия: точка? пробел?
     public static LocalTime parseTime(String value) {
@@ -126,8 +140,8 @@ public class Utilites {
             return LocalTime.of(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE));
         }
 
-        // Если нажал Cancel, или крестик окна, то возвращаем дефолт
-        return defaultTime;
+        // Если нажал Cancel, или крестик окна, то отмена запуска
+        return null;
     }
 
     /**
@@ -215,31 +229,27 @@ public class Utilites {
                 JOptionPane.QUESTION_MESSAGE
         );
 
-        return getSelectedWindows(foundWindows, defaultWindowsStr, result, boxes);
+        if (result != JOptionPane.OK_OPTION) {
+            return null; // ← ВОТ ОНО
+        }
+
+        return getSelectedWindows(foundWindows, defaultWindowsStr, boxes);
     }
 
-    private static List<HWND> getSelectedWindows(List<HWND> foundWindows, String defaultWindowsStr,
-                                                 int result,
+    private static List<HWND> getSelectedWindows(List<HWND> foundWindows,
+                                                 String defaultWindowsStr,
                                                  JCheckBox[] boxes) {
         List<HWND> selected = new ArrayList<>();
 
-        if (result == JOptionPane.OK_OPTION) {
-            for (int i = 0; i < boxes.length; i++) {
-                if (boxes[i].isSelected() && foundWindows.get(i) != null) {
-                    selected.add(foundWindows.get(i));
-                }
+        for (int i = 0; i < boxes.length; i++) {
+            if (boxes[i].isSelected() && foundWindows.get(i) != null) {
+                selected.add(foundWindows.get(i));
             }
-        } else if (defaultWindowsStr != null && !defaultWindowsStr.isEmpty()) {
-            // Если нажали Cancel — восстановим из конфига
-            for (String part : defaultWindowsStr.split(" ")) {
-                try {
-                    int idx = Integer.parseInt(part.trim()) - 1;
-                    if (idx >= 0 && idx < foundWindows.size() && foundWindows.get(idx) != null) {
-                        selected.add(foundWindows.get(idx));
-                    }
-                } catch (NumberFormatException ignored) {
-                }
-            }
+        }
+
+        // OK, но ничего не выбрано → отмена
+        if (selected.isEmpty()) {
+            return null;
         }
 
         return selected;

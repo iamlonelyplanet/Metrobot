@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.sun.jna.platform.win32.WinDef.HWND;
 
+import javax.swing.text.Utilities;
+
 /**
  * Главный класс. Спрашивает в GUI режим игры, активные окна, время старта каждого режима. Обнуляет счётчики
  * раз в сутки после 03:00 Мск, так нужно по логике игры.
@@ -17,8 +19,8 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 public class Main {
     public static void main(String[] args) {
         try {
-            String botName;
-            LocalTime startTime;
+//            String botName;
+//            LocalTime startTime;
 
             // === Обнуляем файл счётчиков каждый день при первом запуске программы после 03:00 по Мск, так надо. ===
             ConfigManager.autoResetCounters();
@@ -26,19 +28,47 @@ public class Main {
             // === Загружаем конфиг из файла при наличии ===
             Map<String, String> config = ConfigManager.loadConfig();
 
-            // === Запрашиваем режим игры в режиме GUI ===
-            int mode = Utilites.askMode();
-            boolean usePet = Utilites.usePet;
+            Optional<BotStartConfig> result =
+                    BotStartWizard.askUser(config);
 
-            // === Разворачиваем окна игры по заголовку. Каждое окно = перс/боец ===
-            Utilites.restoreAllGameWindows();
+            if (result.isEmpty()) {
+                System.out.println("Запуск отменён пользователем.");
+                return;
+            }
 
-            // === Получаем координаты каждого окна среди развёрнутых ===
-            List<HWND> foundWindows = Utilites.findGameWindows();
+            BotStartConfig cfg = result.get();
+            ConfigManager.saveConfig(
+                    cfg.getMode(),
+                    cfg.getActiveWindows(),
+                    // тут пока можешь оставить старую логику времён
+            );
 
-            // === Запрашиваем в режиме GUI активные окна из числа найденных, с ними будет работать программа ===
-            List<HWND> activeWindows = Utilites.askActiveWindows(foundWindows, config.get("activeWindows"));
+//            BotFactory.start(cfg);
 
+//            System.out.println("=== Проверка конфигурации ===");
+//            System.out.println("mode = " + cfg.getMode());
+//            System.out.println("botName = " + cfg.getBotName());
+//            System.out.println("startTime = " + cfg.getStartTime());
+//            System.out.println("usePet = " + cfg.isUsePet());
+//            System.out.println("windows = " + cfg.getActiveWindows().size());
+//            System.out.println("============================");
+
+
+//            // === Запрашиваем режим игры в режиме GUI ===
+//            Utilites.ModeSelection selection = Utilites.askModeSelection();
+
+//            int mode = Utilites.askMode();
+//            boolean usePet = Utilites.usePet;
+//
+//            // === Разворачиваем окна игры по заголовку. Каждое окно = перс/боец ===
+//            Utilites.restoreAllGameWindows();
+//
+//            // === Получаем координаты каждого окна среди развёрнутых ===
+//            List<HWND> foundWindows = Utilites.findGameWindows();
+//
+//            // === Запрашиваем в режиме GUI активные окна из числа найденных, с ними будет работать программа ===
+//            List<HWND> activeWindows = Utilites.askActiveWindows(foundWindows, config.get("activeWindows"));
+//
             // === Читаем времена стартов из конфига (если есть). Не трогать, пока хоть как-то работает ===
             LocalTime arenaDefault = Utilites.parseTime(config.get("arena_start"));
             LocalTime kvDefault = Utilites.parseTime(config.get("kv_start"));
