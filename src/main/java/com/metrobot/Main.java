@@ -2,11 +2,6 @@ package com.metrobot;
 
 import java.time.LocalTime;
 import java.util.*;
-import java.util.List;
-
-import com.sun.jna.platform.win32.WinDef.HWND;
-
-import javax.swing.text.Utilities;
 
 /**
  * Главный класс. Спрашивает в GUI режим игры, активные окна, время старта каждого режима. Обнуляет счётчики
@@ -40,7 +35,7 @@ public class Main {
 //                    cfg.getActiveWindows(),
 //            );
 
-//            BotFactory.start(cfg);
+            BotFactory.start(cfg);
 
 //            System.out.println("=== Проверка конфигурации ===");
 //            System.out.println("mode = " + cfg.getMode());
@@ -50,13 +45,11 @@ public class Main {
 //            System.out.println("windows = " + cfg.getActiveWindows().size());
 //            System.out.println("============================");
 
-            int mode = cfg.getMode();
-            String botName;
-            LocalTime startTime = cfg.getStartTime();
-            boolean usePet = cfg.isUsePet();
-            List<HWND> activeWindows = cfg.getActiveWindows();
-
-
+//            int mode = cfg.getMode();
+//            String botName;
+//            LocalTime startTime = cfg.getStartTime();
+//            boolean usePet = cfg.isUsePet();
+//            List<HWND> activeWindows = cfg.getActiveWindows();
 
             // === Запрашиваем режим игры в режиме GUI ===
 //            Utilites.ModeSelection selection = Utilites.askModeSelection();
@@ -84,45 +77,45 @@ public class Main {
             LocalTime tunnelStart = tunnelDefault;
             LocalTime ratStart = ratDefault;
 
-            // === Запуск выбранного режима игры ===
-            switch (mode) {
-                case 1 -> {
-                    botName = "КВ";
-                    kvStart = startTime;
-                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-                    ClanBot clanBot = new ClanBot(activeWindows, startTime, botName);
-                    clanBot.start();
-                }
-                case 2 -> {
-                    botName = "Рейд";
-                    raidStart = startTime;
-                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-                    ClanBot clanBot = new ClanBot(activeWindows, startTime, botName);
-                    clanBot.start();
-                }
-                case 3 -> {
-                    botName = "Арена";
-                    arenaStart = startTime;
-                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-                    ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName, usePet);
-                    arenaBot.start();
-                }
-                case 4 -> {
-                    botName = "Туннель";
-                    tunnelStart = startTime;
-                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-                    TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName, usePet);
-                    tunnelBot.start();
-                }
-                case 5 -> {
-                    botName = "Крысы";
-                    ratStart = startTime;
-                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-                    RatBot ratBot = new RatBot(activeWindows, startTime, botName, usePet);
-                    ratBot.start();
-                }
-                default -> System.out.println("Неизвестный режим. Завершаю.");
-            }
+//            // === Запуск выбранного режима игры ===
+//            switch (mode) {
+//                case 1 -> {
+//                    botName = "КВ";
+//                    kvStart = startTime;
+//                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
+//                    ClanBot clanBot = new ClanBot(activeWindows, startTime, botName);
+//                    clanBot.start();
+//                }
+//                case 2 -> {
+//                    botName = "Рейд";
+//                    raidStart = startTime;
+//                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
+//                    ClanBot clanBot = new ClanBot(activeWindows, startTime, botName);
+//                    clanBot.start();
+//                }
+//                case 3 -> {
+//                    botName = "Арена";
+//                    arenaStart = startTime;
+//                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
+//                    ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName, usePet);
+//                    arenaBot.start();
+//                }
+//                case 4 -> {
+//                    botName = "Туннель";
+//                    tunnelStart = startTime;
+//                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
+//                    TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName, usePet);
+//                    tunnelBot.start();
+//                }
+//                case 5 -> {
+//                    botName = "Крысы";
+//                    ratStart = startTime;
+//                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
+//                    RatBot ratBot = new RatBot(activeWindows, startTime, botName, usePet);
+//                    ratBot.start();
+//                }
+//                default -> System.out.println("Неизвестный режим. Завершаю.");
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
