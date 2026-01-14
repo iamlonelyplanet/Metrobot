@@ -7,8 +7,6 @@ import java.util.*;
  * Главный класс. Спрашивает в GUI режим игры, активные окна, время старта каждого режима. Обнуляет счётчики
  * раз в сутки после 03:00 Мск, так нужно по логике игры.
  * Здесь и в следующих классах прошу ориентироваться на комментарии перед методами.
- * TODO: совместить 3 основных класса (боты Арена, КВ и Рейд) в единый. ООП же!
- * TODO: унифицировать switch/case! В отдельный класс?
  */
 
 public class Main {
@@ -30,12 +28,13 @@ public class Main {
             }
 
             BotStartConfig cfg = result.get();
-//            ConfigManager.saveConfig(
-//                    cfg.getMode(),
-//                    cfg.getActiveWindows(),
-//            );
-
             BotFactory.start(cfg);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
 
 //            System.out.println("=== Проверка конфигурации ===");
 //            System.out.println("mode = " + cfg.getMode());
@@ -43,13 +42,6 @@ public class Main {
 //            System.out.println("startTime = " + cfg.getStartTime());
 //            System.out.println("usePet = " + cfg.isUsePet());
 //            System.out.println("windows = " + cfg.getActiveWindows().size());
-//            System.out.println("============================");
-
-//            int mode = cfg.getMode();
-//            String botName;
-//            LocalTime startTime = cfg.getStartTime();
-//            boolean usePet = cfg.isUsePet();
-//            List<HWND> activeWindows = cfg.getActiveWindows();
 
             // === Запрашиваем режим игры в режиме GUI ===
 //            Utilites.ModeSelection selection = Utilites.askModeSelection();
@@ -63,61 +55,16 @@ public class Main {
 //            // === Запрашиваем в режиме GUI активные окна из числа найденных, с ними будет работать программа ===
 //            List<HWND> activeWindows = Utilites.askActiveWindows(foundWindows, config.get("activeWindows"));
 //
-            // === Читаем времена стартов из конфига (если есть). Не трогать, пока хоть как-то работает ===
-            LocalTime arenaDefault = Utilites.parseTime(config.get("arena_start"));
-            LocalTime kvDefault = Utilites.parseTime(config.get("kv_start"));
-            LocalTime raidDefault = Utilites.parseTime(config.get("raid_start"));
-            LocalTime tunnelDefault = Utilites.parseTime(config.get("tunnel_start"));
-            LocalTime ratDefault = Utilites.parseTime(config.get("rat_start"));
-
-            // === Готовим переменные времени для записи обратно в конфиг. Не трогать, пока хоть как-то работает ===
-            LocalTime arenaStart = arenaDefault;
-            LocalTime kvStart = kvDefault;
-            LocalTime raidStart = raidDefault;
-            LocalTime tunnelStart = tunnelDefault;
-            LocalTime ratStart = ratDefault;
-
-//            // === Запуск выбранного режима игры ===
-//            switch (mode) {
-//                case 1 -> {
-//                    botName = "КВ";
-//                    kvStart = startTime;
-//                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-//                    ClanBot clanBot = new ClanBot(activeWindows, startTime, botName);
-//                    clanBot.start();
-//                }
-//                case 2 -> {
-//                    botName = "Рейд";
-//                    raidStart = startTime;
-//                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-//                    ClanBot clanBot = new ClanBot(activeWindows, startTime, botName);
-//                    clanBot.start();
-//                }
-//                case 3 -> {
-//                    botName = "Арена";
-//                    arenaStart = startTime;
-//                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-//                    ArenaBot arenaBot = new ArenaBot(activeWindows, startTime, botName, usePet);
-//                    arenaBot.start();
-//                }
-//                case 4 -> {
-//                    botName = "Туннель";
-//                    tunnelStart = startTime;
-//                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-//                    TunnelBot tunnelBot = new TunnelBot(activeWindows, startTime, botName, usePet);
-//                    tunnelBot.start();
-//                }
-//                case 5 -> {
-//                    botName = "Крысы";
-//                    ratStart = startTime;
-//                    ConfigManager.saveConfig(mode, activeWindows, arenaStart, kvStart, raidStart, tunnelStart, ratStart);
-//                    RatBot ratBot = new RatBot(activeWindows, startTime, botName, usePet);
-//                    ratBot.start();
-//                }
-//                default -> System.out.println("Неизвестный режим. Завершаю.");
-//            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
+//            // === Читаем времена стартов из конфига (если есть). Не трогать, пока хоть как-то работает ===
+//            LocalTime arenaDefault = Utilites.parseTime(config.get("arena_start"));
+//            LocalTime kvDefault = Utilites.parseTime(config.get("kv_start"));
+//            LocalTime raidDefault = Utilites.parseTime(config.get("raid_start"));
+//            LocalTime tunnelDefault = Utilites.parseTime(config.get("tunnel_start"));
+//            LocalTime ratDefault = Utilites.parseTime(config.get("rat_start"));
+//
+//            // === Готовим переменные времени для записи обратно в конфиг. Не трогать, пока хоть как-то работает ===
+//            LocalTime arenaStart = arenaDefault;
+//            LocalTime kvStart = kvDefault;
+//            LocalTime raidStart = raidDefault;
+//            LocalTime tunnelStart = tunnelDefault;
+//            LocalTime ratStart = ratDefault;

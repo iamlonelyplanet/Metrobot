@@ -1,6 +1,6 @@
 package com.metrobot;
 
-import com.sun.jna.platform.win32.WinDef;
+import com.sun.jna.platform.win32.WinDef.HWND;
 
 import java.io.*;
 import java.time.LocalTime;
@@ -41,15 +41,15 @@ public class ConfigManager {
         return config;
     }
 
-    // Сохраняем конфиг в локальный файл, без взаимодействия с сервером
-    public static void saveConfig(int mode, List<WinDef.HWND> windows, LocalTime arenaStart, LocalTime kvStart,
+    // Сохраняем конфиг в локальный файл, без взаимодействия с сервером. С версии 1.2.2 работает переопределение методов
+    public static void saveConfig(int mode, List<HWND> windows, LocalTime arenaStart, LocalTime kvStart,
                                   LocalTime raidStart, LocalTime tunnelStart, LocalTime ratStart) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(CONFIG_FILE))) {
             pw.println("mode=" + mode);
 
             // Преобразуем HWND в индексы (1–4, не 0-3)
             List<Integer> windowInds = new ArrayList<>();
-            for (WinDef.HWND hwnd : windows) {
+            for (HWND hwnd : windows) {
                 int index = windows.indexOf(hwnd) + 1;
                 if (index > 0) windowInds.add(index);
             }
@@ -63,6 +63,42 @@ public class ConfigManager {
         } catch (IOException e) {
             System.err.println("Ошибка записи " + CONFIG_FILE + ": " + e.getMessage());
         }
+    }
+
+    // Сохраняем конфиг в локальный файл, без взаимодействия с сервером. С версии 1.2.2 работает переопределение методов
+    public static void saveConfig(BotStartConfig cfg) {
+        int mode = cfg.getMode();
+        List<HWND> activeWindows = cfg.getActiveWindows();
+        LocalTime startTime = cfg.getStartTime();
+
+        // Читаем текущий конфиг, чтобы не потерять остальные времена
+        Map<String, String> existing = loadConfig();
+
+        LocalTime arenaStart = Utilites.parseTime(existing.get("arena_start"));
+        LocalTime kvStart     = Utilites.parseTime(existing.get("kv_start"));
+        LocalTime raidStart   = Utilites.parseTime(existing.get("raid_start"));
+        LocalTime tunnelStart = Utilites.parseTime(existing.get("tunnel_start"));
+        LocalTime ratStart    = Utilites.parseTime(existing.get("rat_start"));
+
+        // Обновляем только нужное время старта, остальные остаются без изменений
+        switch (mode) {
+            case 1 -> kvStart = startTime;
+            case 2 -> raidStart = startTime;
+            case 3 -> arenaStart = startTime;
+            case 4 -> tunnelStart = startTime;
+            case 5 -> ratStart = startTime;
+        }
+
+        // переиспользуем старый рабочий метод
+        saveConfig(
+                mode,
+                activeWindows,
+                arenaStart,
+                kvStart,
+                raidStart,
+                tunnelStart,
+                ratStart
+        );
     }
 
     // Обнуляем файл счётчиков при первом запуске программы каждый день после 03:00 по Мск, так надо.

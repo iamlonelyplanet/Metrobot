@@ -30,6 +30,16 @@ public class BotStartWizard {
             LocalTime startTime = Utilites.askStartTime(botName, defaultTime);
             if (startTime == null) return Optional.empty();
 
+            BotStartConfig cfg = new BotStartConfig(
+                    mode,
+                    botName,
+                    startTime,
+                    active,
+                    usePet
+            );
+
+            ConfigManager.saveConfig(cfg);
+
             return Optional.of(
                     new BotStartConfig(
                             mode,
