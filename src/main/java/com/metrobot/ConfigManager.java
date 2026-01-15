@@ -79,11 +79,11 @@ public class ConfigManager {
         // Читаем текущий конфиг, чтобы не потерять остальные времена
         Map<String, String> existing = loadConfig();
 
-        LocalTime arenaStart = Utilites.parseTime(existing.get("arena_start"));
-        LocalTime kvStart = Utilites.parseTime(existing.get("kv_start"));
-        LocalTime raidStart = Utilites.parseTime(existing.get("raid_start"));
-        LocalTime tunnelStart = Utilites.parseTime(existing.get("tunnel_start"));
-        LocalTime ratStart = Utilites.parseTime(existing.get("rat_start"));
+        LocalTime arenaStart = Utilities.parseTime(existing.get("arena_start"));
+        LocalTime kvStart = Utilities.parseTime(existing.get("kv_start"));
+        LocalTime raidStart = Utilities.parseTime(existing.get("raid_start"));
+        LocalTime tunnelStart = Utilities.parseTime(existing.get("tunnel_start"));
+        LocalTime ratStart = Utilities.parseTime(existing.get("rat_start"));
 
         // Обновляем только нужное время старта, остальные остаются без изменений
         switch (mode) {

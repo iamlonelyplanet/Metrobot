@@ -16,7 +16,7 @@ import java.util.List;
  * Вспомогательные методы для GUI запросов (режим, окна, время).
  */
 
-public class Utilites {
+public class Utilities {
     public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
     public static boolean usePet = false;
 
