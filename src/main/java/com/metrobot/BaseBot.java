@@ -13,6 +13,7 @@ import javax.sound.sampled.*;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.RECT;
+import com.sun.jna.platform.win32.WinUser;
 
 import static com.metrobot.Buttons.*;
 
@@ -34,6 +35,7 @@ public abstract class BaseBot {
     public enum BotType {RAID, CW}
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
     protected abstract Map<String, Point> getButtonMap();
+    private static final User32 USER32 = User32.INSTANCE;
 
     // --- Конструкторы ---
     public BaseBot() throws AWTException {
@@ -68,8 +70,8 @@ public abstract class BaseBot {
     protected void showActiveWindows() {
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
-            User32.INSTANCE.ShowWindow(hWnd, User32.SW_RESTORE);
-            User32.INSTANCE.SetForegroundWindow(hWnd);
+            USER32.ShowWindow(hWnd, WinUser.SW_RESTORE);
+            USER32.SetForegroundWindow(hWnd);
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
@@ -85,7 +87,7 @@ public abstract class BaseBot {
         if (!isSilentMode) return;
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
-            User32.INSTANCE.ShowWindow(hWnd, User32.SW_MINIMIZE);
+            USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
@@ -161,7 +163,6 @@ public abstract class BaseBot {
                 "Атаковать",
                 "Арена"
         );
-
         if (rel == null) {
             System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
             return;
@@ -169,11 +170,10 @@ public abstract class BaseBot {
         for (int i = 0; i < activeWindows.size(); i++) {
             HWND hWnd = activeWindows.get(i);
             if (hWnd == null) continue;
-
             int fighterNum = i + 1; // индексация от 1
 
             RECT rect = new RECT();
-            User32.INSTANCE.GetWindowRect(hWnd, rect);
+            USER32.GetWindowRect(hWnd, rect);
 
             int x = rect.left + Buttons.xMoveRight + rel.x;
             int y = rect.top + Buttons.yMoveDown + rel.y;
@@ -186,9 +186,7 @@ public abstract class BaseBot {
             clickAt(x, y);
             Thread.sleep(PAUSE_MICRO_MS);
         }
-
         Thread.sleep(PAUSE_SHORT_MS);
-
         if (LONG_PAUSE_BUTTONS.contains(buttonName)) {
             Thread.sleep(PAUSE_LONG_MS);
         }
