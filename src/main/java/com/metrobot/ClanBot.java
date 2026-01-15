@@ -13,7 +13,8 @@ import static com.metrobot.Buttons.*;
 /**
  * Унификация старых классов Raid и War
  * Режим "Клан": бои перса в коллективной ("клановой") движухе.
- * Вручную занимало у пользователей порядка 2 часов (КВ) и часа (рейд), раз в 5 минут требуя внимания, притом сильно:
+ * В режиме "Клан" работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
+ * Вручную занимал у пользователей порядка 2 часов (КВ) и часа (рейд), раз в 5 минут требуя внимания, притом сильно:
  * коллектив же.
  * <p>
  * Полное прохождение: то же время, полностью автоматически.
@@ -24,8 +25,12 @@ import static com.metrobot.Buttons.*;
 
 public class ClanBot extends BaseBot {
 
-    public ClanBot(List<HWND> windows, LocalTime timeHHmm, String botName) throws AWTException {
+    public ClanBot(List<HWND> windows,
+                   LocalTime timeHHmm,
+                   String botName) throws AWTException {
+
         super(windows);
+
         {
             this.startTime = timeHHmm;
             this.botName = botName;
@@ -36,7 +41,6 @@ public class ClanBot extends BaseBot {
     protected Map<String, Point> getButtonMap() {
         return CLAN_BUTTONS;
     }
-
     private int totalBattles;
     private int lastSecondsCountdown;
     private int hoursToAdd;
@@ -62,14 +66,13 @@ public class ClanBot extends BaseBot {
             isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
 
             if (Objects.equals(botName, "Рейд")) {
-                // Подготовительные клики (разово, если надо)
+                // Подготовительные клики (однократно, перед первым боем рейда)
                 if (unifiedCounter.getCount() == 0) {
                     showActiveWindows();
                     clickButton("Клан");
                     clickButton("Война");
                     clickButton("Обновить");
                     clickButton("Рейды");
-//                    Thread.sleep(PAUSE_SHORT_MS);
                 }
                 while (isGameGoingOn) {
                     fightInClan(BotType.RAID);
@@ -89,9 +92,10 @@ public class ClanBot extends BaseBot {
     }
 
     public void fightInClan(BotType type) throws InterruptedException {
+        System.out.println("\n=== Бой " + (unifiedCounter.getCount() + 1) + " из " + totalBattles + " ===");
+        showActiveWindows();
+
         if (type == BotType.CW) {
-            System.out.println("\n=== Бой " + (unifiedCounter.getCount() + 1) + " из " + totalBattles + " ===");
-            showActiveWindows();
             clickButton("Клан");
             clickButton("Война");
             clickButton("Атаковать врага");
@@ -101,15 +105,12 @@ public class ClanBot extends BaseBot {
             clickButton("Погон 2");
             clickButton("Погон 3");
             clickButton("Погон - Коллекция");
-            minimizeActiveWindows();
         }
 
         if (type == BotType.RAID) {
-            System.out.println("\n=== Бой " + (unifiedCounter.getCount() + 1) + " из " + totalBattles + " ===");
-            showActiveWindows();
             Thread.sleep(PAUSE_SHORT_MS);
 
-            if (unifiedCounter.getCount() != 0) {
+            if (unifiedCounter.getCount() > 0) {
                 clickButton("Клан");
                 clickButton("Рейды");
             }
@@ -118,9 +119,9 @@ public class ClanBot extends BaseBot {
             Thread.sleep(PAUSE_RAID_BOSS_MS);
             clickButton("Пропустить");
             clickButton("Закрыть");
-            minimizeActiveWindows();
         }
 
+        minimizeActiveWindows();
         unifiedCounter.plusOne();
         CounterStorage.saveCounters(counters);
         System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));

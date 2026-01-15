@@ -21,8 +21,14 @@ import static com.metrobot.Buttons.*;
  */
 
 public class TunnelBot extends BaseBot {
-    public TunnelBot(List<HWND> windows, LocalTime timeHHmm, String botName, boolean usePet) throws AWTException {
+    public TunnelBot(List<HWND> windows,
+                     LocalTime timeHHmm,
+                     String botName,
+                     boolean usePet)
+            throws AWTException {
+
         super(windows);
+
         {
             this.startTime = timeHHmm;
             this.botName = botName;

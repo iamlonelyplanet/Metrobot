@@ -10,12 +10,17 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 import static com.metrobot.Buttons.*;
 
 /**
- * Режим "Бой с крысами". Пока экспериментальный
+ * Режим "Бой с крысами". Пока экспериментальный. Silent mode под вопросом, подумать.
  */
 
 public class RatBot extends BaseBot {
-    public RatBot(List<HWND> windows, LocalTime timeHHmm, String botName, boolean usePet) throws AWTException {
+    public RatBot(List<HWND> windows,
+                  LocalTime timeHHmm,
+                  String botName,
+                  boolean usePet) throws AWTException {
+
         super(windows);
+
         {
             this.startTime = timeHHmm;
             this.botName = botName;
@@ -39,7 +44,7 @@ public class RatBot extends BaseBot {
                 if (isSilentMode) {
                     showActiveWindows();
                 }
-//                clickButton("Клан - Выход");
+
                 clickButton("Начстанции");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickButton("Крыса");

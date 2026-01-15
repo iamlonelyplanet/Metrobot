@@ -42,8 +42,13 @@ public class ConfigManager {
     }
 
     // Сохраняем конфиг в локальный файл, без взаимодействия с сервером. С версии 1.2.2 работает переопределение методов
-    public static void saveConfig(int mode, List<HWND> windows, LocalTime arenaStart, LocalTime kvStart,
-                                  LocalTime raidStart, LocalTime tunnelStart, LocalTime ratStart) {
+    public static void saveConfig(int mode,
+                                  List<HWND> windows,
+                                  LocalTime arenaStart,
+                                  LocalTime kvStart,
+                                  LocalTime raidStart,
+                                  LocalTime tunnelStart,
+                                  LocalTime ratStart) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(CONFIG_FILE))) {
             pw.println("mode=" + mode);
 
@@ -75,10 +80,10 @@ public class ConfigManager {
         Map<String, String> existing = loadConfig();
 
         LocalTime arenaStart = Utilites.parseTime(existing.get("arena_start"));
-        LocalTime kvStart     = Utilites.parseTime(existing.get("kv_start"));
-        LocalTime raidStart   = Utilites.parseTime(existing.get("raid_start"));
+        LocalTime kvStart = Utilites.parseTime(existing.get("kv_start"));
+        LocalTime raidStart = Utilites.parseTime(existing.get("raid_start"));
         LocalTime tunnelStart = Utilites.parseTime(existing.get("tunnel_start"));
-        LocalTime ratStart    = Utilites.parseTime(existing.get("rat_start"));
+        LocalTime ratStart = Utilites.parseTime(existing.get("rat_start"));
 
         // Обновляем только нужное время старта, остальные остаются без изменений
         switch (mode) {

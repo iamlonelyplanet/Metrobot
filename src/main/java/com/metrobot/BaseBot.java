@@ -150,8 +150,7 @@ public abstract class BaseBot {
         }
     }
 
-    // Единый метод кликов по всем выбранным окнам. Ох, и долго же я его писал и переписывал. Учился. Это самый центр
-    // всей проги.
+    // Единый метод кликов по всем выбранным окнам. Центр всей проги.
     protected void clickButton(String buttonName) throws InterruptedException {
         Map<String, Point> buttonMap = getButtonMap();
         Point rel = buttonMap.get(buttonName);
