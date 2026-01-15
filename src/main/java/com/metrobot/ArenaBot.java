@@ -65,7 +65,6 @@ public class ArenaBot extends BaseBot {
                 unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);
                 System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
-
                 if (battle < MAX_BATTLES_ARENA) {
                     countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() + 1);
                 }
