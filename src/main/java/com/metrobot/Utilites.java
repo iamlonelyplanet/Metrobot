@@ -228,7 +228,6 @@ public class Utilites {
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
-
         if (result != JOptionPane.OK_OPTION) {
             return null;
         }
@@ -246,7 +245,6 @@ public class Utilites {
                 selected.add(foundWindows.get(i));
             }
         }
-
         if (selected.isEmpty()) {
             return null;
         }
