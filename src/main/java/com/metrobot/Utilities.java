@@ -1,8 +1,7 @@
 package com.metrobot;
 
 import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.WinDef;
-import com.sun.jna.platform.win32.WinDef.HWND;
+import com.sun.jna.platform.win32.WinDef.*;
 import com.sun.jna.platform.win32.WinUser;
 
 import javax.swing.*;
@@ -19,10 +18,9 @@ import java.util.List;
 public class Utilities {
     public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
     public static boolean usePet = false;
-
+    private static final User32 USER32 = User32.INSTANCE;
     public record ModeSelection(int mode, boolean usePet) {
     }
-
 
     // Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию
     public static int askMode() {
@@ -148,29 +146,27 @@ public class Utilities {
      * Сужаем размер окна до минимально возможного, 1033 на 768
      */
     public static void restoreAllGameWindows() {
-        User32 user32 = User32.INSTANCE;
-
-        user32.EnumWindows((hWnd, data) -> {
+        USER32.EnumWindows((hWnd, data) -> {
             char[] buffer = new char[512];
-            user32.GetWindowText(hWnd, buffer, 512);
+            USER32.GetWindowText(hWnd, buffer, 512);
             String title = new String(buffer).trim();
 
             if (title.contains("Игроклуб") || title.contains("2033")) {
                 resizeWindows(hWnd);
-                user32.ShowWindow(hWnd, User32.SW_RESTORE);
+                USER32.ShowWindow(hWnd, WinUser.SW_RESTORE);
             }
             return true;
         }, null);
     }
 
     public static void resizeWindows(HWND hwnd) {
-        WinDef.RECT r = new WinDef.RECT();
-        User32.INSTANCE.GetWindowRect(hwnd, r);
+        RECT r = new RECT();
+        USER32.GetWindowRect(hwnd, r);
         if (r.right - r.left == Buttons.windowWidth) {
             return;
         }
 
-        User32.INSTANCE.SetWindowPos(
+        USER32.SetWindowPos(
                 hwnd,
                 null,
                 r.left,        // сохраняем позицию
@@ -186,7 +182,6 @@ public class Utilities {
      * Некоторые из найденных окон могут быть неактивными, пусть такие работают сами, без участия программы. Так надо.
      */
     public static List<HWND> askActiveWindows(List<HWND> foundWindows, String defaultWindowsStr) {
-        User32 user32 = User32.INSTANCE;
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
 
@@ -197,8 +192,8 @@ public class Utilities {
             String label;
             HWND hWnd = foundWindows.get(i);
             if (hWnd != null) {
-                WinDef.RECT r = new WinDef.RECT();
-                user32.GetWindowRect(hWnd, r);
+                RECT r = new RECT();
+                USER32.GetWindowRect(hWnd, r);
                 label = String.format("Окно %d: (%d, %d)", i + 1, r.left, r.top);
             } else {
                 label = String.format("Окно %d: [не найдено]", i + 1);
@@ -256,12 +251,11 @@ public class Utilities {
     сортируем список: сначала верх - слева направо, затем низ - слева направо.
     */
     public static List<HWND> findGameWindows() {
-        User32 user32 = User32.INSTANCE;
         List<HWND> found = new ArrayList<>();
 
-        user32.EnumWindows((hWnd, data) -> {
+        USER32.EnumWindows((hWnd, data) -> {
             char[] buffer = new char[512];
-            user32.GetWindowText(hWnd, buffer, 512);
+            USER32.GetWindowText(hWnd, buffer, 512);
             String title = new String(buffer).trim();
             if (title.contains("Игроклуб") || title.contains("2033")) {
                 found.add(hWnd);
@@ -271,10 +265,10 @@ public class Utilities {
 
         // Сортируем найденные окна по координатам по принципу: сначала верх - слева направо, затем низ - слева направо.
         found.sort((h1, h2) -> {
-            WinDef.RECT r1 = new WinDef.RECT();
-            WinDef.RECT r2 = new WinDef.RECT();
-            user32.GetWindowRect(h1, r1);
-            user32.GetWindowRect(h2, r2);
+            RECT r1 = new RECT();
+            RECT r2 = new RECT();
+            USER32.GetWindowRect(h1, r1);
+            USER32.GetWindowRect(h2, r2);
             if (r1.top != r2.top) {
                 return Integer.compare(r1.top, r2.top);
             } else {
@@ -292,8 +286,8 @@ public class Utilities {
         int midY = screen.height / 2;
 
         for (HWND hWnd : found) {
-            WinDef.RECT r = new WinDef.RECT();
-            user32.GetWindowRect(hWnd, r);
+            RECT r = new RECT();
+            USER32.GetWindowRect(hWnd, r);
 
             int centerX = (r.left + r.right) / 2;
             int centerY = (r.top + r.bottom) / 2;
@@ -313,8 +307,8 @@ public class Utilities {
         System.out.println("=== Найдены игровые окна (позиции 1–4) ===");
         for (int i = 0; i < 4; i++) {
             if (ordered.get(i) != null) {
-                WinDef.RECT r = new WinDef.RECT();
-                user32.GetWindowRect(ordered.get(i), r);
+                RECT r = new RECT();
+                USER32.GetWindowRect(ordered.get(i), r);
                 System.out.printf("Окно %d: (%d, %d)%n",
                         i + 1, r.left, r.top);
             } else {
