@@ -118,9 +118,8 @@ public abstract class BaseBot {
     // Бои с туннельными монстрами
     protected void fightMonsters(MonsterKind kind, boolean usePet) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
-        if (usePet) {
+        if (usePet)
             clickButton("Питомец");
-        }
         clickButton("Пропустить");
         clickButton("Закрыть");
         unifiedCounter.plusOne();

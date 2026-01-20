@@ -34,6 +34,7 @@ public class ClanBot extends BaseBot {
         {
             this.startTime = timeHHmm;
             this.botName = botName;
+            this.windows = windows;
         }
     }
 
@@ -41,6 +42,7 @@ public class ClanBot extends BaseBot {
     protected Map<String, Point> getButtonMap() {
         return CLAN_BUTTONS;
     }
+    protected final List<HWND> windows;
     private int totalBattles;
     private int lastSecondsCountdown;
     private int hoursToAdd;
@@ -86,6 +88,10 @@ public class ClanBot extends BaseBot {
             }
 
             endGame();
+//            for (HWND hwnd : windows) {
+//                WindowCloser.closeGameWindow(hwnd);
+//            }
+
         } catch (Exception e) {
             handleExceptions(e);
         }
