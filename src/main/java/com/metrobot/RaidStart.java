@@ -10,15 +10,16 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 import static com.metrobot.Buttons.*;
 
 /**
- * Микро-режим: RaidStart
- * В заданное время Боец 1 заходит в клановый рейд и стартует его.
- * Без повторений.
+ * Микро-режим для старта рейда в заданное время.
+ * В заданное время Боец 1 заходит во вкладку Кланы, затем в Рейд, щёлкает на вызов босса и подтверждает рейд.
+ * Однократно.
+ * Надо убрать usePet.
  */
 public class RaidStart extends BaseBot {
 
     public RaidStart(List<HWND> windows,
                      LocalTime timeHHmm,
-                     String botName, boolean usePet) throws AWTException {
+                     String botName) throws AWTException {
 
         super(windows);
 
@@ -51,7 +52,7 @@ public class RaidStart extends BaseBot {
 
             clickButton("В рейд");
 
-            System.out.println("=== Рейд запущен ===");
+            System.out.println("=== Рейд запущен ==="); // стандартный endGame здесь не подходит.
 
         } catch (Exception e) {
             handleExceptions(e);

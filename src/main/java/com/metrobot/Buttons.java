@@ -98,6 +98,5 @@ public class Buttons {
         put("Атаковать босса", new Point(425, 323));
         put("Вичуха", new Point(533, 450));
         put("В рейд", new Point(170, 535));
-
     }};
 }

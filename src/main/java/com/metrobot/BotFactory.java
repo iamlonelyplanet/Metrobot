@@ -55,8 +55,7 @@ public class BotFactory {
                 RaidStart RaidStart = new RaidStart(
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
-                        cfg.getBotName(),
-                        cfg.isUsePet()
+                        cfg.getBotName()
                 );
                 RaidStart.start();
             }
