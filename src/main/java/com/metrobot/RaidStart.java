@@ -35,12 +35,11 @@ public class RaidStart extends BaseBot {
 
     public void start() {
         try {
-            startGame();          // ожидание startTime + фокус окон
-            showActiveWindows();  // на всякий случай
+            startGame();
+            showActiveWindows();
 
             System.out.println("=== Запуск рейда ===");
 
-            // Только Боец 1 — предполагаем, что окно уже выбрано BaseBot'ом
             clickButton("Клан");
             Thread.sleep(PAUSE_SHORT_MS);
 
