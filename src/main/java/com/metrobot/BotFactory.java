@@ -50,6 +50,16 @@ public class BotFactory {
                 );
                 ratBot.start();
             }
+
+            case 6 -> {
+                RaidStart RaidStart = new RaidStart(
+                        cfg.getActiveWindows(),
+                        cfg.getStartTime(),
+                        cfg.getBotName(),
+                        cfg.isUsePet()
+                );
+                RaidStart.start();
+            }
             default -> System.out.println("Неизвестный режим. Завершаю.");
         }
     }

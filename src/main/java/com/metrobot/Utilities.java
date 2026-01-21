@@ -24,7 +24,7 @@ public class Utilities {
 
     // Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию
     public static int askMode() {
-        String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели", "Крысы"};
+        String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели", "Крысы", "Старт рейда"};
 
         JComboBox<String> modeCombo = new JComboBox<>(options);
         modeCombo.setSelectedIndex(2); // по умолчанию Арена
@@ -56,6 +56,10 @@ public class Utilities {
                 case 4: // Крысы
                     petCheck.setSelected(true);
                     petCheck.setEnabled(true);
+                    break;
+                    case 5: // Старт рейда
+                    petCheck.setSelected(false);
+                    petCheck.setEnabled(false);
                     break;
             }
         };

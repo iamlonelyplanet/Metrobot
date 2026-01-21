@@ -63,6 +63,7 @@ public class BotStartWizard {
             case 3 -> "Арена";
             case 4 -> "Туннель";
             case 5 -> "Крысы";
+            case 6 -> "Старт рейда";
             default -> throw new IllegalArgumentException("Неизвестный режим: " + mode);
         };
     }
@@ -74,6 +75,7 @@ public class BotStartWizard {
             case 3 -> Utilities.parseTime(config.get("arena_start"));
             case 4 -> Utilities.parseTime(config.get("tunnel_start"));
             case 5 -> Utilities.parseTime(config.get("rat_start"));
+            case 6 -> Utilities.parseTime(config.get("raid2_start"));
             default -> null;
         };
     }

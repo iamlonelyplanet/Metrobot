@@ -48,7 +48,8 @@ public class ConfigManager {
                                   LocalTime kvStart,
                                   LocalTime raidStart,
                                   LocalTime tunnelStart,
-                                  LocalTime ratStart) {
+                                  LocalTime ratStart,
+                                  LocalTime raid2_start) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(CONFIG_FILE))) {
             pw.println("mode=" + mode);
 
@@ -65,6 +66,7 @@ public class ConfigManager {
             if (raidStart != null) pw.println("raid_start=" + raidStart.format(TIME_FORMAT));
             if (tunnelStart != null) pw.println("tunnel_start=" + tunnelStart.format(TIME_FORMAT));
             if (ratStart != null) pw.println("rat_start=" + ratStart.format(TIME_FORMAT));
+            if (raid2_start != null) pw.println("raid2_start=" + raid2_start.format(TIME_FORMAT));
         } catch (IOException e) {
             System.err.println("Ошибка записи " + CONFIG_FILE + ": " + e.getMessage());
         }
@@ -84,6 +86,7 @@ public class ConfigManager {
         LocalTime raidStart = Utilities.parseTime(existing.get("raid_start"));
         LocalTime tunnelStart = Utilities.parseTime(existing.get("tunnel_start"));
         LocalTime ratStart = Utilities.parseTime(existing.get("rat_start"));
+        LocalTime raid2_start = Utilities.parseTime(existing.get("raid2_start"));
 
         // Обновляем только нужное время старта, остальные остаются без изменений
         switch (mode) {
@@ -92,6 +95,7 @@ public class ConfigManager {
             case 3 -> arenaStart = startTime;
             case 4 -> tunnelStart = startTime;
             case 5 -> ratStart = startTime;
+            case 6 -> raid2_start = startTime;
         }
 
         // переиспользуем старый рабочий метод
@@ -102,7 +106,8 @@ public class ConfigManager {
                 kvStart,
                 raidStart,
                 tunnelStart,
-                ratStart
+                ratStart,
+                raid2_start
         );
     }
 
