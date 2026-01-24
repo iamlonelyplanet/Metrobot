@@ -13,21 +13,23 @@ import static com.metrobot.Buttons.*;
  * Микро-режим для старта рейда в заданное время.
  * В заданное время Боец 1 заходит во вкладку Кланы, затем в Рейд, щёлкает на вызов босса и подтверждает рейд.
  * Однократно.
- * Надо убрать usePet.
+ * После выполнения режима автоматически стартует режим Рейд во всех окнах, выбранных в предыдущем диалоге.
  */
-public class RaidStart extends BaseBot {
+public class RaidStartBot extends BaseBot {
 
-    public RaidStart(List<HWND> windows,
-                     LocalTime timeHHmm,
-                     String botName) throws AWTException {
+    public RaidStartBot(List<HWND> windows,
+                        LocalTime timeHHmm,
+                        String botName) throws AWTException {
 
-        super(windows);
+        super(List.of(windows.get(0))); // запустить Рейд может только первое, главное окно. Так надо по логике игры.
 
         {
             this.startTime = timeHHmm;
             this.botName = botName;
+            this.windows = windows;
         }
     }
+    private final List<HWND> windows;
 
     @Override
     protected Map<String, Point> getButtonMap() {
@@ -52,7 +54,13 @@ public class RaidStart extends BaseBot {
 
             clickButton("В рейд");
 
-            System.out.println("=== Рейд запущен ==="); // стандартный endGame здесь не подходит.
+            System.out.println("=== Рейд запущен ==="); // стандартный endGame здесь не подходит
+            Thread.sleep(PAUSE_LONG_MS);
+
+            // Стартуем режим "Рейд" с теми окнами, которые передались в RaidStartBot
+            ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд");
+            raid.start();
+
 
         } catch (Exception e) {
             handleExceptions(e);

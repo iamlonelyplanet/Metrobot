@@ -52,12 +52,12 @@ public class BotFactory {
             }
 
             case 6 -> {
-                RaidStart RaidStart = new RaidStart(
+                RaidStartBot RaidStartBot = new RaidStartBot(
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
                         cfg.getBotName()
                 );
-                RaidStart.start();
+                RaidStartBot.start();
             }
             default -> System.out.println("Неизвестный режим. Завершаю.");
         }
