@@ -44,8 +44,8 @@ public class ClanBot extends BaseBot {
     }
     protected final List<HWND> windows;
     private int totalBattles;
-    private int lastSecondsCountdown;
-    private int hoursToAdd;
+    private int lastSecondsCorrection;
+    private int hoursToFinish;
     private boolean isGameGoingOn;
     private LocalTime endTime;
 
@@ -53,17 +53,17 @@ public class ClanBot extends BaseBot {
         try {
             startGame();
             if (Objects.equals(botName, "Рейд")) {
-                hoursToAdd = 1;
+                hoursToFinish = 1;
                 totalBattles = MAX_BATTLES_RAID;
-                lastSecondsCountdown = 4;
+                lastSecondsCorrection = 4;
             }
 
             if (Objects.equals(botName, "КВ")) {
-                hoursToAdd = 2;
+                hoursToFinish = 2;
                 totalBattles = MAX_BATTLES_CW;
-                lastSecondsCountdown = 4;
+                lastSecondsCorrection = 4;
             }
-            endTime = startTime.plusHours(hoursToAdd);
+            endTime = startTime.plusHours(hoursToFinish);
             endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS); // проверить
             isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
 
@@ -133,7 +133,7 @@ public class ClanBot extends BaseBot {
         System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
         isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
         if (isGameGoingOn) {
-            countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - lastSecondsCountdown);
+            countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - lastSecondsCorrection);
         }
     }
 }

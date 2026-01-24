@@ -5,6 +5,7 @@ import java.awt.event.InputEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
@@ -36,6 +37,9 @@ public abstract class BaseBot {
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
     protected abstract Map<String, Point> getButtonMap();
     private static final User32 USER32 = User32.INSTANCE;
+    private static final DateTimeFormatter TIME_FMT =
+            DateTimeFormatter.ofPattern("HH:mm");
+
 
     // --- Конструкторы ---
     public BaseBot() throws AWTException {
@@ -60,7 +64,7 @@ public abstract class BaseBot {
 
     // Ожидание времени старта. Отсчитывает большие промежутки времени, без обновляемого вывода в консоль
     protected void waitUntilStartTime(LocalTime startTime) throws InterruptedException {
-        System.out.println("\nБот запустится в " + startTime);
+        System.out.println("\nБот запустится в " + startTime.format(TIME_FMT));
         while (LocalTime.now().isBefore(startTime)) {
             Thread.sleep(1000); // Не менять число на переменную, это эталон секунды в счётчике!
         }

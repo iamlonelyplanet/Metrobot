@@ -6,6 +6,7 @@ import com.sun.jna.platform.win32.WinUser;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -22,9 +23,17 @@ public class Utilities {
     public record ModeSelection(int mode, boolean usePet) {
     }
 
-    // Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию
+    /** Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию. С версии 1.2.6 добавлен "тайный" режим
+    "Старт рейда", доступен при нажатии на клавишу 6 (на клавиатуре). Принцип: если знаешь - пользуйся, если не знаешь -
+    это тебе не надо.
+    */
     public static int askMode() {
-        String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели", "Крысы", "Старт рейда"};
+        String[] options = {
+                "Клановые войны",
+                "Рейд",
+                "Арена",
+                "Туннели",
+                "Крысы"};
 
         JComboBox<String> modeCombo = new JComboBox<>(options);
         modeCombo.setSelectedIndex(2); // по умолчанию Арена
@@ -32,6 +41,27 @@ public class Utilities {
         JCheckBox petCheck = new JCheckBox("С питомцем");
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
+        final int SECRET_RAID_START_MODE = 6;  // человеческий номер для скрытого, тайного режима "Запуск рейда"
+        final int[] forcedMode = { -1 };
+
+        InputMap inputMap = panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = panel.getActionMap();
+
+        inputMap.put(KeyStroke.getKeyStroke('6'), "secretRaidStart");
+
+        actionMap.put("secretRaidStart", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                forcedMode[0] = SECRET_RAID_START_MODE;
+                usePet = false;
+
+                Window window = SwingUtilities.getWindowAncestor(panel);
+                if (window != null) {
+                    window.dispose(); // закрываем диалог
+                }
+            }
+        });
+
         panel.add(new JLabel("Выбери режим:"));
         panel.add(modeCombo);
         panel.add(petCheck);
@@ -75,13 +105,16 @@ public class Utilities {
                 JOptionPane.INFORMATION_MESSAGE
         );
 
+        if (forcedMode[0] > 0) {
+            return forcedMode[0]; // скрытый режим, доступен при нажатии на клавишу 6
+        }
+
         if (result == JOptionPane.OK_OPTION) {
             int idx = modeCombo.getSelectedIndex();
-            // Флажок учитывается только для Арены/Туннелей/Крыс
             usePet = (idx == 2 || idx == 3 || idx == 4) && petCheck.isSelected();
-            return idx + 1; // 1–5, в человеческом режиме
+            return idx + 1; // 1–5
         } else {
-            // Esc/Cancel -> выход из программы (-1), подхватывается null.
+            // Esc/Cancel - выход из программы (-1), подхватывается null.
             usePet = false;
             return -1;
         }
@@ -107,7 +140,9 @@ public class Utilities {
         }
     }
 
-    // GUI-запрос времени старта, при помощи окна-спиннера с дефолтным значением (при наличии). Enter = оставить дефолт.
+    /** GUI-запрос времени старта, при помощи окна-спиннера с дефолтным значением (при наличии).
+     * Enter = оставить дефолт.
+     */
     public static LocalTime askStartTime(String botName, LocalTime defaultTime) {
         SpinnerDateModel model = new SpinnerDateModel(); // Оставить, несмотря на подчёркивания IDEA. Изучить.
         JSpinner spinner = new JSpinner(model);
@@ -251,7 +286,7 @@ public class Utilities {
         return selected;
     }
 
-    /* Ищем в Windows все окна с заголовком игры: "Игроклуб" для соцсети МойМир, "2033" для ВКонтакте. Затем
+    /** Ищем в Windows все окна с заголовком игры: "Игроклуб" (для соцсети МойМир), "2033" (для ВКонтакте). Затем
     сортируем список: сначала верх - слева направо, затем низ - слева направо.
     */
     public static List<HWND> findGameWindows() {
