@@ -11,15 +11,16 @@ public class BotFactory {
                 ClanBot clanBot = new ClanBot(
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
-                        cfg.getBotName()
-                );
+                        cfg.getBotName(),
+                        cfg.isCloseAfterFinish());
                 clanBot.start();
             }
             case 2 -> { // Рейд, не мёржить с case 1
                 ClanBot clanBot = new ClanBot(
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
-                        cfg.getBotName()
+                        cfg.getBotName(),
+                        cfg.isCloseAfterFinish()
                 );
                 clanBot.start();
             }
@@ -28,7 +29,8 @@ public class BotFactory {
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
                         cfg.getBotName(),
-                        cfg.isUsePet()
+                        cfg.isUsePet(),
+                        cfg.isCloseAfterFinish()
                 );
                 arenaBot.start();
             }
@@ -37,7 +39,8 @@ public class BotFactory {
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
                         cfg.getBotName(),
-                        cfg.isUsePet()
+                        cfg.isUsePet(),
+                        cfg.isCloseAfterFinish()
                 );
                 tunnelBot.start();
             }
@@ -46,7 +49,8 @@ public class BotFactory {
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
                         cfg.getBotName(),
-                        cfg.isUsePet()
+                        cfg.isUsePet(),
+                        cfg.isCloseAfterFinish()
                 );
                 ratBot.start();
             }
@@ -55,7 +59,8 @@ public class BotFactory {
                 RaidStartBot RaidStartBot = new RaidStartBot(
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
-                        cfg.getBotName()
+                        cfg.getBotName(),
+                        cfg.isCloseAfterFinish()
                 );
                 RaidStartBot.start();
             }

@@ -27,7 +27,8 @@ public class ClanBot extends BaseBot {
 
     public ClanBot(List<HWND> windows,
                    LocalTime timeHHmm,
-                   String botName) throws AWTException {
+                   String botName,
+                   boolean closeAfterFinish) throws AWTException {
 
         super(windows);
 
@@ -35,6 +36,7 @@ public class ClanBot extends BaseBot {
             this.startTime = timeHHmm;
             this.botName = botName;
             this.windows = windows;
+            this.closeAfterFinish = closeAfterFinish;
         }
     }
 

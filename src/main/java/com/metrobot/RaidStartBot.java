@@ -19,7 +19,8 @@ public class RaidStartBot extends BaseBot {
 
     public RaidStartBot(List<HWND> windows,
                         LocalTime timeHHmm,
-                        String botName) throws AWTException {
+                        String botName,
+                        boolean isCloseAfterFinish) throws AWTException {
 
         super(List.of(windows.get(0))); // запустить Рейд может только первое, главное окно. Так надо по логике игры.
 
@@ -27,6 +28,7 @@ public class RaidStartBot extends BaseBot {
             this.startTime = timeHHmm;
             this.botName = botName;
             this.windows = windows;
+            this.closeAfterFinish = isCloseAfterFinish;
         }
     }
     private final List<HWND> windows;
@@ -58,7 +60,7 @@ public class RaidStartBot extends BaseBot {
             Thread.sleep(PAUSE_LONG_MS);
 
             // Стартуем режим "Рейд" с теми окнами, которые передались в RaidStartBot
-            ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд");
+            ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд", closeAfterFinish);
             raid.start();
 
 

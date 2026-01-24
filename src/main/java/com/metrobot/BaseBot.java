@@ -29,6 +29,7 @@ public abstract class BaseBot {
     protected List<HWND> activeWindows = new ArrayList<>();
     protected boolean isSilentMode = true;
     protected boolean usePet = false;
+    protected boolean closeAfterFinish;
     protected String botName;
     protected LocalTime startTime;
     protected Counter unifiedCounter;
@@ -112,11 +113,14 @@ public abstract class BaseBot {
 
     // Конец любого игрового режима, это не bot.stop()
     protected void endGame() {
-        playFinalSound();
-        System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d",
+//        playFinalSound();
+        System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
                 botName,
                 LocalTime.now().withNano(0),
                 unifiedCounter.getCount());
+        if (closeAfterFinish) {
+            System.out.println("Я типа закрыл окна");
+        }
     }
 
     // Бои с туннельными монстрами

@@ -16,6 +16,7 @@ public class BotStartWizard {
 
             int mode = selection.mode();
             boolean usePet = selection.usePet();
+            boolean closeAfterFinish = selection.closeAfterFinish();
 
             // 2. Окна
             Utilities.restoreAllGameWindows();
@@ -35,7 +36,8 @@ public class BotStartWizard {
                     botName,
                     startTime,
                     active,
-                    usePet
+                    usePet,
+                    closeAfterFinish
             );
 
             ConfigManager.saveConfig(cfg);
@@ -46,8 +48,8 @@ public class BotStartWizard {
                             botName,
                             startTime,
                             active,
-                            usePet
-                    )
+                            usePet,
+                            closeAfterFinish)
             );
 
         } catch (Exception e) {

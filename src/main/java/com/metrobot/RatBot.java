@@ -17,7 +17,8 @@ public class RatBot extends BaseBot {
     public RatBot(List<HWND> windows,
                   LocalTime timeHHmm,
                   String botName,
-                  boolean usePet) throws AWTException {
+                  boolean usePet,
+                  boolean closeAfterFinish) throws AWTException {
 
         super(windows);
 
@@ -25,6 +26,7 @@ public class RatBot extends BaseBot {
             this.startTime = timeHHmm;
             this.botName = botName;
             this.usePet = usePet;
+            this.closeAfterFinish = closeAfterFinish;
         }
     }
 

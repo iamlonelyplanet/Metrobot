@@ -19,14 +19,25 @@ import java.util.List;
 public class Utilities {
     public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
     public static boolean usePet = false;
+    public static boolean exitAfter;
     private static final User32 USER32 = User32.INSTANCE;
-    public record ModeSelection(int mode, boolean usePet) {
+    public record ModeSelection(int mode, boolean usePet, boolean closeAfterFinish) {
     }
 
     /** Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию. С версии 1.2.6 добавлен "тайный" режим
     "Старт рейда", доступен при нажатии на клавишу 6 (на клавиатуре). Принцип: если знаешь - пользуйся, если не знаешь -
     это тебе не надо.
     */
+    public static ModeSelection askModeSelection() {
+        int mode = askMode();      // старый метод
+        if (mode <= 0) {
+            return null;
+        }
+        boolean pet = usePet;      // старое статическое поле
+        boolean closeAfterFinish = exitAfter;
+        return new ModeSelection(mode, pet, closeAfterFinish);
+    }
+
     public static int askMode() {
         String[] options = {
                 "Клановые войны",
@@ -39,6 +50,7 @@ public class Utilities {
         modeCombo.setSelectedIndex(2); // по умолчанию Арена
 
         JCheckBox petCheck = new JCheckBox("С питомцем");
+        JCheckBox exitAfterCheck = new JCheckBox("Закрыть окна после завершения");
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
         final int SECRET_RAID_START_MODE = 6;  // человеческий номер для скрытого, тайного режима "Запуск рейда"
@@ -46,7 +58,6 @@ public class Utilities {
 
         InputMap inputMap = panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = panel.getActionMap();
-
         inputMap.put(KeyStroke.getKeyStroke('6'), "secretRaidStart");
 
         actionMap.put("secretRaidStart", new AbstractAction() {
@@ -65,31 +76,47 @@ public class Utilities {
         panel.add(new JLabel("Выбери режим:"));
         panel.add(modeCombo);
         panel.add(petCheck);
+        panel.add(exitAfterCheck);
 
         // Локальная функция обновления чекбокса по выбранному режиму
         Runnable applyState = () -> {
             int idx = modeCombo.getSelectedIndex();
             switch (idx) {
                 case 0: // Клановые войны
+                    petCheck.setSelected(false);
+                    petCheck.setEnabled(false);
+                    exitAfterCheck.setSelected(true);
+                    exitAfterCheck.setEnabled(true);
+                    break;
                 case 1: // Рейд
                     petCheck.setSelected(false);
                     petCheck.setEnabled(false);
+                    exitAfterCheck.setSelected(false);
+                    exitAfterCheck.setEnabled(true);
                     break;
                 case 2: // Арена
                     petCheck.setSelected(false);
                     petCheck.setEnabled(true);
+                    exitAfterCheck.setSelected(true);
+                    exitAfterCheck.setEnabled(true);
                     break;
                 case 3: // Туннели
                     petCheck.setSelected(true);
                     petCheck.setEnabled(true);
+                    exitAfterCheck.setSelected(false);
+                    exitAfterCheck.setEnabled(true);
                     break;
                 case 4: // Крысы
                     petCheck.setSelected(true);
                     petCheck.setEnabled(true);
+                    exitAfterCheck.setSelected(true);
+                    exitAfterCheck.setEnabled(true);
                     break;
                     case 5: // Старт рейда
                     petCheck.setSelected(false);
                     petCheck.setEnabled(false);
+                    exitAfterCheck.setSelected(false);
+                    exitAfterCheck.setEnabled(false);
                     break;
             }
         };
@@ -112,23 +139,13 @@ public class Utilities {
         if (result == JOptionPane.OK_OPTION) {
             int idx = modeCombo.getSelectedIndex();
             usePet = (idx == 2 || idx == 3 || idx == 4) && petCheck.isSelected();
+            exitAfter = exitAfterCheck.isSelected();
             return idx + 1; // 1–5
         } else {
             // Esc/Cancel - выход из программы (-1), подхватывается null.
-            usePet = false;
             return -1;
         }
     }
-
-    public static ModeSelection askModeSelection() {
-        int mode = askMode();      // старый метод
-        if (mode <= 0) {
-            return null;
-        }
-        boolean pet = usePet;      // старое статическое поле
-        return new ModeSelection(mode, pet);
-    }
-
 
     // Парсим время. TODO: разделители помимо двоеточия: точка? пробел?
     public static LocalTime parseTime(String value) {
