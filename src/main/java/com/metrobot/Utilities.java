@@ -85,7 +85,7 @@ public class Utilities {
                 case 0: // Клановые войны
                     petCheck.setSelected(false);
                     petCheck.setEnabled(false);
-                    exitAfterCheck.setSelected(true);
+                    exitAfterCheck.setSelected(false);
                     exitAfterCheck.setEnabled(true);
                     break;
                 case 1: // Рейд
@@ -97,7 +97,7 @@ public class Utilities {
                 case 2: // Арена
                     petCheck.setSelected(false);
                     petCheck.setEnabled(true);
-                    exitAfterCheck.setSelected(true);
+                    exitAfterCheck.setSelected(false);
                     exitAfterCheck.setEnabled(true);
                     break;
                 case 3: // Туннели
@@ -109,14 +109,14 @@ public class Utilities {
                 case 4: // Крысы
                     petCheck.setSelected(true);
                     petCheck.setEnabled(true);
-                    exitAfterCheck.setSelected(true);
+                    exitAfterCheck.setSelected(false);
                     exitAfterCheck.setEnabled(true);
                     break;
                     case 5: // Старт рейда
                     petCheck.setSelected(false);
                     petCheck.setEnabled(false);
                     exitAfterCheck.setSelected(false);
-                    exitAfterCheck.setEnabled(false);
+                    exitAfterCheck.setEnabled(true);
                     break;
             }
         };

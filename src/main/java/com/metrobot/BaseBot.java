@@ -119,7 +119,8 @@ public abstract class BaseBot {
                 LocalTime.now().withNano(0),
                 unifiedCounter.getCount());
         if (closeAfterFinish) {
-            System.out.println("Я типа закрыл окна");
+            System.out.println("\nЗакрываю игровые окна...");
+            closeGameWindows();
         }
     }
 
@@ -156,6 +157,39 @@ public abstract class BaseBot {
             }
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
+        }
+    }
+
+    protected void intoTunnel(String buttonName) throws InterruptedException {
+        clickButton("В туннель");
+        Thread.sleep(Buttons.PAUSE_SHORT_TUNNELS_MS);
+        clickButton(buttonName);
+    }
+
+    protected void intoTunnel() throws InterruptedException {
+        clickButton("В туннель");
+        Thread.sleep(Buttons.PAUSE_SHORT_TUNNELS_MS);
+    }
+
+    protected void enterStation(String document, int PAUSE) throws InterruptedException {
+        Thread.sleep(PAUSE);
+        clickButton(document);
+
+        if (Objects.equals(document, "Войти с пропуском")) {
+            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
+        }
+    }
+
+    protected void closeGameWindows() {
+        for (HWND hwnd : activeWindows) {
+            if (hwnd == null) continue;
+            WindowCloser.closeGameWindow(hwnd);
+
+            try {
+                Thread.sleep(PAUSE_MICRO_MS); // небольшая пауза между окнами
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 

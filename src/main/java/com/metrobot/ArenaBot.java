@@ -55,15 +55,14 @@ public class ArenaBot extends BaseBot {
                 clickButton("Клан - Выход");
                 clickButton("Арена");
                 clickButton("Атаковать");
-                if (usePet) {
+                if (usePet)
                     clickButton("Питомец");
-                }
                 clickButton("Пропустить");
                 clickButton("Закрыть — Победа");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickButton("Закрыть — Поражение");
-
                 minimizeActiveWindows();
+
                 unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);
                 System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
