@@ -95,8 +95,7 @@ public class ClanBot extends BaseBot {
     }
 
     public void fightInClan(BotType type) throws InterruptedException {
-        System.out.println("\n=== Бой " + (unifiedCounter.getCount() + 1) + " из " + totalBattles + " ===");
-        showActiveWindows();
+        printBattleNumber((unifiedCounter.getCount() + 1), totalBattles);
 
         if (type == BotType.CW) {
             clickButton("Клан");

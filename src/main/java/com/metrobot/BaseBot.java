@@ -154,6 +154,11 @@ public abstract class BaseBot {
         }
     }
 
+    protected void printBattleNumber(int battle, int total) {
+        System.out.println("\n=== Бой " + battle + " из " + total + " ===");
+        showActiveWindows();
+    }
+
     // Единый метод кликов по всем выбранным окнам. Центр всей проги.
     protected void clickButton(String buttonName) throws InterruptedException {
         Map<String, Point> buttonMap = getButtonMap();
@@ -169,6 +174,7 @@ public abstract class BaseBot {
             System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
             return;
         }
+
         for (int i = 0; i < activeWindows.size(); i++) {
             HWND hWnd = activeWindows.get(i);
             if (hWnd == null) continue;
@@ -188,6 +194,7 @@ public abstract class BaseBot {
             clickAt(x, y);
             Thread.sleep(PAUSE_MICRO_MS);
         }
+
         Thread.sleep(PAUSE_SHORT_MS);
         if (LONG_PAUSE_BUTTONS.contains(buttonName)) {
             Thread.sleep(PAUSE_LONG_MS);

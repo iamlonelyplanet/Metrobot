@@ -42,21 +42,16 @@ public class RatBot extends BaseBot {
 
             // Бои
             for (int battle = 1; battle <= MAX_ENERGY; battle++) {
-                System.out.println("\n=== Бой " + battle + " из " + MAX_ENERGY + " ===");
-                if (isSilentMode) {
-                    showActiveWindows();
-                }
+                printBattleNumber(battle, MAX_ENERGY);
 
                 clickButton("Начстанции");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickButton("Крыса");
-                if (isSilentMode) {
-                    minimizeActiveWindows();
-                }
+
+                minimizeActiveWindows();
                 countdown(60); // стандарт: 60, ст + штаны: 42, ст + комплект: 30, VIP: 30, VIP + комплект: 20
-                if (isSilentMode) {
-                    showActiveWindows();
-                }
+                showActiveWindows();
+
                 if (usePet) {
                     clickButton("Питомец");
                 }
