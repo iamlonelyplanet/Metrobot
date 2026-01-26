@@ -21,9 +21,7 @@ import static com.metrobot.Buttons.*;
 /**
  * Родительский класс для четырёх режимов. Здесь находится набор унифицированных методов.
  */
-
 public abstract class BaseBot {
-
     // === Общее состояние для всех ботов ===
     protected Robot robot;
     protected List<HWND> activeWindows = new ArrayList<>();
@@ -33,14 +31,12 @@ public abstract class BaseBot {
     protected String botName;
     protected LocalTime startTime;
     protected Counter unifiedCounter;
-    protected enum MonsterKind {SPIDER, LIZARD}
     public enum BotType {RAID, CW}
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
     protected abstract Map<String, Point> getButtonMap();
     private static final User32 USER32 = User32.INSTANCE;
     private static final DateTimeFormatter TIME_FMT =
             DateTimeFormatter.ofPattern("HH:mm");
-
 
     // --- Конструкторы ---
     public BaseBot() throws AWTException {
@@ -86,8 +82,9 @@ public abstract class BaseBot {
         System.out.println("\nРазвернул окна");
     }
 
-    // Сворачиваем активные окна, если включён silentMode. После сворачивания до следующего события проходит почти
-    // 5 минут, в это время пользователь продолжает заниматься своей работой.
+    /** Сворачиваем активные окна, если включён silentMode. После сворачивания до следующего события проходит почти
+     5 минут, в это время пользователь продолжает заниматься своей работой.
+     */
     protected void minimizeActiveWindows() {
         if (!isSilentMode) return;
         for (HWND hWnd : activeWindows) {
@@ -102,7 +99,7 @@ public abstract class BaseBot {
         System.out.println("Свернул окна\n");
     }
 
-    // Старт любого игрового режима
+    // Старт игрового режима
     protected void startGame() throws InterruptedException {
         waitUntilStartTime(startTime);
         System.out.printf("\nСтарт режима %s \n", botName);
@@ -124,23 +121,7 @@ public abstract class BaseBot {
         }
     }
 
-    // Проигрываем звук по окончанию режима игры. Бесполезная свистоперделка ради учёбы и пасхалка для олдов.
-    protected static void playFinalSound() {
-        try (InputStream inputStream = BaseBot.class.getResourceAsStream("/sound.wav")) {
-            if (inputStream == null) {
-                System.err.println("Файл звука не найден: sound.wav");
-                return;
-            }
-            try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(inputStream)) {
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioIn);
-                clip.start();
-            }
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-        }
-    }
-
+    // Закрытие активных окон
     protected void closeGameWindows() {
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;
@@ -154,6 +135,7 @@ public abstract class BaseBot {
         }
     }
 
+    // Вывод в консоль номера боя
     protected void printBattleNumber(int battle, int total) {
         System.out.println("\n=== Бой " + battle + " из " + total + " ===");
         showActiveWindows();
@@ -200,7 +182,6 @@ public abstract class BaseBot {
             Thread.sleep(PAUSE_LONG_MS);
         }
     }
-
     // Обработка исключений. Учебная штука.
     protected void handleExceptions(Exception e) {
         if (e instanceof InterruptedException) {
@@ -210,12 +191,28 @@ public abstract class BaseBot {
             e.printStackTrace();
         }
     }
-
     // Клик. Собственно, ядро всей программы. Интерфейс? Изучить, подумать. Дополнить паузами, сведя их в этот метод.
     protected void clickAt(int x, int y) {
         if (robot == null) return;
         robot.mouseMove(x, y);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+    }
+
+    // Проигрываем звук по окончанию режима игры. Бесполезная свистоперделка ради учёбы и пасхалка для олдов.
+    protected static void playFinalSound() {
+        try (InputStream inputStream = BaseBot.class.getResourceAsStream("/sound.wav")) {
+            if (inputStream == null) {
+                System.err.println("Файл звука не найден: sound.wav");
+                return;
+            }
+            try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(inputStream)) {
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioIn);
+                clip.start();
+            }
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 }

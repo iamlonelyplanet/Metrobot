@@ -46,13 +46,13 @@ public class ClanBot extends BaseBot {
     protected final List<HWND> windows;
     private int totalBattles;
     private int lastSecondsCorrection;
-    private int hoursToFinish;
     private boolean isGameGoingOn;
     private LocalTime endTime;
 
     public void start() {
         try {
             startGame();
+            int hoursToFinish;
             if (Objects.equals(botName, "Рейд")) {
                 hoursToFinish = 1;
                 totalBattles = MAX_BATTLES_RAID;

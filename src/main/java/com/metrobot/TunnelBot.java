@@ -42,22 +42,27 @@ public class TunnelBot extends BaseBot {
     protected Map<String, Point> getButtonMap() {
         return TUNNEL_BUTTONS;
     }
+    private enum MonsterKind {SPIDER, LIZARD}
 
     public void start() {
         try {
             startGame();
+
             Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
+            MonsterKind spider = MonsterKind.SPIDER;
+            MonsterKind lizard = MonsterKind.LIZARD;
 
             showActiveWindows();
             // === Туннели с пауками ===
             // 10 пауков в туннеле Парк Культуры - Кропоткинская
             intoTunnel();
+
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 clickButton("Карта ПК-КРО");
-                fightMonsters(MonsterKind.SPIDER, usePet);
+                fightMonsters(spider, usePet);
                 Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
                 clickButton("Карта КРО-ПК");
-                fightMonsters(MonsterKind.SPIDER, usePet);
+                fightMonsters(spider, usePet);
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
@@ -69,9 +74,9 @@ public class TunnelBot extends BaseBot {
 
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 clickButton("Карта ПКг-КИЕ");
-                fightMonsters(MonsterKind.SPIDER, usePet);
+                fightMonsters(spider, usePet);
                 clickButton("Карта КИЕ-ПКг");
-                fightMonsters(MonsterKind.SPIDER, usePet);
+                fightMonsters(spider, usePet);
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
@@ -82,6 +87,7 @@ public class TunnelBot extends BaseBot {
 
             // Пока надо для таймера, потом можно удалить
             Instant endSpiderTime = Instant.now();
+
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
             long secondsSpider = spidersDuration.getSeconds();
             System.out.printf("На пауков затрачено %d мин %d сек\n", (secondsSpider / 60), (secondsSpider % 60));
@@ -94,36 +100,36 @@ public class TunnelBot extends BaseBot {
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 // 4 ящерицы в тоннеле Парк Культуры - Проспект Вернадского
                 intoTunnel("Карта-ПК-ФРУ");
-                fightMonsters(MonsterKind.LIZARD, usePet);
+                fightMonsters(lizard, usePet);
                 enterStation("Войти с пропуском", PAUSE_SHORT_TUNNELS_MS);
 
                 intoTunnel("Карта-КОМ");
-                fightMonsters(MonsterKind.LIZARD, usePet);
+                fightMonsters(lizard, usePet);
                 Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
                 intoTunnel("Карта-УНИ");
-                fightMonsters(MonsterKind.LIZARD, usePet);
+                fightMonsters(lizard, usePet);
                 enterStation("Войти с пропуском", PAUSE_SHORT_TUNNELS_MS);
 
                 intoTunnel("Карта-ПВ");
-                fightMonsters(MonsterKind.LIZARD, usePet);
+                fightMonsters(lizard, usePet);
                 Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
                 System.out.printf("Завершено пробегов до Проспекта Вернадского: %d\n\n", (way + 1));
 
                 // 4 ящерицы в тоннеле Проспект Вернадского - Парк Культуры
                 intoTunnel("Карта-УНИ");
-                fightMonsters(MonsterKind.LIZARD, usePet);
+                fightMonsters(lizard, usePet);
 
                 intoTunnel("Карта-КОМ");
-                fightMonsters(MonsterKind.LIZARD, usePet);
+                fightMonsters(lizard, usePet);
                 enterStation("Войти с пропуском", PAUSE_SHORT_TUNNELS_MS);
 
                 intoTunnel("Карта-КОМ-ФРУ");
-                fightMonsters(MonsterKind.LIZARD, usePet);
+                fightMonsters(lizard, usePet);
 
                 intoTunnel("Карта-ФРУ-ПК");
-                fightMonsters(MonsterKind.LIZARD, usePet);
+                fightMonsters(lizard, usePet);
                 enterStation("Войти", PAUSE_SHORT_TUNNELS_MS);
 
                 System.out.printf("\nЗавершено пробегов до Парка Культуры: %d\n\n", (way + 1));
