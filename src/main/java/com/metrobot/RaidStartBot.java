@@ -63,7 +63,6 @@ public class RaidStartBot extends BaseBot {
             ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд", closeAfterFinish);
             raid.start();
 
-
         } catch (Exception e) {
             handleExceptions(e);
         }

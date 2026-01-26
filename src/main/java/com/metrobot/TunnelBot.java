@@ -4,6 +4,7 @@ import java.awt.*;
 import java.time.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.sun.jna.platform.win32.WinDef.HWND;
 
@@ -140,6 +141,45 @@ public class TunnelBot extends BaseBot {
 
         } catch (Exception e) {
             handleExceptions(e);
+        }
+    }
+
+    // Бои с туннельными монстрами
+    private void fightMonsters(MonsterKind kind, boolean usePet) throws InterruptedException {
+        Thread.sleep(PAUSE_TUNNEL_MS);
+        if (usePet)
+            clickButton("Питомец");
+        clickButton("Пропустить");
+        clickButton("Закрыть");
+        unifiedCounter.plusOne();
+        if (kind == MonsterKind.SPIDER) {
+            System.out.printf("Убито пауков: %d%n%n", unifiedCounter.getCount());
+            Thread.sleep(PAUSE_TUNNEL_MS);
+            clickButton("В туннель");
+            Thread.sleep(PAUSE_SHORT_MS);
+        } else {
+            System.out.printf("Убито ящеров: %d%n%n", unifiedCounter.getCount());
+            Thread.sleep(PAUSE_TUNNEL_MS);
+        }
+    }
+
+    private void intoTunnel(String buttonName) throws InterruptedException {
+        clickButton("В туннель");
+        Thread.sleep(Buttons.PAUSE_SHORT_TUNNELS_MS);
+        clickButton(buttonName);
+    }
+
+    private void intoTunnel() throws InterruptedException {
+        clickButton("В туннель");
+        Thread.sleep(Buttons.PAUSE_SHORT_TUNNELS_MS);
+    }
+
+    private void enterStation(String document, int PAUSE) throws InterruptedException {
+        Thread.sleep(PAUSE);
+        clickButton(document);
+
+        if (Objects.equals(document, "Войти с пропуском")) {
+            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
         }
     }
 }

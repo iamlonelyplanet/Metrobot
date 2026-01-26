@@ -24,7 +24,6 @@ import static com.metrobot.Buttons.*;
  */
 
 public class ClanBot extends BaseBot {
-
     public ClanBot(List<HWND> windows,
                    LocalTime timeHHmm,
                    String botName,
@@ -58,15 +57,14 @@ public class ClanBot extends BaseBot {
                 hoursToFinish = 1;
                 totalBattles = MAX_BATTLES_RAID;
                 lastSecondsCorrection = 4;
-            }
-
-            if (Objects.equals(botName, "КВ")) {
+            } else {
                 hoursToFinish = 2;
                 totalBattles = MAX_BATTLES_CW;
                 lastSecondsCorrection = 4;
             }
+
             endTime = startTime.plusHours(hoursToFinish);
-            endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS); // проверить
+            endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS);
             isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
 
             if (Objects.equals(botName, "Рейд")) {
@@ -90,9 +88,6 @@ public class ClanBot extends BaseBot {
             }
 
             endGame();
-//            for (HWND hwnd : windows) {
-//                WindowCloser.closeGameWindow(hwnd);
-//            }
 
         } catch (Exception e) {
             handleExceptions(e);

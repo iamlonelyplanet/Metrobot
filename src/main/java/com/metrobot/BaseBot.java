@@ -124,25 +124,6 @@ public abstract class BaseBot {
         }
     }
 
-    // Бои с туннельными монстрами
-    protected void fightMonsters(MonsterKind kind, boolean usePet) throws InterruptedException {
-        Thread.sleep(PAUSE_TUNNEL_MS);
-        if (usePet)
-            clickButton("Питомец");
-        clickButton("Пропустить");
-        clickButton("Закрыть");
-        unifiedCounter.plusOne();
-        if (kind == MonsterKind.SPIDER) {
-            System.out.printf("Убито пауков: %d%n%n", unifiedCounter.getCount());
-            Thread.sleep(PAUSE_TUNNEL_MS);
-            clickButton("В туннель");
-            Thread.sleep(PAUSE_SHORT_MS);
-        } else {
-            System.out.printf("Убито ящеров: %d%n%n", unifiedCounter.getCount());
-            Thread.sleep(PAUSE_TUNNEL_MS);
-        }
-    }
-
     // Проигрываем звук по окончанию режима игры. Бесполезная свистоперделка ради учёбы и пасхалка для олдов.
     protected static void playFinalSound() {
         try (InputStream inputStream = BaseBot.class.getResourceAsStream("/sound.wav")) {
@@ -157,26 +138,6 @@ public abstract class BaseBot {
             }
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
-        }
-    }
-
-    protected void intoTunnel(String buttonName) throws InterruptedException {
-        clickButton("В туннель");
-        Thread.sleep(Buttons.PAUSE_SHORT_TUNNELS_MS);
-        clickButton(buttonName);
-    }
-
-    protected void intoTunnel() throws InterruptedException {
-        clickButton("В туннель");
-        Thread.sleep(Buttons.PAUSE_SHORT_TUNNELS_MS);
-    }
-
-    protected void enterStation(String document, int PAUSE) throws InterruptedException {
-        Thread.sleep(PAUSE);
-        clickButton(document);
-
-        if (Objects.equals(document, "Войти с пропуском")) {
-            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
         }
     }
 
