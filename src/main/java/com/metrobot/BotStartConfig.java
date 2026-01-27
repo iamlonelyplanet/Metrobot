@@ -12,19 +12,21 @@ public class BotStartConfig {
 
     private final int mode;
     private final String botName;
+    private final String boss;
     private final LocalTime startTime;
     private final List<HWND> activeWindows;
     private final boolean usePet;
     private final boolean closeAfterFinish;
 
     public BotStartConfig(int mode,
-                          String botName,
+                          String botName, String bossName,
                           LocalTime startTime,
                           List<HWND> activeWindows,
                           boolean usePet,
                           boolean closeAfterFinish) {
         this.mode = mode;
         this.botName = botName;
+        this.boss = bossName;
         this.startTime = startTime;
         this.activeWindows = activeWindows;
         this.usePet = usePet;
@@ -37,6 +39,10 @@ public class BotStartConfig {
 
     public String getBotName() {
         return botName;
+    }
+
+    public String getBoss() {
+        return boss;
     }
 
     public LocalTime getStartTime() {

@@ -34,7 +34,7 @@ public class Buttons {
     public static int windowWidth = 1033;
     public static int windowHeight = 768;
     public static int xMoveRight = (windowWidth - 764 - 19) / 2; // Расчёт "нуля" (верхней левой точки) рабочего поля
-    public static int yMoveDown = 97; // Константа для "Игромира" при WQHD, для остальных собирать статистику
+    public static int yMoveDown = 97; // Константа для "Игроклуба" при WQHD, для остальных собирать статистику
 
     // === Координаты кнопок относительно верхнего левого угла "рабочего поля" (не окна!) ===
     // --- Арена ---
@@ -96,7 +96,16 @@ public class Buttons {
         put("Рейды", new Point(80, 413));
         put("Обновить", new Point(520, 40));
         put("Атаковать босса", new Point(425, 323));
-        put("Вичуха", new Point(533, 450));
+        put("Карта-левее", new Point(115, 270));
+        put("Карта-ниже", new Point(420, 510));
         put("В рейд", new Point(170, 535));
+        put("Зверь", new Point(435, 100)); // доступен с экрана 1
+        put("Упырь", new Point(195, 120)); // доступен с экрана 1
+        put("Вичуха", new Point(533, 450)); // доступен с экрана 1
+        put("Стигмат", new Point(190, 435)); // доступен с экрана 2
+        put("Горгон", new Point(440, 425)); // доступен с экрана 2
+        put("Биомасса", new Point(360, 330)); // доступен с экрана 1
+        put("Слизень", new Point(420, 460)); // доступен с экрана 1
+        put("Тварь", new Point(185, 60)); // доступен с экрана 2
     }};
 }

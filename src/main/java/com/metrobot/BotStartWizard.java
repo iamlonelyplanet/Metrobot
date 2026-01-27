@@ -26,6 +26,8 @@ public class BotStartWizard {
 
             // 3. Время старта
             String botName = resolveBotName(mode);
+            String boss = selection.bossName();
+
             LocalTime defaultTime = resolveDefaultTime(mode, config);
 
             LocalTime startTime = Utilities.askStartTime(botName, defaultTime);
@@ -34,6 +36,7 @@ public class BotStartWizard {
             BotStartConfig cfg = new BotStartConfig(
                     mode,
                     botName,
+                    boss,
                     startTime,
                     active,
                     usePet,
@@ -46,6 +49,7 @@ public class BotStartWizard {
                     new BotStartConfig(
                             mode,
                             botName,
+                            boss,
                             startTime,
                             active,
                             usePet,

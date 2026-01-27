@@ -60,6 +60,7 @@ public class BotFactory {
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
                         cfg.getBotName(),
+                        cfg.getBoss(),
                         cfg.isCloseAfterFinish()
                 );
                 RaidStartBot.start();

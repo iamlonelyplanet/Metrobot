@@ -21,13 +21,19 @@ public class Utilities {
     public static boolean usePet = false;
     public static boolean exitAfter;
     private static final User32 USER32 = User32.INSTANCE;
-    public record ModeSelection(int mode, boolean usePet, boolean closeAfterFinish) {
+    private static String bossName;
+
+    public record ModeSelection(int mode,
+                                boolean usePet,
+                                boolean closeAfterFinish,
+                                String bossName) {
     }
 
-    /** Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию. С версии 1.2.6 добавлен "тайный" режим
-    "Старт рейда", доступен при нажатии на клавишу 6 (на клавиатуре). Принцип: если знаешь - пользуйся, если не знаешь -
-    это тебе не надо.
-    */
+    /**
+     * Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию. С версии 1.2.6 добавлен "тайный" режим
+     * "Старт рейда", доступен при нажатии на клавишу 6 (на клавиатуре). Принцип: если знаешь - пользуйся, если не знаешь -
+     * это тебе не надо.
+     */
     public static ModeSelection askModeSelection() {
         int mode = askMode();      // старый метод
         if (mode <= 0) {
@@ -35,7 +41,7 @@ public class Utilities {
         }
         boolean pet = usePet;      // старое статическое поле
         boolean closeAfterFinish = exitAfter;
-        return new ModeSelection(mode, pet, closeAfterFinish);
+        return new ModeSelection(mode, pet, closeAfterFinish, bossName);
     }
 
     public static int askMode() {
@@ -46,7 +52,22 @@ public class Utilities {
                 "Туннели",
                 "Крысы"};
 
+        String[] boss = {
+                "Зверь",
+                "Упырь",
+                "Вичуха",
+                "Стигмат",
+                "Горгон",
+                "Биомасса",
+                "Слизень",
+                "Тварь"
+        };
+
         JComboBox<String> modeCombo = new JComboBox<>(options);
+        JComboBox<String> bossCombo = new JComboBox<>(boss);
+        bossCombo.setSelectedIndex(0);
+        bossCombo.setEnabled(false); // по умолчанию скрыт
+
         modeCombo.setSelectedIndex(2); // по умолчанию Арена
 
         JCheckBox petCheck = new JCheckBox("С питомцем");
@@ -54,7 +75,7 @@ public class Utilities {
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
         final int SECRET_RAID_START_MODE = 6;  // человеческий номер для скрытого, тайного режима "Запуск рейда"
-        final int[] forcedMode = { -1 };
+        final int[] forcedMode = {-1};
 
         InputMap inputMap = panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = panel.getActionMap();
@@ -66,9 +87,12 @@ public class Utilities {
                 forcedMode[0] = SECRET_RAID_START_MODE;
                 usePet = false;
 
+                bossCombo.setEnabled(true);
+                bossCombo.setVisible(true);
+
                 Window window = SwingUtilities.getWindowAncestor(panel);
                 if (window != null) {
-                    window.dispose(); // закрываем диалог
+                    window.pack();  // обновить размер
                 }
             }
         });
@@ -77,6 +101,9 @@ public class Utilities {
         panel.add(modeCombo);
         panel.add(petCheck);
         panel.add(exitAfterCheck);
+        panel.add(new JLabel("Босс рейда:"));
+        panel.add(bossCombo);
+
 
         // Локальная функция обновления чекбокса по выбранному режиму
         Runnable applyState = () -> {
@@ -112,7 +139,7 @@ public class Utilities {
                     exitAfterCheck.setSelected(false);
                     exitAfterCheck.setEnabled(true);
                     break;
-                    case 5: // Старт рейда
+                case 5: // Старт рейда
                     petCheck.setSelected(false);
                     petCheck.setEnabled(false);
                     exitAfterCheck.setSelected(false);
@@ -133,6 +160,7 @@ public class Utilities {
         );
 
         if (forcedMode[0] > 0) {
+            bossName = (String) bossCombo.getSelectedItem();
             return forcedMode[0]; // скрытый режим, доступен при нажатии на клавишу 6
         }
 
@@ -140,6 +168,7 @@ public class Utilities {
             int idx = modeCombo.getSelectedIndex();
             usePet = (idx == 2 || idx == 3 || idx == 4) && petCheck.isSelected();
             exitAfter = exitAfterCheck.isSelected();
+
             return idx + 1; // 1–5
         } else {
             // Esc/Cancel - выход из программы (-1), подхватывается null.
@@ -157,7 +186,8 @@ public class Utilities {
         }
     }
 
-    /** GUI-запрос времени старта, при помощи окна-спиннера с дефолтным значением (при наличии).
+    /**
+     * GUI-запрос времени старта, при помощи окна-спиннера с дефолтным значением (при наличии).
      * Enter = оставить дефолт.
      */
     public static LocalTime askStartTime(String botName, LocalTime defaultTime) {
@@ -303,9 +333,10 @@ public class Utilities {
         return selected;
     }
 
-    /** Ищем в Windows все окна с заголовком игры: "Игроклуб" (для соцсети МойМир), "2033" (для ВКонтакте). Затем
-    сортируем список: сначала верх - слева направо, затем низ - слева направо.
-    */
+    /**
+     * Ищем в Windows все окна с заголовком игры: "Игроклуб" (для соцсети МойМир), "2033" (для ВКонтакте). Затем
+     * сортируем список: сначала верх - слева направо, затем низ - слева направо.
+     */
     public static List<HWND> findGameWindows() {
         List<HWND> found = new ArrayList<>();
 
