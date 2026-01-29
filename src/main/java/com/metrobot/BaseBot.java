@@ -12,6 +12,7 @@ import java.util.List;
 import javax.sound.sampled.*;
 
 import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.RECT;
 import com.sun.jna.platform.win32.WinUser;
@@ -31,9 +32,13 @@ public abstract class BaseBot {
     protected String botName;
     protected LocalTime startTime;
     protected Counter unifiedCounter;
+
     public enum BotType {RAID, CW}
+
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
+
     protected abstract Map<String, Point> getButtonMap();
+
     private static final User32 USER32 = User32.INSTANCE;
     private static final DateTimeFormatter TIME_FMT =
             DateTimeFormatter.ofPattern("HH:mm");
@@ -82,8 +87,9 @@ public abstract class BaseBot {
         System.out.println("\nРазвернул окна");
     }
 
-    /** Сворачиваем активные окна, если включён silentMode. После сворачивания до следующего события проходит почти
-     5 минут, в это время пользователь продолжает заниматься своей работой.
+    /**
+     * Сворачиваем активные окна, если включён silentMode. После сворачивания до следующего события проходит почти
+     * 5 минут, в это время пользователь продолжает заниматься своей работой.
      */
     protected void minimizeActiveWindows() {
         if (!isSilentMode) return;
@@ -109,15 +115,16 @@ public abstract class BaseBot {
     }
 
     // Конец любого игрового режима, это не bot.stop()
-    protected void endGame() {
+    protected void endGame() throws InterruptedException {
 //        playFinalSound();
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
                 botName,
                 LocalTime.now().withNano(0),
-                unifiedCounter.getCount());
+                unifiedCounter.getCount(),
+                activeWindows);
         if (closeAfterFinish) {
             System.out.println("\nЗакрываю игровые окна...");
-            closeGameWindows();
+            closeWindows(activeWindows);
         }
     }
 
@@ -125,7 +132,7 @@ public abstract class BaseBot {
     protected void closeGameWindows() {
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;
-            WindowCloser.closeGameWindow(hwnd);
+            WindowCloser.closeWindows(activeWindows);
 
             try {
                 Thread.sleep(PAUSE_MICRO_MS); // небольшая пауза между окнами
@@ -182,6 +189,36 @@ public abstract class BaseBot {
             Thread.sleep(PAUSE_LONG_MS);
         }
     }
+
+    protected void closeWindows(List<HWND> windows) throws InterruptedException {
+        if (windows == null || windows.isEmpty()) {
+            return;
+        }
+
+        for (HWND hwnd : windows) {
+            if (User32.INSTANCE.IsWindow(hwnd)) {
+                User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null);
+            }
+        }
+
+        Thread.sleep(300);
+        clickYesButton();
+    }
+
+    protected void clickYesButton() throws InterruptedException {
+        HWND hwnd = User32.INSTANCE.GetForegroundWindow();
+        if (hwnd == null) {
+            return;
+        }
+
+        WinDef.RECT rect = new WinDef.RECT();
+        if (!User32.INSTANCE.GetWindowRect(hwnd, rect)) {
+            return;
+        }
+
+        clickButton("Закрыть окно");
+    }
+
     // Обработка исключений. Учебная штука.
     protected void handleExceptions(Exception e) {
         if (e instanceof InterruptedException) {
@@ -191,6 +228,7 @@ public abstract class BaseBot {
             e.printStackTrace();
         }
     }
+
     // Клик. Собственно, ядро всей программы. Интерфейс? Изучить, подумать. Дополнить паузами, сведя их в этот метод.
     protected void clickAt(int x, int y) {
         if (robot == null) return;

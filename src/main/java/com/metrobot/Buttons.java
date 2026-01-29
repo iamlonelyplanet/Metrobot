@@ -46,6 +46,7 @@ public class Buttons {
         put("Пропустить", new Point(385, 33));
         put("Закрыть — Победа", new Point(460, 520));
         put("Закрыть — Поражение", new Point(480, 463));
+        put("Закрыть окно", new Point(510, 320));
     }};
 
     // --- Туннели ---
@@ -69,6 +70,7 @@ public class Buttons {
         put("Карта КИЕ-ПКг", new Point(205, 433));
         put("Карта ПКг-ПКк", new Point(185, 383));
         put("Питомец", new Point(80, 505));
+        put("Закрыть окно", new Point(510, 320));
     }};
 
     // --- Крысы ---
@@ -80,6 +82,7 @@ public class Buttons {
         put("Закрыть — Победа", new Point(460, 520));
         put("Закрыть — Поражение", new Point(480, 463));
         put("Питомец", new Point(80, 505));
+        put("Закрыть окно", new Point(510, 320));
     }};
 
     // --- КВ и рейды ---
@@ -95,6 +98,7 @@ public class Buttons {
         put("Погон - Коллекция", new Point(480, 465));
         put("Рейды", new Point(80, 413));
         put("Обновить", new Point(520, 40));
+        put("Закрыть окно", new Point(510, 320));
         put("Атаковать босса", new Point(425, 323));
         put("Карта-левее", new Point(115, 270));
         put("Карта-ниже", new Point(420, 510));
