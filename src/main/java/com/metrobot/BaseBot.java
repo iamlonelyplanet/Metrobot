@@ -124,15 +124,15 @@ public abstract class BaseBot {
                 activeWindows);
         if (closeAfterFinish) {
             System.out.println("\nЗакрываю игровые окна...");
-            closeWindows(activeWindows);
+            closeGameWindows();
         }
     }
 
     // Закрытие активных окон
-    protected void closeGameWindows() {
+    protected void closeGameWindows() throws InterruptedException {
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;
-            WindowCloser.closeWindows(activeWindows);
+            closeWindows(activeWindows);
 
             try {
                 Thread.sleep(PAUSE_MICRO_MS); // небольшая пауза между окнами
