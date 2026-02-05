@@ -40,7 +40,7 @@ public class Buttons {
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
         put("Клан - Выход", new Point(80, 505));
-        put("Арена", new Point(320, 303));
+        put("Арена", new Point(328, 303)); //320, 303
         put("Атаковать", new Point(200, 513));
         put("Питомец", new Point(80, 505));
         put("Пропустить", new Point(385, 33));
@@ -88,6 +88,8 @@ public class Buttons {
     // --- КВ и рейды ---
     public static final LinkedHashMap<String, Point> CLAN_BUTTONS = new LinkedHashMap<>() {{
         put("Клан", new Point(315, 58));
+        put("Убрать автобой", new Point(145, 566));
+        put("Арена - закрыть", new Point(515, 575));
         put("Война", new Point(80, 303));
         put("Атаковать врага", new Point(415, 288));
         put("Пропустить", new Point(385, 33));
