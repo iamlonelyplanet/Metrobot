@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+config.txt
+counters.txt
+last_reset.txt

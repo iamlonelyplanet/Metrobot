@@ -12,7 +12,6 @@ import java.util.List;
 import javax.sound.sampled.*;
 
 import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.RECT;
 import com.sun.jna.platform.win32.WinUser;
@@ -20,8 +19,9 @@ import com.sun.jna.platform.win32.WinUser;
 import static com.metrobot.Buttons.*;
 
 /**
- * Родительский класс для четырёх режимов. Здесь находится набор унифицированных методов.
+ * Родительский класс для всех режимов. Полный комплект унифицированных методов.
  */
+
 public abstract class BaseBot {
     // === Общее состояние для всех ботов ===
     protected Robot robot;
@@ -43,6 +43,7 @@ public abstract class BaseBot {
     private static final DateTimeFormatter TIME_FMT =
             DateTimeFormatter.ofPattern("HH:mm");
 
+
     // --- Конструкторы ---
     public BaseBot() throws AWTException {
         robot = new Robot();
@@ -61,12 +62,14 @@ public abstract class BaseBot {
             System.out.printf("\rДо следующего боя: %02d:%02d   ", m, ss);
             Thread.sleep(1000); // Не менять число на переменную, это эталон секунды в счётчике!
         }
+
         System.out.println();
     }
 
     // Ожидание времени старта. Отсчитывает большие промежутки времени, без обновляемого вывода в консоль
     protected void waitUntilStartTime(LocalTime startTime) throws InterruptedException {
         System.out.println("\nБот запустится в " + startTime.format(TIME_FMT));
+
         while (LocalTime.now().isBefore(startTime)) {
             Thread.sleep(1000); // Не менять число на переменную, это эталон секунды в счётчике!
         }
@@ -132,15 +135,29 @@ public abstract class BaseBot {
     protected void closeGameWindows() throws InterruptedException {
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;
-            closeWindows(activeWindows);
-
-            try {
-                Thread.sleep(PAUSE_MICRO_MS); // небольшая пауза между окнами
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+            if (User32.INSTANCE.IsWindow(hwnd)) {
+                User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null);
+                Thread.sleep(PAUSE_MICRO_MS);
+                clickButton("Закрыть окно");
+                Thread.sleep(PAUSE_MICRO_MS);
             }
+//            closeWindows(hwnd);
+//            try {
+//                Thread.sleep(PAUSE_MICRO_MS); // небольшая пауза между окнами
+//            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+//            }
         }
     }
+
+//    protected void closeWindows(HWND hwnd) throws InterruptedException {
+//        if (User32.INSTANCE.IsWindow(hwnd)) {
+//            User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null);
+//            Thread.sleep(PAUSE_MICRO_MS);
+//            clickButton("Закрыть окно");
+//            Thread.sleep(PAUSE_MICRO_MS);
+//        }
+//    }
 
     // Вывод в консоль номера боя
     protected void printBattleNumber(int battle, int total) {
@@ -188,35 +205,6 @@ public abstract class BaseBot {
         if (LONG_PAUSE_BUTTONS.contains(buttonName)) {
             Thread.sleep(PAUSE_LONG_MS);
         }
-    }
-
-    protected void closeWindows(List<HWND> windows) throws InterruptedException {
-        if (windows == null || windows.isEmpty()) {
-            return;
-        }
-
-        for (HWND hwnd : windows) {
-            if (User32.INSTANCE.IsWindow(hwnd)) {
-                User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null);
-            }
-        }
-
-        Thread.sleep(300);
-        clickYesButton();
-    }
-
-    protected void clickYesButton() throws InterruptedException {
-        HWND hwnd = User32.INSTANCE.GetForegroundWindow();
-        if (hwnd == null) {
-            return;
-        }
-
-        WinDef.RECT rect = new WinDef.RECT();
-        if (!User32.INSTANCE.GetWindowRect(hwnd, rect)) {
-            return;
-        }
-
-        clickButton("Закрыть окно");
     }
 
     // Обработка исключений. Учебная штука.

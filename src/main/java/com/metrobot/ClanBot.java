@@ -64,7 +64,7 @@ public class ClanBot extends BaseBot {
             }
 
             endTime = startTime.plusHours(hoursToFinish);
-            endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS);
+            endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS + lastSecondsCorrection);
             isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
 
             if (Objects.equals(botName, "Рейд")) {

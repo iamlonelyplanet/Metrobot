@@ -399,7 +399,7 @@ public class Utilities {
                 System.out.printf("Окно %d: (%d, %d)%n",
                         i + 1, r.left, r.top);
             } else {
-                System.out.printf("Окно %d: [не найдено]%n", i + 1);
+                System.out.printf("Окно %d: [отсутствует]%n", i + 1);
             }
         }
 
