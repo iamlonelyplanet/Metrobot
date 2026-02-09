@@ -96,6 +96,9 @@ public class ClanBot extends BaseBot {
 
     public void fightInClan(BotType type) throws InterruptedException {
         printBattleNumber((unifiedCounter.getCount() + 1), totalBattles);
+        /* Выход из режима "Автобой" (при VIP) перед клановыми движухами. Не сработает, если нижние окна
+        пересекаются с верхними. Переделать?
+         */
         if (unifiedCounter.getCount() == 0) {
             clickButton("Убрать автобой");
             clickButton("Арена - закрыть");
