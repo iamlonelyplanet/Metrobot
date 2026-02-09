@@ -43,6 +43,7 @@ public class ArenaBot extends BaseBot {
     protected Map<String, Point> getButtonMap() {
         return ARENA_BUTTONS;
     }
+    private long lastAttackMillis = -1;
 
     public void start() {
         try {
@@ -53,6 +54,7 @@ public class ArenaBot extends BaseBot {
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
 
                 clickButton("Клан - Выход");
+                lastAttackMillis = System.currentTimeMillis();
                 clickButton("Арена");
                 clickButton("Атаковать");
                 if (usePet)
@@ -66,8 +68,14 @@ public class ArenaBot extends BaseBot {
                 unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);
                 System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
-                if (battle < MAX_BATTLES_ARENA) {
-                    countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() + 1);
+                if (battle < MAX_BATTLES_ARENA && lastAttackMillis > 0) {
+                    long now = System.currentTimeMillis();
+                    long elapsedSeconds = (now - lastAttackMillis) / 1000;
+                    long secondsToWait = ATTACK_COOLDOWN_SECONDS - elapsedSeconds;
+
+                    if (secondsToWait > 0) {
+                        countdown((int) secondsToWait);
+                    }
                 }
             }
 

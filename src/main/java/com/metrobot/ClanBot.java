@@ -21,6 +21,7 @@ import static com.metrobot.Buttons.*;
  * В этом режиме работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
  * Повседневная работа пользователя в Windows прерывается всего на 10-12 секунд раз в 5 минут.
  * Счётчик боёв записывается в файл.
+ * TODO: проверить предпоследние, 23/11 бои
  */
 
 public class ClanBot extends BaseBot {
@@ -45,9 +46,10 @@ public class ClanBot extends BaseBot {
     }
     protected final List<HWND> windows;
     private int totalBattles;
-    private int lastSecondsCorrection;
+//    private int lastSecondsCorrection;
     private boolean isGameGoingOn;
     private LocalTime endTime;
+    private long lastAttackMillis = -1;
 
     public void start() {
         try {
@@ -56,15 +58,15 @@ public class ClanBot extends BaseBot {
             if (Objects.equals(botName, "Рейд")) {
                 hoursToFinish = 1;
                 totalBattles = MAX_BATTLES_RAID;
-                lastSecondsCorrection = 4;
+//                lastSecondsCorrection = 4;
             } else {
                 hoursToFinish = 2;
                 totalBattles = MAX_BATTLES_CW;
-                lastSecondsCorrection = 4;
+//                lastSecondsCorrection = 4;
             }
 
             endTime = startTime.plusHours(hoursToFinish);
-            endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS + lastSecondsCorrection);
+//            endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS + lastSecondsCorrection);
             isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
 
             if (Objects.equals(botName, "Рейд")) {
@@ -106,8 +108,10 @@ public class ClanBot extends BaseBot {
 
         if (type == BotType.CW) {
             clickButton("Клан");
+            lastAttackMillis = System.currentTimeMillis();
             clickButton("Война");
             clickButton("Атаковать врага");
+
             clickButton("Пропустить");
             clickButton("Закрыть");
             clickButton("Погон 1");
@@ -121,10 +125,12 @@ public class ClanBot extends BaseBot {
 
             if (unifiedCounter.getCount() > 0) {
                 clickButton("Клан");
+                lastAttackMillis = System.currentTimeMillis();
                 clickButton("Рейды");
             }
 
             clickButton("Атаковать босса");
+            lastAttackMillis = System.currentTimeMillis();
             Thread.sleep(PAUSE_RAID_BOSS_MS);
             clickButton("Пропустить");
             clickButton("Закрыть");
@@ -135,8 +141,18 @@ public class ClanBot extends BaseBot {
         CounterStorage.saveCounters(counters);
         System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
         isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
+
         if (isGameGoingOn) {
-            countdown(FIVE_MINUTES_PAUSE_SECONDS - activeWindows.size() - lastSecondsCorrection);
+            if (lastAttackMillis > 0) {
+                long now = System.currentTimeMillis();
+                long elapsedSeconds = (now - lastAttackMillis) / 1000;
+                long secondsToWait = ATTACK_COOLDOWN_SECONDS - elapsedSeconds;
+
+                if (secondsToWait > 0) {
+                    countdown((int) secondsToWait);
+                }
+            }
+
         }
     }
 }

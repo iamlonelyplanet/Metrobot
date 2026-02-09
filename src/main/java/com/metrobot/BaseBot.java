@@ -56,6 +56,7 @@ public abstract class BaseBot {
 
     // Таймер (секунды), отсчитывает короткие промежутки времени, выводит в консоль обновление раз в секунду
     protected void countdown(int seconds) throws InterruptedException {
+        seconds += 4; // 4 сек между стартом серии и клику "Атаковать". Нужно для UX, дабы не нервировать пользователей
         for (int s = seconds; s > 0; s--) {
             int m = s / 60;
             int ss = s % 60;
