@@ -20,6 +20,7 @@ import static com.metrobot.Buttons.*;
 
 /**
  * Родительский класс для всех режимов. Полный комплект унифицированных методов.
+ * TODO: переработать закрытие окон; пересмотреть countdown для ClanWar и ArenaBot.
  */
 
 public abstract class BaseBot {
@@ -56,7 +57,7 @@ public abstract class BaseBot {
 
     // Таймер (секунды), отсчитывает короткие промежутки времени, выводит в консоль обновление раз в секунду
     protected void countdown(int seconds) throws InterruptedException {
-        seconds += 4; // 4 сек между стартом серии и клику "Атаковать". Нужно для UX, дабы не нервировать пользователей
+//        seconds += 4; // 4 сек между стартом серии и клику "Атаковать". Нужно для UX, дабы не нервировать пользователей
         for (int s = seconds; s > 0; s--) {
             int m = s / 60;
             int ss = s % 60;

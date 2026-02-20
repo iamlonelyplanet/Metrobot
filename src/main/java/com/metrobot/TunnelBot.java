@@ -61,6 +61,7 @@ public class TunnelBot extends BaseBot {
                 clickButton("Карта ПК-КРО");
                 fightMonsters(spider, usePet);
                 Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickButton("Карта КРО-ПК");
                 fightMonsters(spider, usePet);
             }
@@ -120,10 +121,12 @@ public class TunnelBot extends BaseBot {
                 // 4 ящерицы в тоннеле Проспект Вернадского - Парк Культуры
                 intoTunnel("Карта-УНИ");
                 fightMonsters(lizard, usePet);
+                Thread.sleep(PAUSE_SHORT_MS);
 
                 intoTunnel("Карта-КОМ");
                 fightMonsters(lizard, usePet);
                 enterStation("Войти с пропуском", PAUSE_SHORT_TUNNELS_MS);
+                Thread.sleep(PAUSE_SHORT_MS);
 
                 intoTunnel("Карта-КОМ-ФРУ");
                 fightMonsters(lizard, usePet);
@@ -131,6 +134,7 @@ public class TunnelBot extends BaseBot {
                 intoTunnel("Карта-ФРУ-ПК");
                 fightMonsters(lizard, usePet);
                 enterStation("Войти", PAUSE_SHORT_TUNNELS_MS);
+                Thread.sleep(PAUSE_SHORT_MS);
 
                 System.out.printf("\nЗавершено пробегов до Парка Культуры: %d\n\n", (way + 1));
             }
@@ -161,6 +165,7 @@ public class TunnelBot extends BaseBot {
         if (kind == MonsterKind.SPIDER) {
             System.out.printf("Убито пауков: %d%n%n", unifiedCounter.getCount());
             Thread.sleep(PAUSE_TUNNEL_MS);
+            Thread.sleep(PAUSE_SHORT_MS);
             clickButton("В туннель");
             Thread.sleep(PAUSE_SHORT_MS);
         } else {
