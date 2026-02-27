@@ -52,7 +52,9 @@ public abstract class BaseBot {
 
     public BaseBot(List<HWND> activeWindows) throws AWTException {
         this();
-        if (activeWindows != null) this.activeWindows = new ArrayList<>(activeWindows);
+        if (activeWindows != null) {
+            this.activeWindows = new ArrayList<>(activeWindows);
+        }
     }
 
     // Таймер (секунды), отсчитывает короткие промежутки времени, выводит в консоль обновление раз в секунду
@@ -121,7 +123,7 @@ public abstract class BaseBot {
 
     // Конец любого игрового режима, это не bot.stop()
     protected void endGame() throws InterruptedException {
-//        playFinalSound();
+//        playFinalSound(); // Ненужная свистоперделка
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
                 botName,
                 LocalTime.now().withNano(0),
@@ -139,27 +141,12 @@ public abstract class BaseBot {
             if (hwnd == null) continue;
             if (User32.INSTANCE.IsWindow(hwnd)) {
                 User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null);
-                Thread.sleep(PAUSE_MICRO_MS);
+                Thread.sleep(PAUSE_SHORT_MS);
                 clickButton("Закрыть окно");
-                Thread.sleep(PAUSE_MICRO_MS);
+                Thread.sleep(PAUSE_SHORT_MS);
             }
-//            closeWindows(hwnd);
-//            try {
-//                Thread.sleep(PAUSE_MICRO_MS); // небольшая пауза между окнами
-//            } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt();
-//            }
         }
     }
-
-//    protected void closeWindows(HWND hwnd) throws InterruptedException {
-//        if (User32.INSTANCE.IsWindow(hwnd)) {
-//            User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null);
-//            Thread.sleep(PAUSE_MICRO_MS);
-//            clickButton("Закрыть окно");
-//            Thread.sleep(PAUSE_MICRO_MS);
-//        }
-//    }
 
     // Вывод в консоль номера боя
     protected void printBattleNumber(int battle, int total) {
