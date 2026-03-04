@@ -20,7 +20,7 @@ import static com.metrobot.Buttons.*;
 
 /**
  * Родительский класс для всех режимов. Полный комплект унифицированных методов.
- * TODO: переработать закрытие окон; пересмотреть countdown для ClanWar и ArenaBot.
+ * TODO: переработать закрытие окон; пересмотреть countdown для ClanBot и ArenaBot.
  */
 
 public abstract class BaseBot {

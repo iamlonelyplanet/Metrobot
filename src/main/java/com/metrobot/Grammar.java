@@ -1,15 +1,8 @@
 package com.metrobot;
 
 public class Grammar {
-    /* Не особо нужный модуль подгона грамматики в зависимости от падежей, склонений, родов и т.п. Больше для учёбы.
+    /* Не особо нужный класс для подгона грамматики в зависимости от падежей, склонений, родов и т.п. Больше для учёбы.
  */
-
-//     Для тестирования корректности работы грамматического модуля
-//    public static void main(String[] args) {
-//        for (int i = 1; i < 41; i++) {
-//            System.out.println(getWord2End2(i));
-//        }
-//    }
 
     // Метод для определения суффикса глагола и окончания существительного в зависимости от числительного
     // Прошёл 1 бой / Прошло 2 боя / Прошло 11 боёв и т.д.
@@ -44,30 +37,6 @@ public class Grammar {
             }
         }
         return "Прош" + verb + " " + number + " бо" + noun;
-    }
-
-    static String getWord2End2(int number, String noun) {
-        String verb;
-
-        if (isNumberWrong(number)) {
-            return "Количество боёв - натуральное число";
-        }
-
-        if (number >= 11 && number <= 15) {
-            noun += "ов";
-        }
-
-        switch (number % 10) {
-            case 1 -> noun += "";
-            case 2, 3, 4 -> noun += "а";
-            default -> noun += "ов";
-        }
-        if (noun.isEmpty()) {
-            verb = " ";
-        } else {
-            verb = "о ";
-        }
-        return "Убит" + verb + number + " " + noun;
     }
 
     static boolean isNumberWrong(int number) {

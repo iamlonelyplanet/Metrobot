@@ -35,12 +35,13 @@ public class Utilities {
      * это тебе не надо.
      */
     public static ModeSelection askModeSelection() {
-        int mode = askMode();      // старый метод
+        int mode = askMode(); // старый метод
         if (mode <= 0) {
             return null;
         }
-        boolean pet = usePet;      // старое статическое поле
+        boolean pet = usePet; // старое static-поле
         boolean closeAfterFinish = exitAfter;
+
         return new ModeSelection(mode, pet, closeAfterFinish, bossName);
     }
 
@@ -71,7 +72,7 @@ public class Utilities {
         modeCombo.setSelectedIndex(2); // по умолчанию Арена
 
         JCheckBox petCheck = new JCheckBox("С питомцем");
-        JCheckBox exitAfterCheck = new JCheckBox("Закрыть окна после завершения");
+        JCheckBox exitAfterCheck = new JCheckBox("Закрыть окна после завершения (не работает)");
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
         final int SECRET_RAID_START_MODE = 6;  // человеческий номер для скрытого, тайного режима "Запуск рейда"

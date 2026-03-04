@@ -185,8 +185,8 @@ public class TunnelBot extends BaseBot {
         Thread.sleep(Buttons.PAUSE_SHORT_TUNNELS_MS);
     }
 
-    private void enterStation(String document, int PAUSE) throws InterruptedException {
-        Thread.sleep(PAUSE);
+    private void enterStation(String document, int pause) throws InterruptedException {
+        Thread.sleep(pause);
         clickButton(document);
 
         if (Objects.equals(document, "Войти с пропуском")) {

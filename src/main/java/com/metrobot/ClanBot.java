@@ -14,14 +14,15 @@ import static com.metrobot.Buttons.*;
  * Унификация старых классов Raid и War
  * Режим "Клан": бои перса в коллективной ("клановой") движухе.
  * В режиме "Клан" работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
- * Вручную занимал у пользователей порядка 2 часов (КВ) и часа (рейд), раз в 5 минут требуя внимания, притом сильно:
+ * Вручную занимал у пользователей порядка 2 (КВ) и 1 часа (рейд), раз в 5 минут требуя внимания, притом сильно:
  * коллектив же.
  * <p>
  * Полное прохождение: то же время, полностью автоматически.
  * В этом режиме работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
  * Повседневная работа пользователя в Windows прерывается всего на 10-12 секунд раз в 5 минут.
  * Счётчик боёв записывается в файл.
- * TODO: проверить предпоследние, 23/11 бои
+ *
+ * TODO: проверить предпоследние, 23/11 бои. Переделать закрытие автобоя
  */
 
 public class ClanBot extends BaseBot {
@@ -46,7 +47,6 @@ public class ClanBot extends BaseBot {
     }
     protected final List<HWND> windows;
     private int totalBattles;
-//    private int lastSecondsCorrection;
     private boolean isGameGoingOn;
     private LocalTime endTime;
     private long lastAttackMillis = -1;
@@ -58,15 +58,12 @@ public class ClanBot extends BaseBot {
             if (Objects.equals(botName, "Рейд")) {
                 hoursToFinish = 1;
                 totalBattles = MAX_BATTLES_RAID;
-//                lastSecondsCorrection = 4;
             } else {
                 hoursToFinish = 2;
                 totalBattles = MAX_BATTLES_CW;
-//                lastSecondsCorrection = 4;
             }
 
             endTime = startTime.plusHours(hoursToFinish);
-//            endTime = endTime.minusSeconds(FIVE_MINUTES_PAUSE_SECONDS + lastSecondsCorrection);
             isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
 
             if (Objects.equals(botName, "Рейд")) {
@@ -101,17 +98,16 @@ public class ClanBot extends BaseBot {
         /* Выход из режима "Автобой" (при VIP) перед клановыми движухами. Не сработает, если нижние окна
         пересекаются с верхними. Переделать?
          */
-        if (unifiedCounter.getCount() == 0) {
-            clickButton("Убрать автобой");
-            clickButton("Арена - закрыть");
-        }
+//        if (unifiedCounter.getCount() == 0) {
+//            clickButton("Убрать автобой");
+//            clickButton("Арена - закрыть");
+//        }
 
         if (type == BotType.CW) {
             clickButton("Клан");
             lastAttackMillis = System.currentTimeMillis();
             clickButton("Война");
             clickButton("Атаковать врага");
-
             clickButton("Пропустить");
             clickButton("Закрыть");
             clickButton("Погон 1");
@@ -152,7 +148,6 @@ public class ClanBot extends BaseBot {
                     countdown((int) secondsToWait);
                 }
             }
-
         }
     }
 }

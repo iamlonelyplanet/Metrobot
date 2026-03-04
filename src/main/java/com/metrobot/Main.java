@@ -11,7 +11,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         try {
-            // === Обнуляем файл счётчиков каждый день при первом запуске программы после 03:00 по Мск, так надо. ===
+            // === Обнуляем счётчики в файле ежедневно при первом запуске после 03:00 по Мск, так надо ===
             ConfigManager.autoResetCounters();
 
             // === Загружаем конфиг из файла при наличии ===
@@ -21,7 +21,7 @@ public class Main {
             Optional<BotStartConfig> result = BotStartWizard.askUser(config);
 
             if (result.isEmpty()) {
-                System.out.println("Запуск отменён пользователем."); // Cancel/крестик на любом этапе - остановка работы
+                System.out.println("Запуск отменён пользователем"); // Cancel/крестик на любом этапе - остановка работы
                 return;
             }
 
