@@ -249,7 +249,7 @@ public class Utilities {
     public static void resizeWindows(HWND hwnd) {
         RECT r = new RECT();
         USER32.GetWindowRect(hwnd, r);
-        if (r.right - r.left == Buttons.windowWidth) {
+        if (r.right - r.left == Buttons.WINDOW_WIDTH) {
             return;
         }
 
@@ -258,8 +258,8 @@ public class Utilities {
                 null,
                 r.left,        // сохраняем позицию
                 r.top,
-                Buttons.windowWidth,
-                Buttons.windowHeight,
+                Buttons.WINDOW_WIDTH,
+                Buttons.WINDOW_HEIGHT,
                 WinUser.SWP_NOZORDER | WinUser.SWP_SHOWWINDOW
         );
     }

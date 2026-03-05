@@ -30,9 +30,9 @@ public class Buttons {
      * Площадь "рабочего поля" в окне Игроклуба и ВК: 764×650; одинакова при всех разрешениях.
      * Ширина полосы прокрутки (элемента окон Windows): 19 в Игроклубе, собрать статистику в других разрешениях
      */
-    public static int windowWidth = 1033;
-    public static int windowHeight = 768;
-    public static int xMoveRight = (windowWidth - 764 - 19) / 2; // Расчёт "нуля" (верхней левой точки) рабочего поля
+    public static final int WINDOW_WIDTH = 1033;
+    public static final int  WINDOW_HEIGHT = 768;
+    public static int xMoveRight = (WINDOW_WIDTH - 764 - 19) / 2; // Расчёт "нуля" (верхней левой точки) рабочего поля
     public static int yMoveDown = 97; // Константа для "Игроклуба" при WQHD, для остальных собирать статистику
 
     // === Координаты кнопок относительно верхнего левого угла "рабочего поля" (не окна!) ===

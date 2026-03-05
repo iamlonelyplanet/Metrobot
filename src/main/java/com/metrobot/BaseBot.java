@@ -41,8 +41,7 @@ public abstract class BaseBot {
     protected abstract Map<String, Point> getButtonMap();
 
     private static final User32 USER32 = User32.INSTANCE;
-    private static final DateTimeFormatter TIME_FMT =
-            DateTimeFormatter.ofPattern("HH:mm");
+    private static final DateTimeFormatter TIME_FMT = DateTimeFormatter.ofPattern("HH:mm");
 
 
     // --- Конструкторы ---
@@ -72,7 +71,7 @@ public abstract class BaseBot {
 
     // Ожидание времени старта. Отсчитывает большие промежутки времени, без обновляемого вывода в консоль
     protected void waitUntilStartTime(LocalTime startTime) throws InterruptedException {
-        System.out.println("\nБот запустится в " + startTime.format(TIME_FMT));
+        System.out.printf("\nБот %s запустится в %s", botName, startTime.format(TIME_FMT));
 
         while (LocalTime.now().isBefore(startTime)) {
             Thread.sleep(1000); // Не менять число на переменную, это эталон секунды в счётчике!
@@ -91,6 +90,7 @@ public abstract class BaseBot {
                 Thread.currentThread().interrupt();
             }
         }
+
         System.out.println("\nРазвернул окна");
     }
 
@@ -150,7 +150,7 @@ public abstract class BaseBot {
 
     // Вывод в консоль номера боя
     protected void printBattleNumber(int battle, int total) {
-        System.out.println("\n=== Бой " + battle + " из " + total + " ===");
+        System.out.printf("\n=== Бой %d из %d ===", battle, total);
         showActiveWindows();
     }
 
