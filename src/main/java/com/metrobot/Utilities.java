@@ -72,7 +72,7 @@ public class Utilities {
         modeCombo.setSelectedIndex(2); // по умолчанию Арена
 
         JCheckBox petCheck = new JCheckBox("С питомцем");
-        JCheckBox exitAfterCheck = new JCheckBox("Закрыть окна после завершения (не работает)");
+        JCheckBox exitAfterCheck = new JCheckBox("Закрыть окна после завершения");
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
         final int SECRET_RAID_START_MODE = 6;  // человеческий номер для скрытого, тайного режима "Запуск рейда"

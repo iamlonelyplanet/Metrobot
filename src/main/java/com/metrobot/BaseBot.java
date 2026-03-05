@@ -71,7 +71,7 @@ public abstract class BaseBot {
 
     // Ожидание времени старта. Отсчитывает большие промежутки времени, без обновляемого вывода в консоль
     protected void waitUntilStartTime(LocalTime startTime) throws InterruptedException {
-        System.out.printf("\nБот %s запустится в %s", botName, startTime.format(TIME_FMT));
+        System.out.printf("\n=== Бот %s запустится в %s ===", botName, startTime.format(TIME_FMT));
 
         while (LocalTime.now().isBefore(startTime)) {
             Thread.sleep(1000); // Не менять число на переменную, это эталон секунды в счётчике!
@@ -112,6 +112,17 @@ public abstract class BaseBot {
         System.out.println("Свернул окна\n");
     }
 
+    // Закрытие активных окон
+    protected void closeGameWindows() throws InterruptedException {
+        for (HWND hwnd : activeWindows) {
+            if (hwnd == null) continue;
+            User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null);
+            Thread.sleep(3000);
+            clickButton("Закрыть окно");
+            Thread.sleep(PAUSE_SHORT_MS);
+        }
+    }
+
     // Старт игрового режима
     protected void startGame() throws InterruptedException {
         waitUntilStartTime(startTime);
@@ -135,19 +146,6 @@ public abstract class BaseBot {
         }
     }
 
-    // Закрытие активных окон
-    protected void closeGameWindows() throws InterruptedException {
-        for (HWND hwnd : activeWindows) {
-            if (hwnd == null) continue;
-            if (User32.INSTANCE.IsWindow(hwnd)) {
-                User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null);
-                Thread.sleep(PAUSE_SHORT_MS);
-                clickButton("Закрыть окно");
-                Thread.sleep(PAUSE_SHORT_MS);
-            }
-        }
-    }
-
     // Вывод в консоль номера боя
     protected void printBattleNumber(int battle, int total) {
         System.out.printf("\n=== Бой %d из %d ===", battle, total);
@@ -165,6 +163,7 @@ public abstract class BaseBot {
                 "Атаковать",
                 "Арена"
         );
+
         if (rel == null) {
             System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
             return;
