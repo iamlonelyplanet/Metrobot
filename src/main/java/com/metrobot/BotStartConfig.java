@@ -28,7 +28,7 @@ public class BotStartConfig {
         this.botName = botName;
         this.boss = bossName;
         this.startTime = startTime;
-        this.activeWindows = activeWindows;
+        this.activeWindows = List.copyOf(activeWindows); // дабы список так и оставался immutable!
         this.usePet = usePet;
         this.closeAfterFinish = closeAfterFinish;
     }

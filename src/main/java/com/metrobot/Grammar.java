@@ -10,10 +10,6 @@ public class Grammar {
         String noun = "";
         String verb = "";
 
-        if (isNumberWrong(number)) {
-            return "Количество боёв - натуральное число";
-        }
-
         int i = number % 100;
         switch (i) {
             case 11, 12, 13, 14:
@@ -37,9 +33,5 @@ public class Grammar {
             }
         }
         return "Прош" + verb + " " + number + " бо" + noun;
-    }
-
-    static boolean isNumberWrong(int number) {
-        return number < 1;
     }
 }
