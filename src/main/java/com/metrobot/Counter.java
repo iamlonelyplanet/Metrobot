@@ -3,7 +3,7 @@ package com.metrobot;
 /** Класс-счётчик. Практически копия урока 8!
  */
 public class Counter {
-    private String name;
+    private final String name;
     private int count;
 
     public Counter(String counterName) {

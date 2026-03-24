@@ -58,7 +58,6 @@ public abstract class BaseBot {
 
     // Таймер (секунды), отсчитывает короткие промежутки времени, выводит в консоль обновление раз в секунду
     protected void countdown(int seconds) throws InterruptedException {
-//        seconds += 4; // 4 сек между стартом серии и клику "Атаковать". Нужно для UX, дабы не нервировать пользователей
         for (int s = seconds; s > 0; s--) {
             int m = s / 60;
             int ss = s % 60;
@@ -112,7 +111,7 @@ public abstract class BaseBot {
         System.out.println("Свернул окна\n");
     }
 
-    // Закрытие активных окон
+    // Закрытие активных окон, пока не работает.
     protected void closeGameWindows() throws InterruptedException {
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;
