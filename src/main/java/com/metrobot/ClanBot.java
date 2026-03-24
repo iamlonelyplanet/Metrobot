@@ -117,8 +117,7 @@ public class ClanBot extends BaseBot {
         }
 
         if (type == BotType.RAID) {
-            Thread.sleep(PAUSE_SHORT_MS);
-
+            // поковыряться здесь в таймингах для старта клана
             if (unifiedCounter.getCount() > 0) {
                 clickButton("Клан");
                 lastAttackMillis = System.currentTimeMillis();

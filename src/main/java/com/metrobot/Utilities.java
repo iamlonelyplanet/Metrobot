@@ -345,7 +345,7 @@ public class Utilities {
             char[] buffer = new char[512];
             USER32.GetWindowText(hWnd, buffer, 512);
             String title = new String(buffer).trim();
-            if (title.contains("Игроклуб") || title.contains("2033")) {
+            if (title.contains("Игроклуб") || title.contains("кланов")) {
                 found.add(hWnd);
             }
             return true;
@@ -392,7 +392,7 @@ public class Utilities {
             ordered.set(index, hWnd);
         }
 
-        System.out.println("=== Найдены игровые окна (позиции 1–4) ===");
+        System.out.println("=== Найдены игровые окна (1–4) ===");
         for (int i = 0; i < 4; i++) {
             if (ordered.get(i) != null) {
                 RECT r = new RECT();
