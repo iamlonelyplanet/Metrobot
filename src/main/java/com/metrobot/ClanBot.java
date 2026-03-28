@@ -50,6 +50,7 @@ public class ClanBot extends BaseBot {
     private boolean isGameGoingOn;
     private LocalTime endTime;
     private long lastAttackMillis = -1;
+    boolean g = true;
 
     public void start() {
         try {
@@ -127,6 +128,9 @@ public class ClanBot extends BaseBot {
             clickButton("Атаковать босса");
             lastAttackMillis = System.currentTimeMillis();
             Thread.sleep(PAUSE_RAID_BOSS_MS);
+//            if (g) {
+//
+//            }
             clickButton("Пропустить");
             clickButton("Закрыть");
         }
