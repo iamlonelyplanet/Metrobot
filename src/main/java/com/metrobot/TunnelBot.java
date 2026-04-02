@@ -174,25 +174,6 @@ public class TunnelBot extends BaseBot {
         }
     }
 
-    private void fightMonsters(MonsterKind kind) throws InterruptedException {
-        Thread.sleep(PAUSE_TUNNEL_MS);
-        if (isPet)
-            clickButton("Питомец");
-        clickButton("Пропустить");
-        clickButton("Закрыть");
-        unifiedCounter.plusOne();
-        if (kind == MonsterKind.SPIDER) {
-            System.out.printf("Убито пауков: %d%n%n", unifiedCounter.getCount());
-            Thread.sleep(PAUSE_TUNNEL_MS);
-            Thread.sleep(PAUSE_SHORT_MS);
-            clickButton("В туннель");
-            Thread.sleep(PAUSE_SHORT_MS);
-        } else {
-            System.out.printf("Убито ящеров: %d%n%n", unifiedCounter.getCount());
-            Thread.sleep(PAUSE_TUNNEL_MS);
-        }
-    }
-
     private void intoTunnel(String buttonName) throws InterruptedException {
         clickButton("В туннель");
         Thread.sleep(Buttons.PAUSE_SHORT_TUNNELS_MS);
