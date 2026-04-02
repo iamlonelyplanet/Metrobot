@@ -17,7 +17,7 @@ public class RatBot extends BaseBot {
     public RatBot(List<HWND> windows,
                   LocalTime timeHHmm,
                   String botName,
-                  boolean usePet,
+                  boolean isPet,
                   boolean closeAfterFinish) throws AWTException {
 
         super(windows);
@@ -25,7 +25,7 @@ public class RatBot extends BaseBot {
         {
             this.startTime = timeHHmm;
             this.botName = botName;
-            this.usePet = usePet;
+            this.isPet = isPet;
             this.closeAfterFinish = closeAfterFinish;
         }
     }
@@ -52,7 +52,7 @@ public class RatBot extends BaseBot {
                 countdown(60); // стандарт: 60, ст + штаны: 42, ст + комплект: 30, VIP: 30, VIP + комплект: 20
                 showActiveWindows();
 
-                if (usePet) {
+                if (isPet) {
                     clickButton("Питомец");
                 }
                 clickButton("Пропустить");

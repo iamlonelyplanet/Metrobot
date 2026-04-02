@@ -26,7 +26,7 @@ public class ArenaBot extends BaseBot {
     public ArenaBot(List<HWND> windows,
                     LocalTime timeHHmm,
                     String botName,
-                    boolean usePet,
+                    boolean isPet,
                     boolean closeAfterFinish) throws AWTException {
 
         super(windows);
@@ -34,7 +34,7 @@ public class ArenaBot extends BaseBot {
         {
             this.startTime = timeHHmm;
             this.botName = botName;
-            this.usePet = usePet;
+            this.isPet = isPet;
             this.closeAfterFinish = closeAfterFinish;
         }
     }
@@ -57,7 +57,7 @@ public class ArenaBot extends BaseBot {
                 lastAttackMillis = System.currentTimeMillis();
                 clickButton("Арена");
                 clickButton("Атаковать");
-                if (usePet)
+                if (isPet)
                     clickButton("Питомец");
                 clickButton("Пропустить");
                 clickButton("Закрыть — Победа");

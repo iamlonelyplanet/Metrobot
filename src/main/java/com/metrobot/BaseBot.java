@@ -28,7 +28,7 @@ public abstract class BaseBot {
     protected Robot robot;
     protected List<HWND> activeWindows = new ArrayList<>();
     protected boolean isSilentMode = true;
-    protected boolean usePet = false;
+    protected boolean isPet = false;
     protected boolean closeAfterFinish;
     protected String botName;
     protected LocalTime startTime;
@@ -137,8 +137,7 @@ public abstract class BaseBot {
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
                 botName,
                 LocalTime.now().withNano(0),
-                unifiedCounter.getCount(),
-                activeWindows);
+                unifiedCounter.getCount());
         if (closeAfterFinish) {
             System.out.println("\nЗакрываю игровые окна...");
             closeGameWindows();

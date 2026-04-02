@@ -29,7 +29,7 @@ public class BotFactory {
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
                         cfg.getBotName(),
-                        cfg.isUsePet(),
+                        cfg.isPet(),
                         cfg.isCloseAfterFinish()
                 );
                 arenaBot.start();
@@ -39,7 +39,7 @@ public class BotFactory {
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
                         cfg.getBotName(),
-                        cfg.isUsePet(),
+                        cfg.isPet(),
                         cfg.isCloseAfterFinish()
                 );
                 tunnelBot.start();
@@ -49,7 +49,7 @@ public class BotFactory {
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
                         cfg.getBotName(),
-                        cfg.isUsePet(),
+                        cfg.isPet(),
                         cfg.isCloseAfterFinish()
                 );
                 ratBot.start();

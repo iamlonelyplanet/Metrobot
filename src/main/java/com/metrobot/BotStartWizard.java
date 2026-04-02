@@ -15,7 +15,7 @@ public class BotStartWizard {
             if (selection == null) return Optional.empty();
 
             int mode = selection.mode();
-            boolean usePet = selection.usePet();
+            boolean isPet = selection.isPet();
             boolean closeAfterFinish = selection.closeAfterFinish();
 
             // 2. Окна
@@ -39,7 +39,7 @@ public class BotStartWizard {
                     boss,
                     startTime,
                     active,
-                    usePet,
+                    isPet,
                     closeAfterFinish
             );
 
@@ -52,7 +52,7 @@ public class BotStartWizard {
                             boss,
                             startTime,
                             active,
-                            usePet,
+                            isPet,
                             closeAfterFinish)
             );
 

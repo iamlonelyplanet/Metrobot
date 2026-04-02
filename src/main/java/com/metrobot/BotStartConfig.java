@@ -15,21 +15,22 @@ public class BotStartConfig {
     private final String boss;
     private final LocalTime startTime;
     private final List<HWND> activeWindows;
-    private final boolean usePet;
+    private final boolean isPet;
     private final boolean closeAfterFinish;
 
     public BotStartConfig(int mode,
-                          String botName, String bossName,
+                          String botName,
+                          String bossName,
                           LocalTime startTime,
                           List<HWND> activeWindows,
-                          boolean usePet,
+                          boolean isPet,
                           boolean closeAfterFinish) {
         this.mode = mode;
         this.botName = botName;
         this.boss = bossName;
         this.startTime = startTime;
         this.activeWindows = List.copyOf(activeWindows); // дабы список так и оставался immutable!
-        this.usePet = usePet;
+        this.isPet = isPet;
         this.closeAfterFinish = closeAfterFinish;
     }
 
@@ -53,8 +54,8 @@ public class BotStartConfig {
         return activeWindows;
     }
 
-    public boolean isUsePet() {
-        return usePet;
+    public boolean isPet() {
+        return isPet;
     }
 
     public boolean isCloseAfterFinish() {return closeAfterFinish; }

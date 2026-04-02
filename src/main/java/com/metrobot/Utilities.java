@@ -18,13 +18,13 @@ import java.util.List;
 
 public class Utilities {
     public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
-    public static boolean usePet = false;
+    public static boolean isPet = false;
     public static boolean exitAfter;
     private static final User32 USER32 = User32.INSTANCE;
     private static String bossName;
 
     public record ModeSelection(int mode,
-                                boolean usePet,
+                                boolean isPet,
                                 boolean closeAfterFinish,
                                 String bossName) {
     }
@@ -39,10 +39,9 @@ public class Utilities {
         if (mode <= 0) {
             return null;
         }
-        boolean pet = usePet; // старое static-поле
         boolean closeAfterFinish = exitAfter;
 
-        return new ModeSelection(mode, pet, closeAfterFinish, bossName);
+        return new ModeSelection(mode, isPet, closeAfterFinish, bossName);
     }
 
     public static int askMode() {
@@ -86,7 +85,7 @@ public class Utilities {
             @Override
             public void actionPerformed(ActionEvent e) {
                 forcedMode[0] = SECRET_RAID_START_MODE;
-                usePet = false;
+                isPet = false;
 
                 bossCombo.setEnabled(true);
                 bossCombo.setVisible(true);
@@ -167,7 +166,7 @@ public class Utilities {
 
         if (result == JOptionPane.OK_OPTION) {
             int idx = modeCombo.getSelectedIndex();
-            usePet = (idx == 2 || idx == 3 || idx == 4) && petCheck.isSelected();
+            isPet = (idx == 2 || idx == 3 || idx == 4) && petCheck.isSelected();
             exitAfter = exitAfterCheck.isSelected();
 
             return idx + 1; // 1–5

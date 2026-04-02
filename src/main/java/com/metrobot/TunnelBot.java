@@ -25,7 +25,7 @@ public class TunnelBot extends BaseBot {
     public TunnelBot(List<HWND> windows,
                      LocalTime timeHHmm,
                      String botName,
-                     boolean usePet, boolean closeAfterFinish)
+                     boolean isPet, boolean closeAfterFinish)
             throws AWTException {
 
         super(windows);
@@ -33,7 +33,7 @@ public class TunnelBot extends BaseBot {
         {
             this.startTime = timeHHmm;
             this.botName = botName;
-            this.usePet = usePet;
+            this.isPet = isPet;
             this.closeAfterFinish = closeAfterFinish;
         }
     }
@@ -59,11 +59,11 @@ public class TunnelBot extends BaseBot {
 
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 clickButton("Карта ПК-КРО");
-                fightMonsters(spider, usePet);
+                fightMonsters(spider, isPet);
                 Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickButton("Карта КРО-ПК");
-                fightMonsters(spider, usePet);
+                fightMonsters(spider, isPet);
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
@@ -75,9 +75,9 @@ public class TunnelBot extends BaseBot {
 
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 clickButton("Карта ПКг-КИЕ");
-                fightMonsters(spider, usePet);
+                fightMonsters(spider, isPet);
                 clickButton("Карта КИЕ-ПКг");
-                fightMonsters(spider, usePet);
+                fightMonsters(spider, isPet);
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
@@ -101,38 +101,38 @@ public class TunnelBot extends BaseBot {
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 // 4 ящерицы в тоннеле Парк Культуры - Проспект Вернадского
                 intoTunnel("Карта-ПК-ФРУ");
-                fightMonsters(lizard, usePet);
+                fightMonsters(lizard, isPet);
                 enterStation("Войти с пропуском", PAUSE_SHORT_TUNNELS_MS);
 
                 intoTunnel("Карта-КОМ");
-                fightMonsters(lizard, usePet);
+                fightMonsters(lizard, isPet);
                 Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
                 intoTunnel("Карта-УНИ");
-                fightMonsters(lizard, usePet);
+                fightMonsters(lizard, isPet);
                 enterStation("Войти с пропуском", PAUSE_SHORT_TUNNELS_MS);
 
                 intoTunnel("Карта-ПВ");
-                fightMonsters(lizard, usePet);
+                fightMonsters(lizard, isPet);
                 Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
                 System.out.printf("Завершено пробегов до Проспекта Вернадского: %d\n\n", (way + 1));
 
                 // 4 ящерицы в тоннеле Проспект Вернадского - Парк Культуры
                 intoTunnel("Карта-УНИ");
-                fightMonsters(lizard, usePet);
+                fightMonsters(lizard, isPet);
                 Thread.sleep(PAUSE_SHORT_MS);
 
                 intoTunnel("Карта-КОМ");
-                fightMonsters(lizard, usePet);
+                fightMonsters(lizard, isPet);
                 enterStation("Войти с пропуском", PAUSE_SHORT_TUNNELS_MS);
                 Thread.sleep(PAUSE_SHORT_MS);
 
                 intoTunnel("Карта-КОМ-ФРУ");
-                fightMonsters(lizard, usePet);
+                fightMonsters(lizard, isPet);
 
                 intoTunnel("Карта-ФРУ-ПК");
-                fightMonsters(lizard, usePet);
+                fightMonsters(lizard, isPet);
                 enterStation("Войти", PAUSE_SHORT_TUNNELS_MS);
                 Thread.sleep(PAUSE_SHORT_MS);
 
@@ -155,9 +155,28 @@ public class TunnelBot extends BaseBot {
     }
 
     // Бои с туннельными монстрами
-    private void fightMonsters(MonsterKind kind, boolean usePet) throws InterruptedException {
+    private void fightMonsters(MonsterKind kind, boolean isPet) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
-        if (usePet)
+        if (isPet)
+            clickButton("Питомец");
+        clickButton("Пропустить");
+        clickButton("Закрыть");
+        unifiedCounter.plusOne();
+        if (kind == MonsterKind.SPIDER) {
+            System.out.printf("Убито пауков: %d%n%n", unifiedCounter.getCount());
+            Thread.sleep(PAUSE_TUNNEL_MS);
+            Thread.sleep(PAUSE_SHORT_MS);
+            clickButton("В туннель");
+            Thread.sleep(PAUSE_SHORT_MS);
+        } else {
+            System.out.printf("Убито ящеров: %d%n%n", unifiedCounter.getCount());
+            Thread.sleep(PAUSE_TUNNEL_MS);
+        }
+    }
+
+    private void fightMonsters(MonsterKind kind) throws InterruptedException {
+        Thread.sleep(PAUSE_TUNNEL_MS);
+        if (isPet)
             clickButton("Питомец");
         clickButton("Пропустить");
         clickButton("Закрыть");
