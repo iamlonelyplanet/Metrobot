@@ -26,6 +26,7 @@ import static com.metrobot.Buttons.*;
  */
 
 public class ClanBot extends BaseBot {
+
     public ClanBot(List<HWND> windows,
                    LocalTime timeHHmm,
                    String botName,
@@ -45,12 +46,13 @@ public class ClanBot extends BaseBot {
     protected Map<String, Point> getButtonMap() {
         return CLAN_BUTTONS;
     }
+
     protected final List<HWND> windows;
     private int totalBattles;
     private boolean isGameGoingOn;
     private LocalTime endTime;
     private long lastAttackMillis = -1;
-    boolean g = true;
+    public enum BotType {RAID, CW}
 
     public void start() {
         try {
@@ -128,9 +130,6 @@ public class ClanBot extends BaseBot {
             clickButton("Атаковать босса");
             lastAttackMillis = System.currentTimeMillis();
             Thread.sleep(PAUSE_RAID_BOSS_MS);
-//            if (g) {
-//
-//            }
             clickButton("Пропустить");
             clickButton("Закрыть");
         }

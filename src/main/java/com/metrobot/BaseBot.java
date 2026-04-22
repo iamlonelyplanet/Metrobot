@@ -34,8 +34,6 @@ public abstract class BaseBot {
     protected LocalTime startTime;
     protected Counter unifiedCounter;
 
-    public enum BotType {RAID, CW}
-
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
 
     protected abstract Map<String, Point> getButtonMap();
@@ -94,8 +92,8 @@ public abstract class BaseBot {
     }
 
     /**
-     * Сворачиваем активные окна, если включён silentMode. После сворачивания до следующего события проходит почти
-     * 5 минут, в это время пользователь продолжает заниматься своей работой.
+     * Сворачиваем активные окна при silentMode == true. После сворачивания до следующего события проходит 5 минут,
+     * в это время пользователь продолжает заниматься своей работой.
      */
     protected void minimizeActiveWindows() {
         if (!isSilentMode) return;
