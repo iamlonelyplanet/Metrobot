@@ -91,6 +91,7 @@ public class TunnelBot extends BaseBot {
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
             long secondsSpider = spidersDuration.getSeconds();
             System.out.printf("На пауков затрачено %d мин %d сек\n", (secondsSpider / 60), (secondsSpider % 60));
+            System.out.printf("На пауков затрачено %d мин %d сек\n", (secondsSpider / 60), (secondsSpider % 60));
 
             // === Туннели с Ящерами ===
             showActiveWindows(); // можно удалить, но лучше оставить для внутреннего тестирования
