@@ -25,13 +25,11 @@ public class RaidStartBot extends BaseBot {
 
         super(List.of(windows.get(0))); // Запустить рейд может только первое, главное окно. Это логика игры.
 
-        {
-            this.startTime = timeHHmm;
-            this.botName = botName;
-            this.windows = windows;
-            this.closeAfterFinish = isCloseAfterFinish;
-            this.bossName = bossName;
-        }
+        this.startTime = timeHHmm;
+        this.botName = botName;
+        this.windows = windows;
+        this.closeAfterFinish = isCloseAfterFinish;
+        this.bossName = bossName;
     }
 
     private final List<HWND> windows;
@@ -68,8 +66,8 @@ public class RaidStartBot extends BaseBot {
 
             clickButton("В рейд");
 
-            System.out.println("\n=== Рейд запущен ==="); // стандартный endGame здесь не подходит
-            Thread.sleep(PAUSE_LONG_MS);
+            System.out.println("\n=== Выбора босса для рейда завершён ==="); // стандартный endGame здесь не подходит
+            Thread.sleep(PAUSE_SHORT_MS);
 
             // Стартуем режим "Рейд" с теми окнами, которые передались в RaidStartBot
             ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд", closeAfterFinish);

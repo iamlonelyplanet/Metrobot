@@ -31,18 +31,17 @@ public class ArenaBot extends BaseBot {
 
         super(windows);
 
-        {
-            this.startTime = timeHHmm;
-            this.botName = botName;
-            this.isPet = isPet;
-            this.closeAfterFinish = closeAfterFinish;
-        }
+        this.startTime = timeHHmm;
+        this.botName = botName;
+        this.isPet = isPet;
+        this.closeAfterFinish = closeAfterFinish;
     }
 
     @Override
     protected Map<String, Point> getButtonMap() {
         return ARENA_BUTTONS;
     }
+
     private long lastAttackMillis = -1;
 
     public void start() {

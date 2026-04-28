@@ -21,7 +21,7 @@ import static com.metrobot.Buttons.*;
  * В этом режиме работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
  * Повседневная работа пользователя в Windows прерывается всего на 10-12 секунд раз в 5 минут.
  * Счётчик боёв записывается в файл.
- *
+ * <p>
  * TODO: проверить предпоследние, 23/11 бои. Переделать закрытие автобоя
  */
 
@@ -34,12 +34,10 @@ public class ClanBot extends BaseBot {
 
         super(windows);
 
-        {
-            this.startTime = timeHHmm;
-            this.botName = botName;
-            this.windows = windows;
-            this.closeAfterFinish = closeAfterFinish;
-        }
+        this.startTime = timeHHmm;
+        this.botName = botName;
+        this.windows = windows;
+        this.closeAfterFinish = closeAfterFinish;
     }
 
     @Override
@@ -52,6 +50,7 @@ public class ClanBot extends BaseBot {
     private boolean isGameGoingOn;
     private LocalTime endTime;
     private long lastAttackMillis = -1;
+
     public enum BotType {RAID, CW}
 
     public void start() {
