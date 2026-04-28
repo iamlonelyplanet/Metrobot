@@ -14,7 +14,8 @@ import static com.metrobot.Buttons.*;
  * порядка 45 минут (23 при VIP, 12 при VIP + скоростной одежде).
  * В этом режиме окна не сворачиваются, работа пользователя в Windows крайне нежелательна/почти недопустима.
  * Запись счётчика в файл здесь не нужна.
- * Самый некрасивый класс. Зато самый лёгкий для обучения, для перегрузки, сигнатур, ООП и многого-прочего.
+ * Самый некрасивый класс. Зато самый лёгкий для обучения, для перегрузки, сигнатур, ООП и многого-прочего, что и
+ * произошло с апрельской версии 1.2.9
  * TODO: Паузы второго туннеля с пауками. Текст в единый метод. Подумать о паузах по команде пользователя.
  */
 
@@ -74,7 +75,7 @@ public class TunnelBot extends BaseBot {
 
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
             long secondsSpider = spidersDuration.getSeconds();
-            System.out.printf("На пауков затрачено %d мин %d сек\n", (secondsSpider / 60), (secondsSpider % 60));
+            System.out.printf("На пауков затрачено: %s", printTime(secondsSpider));
 
             // === Туннели с Ящерами ===
             showActiveWindows(); // можно удалить, но лучше оставить для внутреннего тестирования
@@ -102,9 +103,8 @@ public class TunnelBot extends BaseBot {
             // Пока надо для таймера, потом можно удалить
             Duration lizardDuration = Duration.between(endSpiderTime, Instant.now());
             long secondsLizard = lizardDuration.getSeconds();
-            System.out.printf("На ящеров затрачено: %d мин %d сек\n", secondsLizard / 60, secondsLizard % 60);
-            System.out.printf("Итого на режим %s затрачено %d мин %d сек",
-                    botName, (secondsSpider + secondsLizard) / 60, (secondsSpider + secondsLizard) % 60);
+            System.out.printf("На ящеров затрачено: %s", printTime(secondsLizard));
+            System.out.printf("Итого на режим %s затрачено %s", botName, printTime(secondsSpider + secondsLizard));
 
             endGame();
 
@@ -117,12 +117,9 @@ public class TunnelBot extends BaseBot {
         Thread.sleep(pause);
         if (isDocument) {
             clickButton("Войти с пропуском");
+            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
         } else {
             clickButton("Войти");
-        }
-
-        if (isDocument) {
-            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
         }
     }
 
@@ -131,18 +128,21 @@ public class TunnelBot extends BaseBot {
                              MonsterKind kind,
                              int pauseStationEntrance,
                              boolean isDocument,
-                             int additionalPause) throws InterruptedException {
+                             int pauseAfterAction) throws InterruptedException {
         intoTunnel(buttonName);
         fightTunnelMonster(kind);
         enterStation(isDocument, pauseStationEntrance);
-        Thread.sleep(additionalPause);
+        Thread.sleep(pauseAfterAction);
     }
+
     // Станции с автовходом
-    private void exitStation(String buttonName, MonsterKind kind, int additionalPause) throws InterruptedException {
+    private void exitStation(String buttonName, MonsterKind kind, int pauseAfterAction) throws InterruptedException {
         intoTunnel(buttonName);
         fightTunnelMonster(kind);
-        Thread.sleep(additionalPause);
+        Thread.sleep(pauseAfterAction);
     }
+
+    // Смена линии метро
     private void changeLine(String stationName, boolean isDocument) throws InterruptedException {
         intoTunnel(stationName);
         enterStation(isDocument, PAUSE_SHORT_MS);
@@ -157,18 +157,22 @@ public class TunnelBot extends BaseBot {
     // Бои с туннельными монстрами
     private void fightTunnelMonster(MonsterKind kind) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
-        if (isPet)
+        if (isPet) {
             clickButton("Питомец");
+        }
         clickButton("Пропустить");
         clickButton("Закрыть");
         unifiedCounter.plusOne();
         if (kind == MonsterKind.SPIDER) {
             System.out.printf("Убито пауков: %d%n%n", unifiedCounter.getCount());
-            Thread.sleep(PAUSE_TUNNEL_MS);
             Thread.sleep(PAUSE_SHORT_MS);
         } else {
             System.out.printf("Убито ящеров: %d%n%n", unifiedCounter.getCount());
-            Thread.sleep(PAUSE_TUNNEL_MS);
         }
+        Thread.sleep(PAUSE_TUNNEL_MS);
+    }
+
+    private String printTime(long seconds) {
+        return String.format("%d мин %d сек\n", seconds / 60, seconds % 60);
     }
 }

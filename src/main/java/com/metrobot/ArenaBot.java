@@ -42,8 +42,6 @@ public class ArenaBot extends BaseBot {
         return ARENA_BUTTONS;
     }
 
-    private long lastAttackMillis = -1;
-
     public void start() {
         try {
             startGame();
@@ -53,11 +51,12 @@ public class ArenaBot extends BaseBot {
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
 
                 clickButton("Клан - Выход");
-                lastAttackMillis = System.currentTimeMillis();
+                long lastAttackMillis = System.currentTimeMillis();
                 clickButton("Арена");
                 clickButton("Атаковать");
-                if (isPet)
+                if (isPet) {
                     clickButton("Питомец");
+                }
                 clickButton("Пропустить");
                 clickButton("Закрыть — Победа");
                 Thread.sleep(PAUSE_SHORT_MS);
