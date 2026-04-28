@@ -15,8 +15,7 @@ import static com.metrobot.Buttons.*;
  * В этом режиме окна не сворачиваются, работа пользователя в Windows крайне нежелательна/почти недопустима.
  * Запись счётчика в файл здесь не нужна.
  * Самый некрасивый класс. Зато самый лёгкий для обучения, для перегрузки, сигнатур, ООП и многого-прочего.
- * TODO: Пауза после входа в туннель на Кропоткинскую (готово?)
- * Текст закинуть в единый метод. Подумать о паузах по команде пользователя.
+ * TODO: Паузы второго туннеля с пауками. Текст в единый метод. Подумать о паузах по команде пользователя.
  */
 
 public class TunnelBot extends BaseBot {
@@ -52,28 +51,21 @@ public class TunnelBot extends BaseBot {
             // 10 пауков в туннеле Парк Культуры - Кропоткинская
             Thread.sleep(PAUSE_MICRO_MS);
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
-                goStation("Карта ПК-КРО", MonsterKind.SPIDER, PAUSE_SHORT_TUNNELS_MS);
-                Thread.sleep(PAUSE_MICRO_MS);
-                goStation("Карта КРО-ПК", MonsterKind.SPIDER, 0);
-                clickButton("В туннель");
-                Thread.sleep(PAUSE_SHORT_MS);
+                exitStation("Карта ПК-КРО", MonsterKind.SPIDER, 0);
+                exitStation("Карта КРО-ПК", MonsterKind.SPIDER, 0);
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
-            clickButton("Карта ПКк-ПКг");
-            enterStation(true, PAUSE_SHORT_MS);
+            changeLine("Карта ПКк-ПКг", true);
 
             // 10 пауков в тоннеле Парк Культуры - Киевская
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
-                goStation("Карта ПКг-КИЕ", MonsterKind.SPIDER, 0);
-                goStation("Карта КИЕ-ПКг", MonsterKind.SPIDER, 0);
-                clickButton("В туннель");
-                Thread.sleep(PAUSE_SHORT_MS);
+                exitStation("Карта ПКг-КИЕ", MonsterKind.SPIDER, 0);
+                exitStation("Карта КИЕ-ПКг", MonsterKind.SPIDER, 0);
             }
 
             // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
-            clickButton("Карта ПКг-ПКк");
-            enterStation(false, PAUSE_SHORT_MS);
+            changeLine("Карта ПКг-ПКк", false);
 
             System.out.printf("\nПауки закончились, прибито %d. Идём к ящерам\n", unifiedCounter.getCount());
 
@@ -91,17 +83,17 @@ public class TunnelBot extends BaseBot {
 
             for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
                 // 4 ящерицы в тоннелях Парк Культуры - Проспект Вернадского
-                goStation("Карта-ПК-ФРУ", MonsterKind.LIZARD, PAUSE_SHORT_TUNNELS_MS, true, 0);
-                goStation("Карта-КОМ", MonsterKind.LIZARD, 0);
-                goStation("Карта-УНИ", MonsterKind.LIZARD, PAUSE_SHORT_TUNNELS_MS, true, 0);
-                goStation("Карта-ПВ", MonsterKind.LIZARD, 0);
+                exitStation("Карта-ПК-ФРУ", MonsterKind.LIZARD, PAUSE_SHORT_TUNNELS_MS, true, 0);
+                exitStation("Карта-КОМ", MonsterKind.LIZARD, 0);
+                exitStation("Карта-УНИ", MonsterKind.LIZARD, PAUSE_SHORT_TUNNELS_MS, true, 0);
+                exitStation("Карта-ПВ", MonsterKind.LIZARD, 0);
                 System.out.printf("Завершено пробегов до Проспекта Вернадского: %d\n\n", (way + 1));
 
                 // 4 ящерицы в тоннелях Проспект Вернадского - Парк Культуры
-                goStation("Карта-УНИ", MonsterKind.LIZARD, PAUSE_SHORT_MS);
-                goStation("Карта-КОМ", MonsterKind.LIZARD, PAUSE_SHORT_MS, true, PAUSE_SHORT_MS);
-                goStation("Карта-КОМ-ФРУ", MonsterKind.LIZARD, 0);
-                goStation("Карта-ФРУ-ПК", MonsterKind.LIZARD, PAUSE_SHORT_MS, false, PAUSE_SHORT_MS);
+                exitStation("Карта-УНИ", MonsterKind.LIZARD, PAUSE_SHORT_MS);
+                exitStation("Карта-КОМ", MonsterKind.LIZARD, PAUSE_SHORT_MS, true, PAUSE_SHORT_MS);
+                exitStation("Карта-КОМ-ФРУ", MonsterKind.LIZARD, 0);
+                exitStation("Карта-ФРУ-ПК", MonsterKind.LIZARD, PAUSE_SHORT_MS, false, PAUSE_SHORT_MS);
                 System.out.printf("\nЗавершено пробегов до Парка Культуры: %d\n\n", (way + 1));
             }
 
@@ -121,12 +113,6 @@ public class TunnelBot extends BaseBot {
         }
     }
 
-    private void intoTunnel(String buttonName) throws InterruptedException {
-        clickButton("В туннель");
-        Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
-        clickButton(buttonName);
-    }
-
     private void enterStation(boolean isDocument, int pause) throws InterruptedException {
         Thread.sleep(pause);
         if (isDocument) {
@@ -141,25 +127,31 @@ public class TunnelBot extends BaseBot {
     }
 
     // Станции без автовхода (с пропуском и без)
-    private void goStation(String buttonName,
-                           MonsterKind kind,
-                           int pauseStationEntrance,
-                           boolean isDocument,
-                           int additionalPause) throws InterruptedException {
-        goBase(buttonName, kind);
+    private void exitStation(String buttonName,
+                             MonsterKind kind,
+                             int pauseStationEntrance,
+                             boolean isDocument,
+                             int additionalPause) throws InterruptedException {
+        intoTunnel(buttonName);
+        fightTunnelMonster(kind);
         enterStation(isDocument, pauseStationEntrance);
         Thread.sleep(additionalPause);
     }
-
     // Станции с автовходом
-    private void goStation(String buttonName, MonsterKind kind, int additionalPause) throws InterruptedException {
-        goBase(buttonName, kind);
-        Thread.sleep(additionalPause);
-    }
-
-    private void goBase(String buttonName, MonsterKind kind) throws InterruptedException {
+    private void exitStation(String buttonName, MonsterKind kind, int additionalPause) throws InterruptedException {
         intoTunnel(buttonName);
         fightTunnelMonster(kind);
+        Thread.sleep(additionalPause);
+    }
+    private void changeLine(String stationName, boolean isDocument) throws InterruptedException {
+        intoTunnel(stationName);
+        enterStation(isDocument, PAUSE_SHORT_MS);
+    }
+
+    private void intoTunnel(String stationName) throws InterruptedException {
+        clickButton("В туннель");
+        Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
+        clickButton(stationName);
     }
 
     // Бои с туннельными монстрами
