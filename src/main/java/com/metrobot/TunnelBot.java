@@ -51,7 +51,7 @@ public class TunnelBot extends BaseBot {
             // === Туннели с пауками ===
             // 10 пауков в туннеле Парк Культуры - Кропоткинская
             Thread.sleep(PAUSE_MICRO_MS);
-            for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
+            for (int way = 0; way < MAX_TUNNEL_WAYS; way++) {
                 exitStation("Карта ПК-КРО", MonsterKind.SPIDER, 0);
                 exitStation("Карта КРО-ПК", MonsterKind.SPIDER, 0);
             }
@@ -60,7 +60,7 @@ public class TunnelBot extends BaseBot {
             changeLine("Карта ПКк-ПКг", true);
 
             // 10 пауков в тоннеле Парк Культуры - Киевская
-            for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
+            for (int way = 0; way < MAX_TUNNEL_WAYS; way++) {
                 exitStation("Карта ПКг-КИЕ", MonsterKind.SPIDER, 0);
                 exitStation("Карта КИЕ-ПКг", MonsterKind.SPIDER, 0);
             }
@@ -82,7 +82,7 @@ public class TunnelBot extends BaseBot {
             unifiedCounter.setCount(0);
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
-            for (int way = 0; way < MAX_WAYS_TUNNEL; way++) {
+            for (int way = 0; way < MAX_TUNNEL_WAYS; way++) {
                 // 4 ящерицы в тоннелях Парк Культуры - Проспект Вернадского
                 exitStation("Карта-ПК-ФРУ", MonsterKind.LIZARD, PAUSE_SHORT_TUNNELS_MS, true, 0);
                 exitStation("Карта-КОМ", MonsterKind.LIZARD, 0);

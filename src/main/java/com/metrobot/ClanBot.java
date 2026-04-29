@@ -122,12 +122,12 @@ public class ClanBot extends BaseBot {
             // поковыряться здесь в таймингах для старта клана
             if (unifiedCounter.getCount() > 0) {
                 clickButton("Клан");
-                lastAttackMillis = System.currentTimeMillis();
+//                lastAttackMillis = System.currentTimeMillis();
                 clickButton("Рейды");
             }
 
-            clickButton("Атаковать босса");
             lastAttackMillis = System.currentTimeMillis();
+            clickButton("Атаковать босса");
             Thread.sleep(PAUSE_RAID_BOSS_MS);
             clickButton("Пропустить");
             clickButton("Закрыть");

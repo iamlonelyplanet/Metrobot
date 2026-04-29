@@ -67,13 +67,9 @@ public class ArenaBot extends BaseBot {
                 CounterStorage.saveCounters(counters);
                 System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
                 if (battle < MAX_BATTLES_ARENA && lastAttackMillis > 0) {
-                    long now = System.currentTimeMillis();
-                    long elapsedSeconds = (now - lastAttackMillis) / 1000;
-                    long secondsToWait = ATTACK_COOLDOWN_SECONDS - elapsedSeconds;
-
-                    if (secondsToWait > 0) {
-                        countdown((int) secondsToWait);
-                    }
+                    int elapsedSeconds = (int) (System.currentTimeMillis() - lastAttackMillis) / 1000;
+                    int secondsToWait = ATTACK_COOLDOWN_SECONDS - elapsedSeconds;
+                    countdown(secondsToWait);
                 }
             }
 
