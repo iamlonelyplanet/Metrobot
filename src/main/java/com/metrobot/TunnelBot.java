@@ -45,34 +45,17 @@ public class TunnelBot extends BaseBot {
         try {
             startGame();
 
+            // === Туннели с пауками ===
             Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
             showActiveWindows();
-
-            // === Туннели с пауками ===
-            // 10 пауков в туннеле Парк Культуры - Кропоткинская
             Thread.sleep(PAUSE_MICRO_MS);
-            for (int way = 0; way < MAX_TUNNEL_WAYS; way++) {
-                exitStation("Карта ПК-КРО", MonsterKind.SPIDER, 0);
-                exitStation("Карта КРО-ПК", MonsterKind.SPIDER, 0);
-            }
 
-            // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
-            changeLine("Карта ПКк-ПКг", true);
-
-            // 10 пауков в тоннеле Парк Культуры - Киевская
-            for (int way = 0; way < MAX_TUNNEL_WAYS; way++) {
-                exitStation("Карта ПКг-КИЕ", MonsterKind.SPIDER, 0);
-                exitStation("Карта КИЕ-ПКг", MonsterKind.SPIDER, 0);
-            }
-
-            // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
-            changeLine("Карта ПКг-ПКк", false);
-
+            fightSpiders("Карта ПК-КРО", "Карта КРО-ПК"); // 10 пауков в туннеле Парк Культуры - Кропоткинская
+            changeLine("Карта ПКк-ПКг", true); // Переход Парк Культуры 1 - Парк Культуры 2, однократно
+            fightSpiders("Карта ПКг-КИЕ", "Карта КИЕ-ПКг"); // 10 пауков в тоннеле Парк Культуры - Киевская
+            changeLine("Карта ПКг-ПКк", false); // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
             System.out.printf("\nПауки закончились, прибито %d. Идём к ящерам\n", unifiedCounter.getCount());
-
-            // Пока надо для таймера, потом можно удалить
-            Instant endSpiderTime = Instant.now();
-
+            Instant endSpiderTime = Instant.now(); // Пока надо для таймера, потом можно удалить
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
             long secondsSpider = spidersDuration.getSeconds();
             System.out.printf("На пауков затрачено: %s", printTime(secondsSpider));
@@ -113,9 +96,29 @@ public class TunnelBot extends BaseBot {
         }
     }
 
-    private void enterStation(boolean isDocument, int pause) throws InterruptedException {
+    // Переход на станцию (с пропуском и без)
+    private void exitStation(String buttonName,
+                             MonsterKind kind,
+                             int pauseStationEntrance,
+                             boolean isDocumentRequired,
+                             int pauseAfterAction) throws InterruptedException {
+        intoTunnel(buttonName);
+        fightTunnelMonster(kind);
+        enterStation(isDocumentRequired, pauseStationEntrance);
+        Thread.sleep(pauseAfterAction);
+    }
+
+    // Переход на станцию с автоматичесмим входом (без пропуска)
+    private void exitStation(String buttonName, MonsterKind kind, int pauseAfterAction) throws InterruptedException {
+        intoTunnel(buttonName);
+        fightTunnelMonster(kind);
+        Thread.sleep(pauseAfterAction);
+    }
+
+    // Вход на станцию (с пропуском и без)
+    private void enterStation(boolean isDocumentRequired, int pause) throws InterruptedException {
         Thread.sleep(pause);
-        if (isDocument) {
+        if (isDocumentRequired) {
             clickButton("Войти с пропуском");
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
         } else {
@@ -123,38 +126,20 @@ public class TunnelBot extends BaseBot {
         }
     }
 
-    // Станции без автовхода (с пропуском и без)
-    private void exitStation(String buttonName,
-                             MonsterKind kind,
-                             int pauseStationEntrance,
-                             boolean isDocument,
-                             int pauseAfterAction) throws InterruptedException {
-        intoTunnel(buttonName);
-        fightTunnelMonster(kind);
-        enterStation(isDocument, pauseStationEntrance);
-        Thread.sleep(pauseAfterAction);
-    }
-
-    // Станции с автовходом
-    private void exitStation(String buttonName, MonsterKind kind, int pauseAfterAction) throws InterruptedException {
-        intoTunnel(buttonName);
-        fightTunnelMonster(kind);
-        Thread.sleep(pauseAfterAction);
-    }
-
     // Смена линии метро
-    private void changeLine(String stationName, boolean isDocument) throws InterruptedException {
+    private void changeLine(String stationName, boolean isDocumentRequired) throws InterruptedException {
         intoTunnel(stationName);
-        enterStation(isDocument, PAUSE_SHORT_MS);
+        enterStation(isDocumentRequired, PAUSE_SHORT_MS);
     }
 
+    // Выход со станции = вход на следующую станцию
     private void intoTunnel(String stationName) throws InterruptedException {
         clickButton("В туннель");
         Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
         clickButton(stationName);
     }
 
-    // Бои с туннельными монстрами
+    // Бой с туннельным монстром
     private void fightTunnelMonster(MonsterKind kind) throws InterruptedException {
         Thread.sleep(PAUSE_TUNNEL_MS);
         if (isPet) {
@@ -172,6 +157,15 @@ public class TunnelBot extends BaseBot {
         Thread.sleep(PAUSE_TUNNEL_MS);
     }
 
+    // Серия боёв с пауками
+    private void fightSpiders(String map1, String map2) throws InterruptedException {
+        for (int way = 0; way < MAX_TUNNEL_WAYS; way++) {
+            exitStation(map1, MonsterKind.SPIDER, 0);
+            exitStation(map2, MonsterKind.SPIDER, 0);
+        }
+    }
+
+    // Подсчёт и формирование строки с потраченным временем
     private String printTime(long seconds) {
         return String.format("%d мин %d сек\n", seconds / 60, seconds % 60);
     }
