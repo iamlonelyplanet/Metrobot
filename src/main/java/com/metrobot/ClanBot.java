@@ -76,6 +76,7 @@ public class ClanBot extends BaseBot {
                     clickButton("Война");
                     clickButton("Обновить");
                     clickButton("Рейды");
+                    lastAttackMillis = System.currentTimeMillis();
                 }
                 while (isGameGoingOn) {
                     fightInClan(BotType.RAID);
@@ -100,6 +101,7 @@ public class ClanBot extends BaseBot {
         /* Выход из режима "Автобой" (при VIP) перед клановыми движухами. Не сработает, если нижние окна
         пересекаются с верхними. Переделать?
          */
+
 //        if (unifiedCounter.getCount() == 0) {
 //            clickButton("Убрать автобой");
 //            clickButton("Арена - закрыть");
@@ -119,14 +121,11 @@ public class ClanBot extends BaseBot {
         }
 
         if (type == BotType.RAID) {
-            // поковыряться здесь в таймингах для старта клана
             if (unifiedCounter.getCount() > 0) {
                 clickButton("Клан");
-//                lastAttackMillis = System.currentTimeMillis();
+                lastAttackMillis = System.currentTimeMillis();
                 clickButton("Рейды");
             }
-
-            lastAttackMillis = System.currentTimeMillis();
             clickButton("Атаковать босса");
             Thread.sleep(PAUSE_RAID_BOSS_MS);
             clickButton("Пропустить");
