@@ -49,8 +49,6 @@ public class ArenaBot extends BaseBot {
             // Бои
             for (int battle = (unifiedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
-
-                clickButton("Клан - Выход");
                 long lastAttackMillis = System.currentTimeMillis();
                 clickButton("Арена");
                 clickButton("Атаковать");
