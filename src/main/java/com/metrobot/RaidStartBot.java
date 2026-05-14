@@ -40,7 +40,7 @@ public class RaidStartBot extends BaseBot {
         return CLAN_BUTTONS;
     }
 
-    public void start() {
+    public void playGame() {
         try {
             startGame();
 
@@ -71,7 +71,7 @@ public class RaidStartBot extends BaseBot {
 
             // Стартуем режим "Рейд" с теми окнами, которые передались в RaidStartBot
             ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд", closeAfterFinish);
-            raid.start();
+            raid.playGame();
 
         } catch (Exception e) {
             handleExceptions(e);

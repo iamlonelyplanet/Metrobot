@@ -33,7 +33,7 @@ public class RatBot extends BaseBot {
         return RAT_BUTTONS;
     }
 
-    public void start() {
+    public void playGame() {
         try {
             startGame();
             showActiveWindows();

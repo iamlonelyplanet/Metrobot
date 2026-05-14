@@ -53,7 +53,7 @@ public class ClanBot extends BaseBot {
 
     public enum BotType {RAID, CW}
 
-    public void start() {
+    public void playGame() {
         try {
             startGame();
             int hoursToFinish;

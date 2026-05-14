@@ -42,7 +42,7 @@ public class ArenaBot extends BaseBot {
         return ARENA_BUTTONS;
     }
 
-    public void start() {
+    public void playGame() {
         try {
             startGame();
 

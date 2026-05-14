@@ -13,7 +13,7 @@ public class BotFactory {
                         cfg.getStartTime(),
                         cfg.getBotName(),
                         cfg.isCloseAfterFinish());
-                clanBot.start();
+                clanBot.playGame();
             }
             case 2 -> { // Рейд, не мёржить с case 1
                 ClanBot clanBot = new ClanBot(
@@ -22,7 +22,7 @@ public class BotFactory {
                         cfg.getBotName(),
                         cfg.isCloseAfterFinish()
                 );
-                clanBot.start();
+                clanBot.playGame();
             }
             case 3 -> {
                 ArenaBot arenaBot = new ArenaBot(
@@ -32,7 +32,7 @@ public class BotFactory {
                         cfg.isPet(),
                         cfg.isCloseAfterFinish()
                 );
-                arenaBot.start();
+                arenaBot.playGame();
             }
             case 4 -> {
                 TunnelBot tunnelBot = new TunnelBot(
@@ -42,7 +42,7 @@ public class BotFactory {
                         cfg.isPet(),
                         cfg.isCloseAfterFinish()
                 );
-                tunnelBot.start();
+                tunnelBot.playGame();
             }
             case 5 -> {
                 RatBot ratBot = new RatBot(
@@ -52,7 +52,7 @@ public class BotFactory {
                         cfg.isPet(),
                         cfg.isCloseAfterFinish()
                 );
-                ratBot.start();
+                ratBot.playGame();
             }
 
             case 6 -> {
@@ -63,7 +63,7 @@ public class BotFactory {
                         cfg.getBoss(),
                         cfg.isCloseAfterFinish()
                 );
-                RaidStartBot.start();
+                RaidStartBot.playGame();
             }
             default -> System.out.println("Неизвестный режим. Завершаю.");
         }
