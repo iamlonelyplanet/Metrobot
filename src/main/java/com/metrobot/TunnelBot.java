@@ -48,7 +48,7 @@ public class TunnelBot extends BaseBot {
             // === Туннели с пауками ===
             Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
             showActiveWindows();
-            Thread.sleep(PAUSE_MICRO_MS);
+            Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
 
             fightSpiders("Карта ПК-КРО", "Карта КРО-ПК"); // 10 пауков в туннеле Парк Культуры - Кропоткинская
             changeLine("Карта ПКк-ПКг", true); // Переход Парк Культуры 1 - Парк Культуры 2, однократно

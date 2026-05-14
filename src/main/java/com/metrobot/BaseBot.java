@@ -20,7 +20,7 @@ import static com.metrobot.Buttons.*;
 
 /**
  * Родительский класс для всех режимов. Полный комплект унифицированных методов.
- * TODO: переработать закрытие окон; пересмотреть countdown для RaidBot и ArenaBot.
+ * TODO: переработать закрытие окон.
  */
 
 public abstract class BaseBot {
@@ -69,25 +69,21 @@ public abstract class BaseBot {
     // Ожидание времени старта. Отсчитывает большие промежутки времени, без обновляемого вывода в консоль
     protected void waitUntilStartTime(LocalTime startTime) throws InterruptedException {
         System.out.printf("\n=== Бот %s запустится в %s ===", botName, startTime.format(TIME_FMT));
-
         while (LocalTime.now().isBefore(startTime)) {
             Thread.sleep(1000); // Не менять число на переменную, это эталон секунды в счётчике!
         }
     }
 
     // Разворачиваем активные окна
-    protected void showActiveWindows() {
+    protected void showActiveWindows() throws InterruptedException {
+        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
             USER32.ShowWindow(hWnd, WinUser.SW_RESTORE);
+            Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
             USER32.SetForegroundWindow(hWnd);
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+            Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
         }
-
         System.out.println("\nРазвернул окна");
     }
 
@@ -95,21 +91,16 @@ public abstract class BaseBot {
      * Сворачиваем активные окна при silentMode == true. После сворачивания до следующего события проходит 5 минут,
      * в это время пользователь продолжает заниматься своей работой.
      */
-    protected void minimizeActiveWindows() {
+    protected void minimizeActiveWindows() throws InterruptedException {
         if (!isSilentMode) return;
+        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
             USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
         }
         System.out.println("Свернул окна\n");
     }
 
-    // Закрытие активных окон, пока не работает.
     protected void closeGameWindows() throws InterruptedException {
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;
@@ -143,7 +134,7 @@ public abstract class BaseBot {
     }
 
     // Вывод в консоль номера боя
-    protected void printBattleNumber(int battle, int total) {
+    protected void printBattleNumber(int battle, int total) throws InterruptedException {
         System.out.printf("\n=== Бой %d из %d ===", battle, total);
         showActiveWindows();
     }
@@ -168,7 +159,6 @@ public abstract class BaseBot {
         for (int i = 0; i < activeWindows.size(); i++) {
             HWND hWnd = activeWindows.get(i);
             if (hWnd == null) continue;
-            int fighterNum = i + 1; // индексация от 1
 
             RECT rect = new RECT();
             USER32.GetWindowRect(hWnd, rect);
@@ -180,9 +170,9 @@ public abstract class BaseBot {
                 Thread.sleep(PAUSE_SHORT_MS);
             }
 
-            System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", fighterNum, buttonName, x, y);
+            System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
             clickAt(x, y);
-            Thread.sleep(PAUSE_MICRO_MS);
+            Thread.sleep(100);
         }
 
         Thread.sleep(PAUSE_SHORT_MS);

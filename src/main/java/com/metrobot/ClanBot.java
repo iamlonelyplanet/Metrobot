@@ -143,7 +143,7 @@ public class ClanBot extends BaseBot {
             if (lastAttackMillis > 0) {
                 long now = System.currentTimeMillis();
                 long elapsedSeconds = (now - lastAttackMillis) / 1000;
-                long secondsToWait = ATTACK_COOLDOWN_SECONDS - elapsedSeconds;
+                long secondsToWait = ATTACK_COOLDOWN_SEC - elapsedSeconds;
 
                 if (secondsToWait > 0) {
                     countdown((int) secondsToWait);
