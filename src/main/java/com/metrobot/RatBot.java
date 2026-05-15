@@ -44,9 +44,7 @@ public class RatBot extends BaseBot {
 
                 clickButton("Начстанции");
                 Thread.sleep(PAUSE_SHORT_MS);
-                clickButton("Крыса");
-
-                minimizeActiveWindows();
+                clickButton("Крыса"); // внутри метода - сворачивание окон при кнопке "Крыса"
                 countdown(60); // стандарт: 60, ст + штаны: 42, ст + комплект: 30, VIP: 30, VIP + комплект: 20
                 showActiveWindows();
 

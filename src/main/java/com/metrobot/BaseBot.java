@@ -87,19 +87,6 @@ public abstract class BaseBot {
         System.out.println("\nРазвернул окна");
     }
 
-    /**
-     * Сворачиваем активные окна при silentMode == true. После сворачивания до следующего события проходит 5 минут,
-     * в это время пользователь продолжает заниматься своей работой.
-     */
-    protected void minimizeActiveWindows() throws InterruptedException {
-        if (!isSilentMode) return;
-        for (HWND hWnd : activeWindows) {
-            if (hWnd == null) continue;
-            USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
-        }
-        System.out.println("Свернул окна\n");
-    }
-
     protected void closeGameWindows() throws InterruptedException {
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;
@@ -150,6 +137,12 @@ public abstract class BaseBot {
                 "Арена"
         );
 
+        Set<String> FINAL_BUTTONS = Set.of(
+                "Закрыть — Поражение",
+                "Крыса",
+                "Клан - Выход"
+        );
+
         if (rel == null) {
             System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
             return;
@@ -171,7 +164,7 @@ public abstract class BaseBot {
 
             System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
             clickAt(x, y);
-            if (Objects.equals(buttonName, "Закрыть — Поражение") || Objects.equals(buttonName,"Клан - Выход")) {
+            if (FINAL_BUTTONS.contains(buttonName)) {
                 Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
                 USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
             }
@@ -200,6 +193,20 @@ public abstract class BaseBot {
         robot.mouseMove(x, y);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+    }
+
+    /**
+     * Метод пока устаревший и не используется. Оставлен для дальнейшей разработки (с версии 1.2.9)
+     * Сворачиваем активные окна при silentMode == true. После сворачивания до следующего события проходит 5 минут,
+     * в это время пользователь продолжает заниматься своей работой.
+     */
+    protected void minimizeActiveWindows() throws InterruptedException {
+        if (!isSilentMode) return;
+        for (HWND hWnd : activeWindows) {
+            if (hWnd == null) continue;
+            USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
+        }
+        System.out.println("Свернул окна\n");
     }
 
     // Проигрываем звук по окончанию режима игры. Бесполезная свистоперделка ради учёбы и пасхалка для олдов.
