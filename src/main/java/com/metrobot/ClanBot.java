@@ -133,7 +133,7 @@ public class ClanBot extends BaseBot {
         }
 
         clickButton("Клан - Выход"); // Выход из игрового меню "Клан" радикально снижает загрузку CPU
-//        minimizeActiveWindows();
+
         unifiedCounter.plusOne();
         CounterStorage.saveCounters(counters);
         System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));

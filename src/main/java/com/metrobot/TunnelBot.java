@@ -83,8 +83,6 @@ public class TunnelBot extends BaseBot {
                 System.out.printf("\nЗавершено пробегов до Парка Культуры: %d\n\n", (way + 1));
             }
 
-//            minimizeActiveWindows();
-
             // Пока надо для таймера, потом можно удалить
             Duration lizardDuration = Duration.between(endSpiderTime, Instant.now());
             long secondsLizard = lizardDuration.getSeconds();
@@ -149,6 +147,7 @@ public class TunnelBot extends BaseBot {
         }
         clickButton("Пропустить");
         clickButton("Закрыть");
+
         unifiedCounter.plusOne();
         if (kind == MonsterKind.SPIDER) {
             System.out.printf("Убито пауков: %d%n%n", unifiedCounter.getCount());
@@ -156,6 +155,7 @@ public class TunnelBot extends BaseBot {
         } else {
             System.out.printf("Убито ящеров: %d%n%n", unifiedCounter.getCount());
         }
+
         Thread.sleep(PAUSE_TUNNEL_MS);
     }
 

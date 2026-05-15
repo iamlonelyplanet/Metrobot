@@ -59,11 +59,11 @@ public class ArenaBot extends BaseBot {
                 clickButton("Закрыть — Победа");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickButton("Закрыть — Поражение");
-//                minimizeActiveWindows();
 
                 unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);
                 System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
+
                 if (battle < MAX_BATTLES_ARENA && lastAttackMillis > 0) {
                     int elapsedSeconds = (int) (System.currentTimeMillis() - lastAttackMillis) / 1000;
                     int secondsToWait = ATTACK_COOLDOWN_SEC - elapsedSeconds;
