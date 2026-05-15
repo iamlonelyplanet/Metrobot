@@ -93,7 +93,6 @@ public abstract class BaseBot {
      */
     protected void minimizeActiveWindows() throws InterruptedException {
         if (!isSilentMode) return;
-        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
             USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
@@ -172,6 +171,10 @@ public abstract class BaseBot {
 
             System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
             clickAt(x, y);
+            if (Objects.equals(buttonName, "Закрыть — Поражение") || Objects.equals(buttonName,"Клан - Выход")) {
+                Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
+                USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
+            }
             Thread.sleep(100);
         }
 

@@ -59,7 +59,7 @@ public class ArenaBot extends BaseBot {
                 clickButton("Закрыть — Победа");
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickButton("Закрыть — Поражение");
-                minimizeActiveWindows();
+//                minimizeActiveWindows();
 
                 unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);

@@ -83,7 +83,7 @@ public class TunnelBot extends BaseBot {
                 System.out.printf("\nЗавершено пробегов до Парка Культуры: %d\n\n", (way + 1));
             }
 
-            minimizeActiveWindows();
+//            minimizeActiveWindows();
 
             // Пока надо для таймера, потом можно удалить
             Duration lizardDuration = Duration.between(endSpiderTime, Instant.now());
