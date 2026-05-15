@@ -41,6 +41,7 @@ public class TunnelBot extends BaseBot {
 
     private enum MonsterKind {SPIDER, LIZARD}
 
+    @Override
     public void playGame() {
         try {
             startGame();

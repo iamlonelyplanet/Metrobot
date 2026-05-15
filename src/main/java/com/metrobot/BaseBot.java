@@ -37,6 +37,7 @@ public abstract class BaseBot {
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
 
     protected abstract Map<String, Point> getButtonMap();
+    protected abstract void playGame();
 
     private static final User32 USER32 = User32.INSTANCE;
     private static final DateTimeFormatter TIME_FMT = DateTimeFormatter.ofPattern("HH:mm");
@@ -76,13 +77,11 @@ public abstract class BaseBot {
 
     // Разворачиваем активные окна
     protected void showActiveWindows() throws InterruptedException {
-        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
             USER32.ShowWindow(hWnd, WinUser.SW_RESTORE);
             Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
             USER32.SetForegroundWindow(hWnd);
-            Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
         }
         System.out.println("\nРазвернул окна");
     }
@@ -167,6 +166,9 @@ public abstract class BaseBot {
             if (FINAL_BUTTONS.contains(buttonName)) {
                 Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
                 USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
+                if (i + 1 == activeWindows.size()) {
+                    System.out.println("Свернул окна");
+                }
             }
             Thread.sleep(100);
         }

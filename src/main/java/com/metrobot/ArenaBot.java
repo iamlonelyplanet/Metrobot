@@ -42,6 +42,7 @@ public class ArenaBot extends BaseBot {
         return ARENA_BUTTONS;
     }
 
+    @Override
     public void playGame() {
         try {
             startGame();

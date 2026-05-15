@@ -33,6 +33,7 @@ public class RatBot extends BaseBot {
         return RAT_BUTTONS;
     }
 
+    @Override
     public void playGame() {
         try {
             startGame();

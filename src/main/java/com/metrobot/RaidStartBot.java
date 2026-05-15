@@ -40,6 +40,7 @@ public class RaidStartBot extends BaseBot {
         return CLAN_BUTTONS;
     }
 
+    @Override
     public void playGame() {
         try {
             startGame();

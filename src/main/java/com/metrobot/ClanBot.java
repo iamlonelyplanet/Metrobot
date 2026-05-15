@@ -53,6 +53,7 @@ public class ClanBot extends BaseBot {
 
     public enum BotType {RAID, CW}
 
+    @Override
     public void playGame() {
         try {
             startGame();

@@ -56,14 +56,14 @@ public class BotFactory {
             }
 
             case 6 -> {
-                RaidStartBot RaidStartBot = new RaidStartBot(
+                RaidStartBot raidStartBot = new RaidStartBot(
                         cfg.getActiveWindows(),
                         cfg.getStartTime(),
                         cfg.getBotName(),
                         cfg.getBoss(),
                         cfg.isCloseAfterFinish()
                 );
-                RaidStartBot.playGame();
+                raidStartBot.playGame();
             }
             default -> System.out.println("Неизвестный режим. Завершаю.");
         }
