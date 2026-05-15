@@ -50,6 +50,7 @@ public class ArenaBot extends BaseBot {
             for (int battle = (unifiedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
                 long lastAttackMillis = System.currentTimeMillis();
+                clickButton("Арена 2");
                 clickButton("Арена");
                 clickButton("Атаковать");
                 if (isPet) {

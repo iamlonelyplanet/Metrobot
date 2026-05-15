@@ -38,7 +38,8 @@ public class Buttons {
     // === Координаты кнопок относительно верхнего левого угла "рабочего поля" (не окна!) ===
     // --- Арена ---
     public static final LinkedHashMap<String, Point> ARENA_BUTTONS = new LinkedHashMap<>() {{
-        put("Арена", new Point(328, 303)); //320, 303
+        put("Арена", new Point(360, 285)); // ПМ-г
+        put("Арена 2", new Point(320, 303)); // Основные станции: ПРМ-К
         put("Атаковать", new Point(200, 513));
         put("Питомец", new Point(80, 505));
         put("Пропустить", new Point(385, 33));
