@@ -23,8 +23,7 @@ public class TunnelBot extends BaseBot {
     public TunnelBot(List<HWND> windows,
                      LocalTime timeHHmm,
                      String botName,
-                     boolean isPet, boolean closeAfterFinish)
-            throws AWTException {
+                     boolean isPet, boolean closeAfterFinish) throws AWTException {
 
         super(windows);
 
@@ -46,7 +45,7 @@ public class TunnelBot extends BaseBot {
         try {
             startGame();
 
-            // === Туннели с пауками ===
+            // === Бои в туннелях с пауками ===
             Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
             showActiveWindows();
             Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);

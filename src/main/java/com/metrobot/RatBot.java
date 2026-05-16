@@ -17,8 +17,7 @@ public class RatBot extends BaseBot {
     public RatBot(List<HWND> windows,
                   LocalTime timeHHmm,
                   String botName,
-                  boolean isPet,
-                  boolean closeAfterFinish) throws AWTException {
+                  boolean isPet, boolean closeAfterFinish) throws AWTException {
 
         super(windows);
 
@@ -37,9 +36,8 @@ public class RatBot extends BaseBot {
     public void playGame() {
         try {
             startGame();
-            showActiveWindows();
 
-            // Бои
+            //  === Бои с крысами
             for (int battle = 1; battle <= MAX_ENERGY; battle++) {
                 printBattleNumber(battle, MAX_ENERGY);
 

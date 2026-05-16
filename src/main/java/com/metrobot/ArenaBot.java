@@ -26,8 +26,7 @@ public class ArenaBot extends BaseBot {
     public ArenaBot(List<HWND> windows,
                     LocalTime timeHHmm,
                     String botName,
-                    boolean isPet,
-                    boolean closeAfterFinish) throws AWTException {
+                    boolean isPet, boolean closeAfterFinish) throws AWTException {
 
         super(windows);
 
@@ -47,7 +46,7 @@ public class ArenaBot extends BaseBot {
         try {
             startGame();
 
-            // Бои
+            //  === Бои на Арене ===
             for (int battle = (unifiedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
                 long lastAttackMillis = System.currentTimeMillis();

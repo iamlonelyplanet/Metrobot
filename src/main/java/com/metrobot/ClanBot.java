@@ -26,7 +26,6 @@ import static com.metrobot.Buttons.*;
  */
 
 public class ClanBot extends BaseBot {
-
     public ClanBot(List<HWND> windows,
                    LocalTime timeHHmm,
                    String botName,
@@ -91,7 +90,6 @@ public class ClanBot extends BaseBot {
             }
 
             endGame();
-
         } catch (Exception e) {
             handleExceptions(e);
         }
