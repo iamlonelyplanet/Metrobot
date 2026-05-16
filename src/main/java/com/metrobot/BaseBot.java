@@ -86,7 +86,7 @@ public abstract class BaseBot {
         System.out.println("\nРазвернул окна");
     }
 
-    protected void closeGameWindows() throws InterruptedException {
+    protected void closeActiveWindows() throws InterruptedException {
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;
             User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null);
@@ -114,7 +114,7 @@ public abstract class BaseBot {
                 unifiedCounter.getCount());
         if (closeAfterFinish) {
             System.out.println("\nЗакрываю игровые окна...");
-            closeGameWindows();
+            closeActiveWindows();
         }
     }
 
