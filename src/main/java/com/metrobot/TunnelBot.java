@@ -51,12 +51,12 @@ public class TunnelBot extends BaseBot {
             showActiveWindows();
             Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
 
-            fightSpiders("Карта ПК-КРО", "Карта КРО-ПК"); // 10 пауков в туннеле Парк Культуры - Кропоткинская
-            changeLine("Карта ПКк-ПКг", true); // Переход Парк Культуры 1 - Парк Культуры 2, однократно
-
-            fightSpiders("Карта ПКг-КИЕ", "Карта КИЕ-ПКг"); // 10 пауков в тоннеле Парк Культуры - Киевская
-            changeLine("Карта ПКг-ПКк", false); // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
-            System.out.printf("\nПауки закончились, прибито %d. Идём к ящерам\n", unifiedCounter.getCount());
+//            fightSpiders("Карта ПК-КРО", "Карта КРО-ПК"); // 10 пауков в туннеле Парк Культуры - Кропоткинская
+//            changeLine("Карта ПКк-ПКг", true); // Переход Парк Культуры 1 - Парк Культуры 2, однократно
+//
+//            fightSpiders("Карта ПКг-КИЕ", "Карта КИЕ-ПКг"); // 10 пауков в тоннеле Парк Культуры - Киевская
+//            changeLine("Карта ПКг-ПКк", false); // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
+//            System.out.printf("\nПауки закончились, прибито %d. Идём к ящерам\n", unifiedCounter.getCount());
 
             Instant endSpiderTime = Instant.now(); // Пока надо для таймера, потом можно удалить
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
@@ -120,6 +120,7 @@ public class TunnelBot extends BaseBot {
     private void enterStation(boolean isDocumentRequired, int pause) throws InterruptedException {
         Thread.sleep(pause);
         if (isDocumentRequired) {
+            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
             clickButton("Войти с пропуском");
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
         } else {
@@ -135,6 +136,7 @@ public class TunnelBot extends BaseBot {
 
     // Выход со станции = вход на следующую станцию
     private void intoTunnel(String stationName) throws InterruptedException {
+        Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
         clickButton("В туннель");
         Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
         clickButton(stationName);
