@@ -2,11 +2,12 @@ package com.metrobot;
 
 import java.time.LocalTime;
 import java.util.List;
+
 import com.sun.jna.platform.win32.WinDef.HWND;
 
 /**
-Учимся работать с DTO.
- DTO — это класс, который только хранит данные, не принимает решений, не открывает окна, не пишет в файлы
+ * Учимся работать с DTO.
+ * DTO — это класс, который только хранит данные, не принимает решений, не открывает окна, не пишет в файлы
  */
 public class BotStartConfig {
 
@@ -58,5 +59,7 @@ public class BotStartConfig {
         return isPet;
     }
 
-    public boolean isCloseAfterFinish() {return closeAfterFinish; }
+    public boolean isCloseAfterFinish() {
+        return closeAfterFinish;
+    }
 }

@@ -34,13 +34,14 @@ public abstract class BaseBot {
     protected LocalTime startTime;
     protected Counter unifiedCounter;
 
+    private static final User32 USER32 = User32.INSTANCE;
+    private static final DateTimeFormatter TIME_FMT = DateTimeFormatter.ofPattern("HH:mm");
+
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
 
     protected abstract Map<String, Point> getButtonMap();
-    protected abstract void playGame();
 
-    private static final User32 USER32 = User32.INSTANCE;
-    private static final DateTimeFormatter TIME_FMT = DateTimeFormatter.ofPattern("HH:mm");
+    protected abstract void playGame();
 
 
     // --- Конструкторы ---
@@ -105,13 +106,11 @@ public abstract class BaseBot {
         // TODO изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
     }
 
-    // Конец любого игрового режима, это не bot.stop()
+    // Конец игрового режима, это не bot.stop()
     protected void endGame() throws InterruptedException {
 //        playFinalSound(); // Ненужная свистоперделка
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
-                botName,
-                LocalTime.now().withNano(0),
-                unifiedCounter.getCount());
+                botName, LocalTime.now().withNano(0), unifiedCounter.getCount());
         if (closeAfterFinish) {
             System.out.println("\nЗакрываю игровые окна...");
             closeActiveWindows();
@@ -142,6 +141,12 @@ public abstract class BaseBot {
                 "Клан - Выход"
         );
 
+        Set<String> SHORT_PAUSE_BUTTONS = Set.of(
+                "Закрыть — Поражение",
+                "Питомец",
+                "Погон 3"
+        );
+
         if (rel == null) {
             System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
             return;
@@ -157,12 +162,14 @@ public abstract class BaseBot {
             int x = rect.left + Buttons.xMoveRight + rel.x;
             int y = rect.top + Buttons.yMoveDown + rel.y;
 
-            if (Objects.equals(botName, "Крысы") && Objects.equals(buttonName, "Питомец")) {
-                Thread.sleep(PAUSE_SHORT_MS);
-            }
 
             System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
             clickAt(x, y);
+
+            if (SHORT_PAUSE_BUTTONS.contains(buttonName)) {
+                Thread.sleep(PAUSE_SHORT_MS);
+            }
+
             if (FINAL_BUTTONS.contains(buttonName)) {
                 Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
                 USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
@@ -174,6 +181,7 @@ public abstract class BaseBot {
         }
 
         Thread.sleep(PAUSE_SHORT_MS);
+
         if (LONG_PAUSE_BUTTONS.contains(buttonName)) {
             Thread.sleep(PAUSE_LONG_MS);
         }
@@ -189,7 +197,7 @@ public abstract class BaseBot {
         }
     }
 
-    // Клик. Собственно, ядро всей программы. Интерфейс? Изучить, подумать. Дополнить паузами, сведя их в этот метод.
+    // Клик. Собственно, ядро всей программы. Дополнить паузами, сведя их в этот метод.
     protected void clickAt(int x, int y) {
         if (robot == null) return;
         robot.mouseMove(x, y);

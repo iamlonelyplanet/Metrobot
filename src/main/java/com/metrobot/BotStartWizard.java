@@ -10,7 +10,7 @@ import java.util.Optional;
 public class BotStartWizard {
     public static Optional<BotStartConfig> askUser(Map<String, String> config) {
         try {
-            // 1. Выбор режима
+            // GUI-диалог 1: Выбор режима
             Utilities.ModeSelection selection = Utilities.askModeSelection();
             if (selection == null) return Optional.empty();
 
@@ -18,13 +18,13 @@ public class BotStartWizard {
             boolean isPet = selection.isPet();
             boolean closeAfterFinish = selection.closeAfterFinish();
 
-            // 2. Окна
+            // GUI-диалог 2: Активные окна
             Utilities.restoreAllGameWindows();
             List<HWND> found = Utilities.findGameWindows();
             List<HWND> active = Utilities.askActiveWindows(found, config.get("activeWindows"));
             if (active == null || active.isEmpty()) return Optional.empty();
 
-            // 3. Время старта
+            // GUI-диалог 3: Время старта
             String botName = resolveBotName(mode);
             String boss = selection.bossName();
 

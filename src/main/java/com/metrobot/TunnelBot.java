@@ -175,8 +175,8 @@ public class TunnelBot extends BaseBot {
         }
     }
 
-        // Подсчёт и формирование строки с потраченным временем
-        private String printTime ( long seconds){
-            return String.format("%d мин %d сек\n", seconds / 60, seconds % 60);
-        }
+    // Подсчёт и формирование строки с потраченным временем
+    private String printTime(long seconds) {
+        return String.format("%d мин %d сек\n", seconds / 60, seconds % 60);
     }
+}
