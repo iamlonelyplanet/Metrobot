@@ -166,10 +166,6 @@ public abstract class BaseBot {
             System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
             clickAt(x, y);
 
-            if (SHORT_PAUSE_BUTTONS.contains(buttonName)) {
-                Thread.sleep(PAUSE_SHORT_MS);
-            }
-
             if (FINAL_BUTTONS.contains(buttonName)) {
                 Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
                 USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
@@ -177,6 +173,11 @@ public abstract class BaseBot {
                     System.out.println("Свернул окна");
                 }
             }
+
+            if (SHORT_PAUSE_BUTTONS.contains(buttonName)) {
+                Thread.sleep(PAUSE_SHORT_MS);
+            }
+
             Thread.sleep(100);
         }
 
