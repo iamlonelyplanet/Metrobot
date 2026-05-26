@@ -16,7 +16,7 @@ import static com.metrobot.Buttons.*;
  * Запись счётчика в файл здесь не нужна.
  * Самый некрасивый класс. Зато самый лёгкий для обучения, для перегрузки, сигнатур, ООП и многого-прочего, что и
  * произошло с апрельской версии 1.2.9
- * TODO: Подумать о паузах по команде пользователя. Тестировать в режиме 1 окна (только ящеры)
+ * TODO: Подумать о паузах по команде пользователя
  */
 
 public class TunnelBot extends BaseBot {
@@ -48,7 +48,7 @@ public class TunnelBot extends BaseBot {
             // === Бои в туннелях с пауками ===
             Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
             showActiveWindows();
-            Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
+            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
             fightAllSpiders();
 

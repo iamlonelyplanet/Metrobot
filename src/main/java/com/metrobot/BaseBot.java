@@ -112,7 +112,7 @@ public abstract class BaseBot {
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
                 botName, LocalTime.now().withNano(0), unifiedCounter.getCount());
         if (closeAfterFinish) {
-            System.out.println("\nЗакрываю игровые окна...");
+            System.out.println("\nЗакрываю игровые окна... это срабатывает не всегда!");
             closeActiveWindows();
         }
     }
@@ -142,7 +142,7 @@ public abstract class BaseBot {
         );
 
         Set<String> SHORT_PAUSE_BUTTONS = Set.of(
-                "Закрыть — Поражение",
+//                "Закрыть — Поражение",
                 "Питомец",
                 "Погон 3"
         );
@@ -169,7 +169,7 @@ public abstract class BaseBot {
             if (FINAL_BUTTONS.contains(buttonName)) {
                 Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
                 USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
-                if (i + 1 == activeWindows.size()) {
+                if (i == activeWindows.size() - 1) {
                     System.out.println("Свернул окна");
                 }
             }
@@ -178,7 +178,7 @@ public abstract class BaseBot {
                 Thread.sleep(PAUSE_SHORT_MS);
             }
 
-            Thread.sleep(100);
+            Thread.sleep(100); // пока не менять значение 100
         }
 
         Thread.sleep(PAUSE_SHORT_MS);
@@ -198,7 +198,7 @@ public abstract class BaseBot {
         }
     }
 
-    // Клик. Собственно, ядро всей программы. Дополнить паузами, сведя их в этот метод.
+    // Клик. Собственно, ядро всей программы. Расширить паузами?
     protected void clickAt(int x, int y) {
         if (robot == null) return;
         robot.mouseMove(x, y);
