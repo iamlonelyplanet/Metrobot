@@ -72,6 +72,8 @@ public class ClanBot extends BaseBot {
                 // Подготовительные клики (однократно, перед первым боем рейда)
                 if (unifiedCounter.getCount() == 0) {
                     showActiveWindows();
+                    clickButton("Убрать автобой");
+                    clickButton("Арена - закрыть");
                     clickButton("Клан");
                     clickButton("Война");
                     clickButton("Обновить");
@@ -97,14 +99,14 @@ public class ClanBot extends BaseBot {
 
     public void fightInClan(BotType type) throws InterruptedException {
         printBattleNumber((unifiedCounter.getCount() + 1), totalBattles);
-        /* Выход из режима "Автобой" (при VIP) перед клановыми движухами. Не сработает, если нижние окна
-        пересекаются с верхними. Переделать?
-         */
 
-//        if (unifiedCounter.getCount() == 0) {
-//            clickButton("Убрать автобой");
-//            clickButton("Арена - закрыть");
-//        }
+        /* Выход из режима "Автобой" (при VIP) перед ClanBot. Не сработает, если нижние окна пересекаются с верхними.
+        Тестировать.
+         */
+        if (unifiedCounter.getCount() == 0) {
+            clickButton("Убрать автобой");
+            clickButton("Арена - закрыть");
+        }
 
         if (type == BotType.CW) {
             clickButton("Клан");

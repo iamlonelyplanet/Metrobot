@@ -76,7 +76,6 @@ public class RaidStartBot extends BaseBot {
             announceInChat();
 
             System.out.printf("\n=== Вызов %s завершён ===", consoleMessage); // стандартный endGame здесь не подходит
-            Thread.sleep(PAUSE_SHORT_MS);
 
             // Стартуем режим "Рейд" с теми окнами, которые передались в RaidStartBot
             ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд", closeAfterFinish);
