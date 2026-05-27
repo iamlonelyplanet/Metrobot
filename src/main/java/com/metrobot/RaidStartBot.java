@@ -73,7 +73,7 @@ public class RaidStartBot extends BaseBot {
 
             announceInChat();
 
-            System.out.println("\n=== Выбора босса для рейда завершён ==="); // стандартный endGame здесь не подходит
+            System.out.printf("\n=== Вызов босса %s завершён ===", bossName); // стандартный endGame здесь не подходит
             Thread.sleep(PAUSE_SHORT_MS);
 
             // Стартуем режим "Рейд" с теми окнами, которые передались в RaidStartBot

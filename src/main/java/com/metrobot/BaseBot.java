@@ -95,7 +95,7 @@ public abstract class BaseBot {
             Thread.sleep(PAUSE_SHORT_MS);
             robot.keyPress(KeyEvent.VK_ENTER);
             robot.keyRelease(KeyEvent.VK_ENTER);
-//            Thread.sleep(PAUSE_SHORT_MS);
+            Thread.sleep(PAUSE_SHORT_MS);
         }
     }
 
