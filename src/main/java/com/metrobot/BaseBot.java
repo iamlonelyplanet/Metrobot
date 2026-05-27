@@ -88,6 +88,7 @@ public abstract class BaseBot {
         System.out.println("\nРазвернул окна");
     }
 
+    // Закрытие окон + подтверждение
     protected void closeActiveWindows() throws InterruptedException {
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;

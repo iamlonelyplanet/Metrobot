@@ -105,6 +105,7 @@ public class RaidStartBot extends BaseBot {
         Thread.sleep(5000);
 
         System.out.printf("Печатаем сообщение \"%s\"\n", MESSAGE_FOR_CLAN);
+        clickButton("Чат - Строка");
         pasteText(MESSAGE_FOR_CLAN);
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);

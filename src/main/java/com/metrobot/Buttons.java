@@ -15,7 +15,7 @@ public class Buttons {
     public static final int PAUSE_BETWEEN_WINDOWS_MS = 100;
     public static final int PAUSE_RAID_BOSS_MS = 12_800;
     public static final int PAUSE_TUNNEL_MS = 16_000; // Для альтернативных скоростей: 16_000, 4_000, 8_000, 13_000
-    public static final int ATTACK_COOLDOWN_SEC = 301;
+    public static final int ATTACK_COOLDOWN_SEC = 300;
 
     // --- Максимально допустимое количество боёв. Почему byte? Где ещё их использовать, если не в учёбе! ---
     public static final byte MAX_BATTLES_ARENA = 50;
@@ -88,8 +88,8 @@ public class Buttons {
     public static final LinkedHashMap<String, Point> CLAN_BUTTONS = new LinkedHashMap<>() {{
         put("Клан", new Point(315, 58));
         put("Клан - Выход", new Point(80, 505));
-        put("Убрать автобой", new Point(145, 566));
-        put("Арена - закрыть", new Point(515, 575));
+        put("Убрать автобой", new Point(145, 565));
+        put("Арена - закрыть", new Point(515, 560));
         put("Война", new Point(80, 303));
         put("Атаковать врага", new Point(415, 288));
         put("Пропустить", new Point(385, 33));
@@ -116,5 +116,6 @@ public class Buttons {
 
         put("Чат", new Point(485, 620));
         put("Чат - Клан", new Point(480, 630));
+        put("Чат - Строка", new Point(320, 600));
     }};
 }
