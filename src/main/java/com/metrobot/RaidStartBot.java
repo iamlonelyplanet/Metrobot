@@ -1,12 +1,16 @@
 package com.metrobot;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import com.sun.jna.platform.win32.WinDef.HWND;
+
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.util.Objects;
 
 import static com.metrobot.Buttons.*;
 
@@ -67,6 +71,8 @@ public class RaidStartBot extends BaseBot {
 
             clickButton("В рейд");
 
+            announceInChat();
+
             System.out.println("\n=== Выбора босса для рейда завершён ==="); // стандартный endGame здесь не подходит
             Thread.sleep(PAUSE_SHORT_MS);
 
@@ -77,5 +83,53 @@ public class RaidStartBot extends BaseBot {
         } catch (Exception e) {
             handleExceptions(e);
         }
+    }
+
+    protected void announceInChat() throws Exception {
+        final String MESSAGE_FOR_CLAN = "РЕЙД! " + bossName + ". Рейд запущен в автоматическом режиме, возможны ошибки";
+        final String MESSAGE_FOR_CLAN_2 = "1";
+
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_MINUS);
+        robot.keyRelease(KeyEvent.VK_MINUS);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+
+        clickButton("Чат");
+
+        robot.mouseMove(FREE_AREA_X, FREE_AREA_Y);
+        robot.mouseWheel(WHEEL_AMOUNT);
+
+        Thread.sleep(5000);
+        clickButton("Чат - Клан");
+        Thread.sleep(5000);
+
+        System.out.printf("Печатаем сообщение \"%s\"\n", MESSAGE_FOR_CLAN);
+        pasteText(MESSAGE_FOR_CLAN);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+
+        robot.mouseMove(FREE_AREA_X, FREE_AREA_Y);
+        robot.mouseWheel(-WHEEL_AMOUNT);
+
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_ADD);
+        robot.keyRelease(KeyEvent.VK_ADD);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+    }
+
+    protected void pasteText(String message) throws Exception {
+        StringSelection selection = new StringSelection(message);
+
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        clipboard.setContents(selection, null);
+
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+
+        Thread.sleep(PAUSE_SHORT_MS);
     }
 }

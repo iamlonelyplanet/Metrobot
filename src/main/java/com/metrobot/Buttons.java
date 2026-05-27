@@ -24,6 +24,10 @@ public class Buttons {
     public static final byte MAX_TUNNEL_WAYS = 5;
     public static final byte MAX_ENERGY = 30; // 50 при VIP
 
+    public static final int WHEEL_AMOUNT = 3;
+    public static final int FREE_AREA_X = 900;
+    public static final int FREE_AREA_Y = 250;
+
     /**
      * Координаты верхних левых углов рабочего поля внутри окна.
      * Площадь стянутого до минимума ("приведённого") окна Игроклуба: 1033x768, приводится автоматически с версии 1.1
@@ -101,6 +105,7 @@ public class Buttons {
         put("Обновить", new Point(520, 40));
         put("Закрыть окно", new Point(510, 320));
         put("Атаковать босса", new Point(425, 323));
+
         put("Карта-левее", new Point(115, 270));
         put("Карта-ниже", new Point(420, 510));
         put("В рейд", new Point(170, 535));
@@ -112,5 +117,8 @@ public class Buttons {
         put("Биомасса", new Point(360, 330)); // доступен с экрана 1
         put("Слизень", new Point(420, 460)); // доступен с экрана 1
         put("Тварь", new Point(185, 60)); // доступен с экрана 2
+
+        put("Чат", new Point(485, 620));
+        put("Чат - Клан", new Point(480, 630));
     }};
 }
