@@ -12,7 +12,7 @@ public class Buttons {
     public static final int PAUSE_LONG_MS = 2800;
     public static final int PAUSE_SHORT_MS = 1200;
     public static final int PAUSE_SHORT_TUNNELS_MS = 600;
-    public static final int PAUSE_BETWEEN_WINDOWS_MS = 200;
+    public static final int PAUSE_BETWEEN_WINDOWS_MS = 100;
     public static final int PAUSE_RAID_BOSS_MS = 12_800;
     public static final int PAUSE_TUNNEL_MS = 16_000; // Для альтернативных скоростей: 16_000, 4_000, 8_000, 13_000
     public static final int ATTACK_COOLDOWN_SEC = 301;
@@ -24,6 +24,10 @@ public class Buttons {
     public static final byte MAX_TUNNEL_WAYS = 5;
     public static final byte MAX_ENERGY = 30; // 50 при VIP
 
+    public static final int WHEEL_AMOUNT = 3;
+    public static final int FREE_AREA_X = 900;
+    public static final int FREE_AREA_Y = 250;
+
     /**
      * Координаты верхних левых углов рабочего поля внутри окна.
      * Площадь стянутого до минимума ("приведённого") окна Игроклуба: 1033x768, приводится автоматически с версии 1.1
@@ -31,7 +35,7 @@ public class Buttons {
      * Ширина полосы прокрутки (элемента окон Windows): 19 в Игроклубе, собрать статистику в других разрешениях
      */
     public static final int WINDOW_WIDTH = 1033;
-    public static final int  WINDOW_HEIGHT = 768;
+    public static final int WINDOW_HEIGHT = 768;
     public static int xMoveRight = (WINDOW_WIDTH - 764 - 19) / 2; // Расчёт "нуля" (верхней левой точки) рабочего поля
     public static int yMoveDown = 97; // Константа для "Игроклуба" при WQHD, для остальных собирать статистику
 
@@ -45,7 +49,6 @@ public class Buttons {
         put("Пропустить", new Point(385, 33));
         put("Закрыть — Победа", new Point(460, 520));
         put("Закрыть — Поражение", new Point(480, 463));
-        put("Закрыть окно", new Point(510, 320));
     }};
 
     // --- Туннели ---
@@ -69,7 +72,6 @@ public class Buttons {
         put("Карта КИЕ-ПКг", new Point(205, 433));
         put("Карта ПКг-ПКк", new Point(185, 383));
         put("Питомец", new Point(80, 505));
-        put("Закрыть окно", new Point(510, 320));
     }};
 
     // --- Крысы ---
@@ -80,7 +82,6 @@ public class Buttons {
         put("Закрыть — Победа", new Point(460, 520));
         put("Закрыть — Поражение", new Point(480, 463));
         put("Питомец", new Point(80, 505));
-        put("Закрыть окно", new Point(510, 320));
     }};
 
     // --- КВ и рейды ---
@@ -99,8 +100,8 @@ public class Buttons {
         put("Погон - Коллекция", new Point(480, 465));
         put("Рейды", new Point(80, 413));
         put("Обновить", new Point(520, 40));
-        put("Закрыть окно", new Point(510, 320));
         put("Атаковать босса", new Point(425, 323));
+
         put("Карта-левее", new Point(115, 270));
         put("Карта-ниже", new Point(420, 510));
         put("В рейд", new Point(170, 535));
@@ -112,5 +113,8 @@ public class Buttons {
         put("Биомасса", new Point(360, 330)); // доступен с экрана 1
         put("Слизень", new Point(420, 460)); // доступен с экрана 1
         put("Тварь", new Point(185, 60)); // доступен с экрана 2
+
+        put("Чат", new Point(485, 620));
+        put("Чат - Клан", new Point(480, 630));
     }};
 }

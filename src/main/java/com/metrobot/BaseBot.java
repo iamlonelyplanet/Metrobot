@@ -2,6 +2,7 @@ package com.metrobot;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalTime;
@@ -91,8 +92,9 @@ public abstract class BaseBot {
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;
             User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null);
-            Thread.sleep(3000);
-            clickButton("Закрыть окно");
+            Thread.sleep(PAUSE_SHORT_MS);
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
             Thread.sleep(PAUSE_SHORT_MS);
         }
     }
@@ -106,7 +108,7 @@ public abstract class BaseBot {
         // TODO изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
     }
 
-    // Конец игрового режима, это не bot.stop()
+    // Завершение игровых режимов, это не bot.stop()
     protected void endGame() throws InterruptedException {
 //        playFinalSound(); // Ненужная свистоперделка
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
@@ -117,7 +119,7 @@ public abstract class BaseBot {
         }
     }
 
-    // Вывод в консоль номера боя
+    // Вывод в консоль номера боя + разворачивание активных окон
     protected void printBattleNumber(int battle, int total) throws InterruptedException {
         System.out.printf("\n=== Бой %d из %d ===", battle, total);
         showActiveWindows();
@@ -142,7 +144,6 @@ public abstract class BaseBot {
         );
 
         Set<String> SHORT_PAUSE_BUTTONS = Set.of(
-                "Закрыть — Поражение",
                 "Питомец",
                 "Погон 3"
         );
@@ -169,7 +170,7 @@ public abstract class BaseBot {
             if (FINAL_BUTTONS.contains(buttonName)) {
                 Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
                 USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
-                if (i + 1 == activeWindows.size()) {
+                if (i == activeWindows.size() - 1) {
                     System.out.println("Свернул окна");
                 }
             }
@@ -178,7 +179,7 @@ public abstract class BaseBot {
                 Thread.sleep(PAUSE_SHORT_MS);
             }
 
-            Thread.sleep(100);
+            Thread.sleep(100); // пока не менять значение 100
         }
 
         Thread.sleep(PAUSE_SHORT_MS);
@@ -198,7 +199,7 @@ public abstract class BaseBot {
         }
     }
 
-    // Клик. Собственно, ядро всей программы. Дополнить паузами, сведя их в этот метод.
+    // Клик. Собственно, ядро всей программы. Расширить паузами?
     protected void clickAt(int x, int y) {
         if (robot == null) return;
         robot.mouseMove(x, y);
