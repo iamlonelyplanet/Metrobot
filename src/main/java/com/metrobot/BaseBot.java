@@ -120,6 +120,19 @@ public abstract class BaseBot {
         }
     }
 
+    // Клик на "Автобой" на Арене
+    protected void AutoArena() throws InterruptedException {
+        getButtonMap();
+        if (closeAfterFinish) {
+            return;
+        }
+
+        System.out.println("\nВыставляю галочку Автобой для Арены...\n");
+        clickButton("Арена 2");
+        clickButton("Арена");
+        clickButton("Автобой");
+    }
+
     // Вывод в консоль номера боя + разворачивание активных окон
     protected void printBattleNumber(int battle, int total) throws InterruptedException {
         System.out.printf("\n=== Бой %d из %d ===", battle, total);

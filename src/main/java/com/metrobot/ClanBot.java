@@ -22,7 +22,7 @@ import static com.metrobot.Buttons.*;
  * Повседневная работа пользователя в Windows прерывается всего на 10-12 секунд раз в 5 минут.
  * Счётчик боёв записывается в файл.
  * <p>
- * TODO: Завершение боёв по таймеру. Переделать закрытие автобоя. Слишком долгое ожидание перед 1+ боями в рейдах
+ * TODO: Завершение боёв по таймеру. Проверить закрытие и открытие автобоя.
  */
 
 public class ClanBot extends BaseBot {
@@ -72,7 +72,7 @@ public class ClanBot extends BaseBot {
                 // Подготовительные клики (однократно, перед первым боем рейда)
                 if (unifiedCounter.getCount() == 0) {
                     showActiveWindows();
-                    clickButton("Убрать автобой");
+                    clickButton("Автобой");
                     clickButton("Арена - закрыть");
                     clickButton("Клан");
                     clickButton("Война");
@@ -104,7 +104,7 @@ public class ClanBot extends BaseBot {
         Тестировать.
          */
         if (unifiedCounter.getCount() == 0) {
-            clickButton("Убрать автобой");
+            clickButton("Автобой");
             clickButton("Арена - закрыть");
         }
 
