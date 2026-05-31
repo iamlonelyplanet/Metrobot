@@ -74,9 +74,10 @@ public class ClanBot extends BaseBot {
                     showActiveWindows();
                     clickButton("Автобой");
                     clickButton("Арена - закрыть");
-                    clickButton("Клан");
-                    clickButton("Война");
-                    clickButton("Обновить");
+                    clickButtons("Клан", "Война", "Обновить");
+//                    clickButton("Клан");
+//                    clickButton("Война");
+//                    clickButton("Обновить");
                     clickButton("Рейды");
                     lastAttackMillis = System.currentTimeMillis();
                 }
@@ -109,23 +110,27 @@ public class ClanBot extends BaseBot {
         }
 
         if (type == BotType.CW) {
-            clickButton("Клан");
+            clickButtons("Клан", "Война");
+//            clickButton("Клан");
+//            clickButton("Война");
             lastAttackMillis = System.currentTimeMillis();
-            clickButton("Война");
             clickButton("Атаковать врага");
+            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
             clickButton("Пропустить");
             clickButton("Закрыть");
-            clickButton("Погон 1");
-            clickButton("Погон 2");
-            clickButton("Погон 3");
+            clickButtons("Погон 1", "Погон 2", "Погон 3");
+//            clickButton("Погон 1");
+//            clickButton("Погон 2");
+//            clickButton("Погон 3");
             clickButton("Погон - Коллекция");
         }
 
         if (type == BotType.RAID) {
             if (unifiedCounter.getCount() > 0) {
-                clickButton("Клан");
+                clickButtons("Клан", "Рейды");
                 lastAttackMillis = System.currentTimeMillis();
-                clickButton("Рейды");
+//                clickButton("Клан");
+//                clickButton("Рейды");
             }
             clickButton("Атаковать босса");
             Thread.sleep(PAUSE_RAID_BOSS_MS);

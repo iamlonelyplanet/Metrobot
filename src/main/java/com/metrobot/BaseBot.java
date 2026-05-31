@@ -121,7 +121,7 @@ public abstract class BaseBot {
     }
 
     // Клик на "Автобой" на Арене
-    protected void AutoArena() throws InterruptedException {
+    protected void autoArena() throws InterruptedException {
         getButtonMap();
         if (closeAfterFinish) {
             return;
@@ -143,6 +143,11 @@ public abstract class BaseBot {
     protected void clickButton(String buttonName) throws InterruptedException {
         Map<String, Point> buttonMap = getButtonMap();
         Point rel = buttonMap.get(buttonName);
+        if (rel == null) {
+            System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
+            return;
+        }
+
         Set<String> LONG_PAUSE_BUTTONS = Set.of(
                 "Обновить",
                 "Атаковать врага",
@@ -162,11 +167,6 @@ public abstract class BaseBot {
                 "Погон 3"
         );
 
-        if (rel == null) {
-            System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
-            return;
-        }
-
         for (int i = 0; i < activeWindows.size(); i++) {
             HWND hWnd = activeWindows.get(i);
             if (hWnd == null) continue;
@@ -176,7 +176,6 @@ public abstract class BaseBot {
 
             int x = rect.left + Buttons.xMoveRight + rel.x;
             int y = rect.top + Buttons.yMoveDown + rel.y;
-
 
             System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
             clickAt(x, y);
@@ -203,6 +202,82 @@ public abstract class BaseBot {
         }
     }
 
+    // Перегрузка метода для нескольких кнопок подряд (без переключений на другие рабочие окна)
+    protected void clickButtons(String... buttonNames) throws InterruptedException {
+        if (buttonNames == null || buttonNames.length == 0) {
+            return;
+        }
+
+        Map<String, Point> buttonMap = getButtonMap();
+
+        Set<String> LONG_PAUSE_BUTTONS = Set.of(
+                "Обновить",
+                "Атаковать врага",
+                "Пропустить",
+                "Атаковать",
+                "Арена"
+        );
+
+        Set<String> FINAL_BUTTONS = Set.of(
+                "Закрыть — Поражение",
+                "Крыса",
+                "Клан - Выход"
+        );
+
+        Set<String> SHORT_PAUSE_BUTTONS = Set.of(
+                "Питомец",
+                "Погон 3"
+        );
+
+        String lastButton = buttonNames[buttonNames.length - 1];
+
+        for (int i = 0; i < activeWindows.size(); i++) {
+            HWND hWnd = activeWindows.get(i);
+            if (hWnd == null) continue;
+
+            RECT rect = new RECT();
+            USER32.GetWindowRect(hWnd, rect);
+
+            for (String buttonName : buttonNames) {
+
+                Point rel = buttonMap.get(buttonName);
+
+                if (rel == null) {
+                    System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
+                    continue;
+                }
+
+                int x = rect.left + Buttons.xMoveRight + rel.x;
+                int y = rect.top + Buttons.yMoveDown + rel.y;
+
+                System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
+                clickAt(x, y);
+                Thread.sleep(100); // пока не менять значение 100
+            }
+
+            // Проверяем только последнюю кнопку серии
+
+            if (FINAL_BUTTONS.contains(lastButton)) {
+                Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
+                USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
+
+                if (i == activeWindows.size() - 1) {
+                    System.out.println("Свернул окна");
+                }
+            }
+
+            if (SHORT_PAUSE_BUTTONS.contains(lastButton)) {
+                Thread.sleep(PAUSE_SHORT_MS);
+            }
+        }
+
+        Thread.sleep(PAUSE_SHORT_MS);
+
+        if (LONG_PAUSE_BUTTONS.contains(lastButton)) {
+            Thread.sleep(PAUSE_LONG_MS);
+        }
+    }
+
     // Обработка исключений. Учебная штука.
     protected void handleExceptions(Exception e) {
         if (e instanceof InterruptedException) {
@@ -219,20 +294,6 @@ public abstract class BaseBot {
         robot.mouseMove(x, y);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-    }
-
-    /**
-     * Метод пока устаревший и не используется. Оставлен для дальнейшей разработки (с версии 1.2.9)
-     * Сворачиваем активные окна при silentMode == true. После сворачивания до следующего события проходит 5 минут,
-     * в это время пользователь продолжает заниматься своей работой.
-     */
-    protected void minimizeActiveWindows() throws InterruptedException {
-        if (!isSilentMode) return;
-        for (HWND hWnd : activeWindows) {
-            if (hWnd == null) continue;
-            USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
-        }
-        System.out.println("Свернул окна\n");
     }
 
     // Проигрываем звук по окончанию режима игры. Бесполезная свистоперделка ради учёбы и пасхалка для олдов.

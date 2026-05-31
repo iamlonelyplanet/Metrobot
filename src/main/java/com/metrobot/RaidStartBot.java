@@ -87,7 +87,7 @@ public class RaidStartBot extends BaseBot {
     }
 
     protected void announceInChat() throws Exception {
-        final String MESSAGE_FOR_CLAN = "РЕЙД! " + bossName + " запущен в автоматическом режиме, возможны ошибки";
+        final String MESSAGE_FOR_CLAN = "РЕЙД! Босс" + bossName + " запущен в автоматическом режиме, возможны ошибки";
 
         robot.keyPress(KeyEvent.VK_CONTROL);
         robot.keyPress(KeyEvent.VK_MINUS);
@@ -101,7 +101,7 @@ public class RaidStartBot extends BaseBot {
 
         Thread.sleep(5000);
         clickButton("Чат - Клан");
-        Thread.sleep(5000);
+        Thread.sleep(3000);
 
         System.out.printf("Печатаем сообщение \"%s\"\n", MESSAGE_FOR_CLAN);
         clickButton("Чат - Строка");
