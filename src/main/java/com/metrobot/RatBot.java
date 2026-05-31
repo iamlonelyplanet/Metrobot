@@ -51,9 +51,9 @@ public class RatBot extends BaseBot {
                     clickButton("Питомец");
                 }
                 clickButton("Пропустить");
-                clickButton("Закрыть — Победа");
+                clickButton("Закрыть - Победа");
                 Thread.sleep(PAUSE_SHORT_MS);
-                clickButton("Закрыть — Поражение");
+                clickButton("Закрыть - Поражение");
                 System.out.println("Убито крыс: " + battle);
             }
 

@@ -55,9 +55,9 @@ public class ArenaBot extends BaseBot {
                 }
 
                 clickButton("Пропустить");
-                clickButton("Закрыть — Победа");
+                clickButton("Закрыть 1");
                 Thread.sleep(PAUSE_SHORT_MS);
-                clickButton("Закрыть — Поражение");
+                clickButton("Закрыть 2");
 
                 unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);

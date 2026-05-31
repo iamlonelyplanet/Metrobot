@@ -47,8 +47,8 @@ public class Buttons {
         put("Атаковать", new Point(200, 513));
         put("Питомец", new Point(80, 505));
         put("Пропустить", new Point(385, 33));
-        put("Закрыть — Победа", new Point(460, 520));
-        put("Закрыть — Поражение", new Point(480, 463));
+        put("Закрыть - Победа", new Point(460, 520));
+        put("Закрыть - Поражение", new Point(480, 463));
     }};
 
     // --- Туннели ---
@@ -79,8 +79,8 @@ public class Buttons {
         put("Начстанции", new Point(100, 350));
         put("Крыса", new Point(465, 235));
         put("Пропустить", new Point(385, 33));
-        put("Закрыть — Победа", new Point(460, 520));
-        put("Закрыть — Поражение", new Point(480, 463));
+        put("Закрыть 1", new Point(460, 520));
+        put("Закрыть 2", new Point(480, 463));
         put("Питомец", new Point(80, 505));
     }};
 
@@ -93,7 +93,7 @@ public class Buttons {
         put("Война", new Point(80, 303));
         put("Атаковать врага", new Point(415, 288));
         put("Пропустить", new Point(385, 33));
-        put("Закрыть", new Point(460, 433));
+        put("Закрыть - Рейд", new Point(460, 433));
         put("Погон 1", new Point(480, 480));
         put("Погон 2", new Point(480, 525));
         put("Погон 3", new Point(480, 560));

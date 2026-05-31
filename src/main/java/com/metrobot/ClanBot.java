@@ -129,13 +129,12 @@ public class ClanBot extends BaseBot {
             if (unifiedCounter.getCount() > 0) {
                 clickButtons("Клан", "Рейды");
                 lastAttackMillis = System.currentTimeMillis();
-//                clickButton("Клан");
-//                clickButton("Рейды");
             }
+
             clickButton("Атаковать босса");
             Thread.sleep(PAUSE_RAID_BOSS_MS);
             clickButton("Пропустить");
-            clickButton("Закрыть");
+            clickButton("Закрыть - Рейд");
         }
 
         clickButton("Клан - Выход"); // Выход из игрового меню "Клан" радикально снижает загрузку CPU
