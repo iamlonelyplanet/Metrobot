@@ -47,8 +47,8 @@ public class Buttons {
         put("Атаковать", new Point(200, 513));
         put("Питомец", new Point(80, 505));
         put("Пропустить", new Point(385, 33));
-        put("Закрыть - Победа", new Point(460, 520));
-        put("Закрыть - Поражение", new Point(480, 463));
+        put("Закрыть 1", new Point(460, 520));
+        put("Закрыть 2", new Point(480, 463));
     }};
 
     // --- Туннели ---

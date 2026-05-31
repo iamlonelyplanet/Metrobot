@@ -160,7 +160,8 @@ public abstract class BaseBot {
                 "Закрыть 2",
                 "Крыса",
                 "Клан - Выход",
-                "Закрыть - Рейд"
+                "Закрыть - Рейд",
+                "Погон - Коллекция"
         );
 
         Set<String> SHORT_PAUSE_BUTTONS = Set.of(
@@ -223,7 +224,8 @@ public abstract class BaseBot {
                 "Закрыть 2",
                 "Крыса",
                 "Клан - Выход",
-                "Закрыть - Рейд"
+                "Закрыть - Рейд",
+                "Погон - Коллекция"
         );
 
         Set<String> SHORT_PAUSE_BUTTONS = Set.of(
