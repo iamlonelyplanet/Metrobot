@@ -45,24 +45,23 @@ public class TunnelBot extends BaseBot {
         try {
             startGame();
 
-            // === Бои в туннелях с пауками ===
             Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
             showActiveWindows();
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
-            fightAllSpiders();
+            fightAllSpiders(); // Бои в туннелях с пауками
 
             Instant endSpiderTime = Instant.now(); // Пока надо для таймера, потом можно удалить
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
             long secondsSpider = spidersDuration.getSeconds();
             System.out.printf("На пауков затрачено: %s", printTime(secondsSpider));
 
-            // === Туннели с Ящерами ===
+
             showActiveWindows();
             unifiedCounter.setCount(0);
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
-            fightAllLizards();
+            fightAllLizards(); // Бои в туннелях с ящерами
 
             Duration lizardDuration = Duration.between(endSpiderTime, Instant.now()); // Для таймера, потом удалить
             long secondsLizard = lizardDuration.getSeconds();

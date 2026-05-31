@@ -112,6 +112,7 @@ public abstract class BaseBot {
     // Завершение игровых режимов, это не bot.stop()
     protected void endGame() throws InterruptedException {
 //        playFinalSound(); // Ненужная свистоперделка
+
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
                 botName, LocalTime.now().withNano(0), unifiedCounter.getCount());
         if (closeAfterFinish) {
@@ -120,23 +121,18 @@ public abstract class BaseBot {
         }
     }
 
-    // Клик на "Автобой" на Арене
-    protected void autoArena() throws InterruptedException {
-        getButtonMap();
-        if (closeAfterFinish) {
-            return;
-        }
-
-        System.out.println("\nВыставляю галочку Автобой для Арены...\n");
-        clickButton("Арена 2");
-        clickButton("Арена");
-        clickButton("Автобой");
-    }
-
     // Вывод в консоль номера боя + разворачивание активных окон
     protected void printBattleNumber(int battle, int total) throws InterruptedException {
         System.out.printf("\n=== Бой %d из %d ===", battle, total);
         showActiveWindows();
+    }
+
+    protected void minimizeActiveWindows(HWND hWnd, int i) throws InterruptedException {
+        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
+        USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
+        if (i == activeWindows.size() - 1) {
+            System.out.println("Свернул окна");
+        }
     }
 
     // Единый метод кликов по всем выбранным окнам. Центр всей проги.
@@ -159,9 +155,7 @@ public abstract class BaseBot {
         Set<String> FINAL_BUTTONS = Set.of(
                 "Закрыть 2",
                 "Крыса",
-                "Клан - Выход",
-                "Закрыть - Рейд",
-                "Погон - Коллекция"
+                "Клан - Выход"
         );
 
         Set<String> SHORT_PAUSE_BUTTONS = Set.of(
@@ -183,11 +177,7 @@ public abstract class BaseBot {
             clickAt(x, y);
 
             if (FINAL_BUTTONS.contains(buttonName)) {
-                Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
-                USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
-                if (i == activeWindows.size() - 1) {
-                    System.out.println("Свернул окна");
-                }
+                minimizeActiveWindows(hWnd, i);
             }
 
             if (SHORT_PAUSE_BUTTONS.contains(buttonName)) {
@@ -260,14 +250,8 @@ public abstract class BaseBot {
             }
 
             // Проверяем только последнюю кнопку серии
-
             if (FINAL_BUTTONS.contains(lastButton)) {
-                Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
-                USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
-
-                if (i == activeWindows.size() - 1) {
-                    System.out.println("Свернул окна");
-                }
+                minimizeActiveWindows(hWnd, i);
             }
 
             if (SHORT_PAUSE_BUTTONS.contains(lastButton)) {
@@ -300,13 +284,26 @@ public abstract class BaseBot {
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
 
+    // Активируем режим "Автобой" на Арене после выполнения других ботов
+    protected void autoArena() throws InterruptedException {
+        getButtonMap();
+        if (closeAfterFinish) {
+            return;
+        }
+
+        System.out.println("\nАктивирую галочку Автобой для Арены...\n");
+        clickButtons("Арена 2", "Арена");
+        clickButton("Автобой");
+    }
+
     // Проигрываем звук по окончанию режима игры. Бесполезная свистоперделка ради учёбы и пасхалка для олдов.
     protected static void playFinalSound() {
         try (InputStream inputStream = BaseBot.class.getResourceAsStream("/sound.wav")) {
             if (inputStream == null) {
-                System.err.println("Файл звука не найден: sound.wav");
+                System.err.println("Файл звука sound.wav не найден!");
                 return;
             }
+
             try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(inputStream)) {
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioIn);

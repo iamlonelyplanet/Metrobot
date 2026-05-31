@@ -21,8 +21,7 @@ import static com.metrobot.Buttons.*;
  * В этом режиме работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
  * Повседневная работа пользователя в Windows прерывается всего на 10-12 секунд раз в 5 минут.
  * Счётчик боёв записывается в файл.
- * <p>
- * TODO: Завершение боёв по таймеру. Проверить закрытие и открытие автобоя.
+ * TODO: Завершение боёв по таймеру. Исправить закрытие и открытие автобоя, снизив y для нижних окон.
  */
 
 public class ClanBot extends BaseBot {
@@ -72,12 +71,8 @@ public class ClanBot extends BaseBot {
                 // Подготовительные клики (однократно, перед первым боем рейда)
                 if (unifiedCounter.getCount() == 0) {
                     showActiveWindows();
-                    clickButton("Автобой");
-                    clickButton("Арена - закрыть");
+                    unCheckAutoFight();
                     clickButtons("Клан", "Война", "Обновить");
-//                    clickButton("Клан");
-//                    clickButton("Война");
-//                    clickButton("Обновить");
                     clickButton("Рейды");
                     lastAttackMillis = System.currentTimeMillis();
                 }
@@ -100,28 +95,18 @@ public class ClanBot extends BaseBot {
 
     public void fightInClan(BotType type) throws InterruptedException {
         printBattleNumber((unifiedCounter.getCount() + 1), totalBattles);
-
-        /* Выход из режима "Автобой" (при VIP) перед ClanBot. Не сработает, если нижние окна пересекаются с верхними.
-        Тестировать.
-         */
         if (unifiedCounter.getCount() == 0) {
-            clickButton("Автобой");
-            clickButton("Арена - закрыть");
+            unCheckAutoFight();
         }
 
         if (type == BotType.CW) {
             clickButtons("Клан", "Война");
-//            clickButton("Клан");
-//            clickButton("Война");
             lastAttackMillis = System.currentTimeMillis();
             clickButton("Атаковать врага");
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
             clickButton("Пропустить");
             clickButton("Закрыть");
             clickButtons("Погон 1", "Погон 2", "Погон 3");
-//            clickButton("Погон 1");
-//            clickButton("Погон 2");
-//            clickButton("Погон 3");
             clickButton("Погон - Коллекция");
         }
 
@@ -155,5 +140,13 @@ public class ClanBot extends BaseBot {
                 }
             }
         }
+    }
+
+    /* Выход из режима "Автобой" (при VIP) перед ClanBot. Не сработает, если нижние окна пересекаются с верхними.
+Тестировать.
+ */
+    private void unCheckAutoFight() throws InterruptedException {
+        clickButton("Автобой");
+        clickButton("Арена - закрыть");
     }
 }

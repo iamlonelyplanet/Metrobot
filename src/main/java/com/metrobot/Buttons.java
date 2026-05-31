@@ -24,7 +24,7 @@ public class Buttons {
     public static final byte MAX_TUNNEL_WAYS = 5;
     public static final byte MAX_ENERGY = 30; // 50 при VIP
 
-    public static final int WHEEL_AMOUNT = 3;
+    public static final int WHEEL_AMOUNT = 3; // количество движений колеса мышки для чата, тестировано при WQHD
     public static final int FREE_AREA_X = 900;
     public static final int FREE_AREA_Y = 250;
 
@@ -33,7 +33,7 @@ public class Buttons {
      * Площадь стянутого до минимума ("приведённого") окна Игроклуба: 1033x768, приводится автоматически с версии 1.1
      * Площадь "рабочего поля" в окне Игроклуба и ВК: 764×650; одинакова при всех разрешениях.
      * Ширина полосы прокрутки (элемента окон Windows): 19 в Игроклубе, собрать статистику в других разрешениях
-     */
+     **/
     public static final int WINDOW_WIDTH = 1033;
     public static final int WINDOW_HEIGHT = 768;
     public static int xMoveRight = (WINDOW_WIDTH - 764 - 19) / 2; // Расчёт "нуля" (верхней левой точки) рабочего поля
@@ -94,6 +94,7 @@ public class Buttons {
         put("Атаковать врага", new Point(415, 288));
         put("Пропустить", new Point(385, 33));
         put("Закрыть - Рейд", new Point(460, 433));
+        put("Закрыть", new Point(460, 433));
         put("Погон 1", new Point(480, 480));
         put("Погон 2", new Point(480, 525));
         put("Погон 3", new Point(480, 560));
