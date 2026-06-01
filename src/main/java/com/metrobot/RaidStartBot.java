@@ -18,7 +18,8 @@ import static com.metrobot.Buttons.*;
  * Микро-режим для старта рейда в заданное время.
  * В заданное время Боец 1 заходит во вкладку Кланы -> Рейд, щёлкает на карте по выбранному босса и подтверждает рейд.
  * Однократно.
- * После выполнения во всех окнах, выбранных в предыдущем диалоге, автоматически стартует режим Рейд.
+ * Метод announceInChat() оповещает игроков о старте рейда в чате игры.
+ * После выполнения автоматически стартует режим Рейд для всех окон, выбранных в предыдущем диалоге.
  */
 public class RaidStartBot extends BaseBot {
     public RaidStartBot(List<HWND> windows,
@@ -51,7 +52,8 @@ public class RaidStartBot extends BaseBot {
 
             System.out.println("=== Запуск рейда ===");
             showActiveWindows();
-            System.out.println("\nВызываем босса " + bossName);
+            String consoleMessage = "босса " + bossName;
+            System.out.println("\nВызываем " + consoleMessage);
 
             clickButton("Клан");
             clickButton("Рейды");
@@ -73,8 +75,7 @@ public class RaidStartBot extends BaseBot {
 
             announceInChat();
 
-            System.out.printf("\n=== Вызов босса %s завершён ===", bossName); // стандартный endGame здесь не подходит
-            Thread.sleep(PAUSE_SHORT_MS);
+            System.out.printf("\n=== Вызов %s завершён ===", consoleMessage); // стандартный endGame здесь не подходит
 
             // Стартуем режим "Рейд" с теми окнами, которые передались в RaidStartBot
             ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд", closeAfterFinish);
@@ -86,8 +87,7 @@ public class RaidStartBot extends BaseBot {
     }
 
     protected void announceInChat() throws Exception {
-        final String MESSAGE_FOR_CLAN = "РЕЙД! " + bossName + ". Рейд запущен в автоматическом режиме, возможны ошибки";
-        final String MESSAGE_FOR_CLAN_2 = "1";
+        final String MESSAGE_FOR_CLAN = "РЕЙД! Босс " + bossName + " запущен в автоматическом режиме, возможны ошибки";
 
         robot.keyPress(KeyEvent.VK_CONTROL);
         robot.keyPress(KeyEvent.VK_MINUS);
@@ -101,9 +101,10 @@ public class RaidStartBot extends BaseBot {
 
         Thread.sleep(5000);
         clickButton("Чат - Клан");
-        Thread.sleep(5000);
+        Thread.sleep(3000);
 
         System.out.printf("Печатаем сообщение \"%s\"\n", MESSAGE_FOR_CLAN);
+        clickButton("Чат - Строка");
         pasteText(MESSAGE_FOR_CLAN);
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);

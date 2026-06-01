@@ -15,7 +15,7 @@ public class Buttons {
     public static final int PAUSE_BETWEEN_WINDOWS_MS = 100;
     public static final int PAUSE_RAID_BOSS_MS = 12_800;
     public static final int PAUSE_TUNNEL_MS = 16_000; // Для альтернативных скоростей: 16_000, 4_000, 8_000, 13_000
-    public static final int ATTACK_COOLDOWN_SEC = 301;
+    public static final int ATTACK_COOLDOWN_SEC = 300;
 
     // --- Максимально допустимое количество боёв. Почему byte? Где ещё их использовать, если не в учёбе! ---
     public static final byte MAX_BATTLES_ARENA = 50;
@@ -24,7 +24,7 @@ public class Buttons {
     public static final byte MAX_TUNNEL_WAYS = 5;
     public static final byte MAX_ENERGY = 30; // 50 при VIP
 
-    public static final int WHEEL_AMOUNT = 3;
+    public static final int WHEEL_AMOUNT = 3; // количество движений колеса мышки для чата, тестировано при WQHD
     public static final int FREE_AREA_X = 900;
     public static final int FREE_AREA_Y = 250;
 
@@ -33,7 +33,7 @@ public class Buttons {
      * Площадь стянутого до минимума ("приведённого") окна Игроклуба: 1033x768, приводится автоматически с версии 1.1
      * Площадь "рабочего поля" в окне Игроклуба и ВК: 764×650; одинакова при всех разрешениях.
      * Ширина полосы прокрутки (элемента окон Windows): 19 в Игроклубе, собрать статистику в других разрешениях
-     */
+     **/
     public static final int WINDOW_WIDTH = 1033;
     public static final int WINDOW_HEIGHT = 768;
     public static int xMoveRight = (WINDOW_WIDTH - 764 - 19) / 2; // Расчёт "нуля" (верхней левой точки) рабочего поля
@@ -47,8 +47,8 @@ public class Buttons {
         put("Атаковать", new Point(200, 513));
         put("Питомец", new Point(80, 505));
         put("Пропустить", new Point(385, 33));
-        put("Закрыть — Победа", new Point(460, 520));
-        put("Закрыть — Поражение", new Point(480, 463));
+        put("Закрыть 1", new Point(460, 520));
+        put("Закрыть 2", new Point(480, 463));
     }};
 
     // --- Туннели ---
@@ -79,8 +79,8 @@ public class Buttons {
         put("Начстанции", new Point(100, 350));
         put("Крыса", new Point(465, 235));
         put("Пропустить", new Point(385, 33));
-        put("Закрыть — Победа", new Point(460, 520));
-        put("Закрыть — Поражение", new Point(480, 463));
+        put("Закрыть 1", new Point(460, 520));
+        put("Закрыть 2", new Point(480, 463));
         put("Питомец", new Point(80, 505));
     }};
 
@@ -88,11 +88,12 @@ public class Buttons {
     public static final LinkedHashMap<String, Point> CLAN_BUTTONS = new LinkedHashMap<>() {{
         put("Клан", new Point(315, 58));
         put("Клан - Выход", new Point(80, 505));
-        put("Убрать автобой", new Point(145, 566));
-        put("Арена - закрыть", new Point(515, 575));
+        put("Автобой", new Point(145, 565));
+        put("Арена - закрыть", new Point(515, 560));
         put("Война", new Point(80, 303));
         put("Атаковать врага", new Point(415, 288));
         put("Пропустить", new Point(385, 33));
+        put("Закрыть - Рейд", new Point(460, 433));
         put("Закрыть", new Point(460, 433));
         put("Погон 1", new Point(480, 480));
         put("Погон 2", new Point(480, 525));
@@ -101,6 +102,9 @@ public class Buttons {
         put("Рейды", new Point(80, 413));
         put("Обновить", new Point(520, 40));
         put("Атаковать босса", new Point(425, 323));
+
+        put("Арена", new Point(360, 285)); // ПМ-г
+        put("Арена 2", new Point(320, 303)); // Основные станции: ПРМ-К
 
         put("Карта-левее", new Point(115, 270));
         put("Карта-ниже", new Point(420, 510));
@@ -116,5 +120,6 @@ public class Buttons {
 
         put("Чат", new Point(485, 620));
         put("Чат - Клан", new Point(480, 630));
+        put("Чат - Строка", new Point(320, 600));
     }};
 }

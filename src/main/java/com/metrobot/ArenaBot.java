@@ -12,14 +12,11 @@ import static com.metrobot.Buttons.*;
 /**
  * Режим "Арена": ежедневные бои перса. Самый первый режим работы программы! :-)
  * Вручную занимал у пользователей более 5 часов, раз в 5 минут требуя внимания.
- * <p>
  * Полное прохождение в полностью автоматическом режиме: порядка 4,5 часа = 50 боёв * 5 мин 10 сек = 260 минут.
  * В режиме "Арена" работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
  * Повседневная работа пользователей в Windows прерывается раз в 5 минут всего на 10-12 секунд.
  * Счётчик боёв записывается в файл.
  * Большинство методов для всех классов-ботов унифицировано и вынесено в родительский BaseBot.
- * <p>
- * TODO: режим не работает на станциях Университет (?), Коммунистическая (?) из-за иных координат выхода на Арену.
  */
 
 public class ArenaBot extends BaseBot {
@@ -49,8 +46,7 @@ public class ArenaBot extends BaseBot {
             //  === Бои на Арене ===
             for (int battle = (unifiedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
-                clickButton("Арена 2");
-                clickButton("Арена");
+                clickButtons("Арена 2", "Арена");
 
                 long lastAttackMillis = System.currentTimeMillis();
                 clickButton("Атаковать");
@@ -59,9 +55,9 @@ public class ArenaBot extends BaseBot {
                 }
 
                 clickButton("Пропустить");
-                clickButton("Закрыть — Победа");
+                clickButton("Закрыть 1");
                 Thread.sleep(PAUSE_SHORT_MS);
-                clickButton("Закрыть — Поражение");
+                clickButton("Закрыть 2");
 
                 unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);

@@ -10,9 +10,9 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 import static com.metrobot.Buttons.*;
 
 /**
- * Режим "Туннели": ежедневная прогулка перса по туннелям с особыми монстрами: Ящерами и Пауками. Полное прохождение:
+ * Режим "Туннели": ежедневная прогулка перса по туннелям с особыми монстрами - Ящерами и Пауками. Полное прохождение:
  * порядка 55 минут (28 при VIP, 14 при VIP + скоростной одежде).
- * В этом режиме окна не сворачиваются, работа пользователя в Windows крайне нежелательна.
+ * В этом режиме окна не сворачиваются, работа пользователя в Windows крайне нежелательна, т.к. клики идут непрерывно.
  * Запись счётчика в файл здесь не нужна.
  * Самый некрасивый класс. Зато самый лёгкий для обучения, для перегрузки, сигнатур, ООП и многого-прочего, что и
  * произошло с апрельской версии 1.2.9
@@ -45,24 +45,23 @@ public class TunnelBot extends BaseBot {
         try {
             startGame();
 
-            // === Бои в туннелях с пауками ===
             Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
             showActiveWindows();
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
-            fightAllSpiders();
+            fightAllSpiders(); // Бои в туннелях с пауками
 
             Instant endSpiderTime = Instant.now(); // Пока надо для таймера, потом можно удалить
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
             long secondsSpider = spidersDuration.getSeconds();
             System.out.printf("На пауков затрачено: %s", printTime(secondsSpider));
 
-            // === Туннели с Ящерами ===
+
             showActiveWindows();
             unifiedCounter.setCount(0);
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
-            fightAllLizards();
+            fightAllLizards(); // Бои в туннелях с ящерами
 
             Duration lizardDuration = Duration.between(endSpiderTime, Instant.now()); // Для таймера, потом удалить
             long secondsLizard = lizardDuration.getSeconds();

@@ -88,6 +88,7 @@ public abstract class BaseBot {
         System.out.println("\nРазвернул окна");
     }
 
+    // Закрытие окон + подтверждение
     protected void closeActiveWindows() throws InterruptedException {
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;
@@ -111,6 +112,7 @@ public abstract class BaseBot {
     // Завершение игровых режимов, это не bot.stop()
     protected void endGame() throws InterruptedException {
 //        playFinalSound(); // Ненужная свистоперделка
+
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
                 botName, LocalTime.now().withNano(0), unifiedCounter.getCount());
         if (closeAfterFinish) {
@@ -125,10 +127,23 @@ public abstract class BaseBot {
         showActiveWindows();
     }
 
+    protected void minimizeActiveWindows(HWND hWnd, int i) throws InterruptedException {
+        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
+        USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
+        if (i == activeWindows.size() - 1) {
+            System.out.println("Свернул окна");
+        }
+    }
+
     // Единый метод кликов по всем выбранным окнам. Центр всей проги.
     protected void clickButton(String buttonName) throws InterruptedException {
         Map<String, Point> buttonMap = getButtonMap();
         Point rel = buttonMap.get(buttonName);
+        if (rel == null) {
+            System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
+            return;
+        }
+
         Set<String> LONG_PAUSE_BUTTONS = Set.of(
                 "Обновить",
                 "Атаковать врага",
@@ -138,7 +153,7 @@ public abstract class BaseBot {
         );
 
         Set<String> FINAL_BUTTONS = Set.of(
-                "Закрыть — Поражение",
+                "Закрыть 2",
                 "Крыса",
                 "Клан - Выход"
         );
@@ -147,11 +162,6 @@ public abstract class BaseBot {
                 "Питомец",
                 "Погон 3"
         );
-
-        if (rel == null) {
-            System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
-            return;
-        }
 
         for (int i = 0; i < activeWindows.size(); i++) {
             HWND hWnd = activeWindows.get(i);
@@ -163,16 +173,11 @@ public abstract class BaseBot {
             int x = rect.left + Buttons.xMoveRight + rel.x;
             int y = rect.top + Buttons.yMoveDown + rel.y;
 
-
             System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
             clickAt(x, y);
 
             if (FINAL_BUTTONS.contains(buttonName)) {
-                Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
-                USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
-                if (i == activeWindows.size() - 1) {
-                    System.out.println("Свернул окна");
-                }
+                minimizeActiveWindows(hWnd, i);
             }
 
             if (SHORT_PAUSE_BUTTONS.contains(buttonName)) {
@@ -185,6 +190,78 @@ public abstract class BaseBot {
         Thread.sleep(PAUSE_SHORT_MS);
 
         if (LONG_PAUSE_BUTTONS.contains(buttonName)) {
+            Thread.sleep(PAUSE_LONG_MS);
+        }
+    }
+
+    // Перегрузка метода для нескольких кнопок подряд (без переключений на другие рабочие окна)
+    protected void clickButtons(String... buttonNames) throws InterruptedException {
+        if (buttonNames == null || buttonNames.length == 0) {
+            return;
+        }
+
+        Map<String, Point> buttonMap = getButtonMap();
+
+        Set<String> LONG_PAUSE_BUTTONS = Set.of(
+                "Обновить",
+                "Атаковать врага",
+                "Пропустить",
+                "Атаковать",
+                "Арена"
+        );
+
+        Set<String> FINAL_BUTTONS = Set.of(
+                "Закрыть 2",
+                "Крыса",
+                "Клан - Выход",
+                "Закрыть - Рейд",
+                "Погон - Коллекция"
+        );
+
+        Set<String> SHORT_PAUSE_BUTTONS = Set.of(
+                "Питомец",
+                "Погон 3"
+        );
+
+        String lastButton = buttonNames[buttonNames.length - 1];
+
+        for (int i = 0; i < activeWindows.size(); i++) {
+            HWND hWnd = activeWindows.get(i);
+            if (hWnd == null) continue;
+
+            RECT rect = new RECT();
+            USER32.GetWindowRect(hWnd, rect);
+
+            for (String buttonName : buttonNames) {
+
+                Point rel = buttonMap.get(buttonName);
+
+                if (rel == null) {
+                    System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
+                    continue;
+                }
+
+                int x = rect.left + Buttons.xMoveRight + rel.x;
+                int y = rect.top + Buttons.yMoveDown + rel.y;
+
+                System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
+                clickAt(x, y);
+                Thread.sleep(100); // пока не менять значение 100
+            }
+
+            // Проверяем только последнюю кнопку серии
+            if (FINAL_BUTTONS.contains(lastButton)) {
+                minimizeActiveWindows(hWnd, i);
+            }
+
+            if (SHORT_PAUSE_BUTTONS.contains(lastButton)) {
+                Thread.sleep(PAUSE_SHORT_MS);
+            }
+        }
+
+        Thread.sleep(PAUSE_SHORT_MS);
+
+        if (LONG_PAUSE_BUTTONS.contains(lastButton)) {
             Thread.sleep(PAUSE_LONG_MS);
         }
     }
@@ -207,27 +284,26 @@ public abstract class BaseBot {
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
 
-    /**
-     * Метод пока устаревший и не используется. Оставлен для дальнейшей разработки (с версии 1.2.9)
-     * Сворачиваем активные окна при silentMode == true. После сворачивания до следующего события проходит 5 минут,
-     * в это время пользователь продолжает заниматься своей работой.
-     */
-    protected void minimizeActiveWindows() throws InterruptedException {
-        if (!isSilentMode) return;
-        for (HWND hWnd : activeWindows) {
-            if (hWnd == null) continue;
-            USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
+    // Активируем режим "Автобой" на Арене после выполнения других ботов
+    protected void autoArena() throws InterruptedException {
+        getButtonMap();
+        if (closeAfterFinish) {
+            return;
         }
-        System.out.println("Свернул окна\n");
+
+        System.out.println("\nАктивирую галочку Автобой для Арены...\n");
+        clickButtons("Арена 2", "Арена");
+        clickButton("Автобой");
     }
 
     // Проигрываем звук по окончанию режима игры. Бесполезная свистоперделка ради учёбы и пасхалка для олдов.
     protected static void playFinalSound() {
         try (InputStream inputStream = BaseBot.class.getResourceAsStream("/sound.wav")) {
             if (inputStream == null) {
-                System.err.println("Файл звука не найден: sound.wav");
+                System.err.println("Файл звука sound.wav не найден!");
                 return;
             }
+
             try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(inputStream)) {
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioIn);
