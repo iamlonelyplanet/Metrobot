@@ -3,8 +3,6 @@ package com.metrobot;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -12,6 +10,7 @@ import java.util.List;
 
 import javax.sound.sampled.*;
 
+import com.metrobot.misc.PlayFinalSound;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.RECT;
@@ -28,7 +27,6 @@ public abstract class BaseBot {
     // === Общее состояние для всех ботов ===
     protected Robot robot;
     protected List<HWND> activeWindows = new ArrayList<>();
-    protected boolean isSilentMode = true;
     protected boolean isPet = false;
     protected boolean closeAfterFinish;
     protected String botName;
@@ -40,10 +38,28 @@ public abstract class BaseBot {
 
     protected Map<String, Counter> counters = CounterStorage.loadCounters(Arrays.asList("Арена", "КВ", "Рейд"));
 
+    private static final Set<String> LONG_PAUSE_BUTTONS = Set.of(
+            "Обновить",
+            "Атаковать врага",
+            "Пропустить",
+            "Атаковать",
+            "Арена"
+    );
+
+    private static final Set<String> FINAL_BUTTONS = Set.of(
+            "Закрыть 2",
+            "Крыса",
+            "Клан - Выход"
+    );
+
+    private static final Set<String> SHORT_PAUSE_BUTTONS = Set.of(
+            "Питомец",
+            "Погон 3"
+    );
+
     protected abstract Map<String, Point> getButtonMap();
 
     protected abstract void playGame();
-
 
     // --- Конструкторы ---
     public BaseBot() throws AWTException {
@@ -88,6 +104,15 @@ public abstract class BaseBot {
         System.out.println("\nРазвернул окна");
     }
 
+    // Сворачиваем активные окна
+    protected void minimizeActiveWindows(HWND hWnd, int i) throws InterruptedException {
+        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
+        USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
+        if (i == activeWindows.size() - 1) {
+            System.out.println("Свернул окна");
+        }
+    }
+
     // Закрытие окон + подтверждение
     protected void closeActiveWindows() throws InterruptedException {
         for (HWND hwnd : activeWindows) {
@@ -106,18 +131,17 @@ public abstract class BaseBot {
         System.out.printf("\nСтарт режима %s \n", botName);
         Thread.sleep(PAUSE_SHORT_MS);
         this.unifiedCounter = counters.computeIfAbsent(botName, name -> new Counter(name));
-        // TODO изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
+        // TODO: изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
     }
 
     // Завершение игровых режимов, это не bot.stop()
     protected void endGame() throws InterruptedException {
-//        playFinalSound(); // Ненужная свистоперделка
-
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
                 botName, LocalTime.now().withNano(0), unifiedCounter.getCount());
         if (closeAfterFinish) {
             System.out.println("\nЗакрываю игровые окна...");
             closeActiveWindows();
+//            PlayFinalSound.playFinalSound();
         }
     }
 
@@ -125,14 +149,6 @@ public abstract class BaseBot {
     protected void printBattleNumber(int battle, int total) throws InterruptedException {
         System.out.printf("\n=== Бой %d из %d ===", battle, total);
         showActiveWindows();
-    }
-
-    protected void minimizeActiveWindows(HWND hWnd, int i) throws InterruptedException {
-        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
-        USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
-        if (i == activeWindows.size() - 1) {
-            System.out.println("Свернул окна");
-        }
     }
 
     // Единый метод кликов по всем выбранным окнам. Центр всей проги.
@@ -143,25 +159,6 @@ public abstract class BaseBot {
             System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
             return;
         }
-
-        Set<String> LONG_PAUSE_BUTTONS = Set.of(
-                "Обновить",
-                "Атаковать врага",
-                "Пропустить",
-                "Атаковать",
-                "Арена"
-        );
-
-        Set<String> FINAL_BUTTONS = Set.of(
-                "Закрыть 2",
-                "Крыса",
-                "Клан - Выход"
-        );
-
-        Set<String> SHORT_PAUSE_BUTTONS = Set.of(
-                "Питомец",
-                "Погон 3"
-        );
 
         for (int i = 0; i < activeWindows.size(); i++) {
             HWND hWnd = activeWindows.get(i);
@@ -202,27 +199,6 @@ public abstract class BaseBot {
 
         Map<String, Point> buttonMap = getButtonMap();
 
-        Set<String> LONG_PAUSE_BUTTONS = Set.of(
-                "Обновить",
-                "Атаковать врага",
-                "Пропустить",
-                "Атаковать",
-                "Арена"
-        );
-
-        Set<String> FINAL_BUTTONS = Set.of(
-                "Закрыть 2",
-                "Крыса",
-                "Клан - Выход",
-                "Закрыть - Рейд",
-                "Погон - Коллекция"
-        );
-
-        Set<String> SHORT_PAUSE_BUTTONS = Set.of(
-                "Питомец",
-                "Погон 3"
-        );
-
         String lastButton = buttonNames[buttonNames.length - 1];
 
         for (int i = 0; i < activeWindows.size(); i++) {
@@ -233,7 +209,6 @@ public abstract class BaseBot {
             USER32.GetWindowRect(hWnd, rect);
 
             for (String buttonName : buttonNames) {
-
                 Point rel = buttonMap.get(buttonName);
 
                 if (rel == null) {
@@ -246,6 +221,7 @@ public abstract class BaseBot {
 
                 System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
                 clickAt(x, y);
+
                 Thread.sleep(100); // пока не менять значение 100
             }
 
@@ -294,23 +270,5 @@ public abstract class BaseBot {
         System.out.println("\nАктивирую галочку Автобой для Арены...\n");
         clickButtons("Арена 2", "Арена");
         clickButton("Автобой");
-    }
-
-    // Проигрываем звук по окончанию режима игры. Бесполезная свистоперделка ради учёбы и пасхалка для олдов.
-    protected static void playFinalSound() {
-        try (InputStream inputStream = BaseBot.class.getResourceAsStream("/sound.wav")) {
-            if (inputStream == null) {
-                System.err.println("Файл звука sound.wav не найден!");
-                return;
-            }
-
-            try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(inputStream)) {
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioIn);
-                clip.start();
-            }
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-        }
     }
 }

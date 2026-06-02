@@ -1,4 +1,4 @@
-package com.metrobot;
+package com.metrobot.misc;
 
 public class Grammar {
     /* Не особо нужный класс для подгона грамматики в зависимости от падежей, склонений, родов и т.п. Больше для учёбы.
@@ -6,7 +6,7 @@ public class Grammar {
 
     // Метод для определения суффикса глагола и окончания существительного в зависимости от числительного
     // Прошёл 1 бой / Прошло 2 боя / Прошло 11 боёв и т.д.
-    static String getWordEnd(int number) {
+    public static String getWordEnd(int number) {
         String noun = "";
         String verb = "";
 

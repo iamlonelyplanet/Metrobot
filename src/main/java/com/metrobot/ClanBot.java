@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.metrobot.misc.Grammar;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
 import static com.metrobot.Buttons.*;
@@ -142,9 +143,7 @@ public class ClanBot extends BaseBot {
         }
     }
 
-    /* Выход из режима "Автобой" (при VIP) перед ClanBot. Не сработает, если нижние окна пересекаются с верхними.
-Тестировать.
- */
+    // Выход из режима "Автобой" (при VIP) перед ClanBot. Не сработает, если нижние окна пересекаются с верхними.
     private void unCheckAutoFight() throws InterruptedException {
         clickButton("Автобой");
         clickButton("Арена - закрыть");
