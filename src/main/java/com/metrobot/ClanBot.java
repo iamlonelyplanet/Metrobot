@@ -128,7 +128,9 @@ public class ClanBot extends BaseBot {
         unifiedCounter.plusOne();
         CounterStorage.saveCounters(counters);
         System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
-        isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
+
+        LocalTime nextBattleTime = LocalTime.now().plusSeconds(ATTACK_COOLDOWN_SEC);
+        isGameGoingOn = nextBattleTime.isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
 
         if (isGameGoingOn) {
             if (lastAttackMillis > 0) {

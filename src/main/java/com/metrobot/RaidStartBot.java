@@ -50,6 +50,7 @@ public class RaidStartBot extends BaseBot {
         try {
             startGame();
 
+            boolean isBarracks = true;
             System.out.println("=== Запуск рейда ===");
             showActiveWindows();
             String consoleMessage = "босса " + bossName;
@@ -73,7 +74,11 @@ public class RaidStartBot extends BaseBot {
 
             clickButton("В рейд");
 
-            announceInChat();
+            if (isBarracks) {
+                barracksTurnOn();
+            }
+
+            announceInChat(isBarracks);
 
             System.out.printf("\n=== Вызов %s завершён ===", consoleMessage); // стандартный endGame здесь не подходит
 
@@ -86,8 +91,15 @@ public class RaidStartBot extends BaseBot {
         }
     }
 
-    protected void announceInChat() throws Exception {
+    protected void barracksTurnOn() throws Exception {
+        clickButton("Строения");
+        clickButton("Активировать");
+        Thread.sleep(PAUSE_SHORT_MS);
+    }
+
+    protected void announceInChat(boolean isBarracks) throws Exception {
         final String MESSAGE_FOR_CLAN = "РЕЙД! Босс " + bossName + " запущен в автоматическом режиме, возможны ошибки";
+        final String MESSAGE_BARRACKS = "Бараки работают!";
 
         robot.keyPress(KeyEvent.VK_CONTROL);
         robot.keyPress(KeyEvent.VK_MINUS);
@@ -103,11 +115,19 @@ public class RaidStartBot extends BaseBot {
         clickButton("Чат - Клан");
         Thread.sleep(3000);
 
-        System.out.printf("Печатаем сообщение \"%s\"\n", MESSAGE_FOR_CLAN);
         clickButton("Чат - Строка");
+
         pasteText(MESSAGE_FOR_CLAN);
+        System.out.printf("Печатаем сообщение \"%s\"\n", MESSAGE_FOR_CLAN);
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
+
+//        if (isBarracks) {
+//            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
+//            pasteText(MESSAGE_BARRACKS);
+//            robot.keyPress(KeyEvent.VK_ENTER);
+//            robot.keyRelease(KeyEvent.VK_ENTER);
+//        }
 
         robot.mouseMove(FREE_AREA_X, FREE_AREA_Y);
         robot.mouseWheel(-WHEEL_AMOUNT);

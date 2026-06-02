@@ -118,6 +118,9 @@ public class Buttons {
         put("Слизень", new Point(420, 460)); // доступен с экрана 1
         put("Тварь", new Point(185, 60)); // доступен с экрана 2
 
+        put("Строения", new Point(80, 245));
+        put("Активировать", new Point(165, 333));
+
         put("Чат", new Point(485, 620));
         put("Чат - Клан", new Point(480, 630));
         put("Чат - Строка", new Point(320, 600));
