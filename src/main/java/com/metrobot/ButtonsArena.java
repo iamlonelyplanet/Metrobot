@@ -12,11 +12,12 @@ public enum ButtonsArena {
         final String name;
         final int x;
         final int y;
-//        int pause;
+//        final int pause;
 
     ButtonsArena(String name, int x, int y) {
             this.name = name;
             this.x = x;
             this.y = y;
+//            this.pause = pause;
     }
 }

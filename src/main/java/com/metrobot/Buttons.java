@@ -17,13 +17,6 @@ public class Buttons {
     public static final int PAUSE_TUNNEL_MS = 16_000; // Для альтернативных скоростей: 16_000, 4_000, 8_000, 13_000
     public static final int ATTACK_COOLDOWN_SEC = 300;
 
-    // --- Максимально допустимое количество боёв. Почему byte? Где ещё их использовать, если не в учёбе! ---
-    public static final byte MAX_BATTLES_ARENA = 50;
-    public static final byte MAX_BATTLES_CW = 24;
-    public static final byte MAX_BATTLES_RAID = 12;
-    public static final byte MAX_TUNNEL_WAYS = 5;
-    public static final byte MAX_ENERGY = 30; // 50 при VIP
-
     public static final int WHEEL_AMOUNT = 3; // количество движений колеса мышки для чата, тестировано при WQHD
     public static final int FREE_AREA_X = 900;
     public static final int FREE_AREA_Y = 250;

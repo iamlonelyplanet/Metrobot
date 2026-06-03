@@ -39,6 +39,8 @@ public class ArenaBot extends BaseBot {
         return ARENA_BUTTONS;
     }
 
+    public static final byte MAX_BATTLES_ARENA = 50;
+
     @Override
     public void playGame() {
         try {

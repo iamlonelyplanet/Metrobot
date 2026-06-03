@@ -38,6 +38,8 @@ public class TunnelBot extends BaseBot {
         return TUNNEL_BUTTONS;
     }
 
+    public static final byte MAX_TUNNEL_WAYS = 5;
+
     private enum MonsterKind {SPIDER, LIZARD}
 
     @Override

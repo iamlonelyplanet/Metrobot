@@ -32,6 +32,8 @@ public class RatBot extends BaseBot {
         return RAT_BUTTONS;
     }
 
+    public static final byte MAX_ENERGY = 30; // 50 при VIP
+
     @Override
     public void playGame() {
         try {

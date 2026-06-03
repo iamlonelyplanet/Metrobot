@@ -52,6 +52,9 @@ public class ClanBot extends BaseBot {
 
     public enum BotType {RAID, CW}
 
+    public static final byte MAX_BATTLES_CW = 24;
+    public static final byte MAX_BATTLES_RAID = 12;
+
     @Override
     public void playGame() {
         try {
@@ -107,8 +110,8 @@ public class ClanBot extends BaseBot {
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
             clickButton("Пропустить");
             clickButton("Закрыть");
-            clickButtons("Погон 1", "Погон 2", "Погон 3");
-            clickButton("Погон - Коллекция");
+            clickButtons("Погон 1", "Погон 2", "Погон 3", "Погон - Коллекция");
+//            clickButton("Погон - Коллекция");
         }
 
         if (type == BotType.RAID) {
