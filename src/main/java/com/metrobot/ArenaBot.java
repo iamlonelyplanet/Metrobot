@@ -39,8 +39,6 @@ public class ArenaBot extends BaseBot {
         return ARENA_BUTTONS;
     }
 
-    public static final byte MAX_BATTLES_ARENA = 50;
-
     @Override
     public void playGame() {
         try {
@@ -58,7 +56,7 @@ public class ArenaBot extends BaseBot {
 
                 clickButton("Пропустить");
                 clickButton("Закрыть 1");
-                Thread.sleep(PAUSE_SHORT_MS);
+                Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
                 clickButton("Закрыть 2");
 
                 unifiedCounter.plusOne();

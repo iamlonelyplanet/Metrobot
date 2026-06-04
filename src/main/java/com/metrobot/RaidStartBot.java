@@ -50,7 +50,7 @@ public class RaidStartBot extends BaseBot {
         try {
             startGame();
 
-            boolean isBarracks = true;
+            boolean isBarracks = false;
             System.out.println("=== Запуск рейда ===");
             showActiveWindows();
             String consoleMessage = "босса " + bossName;

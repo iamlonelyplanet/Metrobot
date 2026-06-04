@@ -52,9 +52,6 @@ public class ClanBot extends BaseBot {
 
     public enum BotType {RAID, CW}
 
-    public static final byte MAX_BATTLES_CW = 24;
-    public static final byte MAX_BATTLES_RAID = 12;
-
     @Override
     public void playGame() {
         try {
