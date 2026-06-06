@@ -8,9 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
-import javax.sound.sampled.*;
-
-import com.metrobot.misc.PlayFinalSound;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.RECT;
@@ -52,7 +49,7 @@ public abstract class BaseBot {
             "Клан - Выход"
     );
 
-    private static final Set<String> SHORT_PAUSE_BUTTONS = Set.of(
+    private static final Set<String> PET_PAUSE_BUTTONS = Set.of(
             "Питомец",
             "Погон 3"
     );
@@ -177,14 +174,14 @@ public abstract class BaseBot {
                 minimizeActiveWindows(hWnd, i);
             }
 
-            if (SHORT_PAUSE_BUTTONS.contains(buttonName)) {
-                Thread.sleep(PAUSE_SHORT_MS);
+            if (PET_PAUSE_BUTTONS.contains(buttonName)) {
+                Thread.sleep(PAUSE_PET_MS);
             }
 
             Thread.sleep(100); // пока не менять значение 100
         }
 
-        Thread.sleep(PAUSE_SHORT_MS);
+        Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
         if (LONG_PAUSE_BUTTONS.contains(buttonName)) {
             Thread.sleep(PAUSE_LONG_MS);
@@ -230,8 +227,8 @@ public abstract class BaseBot {
                 minimizeActiveWindows(hWnd, i);
             }
 
-            if (SHORT_PAUSE_BUTTONS.contains(lastButton)) {
-                Thread.sleep(PAUSE_SHORT_MS);
+            if (PET_PAUSE_BUTTONS.contains(lastButton)) {
+                Thread.sleep(PAUSE_PET_MS);
             }
         }
 
