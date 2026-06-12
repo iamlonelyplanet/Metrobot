@@ -119,6 +119,13 @@ public class ClanBot extends BaseBot {
 
             clickButton("Атаковать босса");
             Thread.sleep(PAUSE_RAID_BOSS_MS);
+
+            boolean isGrenadeModeOn = false;
+            if (isGrenadeModeOn) {
+                Thread.sleep(PAUSE_SHORT_MS);
+                clickButton("Граната красная");
+                Thread.sleep(5000);
+            }
             clickButton("Пропустить");
             clickButton("Закрыть - Рейд");
         }

@@ -55,9 +55,10 @@ public class ArenaBot extends BaseBot {
                 }
 
                 clickButton("Пропустить");
-                clickButton("Закрыть 1");
-                Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
-                clickButton("Закрыть 2");
+                clickButtons("Закрыть 1", "Закрыть 2");
+//                clickButton("Закрыть 1");
+//                Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
+//                clickButton("Закрыть 2");
 
                 unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);

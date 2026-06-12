@@ -15,7 +15,7 @@ public class Buttons {
     public static final int PAUSE_PET_MS = 500;
     public static final int PAUSE_BETWEEN_WINDOWS_MS = 50;
     public static final int PAUSE_RAID_BOSS_MS = 12_800;
-    public static final int PAUSE_TUNNEL_MS = 8_000; // Для альтернативных скоростей: 16_000, 4_500, 8_500, 13_000
+    public static final int PAUSE_TUNNEL_MS = 4_000; // Для альтернативных скоростей: 16_000, 4_500, 8_500, 13_000
     public static final int ATTACK_COOLDOWN_SEC = 301;
 
     public static final byte MAX_BATTLES_ARENA = 50;
@@ -102,6 +102,8 @@ public class Buttons {
         put("Рейды", new Point(80, 413));
         put("Обновить", new Point(520, 40));
         put("Атаковать босса", new Point(425, 323));
+
+        put("Граната красная", new Point(420, 465));
 
         put("Арена", new Point(360, 285)); // ПМ-г
         put("Арена 2", new Point(320, 303)); // Основные станции: ПРМ-К
