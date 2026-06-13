@@ -32,6 +32,6 @@ public class Grammar {
                 noun = "ёв";
             }
         }
-        return "Прош" + verb + " " + number + " бо" + noun + "\n";
+        return "\nПрош" + verb + " " + number + " бо" + noun;
     }
 }

@@ -3,11 +3,14 @@ package com.metrobot;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
+import com.metrobot.misc.Grammar;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.RECT;
@@ -51,7 +54,8 @@ public abstract class BaseBot {
 
     private static final Set<String> PET_PAUSE_BUTTONS = Set.of(
             "Питомец",
-            "Погон 3"
+            "Погон 3",
+            "Закрыть - Рейд" // Подумать
     );
 
     protected abstract Map<String, Point> getButtonMap();
@@ -95,6 +99,17 @@ public abstract class BaseBot {
         return String.format("%d мин %d сек\n", seconds / 60, seconds % 60);
     }
 
+    // Обновление файла счётчиков, вывод в консоль номера боя и потраченного времени (до 0,01 сек)
+    protected void fightEnd(Instant startTime) {
+        unifiedCounter.plusOne();
+        CounterStorage.saveCounters(counters);
+        System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
+
+        Duration duration = Duration.between(startTime, Instant.now());
+        double secondsForBattle = duration.toMillis() / 1000.0;
+        System.out.printf("На бой затрачено %.2f сек%n", secondsForBattle);
+    }
+
     // Разворачиваем активные окна
     protected void showActiveWindows() throws InterruptedException {
         for (HWND hWnd : activeWindows) {
@@ -106,8 +121,8 @@ public abstract class BaseBot {
         System.out.println("\nРазвернул окна");
     }
 
-    // Сворачиваем активные окна
-    protected void minimizeActiveWindows(HWND hWnd, int i) throws InterruptedException {
+    // Сворачиваем активное окна
+    protected void minimizeActiveWindow(HWND hWnd, int i) throws InterruptedException {
         Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
         USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
         if (i == activeWindows.size() - 1) {
@@ -117,6 +132,8 @@ public abstract class BaseBot {
 
     // Закрытие окон + подтверждение
     protected void closeActiveWindows() throws InterruptedException {
+        System.out.println("\nЗакрываю игровые окна...");
+
         for (HWND hwnd : activeWindows) {
             if (hwnd == null) continue;
             User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null);
@@ -125,6 +142,7 @@ public abstract class BaseBot {
             robot.keyRelease(KeyEvent.VK_ENTER);
             Thread.sleep(PAUSE_SHORT_MS);
         }
+        System.out.println("\nОкна закрыты");
     }
 
     // Старт игрового режима
@@ -141,7 +159,6 @@ public abstract class BaseBot {
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
                 botName, LocalTime.now().withNano(0), unifiedCounter.getCount());
         if (closeAfterFinish) {
-            System.out.println("\nЗакрываю игровые окна...");
             closeActiveWindows();
 //            PlayFinalSound.playFinalSound();
         }
@@ -165,18 +182,13 @@ public abstract class BaseBot {
         for (int i = 0; i < activeWindows.size(); i++) {
             HWND hWnd = activeWindows.get(i);
             if (hWnd == null) continue;
-
             RECT rect = new RECT();
             USER32.GetWindowRect(hWnd, rect);
 
-            int x = rect.left + Buttons.xMoveRight + rel.x;
-            int y = rect.top + Buttons.yMoveDown + rel.y;
-
-            System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
-            clickAt(x, y);
+            calculateCoordinates(rect, rel, i, buttonName);
 
             if (FINAL_BUTTONS.contains(buttonName)) {
-                minimizeActiveWindows(hWnd, i);
+                minimizeActiveWindow(hWnd, i);
             }
 
             if (PET_PAUSE_BUTTONS.contains(buttonName)) {
@@ -206,7 +218,6 @@ public abstract class BaseBot {
         for (int i = 0; i < activeWindows.size(); i++) {
             HWND hWnd = activeWindows.get(i);
             if (hWnd == null) continue;
-
             RECT rect = new RECT();
             USER32.GetWindowRect(hWnd, rect);
 
@@ -218,18 +229,13 @@ public abstract class BaseBot {
                     continue;
                 }
 
-                int x = rect.left + Buttons.xMoveRight + rel.x;
-                int y = rect.top + Buttons.yMoveDown + rel.y;
-
-                System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
-                clickAt(x, y);
-
+                calculateCoordinates(rect, rel, i, buttonName);
                 Thread.sleep(100); // пока не менять значение 100
             }
 
             // Проверяем только последнюю кнопку серии
             if (FINAL_BUTTONS.contains(lastButton)) {
-                minimizeActiveWindows(hWnd, i);
+                minimizeActiveWindow(hWnd, i);
             }
 
             if (PET_PAUSE_BUTTONS.contains(lastButton)) {
@@ -244,10 +250,18 @@ public abstract class BaseBot {
         }
     }
 
+    protected void calculateCoordinates(RECT rect, Point rel, int i, String buttonName) {
+        int x = rect.left + Buttons.xMoveRight + rel.x;
+        int y = rect.top + Buttons.yMoveDown + rel.y;
+
+        System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
+        clickAt(x, y);
+    }
+
     // Обработка исключений. Учебная штука.
     protected void handleExceptions(Exception e) {
         if (e instanceof InterruptedException) {
-            System.out.println("Прервано — выхожу.");
+            System.out.println("Прервано — выхожу");
             Thread.currentThread().interrupt();
         } else {
             e.printStackTrace();
@@ -262,7 +276,7 @@ public abstract class BaseBot {
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
 
-    // Активируем режим "Автобой" на Арене после выполнения других ботов
+    // Активируем режим "Автобой" на Арене после выполнения других ботов, на будущее
     protected void autoArena() throws InterruptedException {
         getButtonMap();
         if (closeAfterFinish) {

@@ -1,12 +1,12 @@
 package com.metrobot;
 
 import java.awt.*;
+import java.time.Instant;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import com.metrobot.misc.Grammar;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
 import static com.metrobot.Buttons.*;
@@ -96,6 +96,7 @@ public class ClanBot extends BaseBot {
 
     public void fightInClan(BotType type) throws InterruptedException {
         printBattleNumber((unifiedCounter.getCount() + 1), totalBattles);
+        Instant startTime = Instant.now();
         if (unifiedCounter.getCount() == 0) {
             unCheckAutoFight();
         }
@@ -132,9 +133,7 @@ public class ClanBot extends BaseBot {
 
         clickButton("Клан - Выход"); // Выход из игрового меню "Клан" радикально снижает загрузку CPU
 
-        unifiedCounter.plusOne();
-        CounterStorage.saveCounters(counters);
-        System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
+        fightEnd(startTime);
 
         LocalTime nextBattleTime = LocalTime.now().plusSeconds(ATTACK_COOLDOWN_SEC);
         isGameGoingOn = nextBattleTime.isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);

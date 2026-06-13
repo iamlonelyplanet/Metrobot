@@ -111,7 +111,7 @@ public class RaidStartBot extends BaseBot {
         robot.mouseMove(FREE_AREA_X, FREE_AREA_Y);
         robot.mouseWheel(WHEEL_AMOUNT);
 
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         clickButton("Чат - Клан");
         Thread.sleep(3000);
 
@@ -122,12 +122,12 @@ public class RaidStartBot extends BaseBot {
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
 
-//        if (isBarracks) {
-//            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
-//            pasteText(MESSAGE_BARRACKS);
-//            robot.keyPress(KeyEvent.VK_ENTER);
-//            robot.keyRelease(KeyEvent.VK_ENTER);
-//        }
+        if (isBarracks) {
+            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
+            pasteText(MESSAGE_BARRACKS);
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+        }
 
         robot.mouseMove(FREE_AREA_X, FREE_AREA_Y);
         robot.mouseWheel(-WHEEL_AMOUNT);

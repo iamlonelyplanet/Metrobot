@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.time.*;
 
-import com.metrobot.misc.Grammar;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
 import static com.metrobot.Buttons.*;
@@ -58,17 +57,8 @@ public class ArenaBot extends BaseBot {
 
                 clickButton("Пропустить");
                 clickButtons("Закрыть 1", "Закрыть 2");
-//                clickButton("Закрыть 1");
-//                Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
-//                clickButton("Закрыть 2");
 
-                unifiedCounter.plusOne();
-                CounterStorage.saveCounters(counters);
-                System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
-
-                Duration duration = Duration.between(Instant.now(), startTime);
-                long secondsForBattle = duration.getSeconds();
-                System.out.printf("На бой затрачено: %s", printTime(secondsForBattle));
+                fightEnd(startTime);
 
                 if (battle < MAX_BATTLES_ARENA) {
                     int elapsedSeconds = (int) (System.currentTimeMillis() - lastAttackMillis) / 1000;
