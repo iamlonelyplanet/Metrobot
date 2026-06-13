@@ -173,9 +173,4 @@ public class TunnelBot extends BaseBot {
             System.out.printf("\nЗавершено пробегов до Парка Культуры: %d\n\n", (way + 1));
         }
     }
-
-    // Подсчёт и формирование строки с потраченным временем
-    private String printTime(long seconds) {
-        return String.format("%d мин %d сек\n", seconds / 60, seconds % 60);
-    }
 }

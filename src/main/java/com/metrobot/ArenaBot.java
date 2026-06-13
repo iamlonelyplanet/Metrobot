@@ -4,6 +4,7 @@ import java.awt.*;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.time.*;
 
 import com.metrobot.misc.Grammar;
 import com.sun.jna.platform.win32.WinDef.HWND;
@@ -46,6 +47,7 @@ public class ArenaBot extends BaseBot {
 
             //  === Бои на Арене ===
             for (int battle = (unifiedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
+                Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
                 long lastAttackMillis = System.currentTimeMillis();
                 clickButtons("Арена 2", "Арена");
@@ -63,6 +65,10 @@ public class ArenaBot extends BaseBot {
                 unifiedCounter.plusOne();
                 CounterStorage.saveCounters(counters);
                 System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
+
+                Duration duration = Duration.between(Instant.now(), startTime);
+                long secondsForBattle = duration.getSeconds();
+                System.out.printf("На бой затрачено: %s", printTime(secondsForBattle));
 
                 if (battle < MAX_BATTLES_ARENA) {
                     int elapsedSeconds = (int) (System.currentTimeMillis() - lastAttackMillis) / 1000;

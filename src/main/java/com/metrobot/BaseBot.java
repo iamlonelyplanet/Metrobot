@@ -90,6 +90,11 @@ public abstract class BaseBot {
         }
     }
 
+    // Подсчёт и формирование строки с потраченным временем
+    protected String printTime(long seconds) {
+        return String.format("%d мин %d сек\n", seconds / 60, seconds % 60);
+    }
+
     // Разворачиваем активные окна
     protected void showActiveWindows() throws InterruptedException {
         for (HWND hWnd : activeWindows) {
