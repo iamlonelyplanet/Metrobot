@@ -150,10 +150,4 @@ public class ClanBot extends BaseBot {
             }
         }
     }
-
-    // Выход из режима "Автобой" (при VIP) перед ClanBot. Не сработает, если нижние окна пересекаются с верхними.
-    private void unCheckAutoFight() throws InterruptedException {
-        clickButton("Автобой");
-        clickButton("Арена - закрыть");
-    }
 }

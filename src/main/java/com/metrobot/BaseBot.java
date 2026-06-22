@@ -170,6 +170,12 @@ public abstract class BaseBot {
         showActiveWindows();
     }
 
+    // Выход из режима "Автобой" (при VIP) перед ClanBot. Не сработает, если нижние окна пересекаются с верхними.
+    protected void unCheckAutoFight() throws InterruptedException {
+        clickButton("Автобой");
+        clickButton("Арена - закрыть");
+    }
+
     // Единый метод кликов по всем выбранным окнам. Центр всей проги.
     protected void clickButton(String buttonName) throws InterruptedException {
         Map<String, Point> buttonMap = getButtonMap();
