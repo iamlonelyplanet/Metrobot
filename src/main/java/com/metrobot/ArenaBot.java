@@ -46,9 +46,8 @@ public class ArenaBot extends BaseBot {
 
             //  === Бои на Арене ===
             for (int battle = (unifiedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
-                Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
+                Instant battleStartTime = Instant.now();
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
-                long lastAttackMillis = System.currentTimeMillis();
                 clickButtons("Арена 2", "Арена");
                 clickButton("Атаковать");
                 if (isPet) {
@@ -58,12 +57,11 @@ public class ArenaBot extends BaseBot {
                 clickButton("Пропустить");
                 clickButtons("Закрыть 1", "Закрыть 2");
 
-                fightEnd(startTime);
+                int battleDuration = fightEnd(battleStartTime);
+                int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
 
                 if (battle < MAX_BATTLES_ARENA) {
-                    int elapsedSeconds = (int) (System.currentTimeMillis() - lastAttackMillis) / 1000;
-                    int secondsToWait = ATTACK_COOLDOWN_SEC - elapsedSeconds;
-                    countdown(secondsToWait);
+                    countdown(secondsBeforeNextBattle);
                 }
             }
 

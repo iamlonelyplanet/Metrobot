@@ -48,7 +48,6 @@ public class ClanBot extends BaseBot {
     private int totalBattles;
     private boolean isGameGoingOn;
     private LocalTime endTime;
-    private long lastAttackMillis = -1;
 
     public enum BotType {RAID, CW}
 
@@ -75,7 +74,7 @@ public class ClanBot extends BaseBot {
                     unCheckAutoFight();
                     clickButtons("Клан", "Война", "Обновить");
                     clickButton("Рейды");
-                    lastAttackMillis = System.currentTimeMillis();
+                    Instant battleStartTime = Instant.now();
                 }
                 while (isGameGoingOn) {
                     fightInClan(BotType.RAID);
@@ -96,14 +95,14 @@ public class ClanBot extends BaseBot {
 
     public void fightInClan(BotType type) throws InterruptedException {
         printBattleNumber((unifiedCounter.getCount() + 1), totalBattles);
-        Instant startTime = Instant.now();
+        Instant battleStartTime = Instant.now();
         if (unifiedCounter.getCount() == 0) {
             unCheckAutoFight();
         }
 
         if (type == BotType.CW) {
             clickButtons("Клан", "Война");
-            lastAttackMillis = System.currentTimeMillis();
+            battleStartTime = Instant.now();
             clickButton("Атаковать врага");
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
             clickButton("Пропустить");
@@ -115,7 +114,7 @@ public class ClanBot extends BaseBot {
         if (type == BotType.RAID) {
             if (unifiedCounter.getCount() > 0) {
                 clickButtons("Клан", "Рейды");
-                lastAttackMillis = System.currentTimeMillis();
+                battleStartTime = Instant.now();
             }
 
             clickButton("Атаковать босса");
@@ -133,21 +132,14 @@ public class ClanBot extends BaseBot {
 
         clickButton("Клан - Выход"); // Выход из игрового меню "Клан" радикально снижает загрузку CPU
 
-        fightEnd(startTime);
+        int battleDuration = fightEnd(battleStartTime);
 
         LocalTime nextBattleTime = LocalTime.now().plusSeconds(ATTACK_COOLDOWN_SEC);
         isGameGoingOn = nextBattleTime.isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
 
         if (isGameGoingOn) {
-            if (lastAttackMillis > 0) {
-                long now = System.currentTimeMillis();
-                long elapsedSeconds = (now - lastAttackMillis) / 1000;
-                long secondsToWait = ATTACK_COOLDOWN_SEC - elapsedSeconds;
-
-                if (secondsToWait > 0) {
-                    countdown((int) secondsToWait);
-                }
-            }
+            int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
+            countdown(secondsBeforeNextBattle);
         }
     }
 }

@@ -100,14 +100,15 @@ public abstract class BaseBot {
     }
 
     // Обновление файла счётчиков, вывод в консоль номера боя и потраченного времени (до 0,01 сек)
-    protected void fightEnd(Instant startTime) {
+    protected int fightEnd(Instant battleStartTime) {
         unifiedCounter.plusOne();
         CounterStorage.saveCounters(counters);
         System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
 
-        Duration duration = Duration.between(startTime, Instant.now());
+        Duration duration = Duration.between(battleStartTime, Instant.now());
         double secondsForBattle = duration.toMillis() / 1000.0;
         System.out.printf("На бой затрачено %.2f сек%n", secondsForBattle);
+        return (int) secondsForBattle;
     }
 
     // Разворачиваем активные окна
@@ -218,7 +219,6 @@ public abstract class BaseBot {
         }
 
         Map<String, Point> buttonMap = getButtonMap();
-
         String lastButton = buttonNames[buttonNames.length - 1];
 
         for (int i = 0; i < activeWindows.size(); i++) {
@@ -236,12 +236,12 @@ public abstract class BaseBot {
                 }
 
                 calculateCoordinates(rect, rel, i, buttonName);
-                Thread.sleep(100); // пока не менять значение 100
-            }
 
-            // Проверяем только последнюю кнопку серии
-            if (FINAL_BUTTONS.contains(lastButton)) {
-                minimizeActiveWindow(hWnd, i);
+                if (FINAL_BUTTONS.contains(buttonName)) {
+                    minimizeActiveWindow(hWnd, i);
+                }
+
+                Thread.sleep(100); // пока не менять значение 100
             }
 
             if (PET_PAUSE_BUTTONS.contains(lastButton)) {
@@ -259,15 +259,14 @@ public abstract class BaseBot {
     protected void calculateCoordinates(RECT rect, Point rel, int i, String buttonName) {
         int x = rect.left + Buttons.xMoveRight + rel.x;
         int y = rect.top + Buttons.yMoveDown + rel.y;
-
-        System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
         clickAt(x, y);
+        System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
     }
 
     // Обработка исключений. Учебная штука.
     protected void handleExceptions(Exception e) {
         if (e instanceof InterruptedException) {
-            System.out.println("Прервано — выхожу");
+            System.out.println("Прервано. Завершаю работу");
             Thread.currentThread().interrupt();
         } else {
             e.printStackTrace();
