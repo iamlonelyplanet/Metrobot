@@ -61,7 +61,7 @@ public class TunnelBot extends BaseBot {
             unifiedCounter.setCount(0);
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
-            fightAllLizards(); // Бои в туннелях с ящерами
+//            fightAllLizards(); // Бои в туннелях с ящерами
 
             Duration lizardDuration = Duration.between(endSpiderTime, Instant.now()); // Для таймера, потом удалить
             long secondsLizard = lizardDuration.getSeconds();

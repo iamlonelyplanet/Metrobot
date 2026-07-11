@@ -143,7 +143,8 @@ public abstract class BaseBot {
             robot.keyRelease(KeyEvent.VK_ENTER);
             Thread.sleep(PAUSE_SHORT_MS);
         }
-        System.out.println("\nОкна закрыты");
+
+        System.out.println("Окна закрыты");
     }
 
     // Старт игрового режима
@@ -167,7 +168,7 @@ public abstract class BaseBot {
 
     // Вывод в консоль номера боя + разворачивание активных окон
     protected void printBattleNumber(int battle, int total) throws InterruptedException {
-        System.out.printf("\n=== Бой %d из %d ===", battle, total);
+        System.out.printf("\n=== %s: бой %d из %d ===", botName, battle, total);
         showActiveWindows();
     }
 
