@@ -27,7 +27,7 @@ public class CounterStorage {
                     String name = parts[0].trim();
                     int value = Integer.parseInt(parts[1].trim());
                     if (counters.containsKey(name)) {
-                        counters.get(name).setCount(value);
+                        counters.get(name).setBattleNumber(value);
                     }
                 }
             }
@@ -41,7 +41,7 @@ public class CounterStorage {
     public static void saveCounters(Map<String, Counter> counters) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME))) {
             for (Counter counter : counters.values()) {
-                writer.println(counter.getName() + "=" + counter.getCount());
+                writer.println(counter.getCounterName() + "=" + counter.getBattleNumber());
             }
         } catch (IOException e) {
             System.out.println("Ошибка при сохранении счётчиков: " + e.getMessage());

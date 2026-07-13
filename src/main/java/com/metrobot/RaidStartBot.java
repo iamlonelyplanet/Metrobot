@@ -33,7 +33,7 @@ public class RaidStartBot extends BaseBot {
         this.startTime = timeHHmm;
         this.botName = botName;
         this.windows = windows;
-        this.closeAfterFinish = isCloseAfterFinish;
+        this.isCloseAfterFinish = isCloseAfterFinish;
         this.bossName = bossName;
     }
 
@@ -81,10 +81,10 @@ public class RaidStartBot extends BaseBot {
 
             announceInChat(isBarracks);
 
-            System.out.printf("\n=== Вызов %s завершён ===", consoleMessage); // стандартный endGame здесь не подходит
+            System.out.printf("\n=== Вызов рейда против босса %s завершён ===", consoleMessage); // endGame не подходит
 
             // Стартуем режим "Рейд" с теми окнами, которые передались в RaidStartBot
-            ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд", closeAfterFinish);
+            ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд", isCloseAfterFinish);
             raid.playGame();
 
         } catch (Exception e) {
@@ -99,7 +99,7 @@ public class RaidStartBot extends BaseBot {
     }
 
     protected void announceInChat(boolean isBarracks) throws Exception {
-        final String MESSAGE_FOR_CLAN = "РЕЙД! Босс " + bossName + " запущен в автоматическом режиме, возможны ошибки";
+        final String MESSAGE_FOR_CLAN = "РЕЙД! Босс " + bossName + " запущен программой. Проверьте";
         final String MESSAGE_BARRACKS = "Бараки работают!";
 
         robot.keyPress(KeyEvent.VK_CONTROL);
@@ -108,14 +108,12 @@ public class RaidStartBot extends BaseBot {
         robot.keyRelease(KeyEvent.VK_CONTROL);
 
         clickButton("Чат");
-
         robot.mouseMove(FREE_AREA_X, FREE_AREA_Y);
         robot.mouseWheel(WHEEL_AMOUNT);
 
-        Thread.sleep(3000);
+        Thread.sleep(1500);
         clickButton("Чат - Клан");
-        Thread.sleep(3000);
-
+        Thread.sleep(1500);
         clickButton("Чат - Строка");
 
         pasteText(MESSAGE_FOR_CLAN);
@@ -130,6 +128,7 @@ public class RaidStartBot extends BaseBot {
             robot.keyRelease(KeyEvent.VK_ENTER);
         }
 
+        Thread.sleep(1000);
         robot.mouseMove(FREE_AREA_X, FREE_AREA_Y);
         robot.mouseWheel(-WHEEL_AMOUNT);
 

@@ -28,7 +28,7 @@ public abstract class BaseBot {
     protected Robot robot;
     protected List<HWND> activeWindows = new ArrayList<>();
     protected boolean isPet = false;
-    protected boolean closeAfterFinish;
+    protected boolean isCloseAfterFinish;
     protected String botName;
     protected LocalTime startTime;
     protected Counter unifiedCounter;
@@ -103,7 +103,7 @@ public abstract class BaseBot {
     protected int fightEnd(Instant battleStartTime) {
         unifiedCounter.plusOne();
         CounterStorage.saveCounters(counters);
-        System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
+        System.out.println(Grammar.getWordEnd(unifiedCounter.getBattleNumber()));
 
         Duration duration = Duration.between(battleStartTime, Instant.now());
         double secondsForBattle = duration.toMillis() / 1000.0;
@@ -159,8 +159,8 @@ public abstract class BaseBot {
     // Завершение игровых режимов, это не bot.stop()
     protected void endGame() throws InterruptedException {
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
-                botName, LocalTime.now().withNano(0), unifiedCounter.getCount());
-        if (closeAfterFinish) {
+                botName, LocalTime.now().withNano(0), unifiedCounter.getBattleNumber());
+        if (isCloseAfterFinish) {
             closeActiveWindows();
 //            PlayFinalSound.playFinalSound();
         }
@@ -285,7 +285,7 @@ public abstract class BaseBot {
     // Активируем режим "Автобой" на Арене после выполнения других ботов, на будущее
     protected void autoArena() throws InterruptedException {
         getButtonMap();
-        if (closeAfterFinish) {
+        if (isCloseAfterFinish) {
             return;
         }
 
