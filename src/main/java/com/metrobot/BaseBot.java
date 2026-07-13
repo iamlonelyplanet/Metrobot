@@ -103,7 +103,7 @@ public abstract class BaseBot {
     protected int fightEnd(Instant battleStartTime) {
         unifiedCounter.plusOne();
         CounterStorage.saveCounters(counters);
-        System.out.println(Grammar.getWordEnd(unifiedCounter.getCount()));
+        System.out.println(Grammar.getWordEnd(unifiedCounter.getBattleNumber()));
 
         Duration duration = Duration.between(battleStartTime, Instant.now());
         double secondsForBattle = duration.toMillis() / 1000.0;
@@ -159,7 +159,7 @@ public abstract class BaseBot {
     // Завершение игровых режимов, это не bot.stop()
     protected void endGame() throws InterruptedException {
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
-                botName, LocalTime.now().withNano(0), unifiedCounter.getCount());
+                botName, LocalTime.now().withNano(0), unifiedCounter.getBattleNumber());
         if (closeAfterFinish) {
             closeActiveWindows();
 //            PlayFinalSound.playFinalSound();

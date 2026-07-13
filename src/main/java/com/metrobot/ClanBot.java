@@ -65,11 +65,11 @@ public class ClanBot extends BaseBot {
             }
 
             endTime = startTime.plusHours(hoursToFinish);
-            isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
+            isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getBattleNumber() < totalBattles);
 
             if (Objects.equals(botName, "Рейд")) {
                 // Подготовительные клики (однократно, перед первым боем рейда)
-                if (unifiedCounter.getCount() == 0) {
+                if (unifiedCounter.getBattleNumber() == 0) {
                     showActiveWindows();
                     unCheckAutoFight();
                     clickButtons("Клан", "Война", "Обновить");
@@ -94,9 +94,9 @@ public class ClanBot extends BaseBot {
     }
 
     public void fightInClan(BotType type) throws InterruptedException {
-        printBattleNumber((unifiedCounter.getCount() + 1), totalBattles);
+        printBattleNumber((unifiedCounter.getBattleNumber() + 1), totalBattles);
         Instant battleStartTime = Instant.now();
-        if (unifiedCounter.getCount() == 0) {
+        if (unifiedCounter.getBattleNumber() == 0) {
             unCheckAutoFight();
         }
 
@@ -112,7 +112,7 @@ public class ClanBot extends BaseBot {
         }
 
         if (type == BotType.RAID) {
-            if (unifiedCounter.getCount() > 0) {
+            if (unifiedCounter.getBattleNumber() > 0) {
                 clickButtons("Клан", "Рейды");
                 battleStartTime = Instant.now();
             }
@@ -135,7 +135,7 @@ public class ClanBot extends BaseBot {
         int battleDuration = fightEnd(battleStartTime);
 
         LocalTime nextBattleTime = LocalTime.now().plusSeconds(ATTACK_COOLDOWN_SEC);
-        isGameGoingOn = nextBattleTime.isBefore(endTime) && (unifiedCounter.getCount() < totalBattles);
+        isGameGoingOn = nextBattleTime.isBefore(endTime) && (unifiedCounter.getBattleNumber() < totalBattles);
 
         if (isGameGoingOn) {
             int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;

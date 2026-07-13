@@ -58,7 +58,7 @@ public class TunnelBot extends BaseBot {
 
 
             showActiveWindows();
-            unifiedCounter.setCount(0);
+            unifiedCounter.setBattleNumber(0);
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
 //            fightAllLizards(); // Бои в туннелях с ящерами
@@ -131,10 +131,10 @@ public class TunnelBot extends BaseBot {
 
         unifiedCounter.plusOne();
         if (kind == MonsterKind.SPIDER) {
-            System.out.printf("Убито пауков: %d%n%n", unifiedCounter.getCount());
+            System.out.printf("Убито пауков: %d%n%n", unifiedCounter.getBattleNumber());
             Thread.sleep(PAUSE_SHORT_MS);
         } else {
-            System.out.printf("Убито ящеров: %d%n%n", unifiedCounter.getCount());
+            System.out.printf("Убито ящеров: %d%n%n", unifiedCounter.getBattleNumber());
         }
 
         Thread.sleep(PAUSE_TUNNEL_MS);
@@ -153,7 +153,7 @@ public class TunnelBot extends BaseBot {
         changeLine("Карта ПКк-ПКг", true); // Переход Парк Культуры 1 - Парк Культуры 2, однократно
         fightSpiders("Карта ПКг-КИЕ", "Карта КИЕ-ПКг"); // 10 пауков в тоннеле Парк Культуры - Киевская
         changeLine("Карта ПКг-ПКк", false); // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
-        System.out.printf("\nПауки закончились, прибито %d. Идём к ящерам\n", unifiedCounter.getCount());
+        System.out.printf("\nПауки закончились, прибито %d. Идём к ящерам\n", unifiedCounter.getBattleNumber());
     }
 
     private void fightAllLizards() throws InterruptedException {

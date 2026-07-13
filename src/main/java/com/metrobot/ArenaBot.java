@@ -45,7 +45,7 @@ public class ArenaBot extends BaseBot {
             startGame();
 
             //  === Бои на Арене ===
-            for (int battle = (unifiedCounter.getCount() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
+            for (int battle = (unifiedCounter.getBattleNumber() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
                 Instant battleStartTime = Instant.now();
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
                 clickButtons("Арена 2", "Арена");
