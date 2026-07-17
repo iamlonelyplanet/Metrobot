@@ -55,7 +55,8 @@ public class ArenaBot extends BaseBot {
                 }
 
                 clickButton("Пропустить");
-                clickButtons("Закрыть 1", "Закрыть 2");
+                clickButton("Закрыть 1");
+                clickButton("Закрыть 2");
 
                 int battleDuration = fightEnd(battleStartTime);
                 int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
