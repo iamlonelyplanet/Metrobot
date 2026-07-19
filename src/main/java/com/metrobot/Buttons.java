@@ -9,13 +9,12 @@ import java.util.LinkedHashMap;
 
 public class Buttons {
     // --- Паузы ---
-    public static final int PAUSE_LONG_MS = 2800;
+    public static final int PAUSE_LONG_MS = 2700; // было 2500, проверка с 21 июля
     public static final int PAUSE_SHORT_MS = 1200;
     public static final int PAUSE_SHORT_TUNNELS_MS = 600;
     public static final int PAUSE_PET_MS = 500;
     public static final int PAUSE_BETWEEN_WINDOWS_MS = 50;
     public static final int PAUSE_RAID_BOSS_MS = 12_800;
-    public static final int PAUSE_TUNNEL_MS = 8_500; // Для альтернативных скоростей: 16_000, 4_500, 8_500, 13_000
     public static final int ATTACK_COOLDOWN_SEC = 301;
 
     public static final byte MAX_BATTLES_ARENA = 50;

@@ -55,6 +55,7 @@ public abstract class BaseBot {
     private static final Set<String> PET_PAUSE_BUTTONS = Set.of(
             "Питомец",
             "Погон 3",
+            "Закрыть 1",
             "Закрыть - Рейд" // Подумать
     );
 

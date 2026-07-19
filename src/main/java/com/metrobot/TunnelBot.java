@@ -30,7 +30,7 @@ public class TunnelBot extends BaseBot {
         this.startTime = timeHHmm;
         this.botName = botName;
         this.isPet = isPet;
-        this.isCloseAfterFinish = this.isCloseAfterFinish;
+        this.isCloseAfterFinish = isCloseAfterFinish;
     }
 
     @Override
@@ -39,6 +39,8 @@ public class TunnelBot extends BaseBot {
     }
 
     private enum MonsterKind {SPIDER, LIZARD}
+
+    private static final int PAUSE_TUNNEL_MS = 8_500; // Для альтернативных скоростей: 16_000, 4_500, 8_500, 13_000
 
     @Override
     public void playGame() {
@@ -55,7 +57,6 @@ public class TunnelBot extends BaseBot {
             Duration spidersDuration = Duration.between(startTime, endSpiderTime);
             long secondsSpider = spidersDuration.getSeconds();
             System.out.printf("На пауков затрачено: %s", printTime(secondsSpider));
-
 
             showActiveWindows();
             unifiedCounter.setBattleNumber(0);

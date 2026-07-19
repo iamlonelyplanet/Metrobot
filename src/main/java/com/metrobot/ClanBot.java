@@ -75,8 +75,8 @@ public class ClanBot extends BaseBot {
                     unCheckAutoFight();
                     clickButtons("Клан", "Война", "Обновить");
                     clickButton("Рейды");
-                    Instant battleStartTime = Instant.now();
                 }
+
                 while (isGameGoingOn) {
                     fightInClan(BotType.RAID);
                 }
@@ -102,20 +102,19 @@ public class ClanBot extends BaseBot {
         }
 
         if (type == BotType.CW) {
-            clickButtons("Клан", "Война");
             battleStartTime = Instant.now();
-            clickButton("Атаковать врага");
-            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
+            clickButtons("Клан", "Война", "Атаковать врага");
+//            clickButton("Атаковать врага");
+            Thread.sleep(800);
             clickButton("Пропустить");
             clickButton("Закрыть");
-            clickButtons("Погон 1", "Погон 2", "Погон 3");
-            clickButton("Погон - Коллекция");
+            clickButtons("Погон 1", "Погон 2", "Погон 3", "Погон - Коллекция");
         }
 
         if (type == BotType.RAID) {
             if (unifiedCounter.getBattleNumber() > 0) {
-                clickButtons("Клан", "Рейды");
                 battleStartTime = Instant.now();
+                clickButtons("Клан", "Рейды"); // Пересмотреть на предмет "Атаковать босса" сюда (21.07)
             }
 
             clickButton("Атаковать босса");

@@ -31,11 +31,11 @@ public class Utilities {
 
     /**
      * Спрашиваем режим игры через GUI, с возможностью оставить по умолчанию. С версии 1.2.6 добавлен "тайный" режим
-     * "Старт рейда", доступен при нажатии на клавишу 6 (на клавиатуре). Принцип: если знаешь - пользуйся, если не знаешь -
+     * "Старт рейда", доступен при нажатии на клавишу 6 на клавиатуре. Принцип: знаешь - пользуйся, если не знаешь -
      * это тебе не надо.
      */
     public static ModeSelection askModeSelection() {
-        int mode = askMode(); // старый метод
+        int mode = askMode();
         if (mode <= 0) {
             return null;
         }
@@ -45,23 +45,9 @@ public class Utilities {
     }
 
     public static int askMode() {
-        String[] options = {
-                "Клановые войны",
-                "Рейд",
-                "Арена",
-                "Туннели",
-                "Крысы"};
+        final String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели", "Крысы"};
 
-        String[] boss = {
-                "Зверь",
-                "Упырь",
-                "Вичуха",
-                "Стигмат",
-                "Горгон",
-                "Биомасса",
-                "Слизень",
-                "Тварь"
-        };
+        final String[] boss = {"Зверь", "Упырь", "Вичуха", "Стигмат", "Горгон", "Биомасса", "Слизень", "Тварь"};
 
         JComboBox<String> modeCombo = new JComboBox<>(options);
         JComboBox<String> bossCombo = new JComboBox<>(boss);
@@ -171,8 +157,7 @@ public class Utilities {
 
             return idx + 1; // 1–5
         } else {
-            // Esc/Cancel - выход из программы (-1), подхватывается null.
-            return -1;
+            return -1; // Esc/Cancel - выход из программы (-1), подхватывается null.
         }
     }
 
@@ -237,7 +222,7 @@ public class Utilities {
             USER32.GetWindowText(hWnd, buffer, 512);
             String title = new String(buffer).trim();
 
-            if (title.contains("Игроклуб") || title.contains("2033")) {
+            if (title.contains("Игроклуб") || title.contains("кланов")) {
                 resizeWindows(hWnd);
                 USER32.ShowWindow(hWnd, WinUser.SW_RESTORE);
             }
@@ -265,7 +250,7 @@ public class Utilities {
 
     /**
      * Спрашиваем список активных окон, основываясь на автоматически найденных. Игровых окон может быть пока до 4.
-     * Некоторые из найденных окон могут быть неактивными, пусть такие работают сами, без участия программы. Так надо.
+     * Некоторые из найденных окон могут быть неактивными, пусть работают без участия программы. Так надо.
      */
     public static List<HWND> askActiveWindows(List<HWND> foundWindows, String defaultWindowsStr) {
         JPanel panel = new JPanel();
@@ -313,12 +298,10 @@ public class Utilities {
             return null;
         }
 
-        return getSelectedWindows(foundWindows, defaultWindowsStr, boxes);
+        return getSelectedWindows(foundWindows, boxes);
     }
 
-    private static List<HWND> getSelectedWindows(List<HWND> foundWindows,
-                                                 String defaultWindowsStr,
-                                                 JCheckBox[] boxes) {
+    private static List<HWND> getSelectedWindows(List<HWND> foundWindows, JCheckBox[] boxes) {
         List<HWND> selected = new ArrayList<>();
 
         for (int i = 0; i < boxes.length; i++) {
@@ -334,8 +317,8 @@ public class Utilities {
     }
 
     /**
-     * Ищем в Windows все окна с заголовком игры: "Игроклуб" (для соцсети МойМир), "2033" (для ВКонтакте). Затем
-     * сортируем список: сначала верх - слева направо, затем низ - слева направо.
+     * Ищем в Windows все окна с заголовком игры: "Игроклуб" (для соцсети МойМир), "кланов" (для ВКонтакте с 2026).
+     * Затем сортируем список: сначала верх - слева направо, затем низ - слева направо.
      */
     public static List<HWND> findGameWindows() {
         List<HWND> found = new ArrayList<>();
@@ -396,8 +379,7 @@ public class Utilities {
             if (ordered.get(i) != null) {
                 RECT r = new RECT();
                 USER32.GetWindowRect(ordered.get(i), r);
-                System.out.printf("Окно %d: (%d, %d)%n",
-                        i + 1, r.left, r.top);
+                System.out.printf("Окно %d: (%d, %d)%n", i + 1, r.left, r.top);
             } else {
                 System.out.printf("Окно %d: [отсутствует]%n", i + 1);
             }

@@ -54,8 +54,7 @@ public class RaidStartBot extends BaseBot {
             System.out.println("=== Запуск рейда ===");
             showActiveWindows();
             unCheckAutoFight();
-            String consoleMessage = "босса " + bossName;
-            System.out.println("\nВызываем " + consoleMessage);
+            System.out.println("\nВызываем босса " + bossName);
 
             clickButton("Клан");
             clickButton("Рейды");
@@ -81,7 +80,7 @@ public class RaidStartBot extends BaseBot {
 
             announceInChat(isBarracks);
 
-            System.out.printf("\n=== Вызов рейда против босса %s завершён ===", consoleMessage); // endGame не подходит
+            System.out.printf("\n=== Запуск рейда против босса %s завершён ===", bossName); // endGame не подходит
 
             // Стартуем режим "Рейд" с теми окнами, которые передались в RaidStartBot
             ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд", isCloseAfterFinish);
