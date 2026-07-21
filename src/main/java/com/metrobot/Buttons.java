@@ -18,7 +18,6 @@ public class Buttons {
     public static final int ATTACK_COOLDOWN_SEC = 301;
 
     public static final byte MAX_BATTLES_ARENA = 50;
-    public static final byte MAX_TUNNEL_WAYS = 5;
     public static final byte MAX_BATTLES_CW = 24;
     public static final byte MAX_BATTLES_RAID = 12;
     public static final byte MAX_ENERGY = 30; // 50 при VIP
