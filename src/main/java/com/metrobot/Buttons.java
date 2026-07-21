@@ -52,6 +52,7 @@ public class Buttons {
     // --- Туннели ---
     public static final LinkedHashMap<String, Point> TUNNEL_BUTTONS = new LinkedHashMap<>() {{
         put("В туннель", new Point(415, 273));
+        put("Выход Тургеневская", new Point(350, 290));
         put("Войти", new Point(275, 303));
         put("Войти с пропуском", new Point(275, 373));
         put("Атаковать", new Point(425, 323));
@@ -69,6 +70,12 @@ public class Buttons {
         put("Карта ПКг-КИЕ", new Point(225, 303));
         put("Карта КИЕ-ПКг", new Point(205, 433));
         put("Карта ПКг-ПКк", new Point(185, 383));
+        put("Карта Риж-ПМ", new Point(430, 320));
+        put("Карта ПМ-Сух", new Point(400, 475));
+        put("Карта Сух-Тур", new Point(455, 330));
+        put("Карта Тур-Сух", new Point(320, 300));
+        put("Карта Сух-ПМ", new Point(350, 145));
+        put("Карта ПМ-Риж", new Point(500, 270));
         put("Питомец", new Point(80, 505));
     }};
 
