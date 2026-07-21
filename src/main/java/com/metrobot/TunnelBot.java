@@ -161,7 +161,7 @@ public class TunnelBot extends BaseBot {
             // 4 ящерицы в тоннелях Парк Культуры - Проспект Вернадского
             exitStation("Карта-ПК-ФРУ", MonsterKind.LIZARD, PAUSE_SHORT_TUNNELS_MS, true, 0);
             exitStation("Карта-КОМ", MonsterKind.LIZARD, 0);
-            exitStation("Карта-УНИ", MonsterKind.LIZARD, PAUSE_SHORT_TUNNELS_MS, true, 0);
+            exitStation("Карта-УНИ", MonsterKind.LIZARD, PAUSE_SHORT_TUNNELS_MS, true, 200);
             exitStation("Карта-ПВ", MonsterKind.LIZARD, 0);
             System.out.printf("Завершено пробегов до Проспекта Вернадского: %d\n\n", (way + 1));
 
