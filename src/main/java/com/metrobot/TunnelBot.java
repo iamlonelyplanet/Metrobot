@@ -14,8 +14,8 @@ import static com.metrobot.Buttons.*;
  * порядка 55 минут (28 при VIP, 14 при VIP + скоростной одежде).
  * В этом режиме окна не сворачиваются, работа пользователя в Windows крайне нежелательна, т.к. клики идут непрерывно.
  * Запись счётчика в файл здесь не нужна.
- * Самый некрасивый класс. Зато самый лёгкий для обучения, для перегрузки, сигнатур, ООП и многого-прочего, что и
- * произошло с апрельской версии 1.2.9
+ * Некогда был самым некрасивым классом. Зато самый интересный для обучения, перегрузки, сигнатур, ООП и
+ * многого-прочего, что и происходит с апрельской версии 1.2.9
  * TODO: Подумать о паузах по команде пользователя
  * TODO:
  * 1) Режим кикимор невозможен при первых двух - надо выбирать место старта.
@@ -41,45 +41,34 @@ public class TunnelBot extends BaseBot {
         return TUNNEL_BUTTONS;
     }
 
-    private static final int PAUSE_TUNNEL_MS = 8_500; // Альтернативные времена: 16_000, 4_700, 9_000 (?), 11_500, 6_500
-    private static final byte MAX_TUNNEL_WAYS = 5;
+    // Думать. С питомцем: опаздывает на втором пауьчем переходе.
+    private int pauseTunnelMS = 8_500; // Альтернативные времена: 16_000, 4_700, 9_000 (?), 11_500, 6_500
+
+    private static final byte MAX_TUNNEL_WAYS = 4;
+    private Duration timer = Duration.ZERO;
 
     @Override
     public void playGame() {
         try {
             startGame();
 
-            Instant startTime = Instant.now(); // Пока надо для таймера, потом можно удалить
             showActiveWindows();
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
+            Instant startTunnelTime = Instant.now();
+            if (!isPet) {
+                pauseTunnelMS += 200;
+            }
 
             killSpiders(); // Бои в туннелях с пауками
-
-            Instant endSpiderTime = Instant.now(); // Пока надо для таймера, потом можно удалить
-            Duration spidersDuration = Duration.between(startTime, endSpiderTime);
-            long secondsSpider = spidersDuration.getSeconds();
-            System.out.printf("На пауков затрачено: %s", printTime(secondsSpider));
-            showActiveWindows();
-
 
             unifiedCounter.setBattleNumber(0);
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
 
             killLizards(); // Бои в туннелях с ящерами
-            Duration lizardDuration = Duration.between(endSpiderTime, Instant.now()); // Для таймера, потом удалить
-            long secondsLizard = lizardDuration.getSeconds();
 
-            System.out.printf("На ящеров затрачено: %s", printTime(secondsLizard));
-            showActiveWindows();
+//            killKikimoras();
 
-            Instant endLizardTime = Instant.now();
-
-            killKikimoras();
-            Duration kikDuration = Duration.between(endLizardTime, Instant.now()); // Для таймера, потом удалить
-            long secondsKik = kikDuration.getSeconds();
-            System.out.printf("На кикимор затрачено: %s", printTime(secondsKik));
-
-            System.out.printf("Итого на режим %s затрачено %s", botName, printTime(secondsSpider + secondsLizard + secondsKik));
+            System.out.printf("Итого на режим %s затрачено %s", botName, printTime(timer.getSeconds()));
 
             endGame();
         } catch (Exception e) {
@@ -87,13 +76,19 @@ public class TunnelBot extends BaseBot {
         }
     }
 
-    // Режим убийства пауков
+    // Режим пауков
     private void killSpiders() throws InterruptedException {
+        Instant startSpiderTime = Instant.now();
         fightSpiders("Карта ПК-КРО", "Карта КРО-ПК"); // 10 пауков в туннеле Парк Культуры - Кропоткинская
         changeLine("Карта ПКк-ПКг", true); // Переход Парк Культуры 1 - Парк Культуры 2, однократно
         fightSpiders("Карта ПКг-КИЕ", "Карта КИЕ-ПКг"); // 10 пауков в тоннеле Парк Культуры - Киевская
         changeLine("Карта ПКг-ПКк", false); // Переход Парк Культуры Красные - Парк Культуры Ганза, однократно
+
         System.out.printf("\nПауки закончились, прибито %d. Идём к ящерам\n", unifiedCounter.getBattleNumber());
+        timer = Duration.between(startSpiderTime, Instant.now());
+        long secondsSpider = timer.getSeconds();
+        System.out.printf("На пауков затрачено: %s", printTime(secondsSpider));
+
     }
 
     // Серия боёв с пауками
@@ -104,53 +99,67 @@ public class TunnelBot extends BaseBot {
         }
     }
 
-    // Режим убийства ящеров
+    // Режим ящеров
     private void killLizards() throws InterruptedException {
+        Instant startLizardTime = Instant.now();
+
         for (int way = 0; way < MAX_TUNNEL_WAYS; way++) {
             // 4 ящерицы в тоннелях Парк Культуры - Проспект Вернадского
-            Instant lizStart = Instant.now();
+            Instant startLizard1stWayTime = Instant.now();
             exitStation("Карта-ПК-ФРУ", MonsterKind.LIZARD, PAUSE_SHORT_TUNNELS_MS, true, 0);
             exitStation("Карта-КОМ", MonsterKind.LIZARD, 0);
             exitStation("Карта-УНИ", MonsterKind.LIZARD, PAUSE_SHORT_TUNNELS_MS, true, 200);
             exitStation("Карта-ПВ", MonsterKind.LIZARD, 0);
-            Duration lizTime = Duration.between(lizStart, Instant.now());
-            System.out.printf("Завершено пробегов до %s: %d. Затрачено: %s\n", MonsterKind.LIZARD.stationName1, (way + 1), printTime(lizTime.getSeconds()));
+            Duration oneWayDuration = Duration.between(startLizard1stWayTime, Instant.now());
+            System.out.printf("Завершено пробегов до %s: %d. Затрачено: %s\n", MonsterKind.LIZARD.stationName1, way + 1, printTime(oneWayDuration.getSeconds()));
 
             // 4 ящерицы в тоннелях Проспект Вернадского - Парк Культуры
-            lizStart = Instant.now();
+            Instant startLizard2ndWayTime = Instant.now();
             exitStation("Карта-УНИ", MonsterKind.LIZARD, PAUSE_SHORT_MS);
             exitStation("Карта-КОМ", MonsterKind.LIZARD, PAUSE_SHORT_MS, true, PAUSE_SHORT_MS);
             exitStation("Карта-КОМ-ФРУ", MonsterKind.LIZARD, PAUSE_SHORT_MS);
             exitStation("Карта-ФРУ-ПК", MonsterKind.LIZARD, PAUSE_SHORT_MS, false, PAUSE_SHORT_MS);
-            lizTime = Duration.between(lizStart, Instant.now());
-            System.out.printf("Завершено пробегов до %s: %d. Затрачено: %s\n", MonsterKind.LIZARD.stationName2, (way + 1), printTime(lizTime.getSeconds()));
+            oneWayDuration = Duration.between(startLizard2ndWayTime, Instant.now());
+            System.out.printf("Завершено пробегов до %s: %d. Затрачено: %s\n", MonsterKind.LIZARD.stationName2, way + 1, printTime(oneWayDuration.getSeconds()));
+
+            Duration lizardDuration = Duration.between(startLizardTime, Instant.now()); // Для таймера, потом удалить
+            long secondsLizard = lizardDuration.getSeconds();
+            System.out.printf("На ящеров затрачено: %s", printTime(secondsLizard));
+            timer = timer.plusSeconds(secondsLizard);
         }
     }
 
-    // Режим убийства кикимор
+    // Режим кикимор
     private void killKikimoras() throws InterruptedException {
+        Instant startKikimoraTime = Instant.now();
+
         for (int way = 0; way < MAX_TUNNEL_WAYS; way++) {
             // 3 кикиморы в тоннелях Рижская - Тургеневская
-            Instant kikStart = Instant.now();
+            Instant startKikimora1stWayTime = Instant.now();
             exitStation("Карта Риж-ПМ", MonsterKind.KIK, PAUSE_SHORT_TUNNELS_MS, true, 0);
             exitStation("Карта ПМ-Сух", MonsterKind.KIK, PAUSE_SHORT_TUNNELS_MS);
             exitStation("Карта Сух-Тур", MonsterKind.KIK, 0);
-            Duration kikTime = Duration.between(kikStart, Instant.now());
-            System.out.printf("Завершено пробегов до %s: %d. Затрачено: %s\n", MonsterKind.KIK.stationName1, (way + 1), printTime(kikTime.getSeconds()));
+            Duration oneWayDuration = Duration.between(startKikimora1stWayTime, Instant.now());
+            System.out.printf("Завершено пробегов до %s: %d. Затрачено: %s\n", MonsterKind.KIK.stationName1, way + 1, printTime(oneWayDuration.getSeconds()));
 
             // 3 кикиморы в тоннелях Тургеневская - Рижская
-            kikStart = Instant.now();
+            Instant startKikimora2ndWayTime = Instant.now();
             exitStation("Карта Тур-Сух", MonsterKind.KIK, 0);
             exitStation("Карта Сух-ПМ", MonsterKind.KIK, PAUSE_SHORT_MS, true, 0);
             exitStation("Карта ПМ-Риж", MonsterKind.KIK, PAUSE_SHORT_TUNNELS_MS, false, PAUSE_SHORT_MS);
-            kikTime = Duration.between(kikStart, Instant.now());
-            System.out.printf("Завершено пробегов до %s: %d. Затрачено: %s\n", MonsterKind.KIK.stationName2, (way + 1), printTime(kikTime.getSeconds()));
+            oneWayDuration = Duration.between(startKikimora2ndWayTime, Instant.now());
+            System.out.printf("Завершено пробегов до %s: %d. Затрачено: %s\n", MonsterKind.KIK.stationName2, way + 1, printTime(oneWayDuration.getSeconds()));
+
+            Duration kikDuration = Duration.between(startKikimoraTime, Instant.now());
+            long secondsKik = kikDuration.getSeconds();
+            System.out.printf("На кикимор затрачено: %s", printTime(secondsKik));
+            timer = timer.plusSeconds(secondsKik);
         }
     }
 
     // Единичный бой с любым туннельным монстром
     private void fightTunnelMonster(MonsterKind kind) throws InterruptedException {
-        Thread.sleep(PAUSE_TUNNEL_MS);
+        Thread.sleep(pauseTunnelMS);
         if (isPet) {
             clickButton("Питомец");
         }
@@ -159,8 +168,7 @@ public class TunnelBot extends BaseBot {
 
         unifiedCounter.plusOne();
         System.out.printf("Убито %s: %d%n%n", kind.monsterName , unifiedCounter.getBattleNumber());
-        Thread.sleep(PAUSE_SHORT_MS);
-        Thread.sleep(PAUSE_TUNNEL_MS);
+        Thread.sleep(PAUSE_SHORT_MS + pauseTunnelMS);
     }
 
     // Переход на станцию с автоматичесмим входом (без пропуска)

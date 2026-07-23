@@ -15,7 +15,7 @@ import static com.metrobot.Buttons.*;
  * Вручную занимал у пользователей более 5 часов, раз в 5 минут требуя внимания.
  * Полное прохождение в полностью автоматическом режиме: порядка 4,5 часа = 50 боёв * 5 мин 10 сек = 260 минут.
  * В режиме "Арена" работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
- * Повседневная работа пользователей в Windows прерывается раз в 5 минут всего на 10-12 секунд.
+ * Повседневная работа пользователей в Windows прерывается раз в 5 минут всего на 10-14 секунд.
  * Счётчик боёв записывается в файл.
  * Большинство методов для всех классов-ботов унифицировано и вынесено в родительский BaseBot.
  */
@@ -45,7 +45,7 @@ public class ArenaBot extends BaseBot {
             startGame();
 
             //  === Бои на Арене ===
-            for (int battle = (unifiedCounter.getBattleNumber() + 1); battle <= MAX_BATTLES_ARENA; battle++) {
+            for (int battle = unifiedCounter.getBattleNumber() + 1; battle <= MAX_BATTLES_ARENA; battle++) {
                 Instant battleStartTime = Instant.now();
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
                 clickButtons("Арена 2", "Арена");
