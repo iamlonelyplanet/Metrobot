@@ -15,7 +15,6 @@ import static com.metrobot.Buttons.*;
 /**
  * Унификация старых классов Raid и War
  * Режим "Клан": бои перса в коллективной ("клановой") движухе.
- * В режиме "Клан" работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
  * Вручную занимал у пользователей порядка 2 (КВ) и 1 часа (рейд), раз в 5 минут требуя внимания, притом сильно:
  * коллектив же.
  * <p>
@@ -23,7 +22,7 @@ import static com.metrobot.Buttons.*;
  * В этом режиме работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
  * Повседневная работа пользователя в Windows прерывается раз в 5 минут всего на 10-25 секунд.
  * Счётчик боёв записывается в файл.
- * TODO: Завершение боёв по таймеру. Исправить закрытие и открытие автобоя, снизив y для нижних окон.
+ * TODO: Завершение рейда, когда босс прибит. После 6-8 удара?
  */
 
 public class ClanBot extends BaseBot {
@@ -48,7 +47,6 @@ public class ClanBot extends BaseBot {
     protected final List<HWND> windows;
     private int totalBattles;
     private boolean isGameGoingOn;
-//    private LocalTime endTime;
     private Instant endInstant;
 
     public enum BotType {RAID, CW}
@@ -69,7 +67,6 @@ public class ClanBot extends BaseBot {
                 totalBattles = MAX_BATTLES_CW;
             }
 
-//            endTime = startTime.plus(clanActivityDuration);
             endInstant = Instant.now().plus(clanActivityDuration);
             isGameGoingOn =  Instant.now().isBefore(endInstant) && (unifiedCounter.getBattleNumber() < totalBattles);
 
@@ -139,12 +136,10 @@ public class ClanBot extends BaseBot {
         clickButton("Клан - Выход"); // Выход из игрового меню "Клан" радикально снижает загрузку CPU
 
         int battleDuration = fightEnd(battleStartTime);
-
-        Instant nextBattleTime = Instant.now().plusSeconds(ATTACK_COOLDOWN_SEC);
+        int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
+        Instant nextBattleTime = Instant.now().plusSeconds(secondsBeforeNextBattle);
         isGameGoingOn = nextBattleTime.isBefore(endInstant) && (unifiedCounter.getBattleNumber() < totalBattles);
-
         if (isGameGoingOn) {
-            int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
             countdown(secondsBeforeNextBattle);
         }
     }
