@@ -63,7 +63,7 @@ public class TunnelBot extends BaseBot {
 
             killMonsters(MonsterKind.LIZARD); // Бои в туннелях с ящерами
 
-            killMonsters(MonsterKind.KIK);
+//            killMonsters(MonsterKind.KIK);
 
             Duration tunnelDuration = Duration.between(startTunnel, Instant.now());
             System.out.printf("Итого на режим %s затрачено %s", botName, printTime(tunnelDuration.getSeconds()));

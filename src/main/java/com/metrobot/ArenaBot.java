@@ -60,8 +60,8 @@ public class ArenaBot extends BaseBot {
 
                 int battleDuration = fightEnd(battleStartTime);
                 int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
-
-                if (battle < MAX_BATTLES_ARENA) {
+                boolean isGameGoingOn = battle < MAX_BATTLES_ARENA;
+                if (isGameGoingOn) {
                     countdown(secondsBeforeNextBattle);
                 }
             }

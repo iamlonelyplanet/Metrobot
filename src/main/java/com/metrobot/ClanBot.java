@@ -63,22 +63,19 @@ public class ClanBot extends BaseBot {
                 clanActivityDuration = Duration.ofMinutes(60);
                 totalBattles = MAX_BATTLES_RAID;
             } else {
-                clanActivityDuration =  Duration.ofMinutes(120);
+                clanActivityDuration = Duration.ofMinutes(120);
                 totalBattles = MAX_BATTLES_CW;
             }
 
             endInstant = Instant.now().plus(clanActivityDuration);
-            isGameGoingOn =  Instant.now().isBefore(endInstant) && (unifiedCounter.getBattleNumber() < totalBattles);
+            isGameGoingOn = Instant.now().isBefore(endInstant) && (unifiedCounter.getBattleNumber() < totalBattles);
 
             if (Objects.equals(botName, "Рейд")) {
                 // Подготовительные клики (однократно, перед первым боем рейда)
                 if (unifiedCounter.getBattleNumber() == 0) {
                     showActiveWindows();
                     unCheckAutoFight();
-                    Instant battleStartTime = Instant.now();
                     clickButtons("Клан", "Война", "Обновить");
-                    clickButtons("Рейды", "Атаковать босса");
-                    Thread.sleep(PAUSE_RAID_BOSS_MS);
                 }
 
                 while (isGameGoingOn) {
@@ -115,13 +112,11 @@ public class ClanBot extends BaseBot {
         }
 
         if (type == BotType.RAID) {
-            if (unifiedCounter.getBattleNumber() > 0) {
-                battleStartTime = Instant.now();
-                clickButtons("Клан", "Рейды");
-                Thread.sleep(PAUSE_SHORT_TUNNELS_MS);// Пересмотреть на предмет "Атаковать босса" сюда (21.07)
-                clickButton("Атаковать босса");
-                Thread.sleep(PAUSE_RAID_BOSS_MS);
-            }
+            battleStartTime = Instant.now();
+            clickButtons("Клан", "Рейды");
+            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);// Пересмотреть на предмет "Атаковать босса" сюда (21.07)
+            clickButton("Атаковать босса");
+            Thread.sleep(PAUSE_RAID_BOSS_MS);
 
             boolean isGrenadeModeOn = false;
             if (isGrenadeModeOn) {

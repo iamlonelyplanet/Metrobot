@@ -20,7 +20,6 @@ import static com.metrobot.Buttons.*;
 
 /**
  * Родительский класс для всех режимов. Полный комплект унифицированных методов.
- * TODO: переработать закрытие окон.
  */
 
 public abstract class BaseBot {
