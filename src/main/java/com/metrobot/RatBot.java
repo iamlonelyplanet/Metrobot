@@ -24,7 +24,7 @@ public class RatBot extends BaseBot {
         this.startTime = timeHHmm;
         this.botName = botName;
         this.isPet = isPet;
-        this.closeAfterFinish = closeAfterFinish;
+        this.isCloseAfterFinish = closeAfterFinish;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class RatBot extends BaseBot {
         try {
             startGame();
 
-            //  === Бои с крысами
+            //  === Бои с крысами ===
             for (int battle = 1; battle <= MAX_ENERGY; battle++) {
                 printBattleNumber(battle, MAX_ENERGY);
 
