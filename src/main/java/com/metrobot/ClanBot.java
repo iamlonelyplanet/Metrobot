@@ -1,6 +1,7 @@
 package com.metrobot;
 
 import java.awt.*;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.util.List;
@@ -14,29 +15,28 @@ import static com.metrobot.Buttons.*;
 /**
  * Унификация старых классов Raid и War
  * Режим "Клан": бои перса в коллективной ("клановой") движухе.
- * В режиме "Клан" работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
  * Вручную занимал у пользователей порядка 2 (КВ) и 1 часа (рейд), раз в 5 минут требуя внимания, притом сильно:
  * коллектив же.
  * <p>
  * Полное прохождение: то же время, полностью автоматически.
  * В этом режиме работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
- * Повседневная работа пользователя в Windows прерывается всего на 10-12 секунд раз в 5 минут.
+ * Повседневная работа пользователя в Windows прерывается раз в 5 минут всего на 10-25 секунд.
  * Счётчик боёв записывается в файл.
- * TODO: Завершение боёв по таймеру. Исправить закрытие и открытие автобоя, снизив y для нижних окон.
+ * TODO: Завершение рейда, когда босс прибит. После 6-8 удара?
  */
 
 public class ClanBot extends BaseBot {
     public ClanBot(List<HWND> windows,
                    LocalTime timeHHmm,
                    String botName,
-                   boolean closeAfterFinish) throws AWTException {
+                   boolean isCloseAfterFinish) throws AWTException {
 
         super(windows);
 
         this.startTime = timeHHmm;
         this.botName = botName;
         this.windows = windows;
-        this.closeAfterFinish = closeAfterFinish;
+        this.isCloseAfterFinish = isCloseAfterFinish;
     }
 
     @Override
@@ -47,25 +47,28 @@ public class ClanBot extends BaseBot {
     protected final List<HWND> windows;
     private int totalBattles;
     private boolean isGameGoingOn;
-    private LocalTime endTime;
+    private Instant endInstant;
 
     public enum BotType {RAID, CW}
+
+    public static final int PAUSE_RAID_BOSS_MS = 12_800;
 
     @Override
     public void playGame() {
         try {
             startGame();
-            int hoursToFinish;
+
+            Duration clanActivityDuration;
             if (Objects.equals(botName, "Рейд")) {
-                hoursToFinish = 1;
+                clanActivityDuration = Duration.ofMinutes(60);
                 totalBattles = MAX_BATTLES_RAID;
             } else {
-                hoursToFinish = 2;
+                clanActivityDuration = Duration.ofMinutes(120);
                 totalBattles = MAX_BATTLES_CW;
             }
 
-            endTime = startTime.plusHours(hoursToFinish);
-            isGameGoingOn = LocalTime.now().isBefore(endTime) && (unifiedCounter.getBattleNumber() < totalBattles);
+            endInstant = Instant.now().plus(clanActivityDuration);
+            isGameGoingOn = Instant.now().isBefore(endInstant) && (unifiedCounter.getBattleNumber() < totalBattles);
 
             if (Objects.equals(botName, "Рейд")) {
                 // Подготовительные клики (однократно, перед первым боем рейда)
@@ -73,9 +76,8 @@ public class ClanBot extends BaseBot {
                     showActiveWindows();
                     unCheckAutoFight();
                     clickButtons("Клан", "Война", "Обновить");
-                    clickButton("Рейды");
-                    Instant battleStartTime = Instant.now();
                 }
+
                 while (isGameGoingOn) {
                     fightInClan(BotType.RAID);
                 }
@@ -94,29 +96,26 @@ public class ClanBot extends BaseBot {
     }
 
     public void fightInClan(BotType type) throws InterruptedException {
-        printBattleNumber((unifiedCounter.getBattleNumber() + 1), totalBattles);
+        printBattleNumber(unifiedCounter.getBattleNumber() + 1, totalBattles);
         Instant battleStartTime = Instant.now();
-        if (unifiedCounter.getBattleNumber() == 0) {
+        if (unifiedCounter.getBattleNumber() == 0 && type.equals(BotType.CW)) {
             unCheckAutoFight();
         }
 
         if (type == BotType.CW) {
-            clickButtons("Клан", "Война");
             battleStartTime = Instant.now();
-            clickButton("Атаковать врага");
-            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
+            clickButtons("Клан", "Война", "Атаковать врага");
+            Thread.sleep(800);
             clickButton("Пропустить");
             clickButton("Закрыть");
-            clickButtons("Погон 1", "Погон 2", "Погон 3");
-            clickButton("Погон - Коллекция");
+            clickButtons("Погон 1", "Погон 2", "Погон 3", "Погон - Коллекция");
         }
 
         if (type == BotType.RAID) {
+            battleStartTime = Instant.now();
             if (unifiedCounter.getBattleNumber() > 0) {
-                clickButtons("Клан", "Рейды");
-                battleStartTime = Instant.now();
-            }
-
+            clickButtons("Клан", "Рейды");
+            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);// Пересмотреть на предмет "Атаковать босса" сюда (21.07)
             clickButton("Атаковать босса");
             Thread.sleep(PAUSE_RAID_BOSS_MS);
 
@@ -133,12 +132,10 @@ public class ClanBot extends BaseBot {
         clickButton("Клан - Выход"); // Выход из игрового меню "Клан" радикально снижает загрузку CPU
 
         int battleDuration = fightEnd(battleStartTime);
-
-        LocalTime nextBattleTime = LocalTime.now().plusSeconds(ATTACK_COOLDOWN_SEC);
-        isGameGoingOn = nextBattleTime.isBefore(endTime) && (unifiedCounter.getBattleNumber() < totalBattles);
-
+        int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
+        Instant nextBattleTime = Instant.now().plusSeconds(secondsBeforeNextBattle);
+        isGameGoingOn = nextBattleTime.isBefore(endInstant) && (unifiedCounter.getBattleNumber() < totalBattles);
         if (isGameGoingOn) {
-            int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
             countdown(secondsBeforeNextBattle);
         }
     }

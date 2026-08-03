@@ -20,7 +20,6 @@ import static com.metrobot.Buttons.*;
 
 /**
  * Родительский класс для всех режимов. Полный комплект унифицированных методов.
- * TODO: переработать закрытие окон.
  */
 
 public abstract class BaseBot {
@@ -28,7 +27,7 @@ public abstract class BaseBot {
     protected Robot robot;
     protected List<HWND> activeWindows = new ArrayList<>();
     protected boolean isPet = false;
-    protected boolean closeAfterFinish;
+    protected boolean isCloseAfterFinish;
     protected String botName;
     protected LocalTime startTime;
     protected Counter unifiedCounter;
@@ -55,6 +54,7 @@ public abstract class BaseBot {
     private static final Set<String> PET_PAUSE_BUTTONS = Set.of(
             "Питомец",
             "Погон 3",
+            "Закрыть 1",
             "Закрыть - Рейд" // Подумать
     );
 
@@ -160,7 +160,7 @@ public abstract class BaseBot {
     protected void endGame() throws InterruptedException {
         System.out.printf("\nРежим %s завершён в %s. Проведено боёв в автоматическом режиме: %d\n",
                 botName, LocalTime.now().withNano(0), unifiedCounter.getBattleNumber());
-        if (closeAfterFinish) {
+        if (isCloseAfterFinish) {
             closeActiveWindows();
 //            PlayFinalSound.playFinalSound();
         }
@@ -285,7 +285,7 @@ public abstract class BaseBot {
     // Активируем режим "Автобой" на Арене после выполнения других ботов, на будущее
     protected void autoArena() throws InterruptedException {
         getButtonMap();
-        if (closeAfterFinish) {
+        if (isCloseAfterFinish) {
             return;
         }
 

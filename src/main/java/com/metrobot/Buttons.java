@@ -9,17 +9,14 @@ import java.util.LinkedHashMap;
 
 public class Buttons {
     // --- Паузы ---
-    public static final int PAUSE_LONG_MS = 2800;
+    public static final int PAUSE_LONG_MS = 2700; // было 2500, проверка с 21 июля
     public static final int PAUSE_SHORT_MS = 1200;
     public static final int PAUSE_SHORT_TUNNELS_MS = 600;
     public static final int PAUSE_PET_MS = 500;
     public static final int PAUSE_BETWEEN_WINDOWS_MS = 50;
-    public static final int PAUSE_RAID_BOSS_MS = 12_800;
-    public static final int PAUSE_TUNNEL_MS = 8_500; // Для альтернативных скоростей: 16_000, 4_500, 8_500, 13_000
     public static final int ATTACK_COOLDOWN_SEC = 301;
 
     public static final byte MAX_BATTLES_ARENA = 50;
-    public static final byte MAX_TUNNEL_WAYS = 5;
     public static final byte MAX_BATTLES_CW = 24;
     public static final byte MAX_BATTLES_RAID = 12;
     public static final byte MAX_ENERGY = 30; // 50 при VIP
@@ -54,6 +51,7 @@ public class Buttons {
     // --- Туннели ---
     public static final LinkedHashMap<String, Point> TUNNEL_BUTTONS = new LinkedHashMap<>() {{
         put("В туннель", new Point(415, 273));
+        put("Выход Тургеневская", new Point(350, 290));
         put("Войти", new Point(275, 303));
         put("Войти с пропуском", new Point(275, 373));
         put("Атаковать", new Point(425, 323));
@@ -71,6 +69,12 @@ public class Buttons {
         put("Карта ПКг-КИЕ", new Point(225, 303));
         put("Карта КИЕ-ПКг", new Point(205, 433));
         put("Карта ПКг-ПКк", new Point(185, 383));
+        put("Карта Риж-ПМ", new Point(430, 320));
+        put("Карта ПМ-Сух", new Point(400, 475));
+        put("Карта Сух-Тур", new Point(455, 330));
+        put("Карта Тур-Сух", new Point(320, 300));
+        put("Карта Сух-ПМ", new Point(350, 145));
+        put("Карта ПМ-Риж", new Point(500, 270));
         put("Питомец", new Point(80, 505));
     }};
 

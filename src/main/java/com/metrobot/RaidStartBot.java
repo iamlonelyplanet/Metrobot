@@ -33,7 +33,7 @@ public class RaidStartBot extends BaseBot {
         this.startTime = timeHHmm;
         this.botName = botName;
         this.windows = windows;
-        this.closeAfterFinish = isCloseAfterFinish;
+        this.isCloseAfterFinish = isCloseAfterFinish;
         this.bossName = bossName;
     }
 
@@ -54,8 +54,7 @@ public class RaidStartBot extends BaseBot {
             System.out.println("=== Запуск рейда ===");
             showActiveWindows();
             unCheckAutoFight();
-            String consoleMessage = "босса " + bossName;
-            System.out.println("\nВызываем " + consoleMessage);
+            System.out.println("\nВызываем босса " + bossName);
 
             clickButton("Клан");
             clickButton("Рейды");
@@ -81,10 +80,10 @@ public class RaidStartBot extends BaseBot {
 
             announceInChat(isBarracks);
 
-            System.out.printf("\n=== Вызов %s завершён ===", consoleMessage); // стандартный endGame здесь не подходит
+            System.out.printf("\n=== Запуск рейда против босса %s завершён ===", bossName); // endGame не подходит
 
             // Стартуем режим "Рейд" с теми окнами, которые передались в RaidStartBot
-            ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд", closeAfterFinish);
+            ClanBot raid = new ClanBot(windows, LocalTime.now(), "Рейд", isCloseAfterFinish);
             raid.playGame();
 
         } catch (Exception e) {
@@ -99,59 +98,58 @@ public class RaidStartBot extends BaseBot {
     }
 
     protected void announceInChat(boolean isBarracks) throws Exception {
-        final String MESSAGE_FOR_CLAN = "РЕЙД! Босс " + bossName + " запущен в автоматическом режиме, возможны ошибки";
+        final String MESSAGE_FOR_CLAN = "РЕЙД! Босс " + bossName + " запущен программой. Проверьте";
         final String MESSAGE_BARRACKS = "Бараки работают!";
 
-        robot.keyPress(KeyEvent.VK_CONTROL);
-        robot.keyPress(KeyEvent.VK_MINUS);
-        robot.keyRelease(KeyEvent.VK_MINUS);
-        robot.keyRelease(KeyEvent.VK_CONTROL);
+        pressKeyCombination(KeyEvent.VK_MINUS);
 
         clickButton("Чат");
-
         robot.mouseMove(FREE_AREA_X, FREE_AREA_Y);
         robot.mouseWheel(WHEEL_AMOUNT);
 
-        Thread.sleep(3000);
+        Thread.sleep(1500);
         clickButton("Чат - Клан");
-        Thread.sleep(3000);
-
+        Thread.sleep(1500);
         clickButton("Чат - Строка");
 
         pasteText(MESSAGE_FOR_CLAN);
-        System.out.printf("Печатаем сообщение \"%s\"\n", MESSAGE_FOR_CLAN);
-        robot.keyPress(KeyEvent.VK_ENTER);
-        robot.keyRelease(KeyEvent.VK_ENTER);
+        pressKeyCombination(KeyEvent.VK_ENTER);
 
         if (isBarracks) {
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
             pasteText(MESSAGE_BARRACKS);
-            robot.keyPress(KeyEvent.VK_ENTER);
-            robot.keyRelease(KeyEvent.VK_ENTER);
+            pressKey(KeyEvent.VK_ENTER);
         }
 
+        Thread.sleep(1000);
         robot.mouseMove(FREE_AREA_X, FREE_AREA_Y);
         robot.mouseWheel(-WHEEL_AMOUNT);
 
-        robot.keyPress(KeyEvent.VK_CONTROL);
-        robot.keyPress(KeyEvent.VK_ADD);
-        robot.keyRelease(KeyEvent.VK_ADD);
-        robot.keyRelease(KeyEvent.VK_CONTROL);
+        pressKeyCombination(KeyEvent.VK_ADD);
     }
 
     protected void pasteText(String message) throws Exception {
+        System.out.printf("Печатаем сообщение \"%s\"\n", message);
+
         StringSelection selection = new StringSelection(message);
 
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
         clipboard.setContents(selection, null);
 
-        robot.keyPress(KeyEvent.VK_CONTROL);
-        robot.keyPress(KeyEvent.VK_V);
-
-        robot.keyRelease(KeyEvent.VK_V);
-        robot.keyRelease(KeyEvent.VK_CONTROL);
-
+        pressKeyCombination(KeyEvent.VK_V);
         Thread.sleep(PAUSE_SHORT_MS);
+    }
+
+    protected void pressKey(int key) {
+        robot.keyPress(key);
+        robot.keyRelease(key);
+    }
+
+    protected void pressKeyCombination(int key2) {
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(key2);
+        robot.keyRelease(key2);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
     }
 }
