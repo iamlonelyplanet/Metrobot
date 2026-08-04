@@ -98,7 +98,8 @@ public class ClanBot extends BaseBot {
     public void fightInClan(BotType type) throws InterruptedException {
         printBattleNumber(unifiedCounter.getBattleNumber() + 1, totalBattles);
         Instant battleStartTime = Instant.now();
-        if (unifiedCounter.getBattleNumber() == 0 && type.equals(BotType.CW)) {
+
+        if (unifiedCounter.getBattleNumber() == 0 && type == BotType.CW) {
             unCheckAutoFight();
         }
 
@@ -111,10 +112,9 @@ public class ClanBot extends BaseBot {
         }
 
         if (type == BotType.RAID) {
-            battleStartTime = Instant.now();
             if (unifiedCounter.getBattleNumber() > 0) {
                 clickButtons("Клан", "Рейды");
-                Thread.sleep(PAUSE_SHORT_TUNNELS_MS);// Пересмотреть на предмет "Атаковать босса" сюда (21.07)
+                Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
                 clickButton("Атаковать босса");
                 Thread.sleep(PAUSE_RAID_BOSS_MS);
 
@@ -124,19 +124,24 @@ public class ClanBot extends BaseBot {
                     clickButton("Граната красная");
                     Thread.sleep(5000);
                 }
+
                 clickButton("Пропустить");
                 clickButton("Закрыть - Рейд");
             }
+        }
 
-            clickButton("Клан - Выход"); // Выход из игрового меню "Клан" радикально снижает загрузку CPU
+        // Общая часть для обоих режимов
+        clickButton("Клан - Выход"); // Выход из игрового меню "Клан" радикально снижает загрузку CPU
 
-            int battleDuration = fightEnd(battleStartTime);
-            int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
-            Instant nextBattleTime = Instant.now().plusSeconds(secondsBeforeNextBattle);
-            isGameGoingOn = nextBattleTime.isBefore(endInstant) && (unifiedCounter.getBattleNumber() < totalBattles);
-            if (isGameGoingOn) {
-                countdown(secondsBeforeNextBattle);
-            }
+        int battleDuration = fightEnd(battleStartTime);
+        int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
+        Instant nextBattleTime = Instant.now().plusSeconds(secondsBeforeNextBattle);
+
+        isGameGoingOn = nextBattleTime.isBefore(endInstant)
+                && (unifiedCounter.getBattleNumber() < totalBattles);
+
+        if (isGameGoingOn) {
+            countdown(secondsBeforeNextBattle);
         }
     }
 }
