@@ -112,22 +112,20 @@ public class ClanBot extends BaseBot {
         }
 
         if (type == BotType.RAID) {
-            if (unifiedCounter.getBattleNumber() > 0) {
-                clickButtons("Клан", "Рейды");
-                Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
-                clickButton("Атаковать босса");
-                Thread.sleep(PAUSE_RAID_BOSS_MS);
+            clickButtons("Клан", "Рейды");
+            Thread.sleep(PAUSE_SHORT_TUNNELS_MS);// Пересмотреть на предмет "Атаковать босса" сюда (21.07)
+            clickButton("Атаковать босса");
+            Thread.sleep(PAUSE_RAID_BOSS_MS);
 
-                boolean isGrenadeModeOn = false;
-                if (isGrenadeModeOn) {
-                    Thread.sleep(PAUSE_SHORT_MS);
-                    clickButton("Граната красная");
-                    Thread.sleep(5000);
-                }
-
-                clickButton("Пропустить");
-                clickButton("Закрыть - Рейд");
+            boolean isGrenadeModeOn = false;
+            if (isGrenadeModeOn) {
+                Thread.sleep(PAUSE_SHORT_MS);
+                clickButton("Граната красная");
+                Thread.sleep(5000);
             }
+
+            clickButton("Пропустить");
+            clickButton("Закрыть - Рейд");
         }
 
         // Общая часть для обоих режимов
