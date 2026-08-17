@@ -97,11 +97,12 @@ public class ClanBot extends BaseBot {
 
     public void fightInClan(BotType type) throws InterruptedException {
         printBattleNumber(unifiedCounter.getBattleNumber() + 1, totalBattles);
-        Instant battleStartTime = Instant.now();
 
         if (unifiedCounter.getBattleNumber() == 0 && type == BotType.CW) {
             unCheckAutoFight();
         }
+
+        Instant battleStartTime = Instant.now();
 
         if (type == BotType.CW) {
             clickButtons("Клан", "Война", "Атаковать врага");
@@ -121,7 +122,7 @@ public class ClanBot extends BaseBot {
             if (isGrenadeModeOn) {
                 Thread.sleep(PAUSE_SHORT_MS);
                 clickButton("Граната красная");
-                Thread.sleep(15000);
+                Thread.sleep(22000);
                 clickButton("Граната красная");
                 Thread.sleep(PAUSE_SHORT_MS);
             }
