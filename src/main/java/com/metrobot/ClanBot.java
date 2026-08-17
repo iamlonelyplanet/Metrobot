@@ -23,6 +23,7 @@ import static com.metrobot.Buttons.*;
  * Повседневная работа пользователя в Windows прерывается раз в 5 минут всего на 10-25 секунд.
  * Счётчик боёв записывается в файл.
  * TODO: Завершение рейда, когда босс прибит. После 6-8 удара?
+ * Странная пауза (её недостаточно) после 1го боя в КВ.
  */
 
 public class ClanBot extends BaseBot {
@@ -97,11 +98,12 @@ public class ClanBot extends BaseBot {
 
     public void fightInClan(BotType type) throws InterruptedException {
         printBattleNumber(unifiedCounter.getBattleNumber() + 1, totalBattles);
-        Instant battleStartTime = Instant.now();
 
         if (unifiedCounter.getBattleNumber() == 0 && type == BotType.CW) {
             unCheckAutoFight();
         }
+
+        Instant battleStartTime = Instant.now();
 
         if (type == BotType.CW) {
             clickButtons("Клан", "Война", "Атаковать врага");
