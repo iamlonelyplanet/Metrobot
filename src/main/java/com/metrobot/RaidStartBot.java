@@ -53,7 +53,7 @@ public class RaidStartBot extends BaseBot {
             boolean isBarracks = false;
             System.out.println("=== Запуск рейда ===");
             showActiveWindows();
-            unCheckAutoFight();
+            uncheckAutoFight();
             System.out.println("\nВызываем босса " + bossName);
 
             clickButton("Клан");

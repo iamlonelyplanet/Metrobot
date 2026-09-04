@@ -83,7 +83,7 @@ public class ClanBot extends BaseBot {
                 // Подготовительные клики (однократно, перед первым боем рейда)
                 if (unifiedCounter.getBattleNumber() == 0) {
                     showActiveWindows();
-                    unCheckAutoFight();
+                    uncheckAutoFight();
                     clickButtons("Клан", "Война", "Обновить");
                 }
 
@@ -110,7 +110,7 @@ public class ClanBot extends BaseBot {
         printBattleNumber(unifiedCounter.getBattleNumber() + 1, totalBattles);
 
         if (unifiedCounter.getBattleNumber() == 0 && type == BotType.CW) {
-            unCheckAutoFight();
+            uncheckAutoFight();
         }
 
         Instant battleStartTime = Instant.now();

@@ -46,6 +46,8 @@ public class Buttons {
         put("Пропустить", new Point(385, 33));
         put("Закрыть 1", new Point(460, 520));
         put("Закрыть 2", new Point(480, 463));
+        put("Нежданчик - снять", new Point(115, 495));
+        put("Нежданчик - закрыть", new Point(560, 495));
     }};
 
     // --- Туннели ---
@@ -86,6 +88,8 @@ public class Buttons {
         put("Закрыть 1", new Point(460, 520));
         put("Закрыть 2", new Point(480, 463));
         put("Питомец", new Point(80, 505));
+        put("Нежданчик - снять", new Point(115, 495));
+        put("Нежданчик - закрыть", new Point(560, 495));
     }};
 
     // --- КВ и рейды ---
@@ -111,6 +115,9 @@ public class Buttons {
 
         put("Арена", new Point(360, 285)); // ПМ-г
         put("Арена 2", new Point(320, 303)); // Основные станции: ПРМ-К
+
+        put("Нежданчик - снять", new Point(115, 495));
+        put("Нежданчик - закрыть", new Point(560, 495));
 
         put("Карта-левее", new Point(115, 270));
         put("Карта-ниже", new Point(420, 510));

@@ -55,6 +55,7 @@ public abstract class BaseBot {
             "Питомец",
             "Погон 3",
             "Закрыть 1",
+            "Нежданчик - снять",
             "Закрыть - Рейд" // Подумать
     );
 
@@ -173,9 +174,19 @@ public abstract class BaseBot {
     }
 
     // Выход из режима "Автобой" (при VIP) перед ClanBot. Не сработает, если нижние окна пересекаются с верхними.
-    protected void unCheckAutoFight() throws InterruptedException {
+    protected void uncheckAutoFight() throws InterruptedException {
         clickButton("Автобой");
         clickButton("Арена - закрыть");
+    }
+
+    // Снятие галочки с неожиданного окна (выполнение квестов).
+    protected void uncheckUnexpected() throws InterruptedException {
+        if (unifiedCounter.getBattleNumber() % 5 == 0) {
+            System.out.println("Снимаю галочку с нежданчика после каждого 5го боя, начиная с первого");
+            Thread.sleep(PAUSE_SHORT_MS);
+            clickButton("Нежданчик - снять");
+            clickButton("Нежданчик - закрыть");
+        }
     }
 
     // Единый метод кликов по всем выбранным окнам. Центр всей проги.
@@ -196,6 +207,7 @@ public abstract class BaseBot {
             calculateCoordinates(rect, rel, i, buttonName);
 
             if (FINAL_BUTTONS.contains(buttonName)) {
+                uncheckUnexpected();
                 minimizeActiveWindow(hWnd, i);
             }
 
