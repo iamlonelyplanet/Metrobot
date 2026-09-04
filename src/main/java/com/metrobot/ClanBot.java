@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 import com.sun.jna.platform.win32.WinDef.HWND;
 
 import static com.metrobot.Buttons.*;
@@ -46,7 +50,6 @@ public class ClanBot extends BaseBot {
 
     protected final List<HWND> windows;
     private int totalBattles;
-    private boolean isGameGoingOn;
     private Instant endInstant;
 
     public enum BotType {RAID, CW}
@@ -59,6 +62,7 @@ public class ClanBot extends BaseBot {
             startGame();
 
             Duration clanActivityDuration;
+
             if (Objects.equals(botName, "Рейд")) {
                 clanActivityDuration = Duration.ofMinutes(60);
                 totalBattles = MAX_BATTLES_RAID;
@@ -67,8 +71,13 @@ public class ClanBot extends BaseBot {
                 totalBattles = MAX_BATTLES_CW;
             }
 
-            endInstant = Instant.now().plus(clanActivityDuration);
-            isGameGoingOn = Instant.now().isBefore(endInstant) && (unifiedCounter.getBattleNumber() < totalBattles);
+            LocalDateTime endDateTime = LocalDate.now()
+                    .atTime(startTime)
+                    .plus(clanActivityDuration);
+
+            endInstant = endDateTime
+                    .atZone(ZoneId.systemDefault())
+                    .toInstant();
 
             if (Objects.equals(botName, "Рейд")) {
                 // Подготовительные клики (однократно, перед первым боем рейда)
@@ -78,13 +87,15 @@ public class ClanBot extends BaseBot {
                     clickButtons("Клан", "Война", "Обновить");
                 }
 
-                while (isGameGoingOn) {
+                while (Instant.now().isBefore(endInstant)
+                        && unifiedCounter.getBattleNumber() < totalBattles) {
                     fightInClan(BotType.RAID);
                 }
             }
 
             if (Objects.equals(botName, "КВ")) {
-                while (isGameGoingOn) {
+                while (Instant.now().isBefore(endInstant)
+                        && unifiedCounter.getBattleNumber() < totalBattles) {
                     fightInClan(BotType.CW);
                 }
             }
@@ -135,13 +146,11 @@ public class ClanBot extends BaseBot {
         clickButton("Клан - Выход"); // Выход из игрового меню "Клан" радикально снижает загрузку CPU
 
         int battleDuration = fightEnd(battleStartTime);
-        int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
+        int secondsBeforeNextBattle = Math.max(0, ATTACK_COOLDOWN_SEC - battleDuration);
+
         Instant nextBattleTime = Instant.now().plusSeconds(secondsBeforeNextBattle);
 
-        isGameGoingOn = nextBattleTime.isBefore(endInstant)
-                && (unifiedCounter.getBattleNumber() < totalBattles);
-
-        if (isGameGoingOn) {
+        if (nextBattleTime.isBefore(endInstant) && unifiedCounter.getBattleNumber() < totalBattles) {
             countdown(secondsBeforeNextBattle);
         }
     }
