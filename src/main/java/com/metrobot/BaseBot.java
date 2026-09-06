@@ -54,7 +54,7 @@ public abstract class BaseBot {
     private static final Set<String> PET_PAUSE_BUTTONS = Set.of(
             "Питомец",
             "Погон 3",
-            "Закрыть 1",
+//            "Закрыть 1",
             "Нежданчик - снять",
             "Закрыть - Рейд" // Подумать
     );
@@ -117,7 +117,7 @@ public abstract class BaseBot {
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
             USER32.ShowWindow(hWnd, WinUser.SW_RESTORE);
-            Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
+//            Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
             USER32.SetForegroundWindow(hWnd);
         }
         System.out.println("\nРазвернул окна");
@@ -125,7 +125,7 @@ public abstract class BaseBot {
 
     // Сворачиваем активное окна
     protected void minimizeActiveWindow(HWND hWnd, int i) throws InterruptedException {
-        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
+//        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
         USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
         if (i == activeWindows.size() - 1) {
             System.out.println("Свернул окна");
@@ -207,6 +207,7 @@ public abstract class BaseBot {
             calculateCoordinates(rect, rel, i, buttonName);
 
             if (FINAL_BUTTONS.contains(buttonName)) {
+                Thread.sleep(50);
 //                uncheckUnexpected();
                 minimizeActiveWindow(hWnd, i);
             }
@@ -215,7 +216,7 @@ public abstract class BaseBot {
                 Thread.sleep(PAUSE_PET_MS);
             }
 
-            Thread.sleep(100); // пока не менять значение 100
+            Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS); // было 100
         }
 
         Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
@@ -254,7 +255,7 @@ public abstract class BaseBot {
                     minimizeActiveWindow(hWnd, i);
                 }
 
-                Thread.sleep(100); // пока не менять значение 100
+                Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS); // было 100
             }
 
             if (PET_PAUSE_BUTTONS.contains(lastButton)) {

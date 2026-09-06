@@ -13,7 +13,7 @@ public class Buttons {
     public static final int PAUSE_SHORT_MS = 1200;
     public static final int PAUSE_SHORT_TUNNELS_MS = 600;
     public static final int PAUSE_PET_MS = 500;
-    public static final int PAUSE_BETWEEN_WINDOWS_MS = 50;
+    public static final int PAUSE_BETWEEN_WINDOWS_MS = 10;
     public static final int ATTACK_COOLDOWN_SEC = 301;
 
     public static final byte MAX_BATTLES_ARENA = 50;
