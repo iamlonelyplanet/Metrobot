@@ -118,7 +118,7 @@ public class RaidStartBot extends BaseBot {
         if (isBarracks) {
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);
             pasteText(MESSAGE_BARRACKS);
-            pressKey(KeyEvent.VK_ENTER);
+            pressKey();
         }
 
         Thread.sleep(1000);
@@ -141,9 +141,9 @@ public class RaidStartBot extends BaseBot {
         Thread.sleep(PAUSE_SHORT_MS);
     }
 
-    protected void pressKey(int key) {
-        robot.keyPress(key);
-        robot.keyRelease(key);
+    protected void pressKey() {
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
     }
 
     protected void pressKeyCombination(int key2) {

@@ -85,6 +85,7 @@ public class ClanBot extends BaseBot {
                     showActiveWindows();
                     uncheckAutoFight();
                     clickButtons("Клан", "Война", "Обновить");
+                    System.out.println("\nЗавершены подготовительные клики перед первым боем рейда\n");
                 }
 
                 while (Instant.now().isBefore(endInstant)
