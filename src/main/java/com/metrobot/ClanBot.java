@@ -89,14 +89,18 @@ public class ClanBot extends BaseBot {
 
                 while (Instant.now().isBefore(endInstant)
                         && unifiedCounter.getBattleNumber() < totalBattles) {
-                    fightInClan(BotType.RAID);
+                    if (!fightInClan(BotType.RAID)) {
+                        break;
+                    }
                 }
             }
 
             if (Objects.equals(botName, "КВ")) {
                 while (Instant.now().isBefore(endInstant)
                         && unifiedCounter.getBattleNumber() < totalBattles) {
-                    fightInClan(BotType.CW);
+                    if (!fightInClan(BotType.CW)) {
+                        break;
+                    }
                 }
             }
 
@@ -106,7 +110,7 @@ public class ClanBot extends BaseBot {
         }
     }
 
-    public void fightInClan(BotType type) throws InterruptedException {
+    public boolean fightInClan(BotType type) throws InterruptedException {
         printBattleNumber(unifiedCounter.getBattleNumber() + 1, totalBattles);
 
         if (unifiedCounter.getBattleNumber() == 0 && type == BotType.CW) {
@@ -150,8 +154,12 @@ public class ClanBot extends BaseBot {
 
         Instant nextBattleTime = Instant.now().plusSeconds(secondsBeforeNextBattle);
 
-        if (nextBattleTime.isBefore(endInstant) && unifiedCounter.getBattleNumber() < totalBattles) {
+        if (nextBattleTime.isBefore(endInstant)
+                && unifiedCounter.getBattleNumber() < totalBattles) {
             countdown(secondsBeforeNextBattle);
+            return true;
         }
+
+        return false;
     }
 }

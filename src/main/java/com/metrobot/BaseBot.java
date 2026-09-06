@@ -207,7 +207,7 @@ public abstract class BaseBot {
             calculateCoordinates(rect, rel, i, buttonName);
 
             if (FINAL_BUTTONS.contains(buttonName)) {
-                uncheckUnexpected();
+//                uncheckUnexpected();
                 minimizeActiveWindow(hWnd, i);
             }
 
