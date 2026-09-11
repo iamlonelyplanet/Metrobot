@@ -39,28 +39,27 @@ public class ClanBot extends BaseBot {
 
         this.startTime = timeHHmm;
         this.botName = botName;
-        this.windows = windows;
         this.isCloseAfterFinish = isCloseAfterFinish;
     }
+
+    private int totalBattles;
+    private Instant endInstant;
+
+    private enum BotType {RAID, CW}
+
+    public static final int PAUSE_RAID_BOSS_MS = 12_800;
 
     @Override
     protected Map<String, Point> getButtonMap() {
         return CLAN_BUTTONS;
     }
 
-    protected final List<HWND> windows;
-    private int totalBattles;
-    private Instant endInstant;
-
-    public enum BotType {RAID, CW}
-
-    public static final int PAUSE_RAID_BOSS_MS = 12_800;
-
     @Override
     public void playGame() {
         try {
             startGame();
 
+            //  === Бои в клане (КВ или рейд) ===
             Duration clanActivityDuration;
 
             if (Objects.equals(botName, "Рейд")) {

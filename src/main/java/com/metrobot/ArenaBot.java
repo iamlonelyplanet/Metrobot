@@ -30,9 +30,11 @@ public class ArenaBot extends BaseBot {
 
         this.startTime = timeHHmm;
         this.botName = botName;
-        this.isPet = isPet;
         this.isCloseAfterFinish = isCloseAfterFinish;
+        this.isPet = isPet;
     }
+
+    public static final byte MAX_BATTLES_ARENA = 50;
 
     @Override
     protected Map<String, Point> getButtonMap() {

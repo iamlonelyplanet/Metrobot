@@ -40,6 +40,10 @@ public class RaidStartBot extends BaseBot {
     private final List<HWND> windows;
     private final String bossName;
 
+    private static final int WHEEL_AMOUNT = 3; // количество движений колеса мышки для чата, тестировано при WQHD
+    private static final int FREE_AREA_X = 900;
+    private static final int FREE_AREA_Y = 250;
+
     @Override
     protected Map<String, Point> getButtonMap() {
         return CLAN_BUTTONS;
