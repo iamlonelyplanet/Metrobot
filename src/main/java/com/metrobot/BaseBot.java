@@ -48,15 +48,19 @@ public abstract class BaseBot {
     private static final Set<String> FINAL_BUTTONS = Set.of(
             "Закрыть 2",
             "Крыса",
-            "Клан - Выход"
+            "Клан - Выход",
+            "Похвастаться - закрыть",
+            "Закрыть - поражение"
     );
 
     private static final Set<String> PET_PAUSE_BUTTONS = Set.of(
             "Питомец",
             "Погон 3",
-//            "Атаковать друга",
+            "Друг",
+            "Атаковать друга",
 //            "Закрыть 1",
             "Нежданчик - снять",
+            "Похвастаться - снять",
             "Закрыть - Рейд" // Подумать
     );
 
@@ -113,10 +117,6 @@ public abstract class BaseBot {
         return (int) secondsForBattle;
     }
 
-    protected String getCounterName() {
-        return botName;
-    }
-
     // Разворачиваем активные окна
     protected void showActiveWindows() throws InterruptedException {
         for (HWND hWnd : activeWindows) {
@@ -161,6 +161,10 @@ public abstract class BaseBot {
         );
         // TODO: изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
     }
+    // Вспомогательный метод для startGame(), переопределён в FriendsBot для унификации счётчика с ArenaBot
+    protected String getCounterName() {
+        return botName;
+    }
 
     // Завершение игровых режимов, это не bot.stop()
     protected void endGame() throws InterruptedException {
@@ -187,9 +191,12 @@ public abstract class BaseBot {
     // Снятие галочки с неожиданного окна (выполнение квестов).
     protected void uncheckUnexpected() throws InterruptedException {
         if (unifiedCounter.getBattleNumber() % 5 == 0) {
-            System.out.println("Снимаю галочку с нежданчика после каждого 5го боя, начиная с первого");
+            if (!botName.equals("Рейд")) {
+                System.out.println("Снимаю галочку с нежданчика после каждого 5го боя, начиная с первого");
+            }
             Thread.sleep(PAUSE_SHORT_MS);
             clickButton("Нежданчик - снять");
+            Thread.sleep(200);
             clickButton("Нежданчик - закрыть");
         }
     }

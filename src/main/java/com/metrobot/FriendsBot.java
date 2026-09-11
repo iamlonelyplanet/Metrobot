@@ -11,13 +11,14 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 import static com.metrobot.Buttons.*;
 
 /**
- * Режим "Арена": ежедневные бои перса. Самый первый режим работы программы! :-)
+ * Режим "Друзья": ежедневные бои перса. Очень близок к режиму "Арена", делят единый счётчик на двоих.
  * Вручную занимал у пользователей более 5 часов, раз в 5 минут требуя внимания.
  * Полное прохождение в полностью автоматическом режиме: порядка 4,5 часа = 50 боёв * 5 мин 10 сек = 260 минут.
- * В режиме "Арена" работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
+ * В режиме "Друзья" работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
  * Повседневная работа пользователей в Windows прерывается раз в 5 минут всего на 10-14 секунд.
  * Счётчик боёв записывается в файл.
  * Большинство методов для всех классов-ботов унифицировано и вынесено в родительский BaseBot.
+ * TODO: реализовать одновременную работу нескольких окон, без переключения между ними при первых кликах.
  */
 
 public class FriendsBot extends BaseBot {
@@ -52,25 +53,35 @@ public class FriendsBot extends BaseBot {
             startGame();
 
             //  === Бои с друзьями ===
+            boolean isFirstBattle = true;
+
             for (int battle = unifiedCounter.getBattleNumber() + 1; battle <= MAX_BATTLES_ARENA; battle++) {
                 Instant battleStartTime = Instant.now();
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
                 clickButton("Друг");
-                Thread.sleep(PAUSE_SHORT_MS);
+                Thread.sleep(200);
                 clickButton("Атаковать друга");
-                Thread.sleep(700);
+                Thread.sleep(2500);
                 clickButton("Атаковать");
+//                clickButtons("Друг", "Атаковать друга", "Атаковать");
                 if (isPet) {
                     clickButton("Питомец");
                 }
 
                 clickButton("Стрелка вправо");
                 clickButton("Пропустить");
-                clickButton("Закрыть 1");
-                clickButton("Закрыть 2");
+                if (isFirstBattle) {
+                    clickButton("Похвастаться - снять");
+                    Thread.sleep(100);
+                    clickButton("Похвастаться - закрыть");
+                    isFirstBattle = false;
+                } else {
+                    clickButton("Закрыть 1");
+                    clickButton("Закрыть - поражение");
+                }
 
                 int battleDuration = fightEnd(battleStartTime);
-                int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
+                int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration + 3;
                 boolean isGameGoingOn = battle < MAX_BATTLES_ARENA;
                 if (isGameGoingOn) {
                     countdown(secondsBeforeNextBattle);

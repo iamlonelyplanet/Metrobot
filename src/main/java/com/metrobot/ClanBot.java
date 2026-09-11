@@ -82,9 +82,10 @@ public class ClanBot extends BaseBot {
                 // Подготовительные клики (однократно, перед первым боем рейда)
                 if (unifiedCounter.getBattleNumber() == 0) {
                     showActiveWindows();
+                    System.out.println("\nПодготовительные клики перед первым боем рейда");
                     uncheckAutoFight();
                     clickButtons("Клан", "Война", "Обновить");
-                    System.out.println("\nЗавершены подготовительные клики перед первым боем рейда\n");
+                    System.out.println("\nПодготовительные клики завершены");
                 }
 
                 while (Instant.now().isBefore(endInstant)
@@ -131,6 +132,10 @@ public class ClanBot extends BaseBot {
             clickButtons("Клан", "Рейды");
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);// Пересмотреть на предмет "Атаковать босса" сюда (21.07)
             clickButton("Атаковать босса");
+            if (unifiedCounter.getBattleNumber() == 0) {
+                System.out.println("\nСнимаем галочку с \"Похвастаться\" перед первым боем рейда");
+                uncheckUnexpected();
+            }
             Thread.sleep(PAUSE_RAID_BOSS_MS);
 
             boolean isGrenadeModeOn = false;
