@@ -49,7 +49,8 @@ public class ConfigManager {
                                   LocalTime raidStart,
                                   LocalTime tunnelStart,
                                   LocalTime ratStart,
-                                  LocalTime raid2_start) {
+                                  LocalTime raid2_Start,
+                                  LocalTime friendsStart) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(CONFIG_FILE))) {
             pw.println("mode=" + mode);
 
@@ -66,7 +67,8 @@ public class ConfigManager {
             if (raidStart != null) pw.println("raid_start=" + raidStart.format(TIME_FORMAT));
             if (tunnelStart != null) pw.println("tunnel_start=" + tunnelStart.format(TIME_FORMAT));
             if (ratStart != null) pw.println("rat_start=" + ratStart.format(TIME_FORMAT));
-            if (raid2_start != null) pw.println("raid2_start=" + raid2_start.format(TIME_FORMAT));
+            if (raid2_Start != null) pw.println("raid2_start=" + raid2_Start.format(TIME_FORMAT));
+            if (friendsStart != null) pw.println("friends_start=" + friendsStart.format(TIME_FORMAT));
         } catch (IOException e) {
             System.err.println("Ошибка записи " + CONFIG_FILE + ": " + e.getMessage());
         }
@@ -87,6 +89,7 @@ public class ConfigManager {
         LocalTime tunnelStart = Utilities.parseTime(existing.get("tunnel_start"));
         LocalTime ratStart = Utilities.parseTime(existing.get("rat_start"));
         LocalTime raid2_start = Utilities.parseTime(existing.get("raid2_start"));
+        LocalTime friendsStart = Utilities.parseTime(existing.get("friendsStart"));
 
         // Обновляем только нужное время старта, остальные остаются без изменений
         switch (mode) {
@@ -96,6 +99,7 @@ public class ConfigManager {
             case 4 -> tunnelStart = startTime;
             case 5 -> ratStart = startTime;
             case 6 -> raid2_start = startTime;
+            case 7 -> friendsStart = startTime;
         }
 
         // переиспользуем старый рабочий метод
@@ -107,8 +111,8 @@ public class ConfigManager {
                 raidStart,
                 tunnelStart,
                 ratStart,
-                raid2_start
-        );
+                raid2_start,
+                friendsStart);
     }
 
     // Обнуляем файл счётчиков при первом запуске программы каждый день после 03:00 по Мск, так надо.
