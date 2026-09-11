@@ -54,6 +54,7 @@ public abstract class BaseBot {
     private static final Set<String> PET_PAUSE_BUTTONS = Set.of(
             "Питомец",
             "Погон 3",
+//            "Атаковать друга",
 //            "Закрыть 1",
             "Нежданчик - снять",
             "Закрыть - Рейд" // Подумать
@@ -112,12 +113,15 @@ public abstract class BaseBot {
         return (int) secondsForBattle;
     }
 
+    protected String getCounterName() {
+        return botName;
+    }
+
     // Разворачиваем активные окна
     protected void showActiveWindows() throws InterruptedException {
         for (HWND hWnd : activeWindows) {
             if (hWnd == null) continue;
             USER32.ShowWindow(hWnd, WinUser.SW_RESTORE);
-//            Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
             USER32.SetForegroundWindow(hWnd);
         }
         System.out.println("\nРазвернул окна");
@@ -153,7 +157,8 @@ public abstract class BaseBot {
         waitUntilStartTime(startTime);
         System.out.printf("\nСтарт режима %s \n", botName);
         Thread.sleep(PAUSE_SHORT_MS);
-        this.unifiedCounter = counters.computeIfAbsent(botName, name -> new Counter(name));
+        this.unifiedCounter = counters.computeIfAbsent(getCounterName(), name -> new Counter(name)
+        );
         // TODO: изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
     }
 

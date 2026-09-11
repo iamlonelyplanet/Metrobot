@@ -54,7 +54,6 @@ public class BotFactory {
                 );
                 ratBot.playGame();
             }
-
             case 6 -> {
                 RaidStartBot raidStartBot = new RaidStartBot(
                         cfg.getActiveWindows(),
@@ -65,8 +64,18 @@ public class BotFactory {
                 );
                 raidStartBot.playGame();
             }
+            case 7 -> {
+                FriendsBot friendsBot = new FriendsBot(
+                        cfg.getActiveWindows(),
+                        cfg.getStartTime(),
+                        cfg.getBotName(),
+                        cfg.isPet(),
+                        cfg.isCloseAfterFinish()
+                );
+                friendsBot.playGame();
+            }
+
             default -> System.out.println("Неизвестный режим. Завершаю.");
         }
     }
-
 }

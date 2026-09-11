@@ -1,0 +1,86 @@
+package com.metrobot;
+
+import java.awt.*;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Map;
+import java.time.*;
+
+import com.sun.jna.platform.win32.WinDef.HWND;
+
+import static com.metrobot.Buttons.*;
+
+/**
+ * Режим "Арена": ежедневные бои перса. Самый первый режим работы программы! :-)
+ * Вручную занимал у пользователей более 5 часов, раз в 5 минут требуя внимания.
+ * Полное прохождение в полностью автоматическом режиме: порядка 4,5 часа = 50 боёв * 5 мин 10 сек = 260 минут.
+ * В режиме "Арена" работает silent mode: окна разворачиваются перед серией кликов, затем сворачиваются обратно.
+ * Повседневная работа пользователей в Windows прерывается раз в 5 минут всего на 10-14 секунд.
+ * Счётчик боёв записывается в файл.
+ * Большинство методов для всех классов-ботов унифицировано и вынесено в родительский BaseBot.
+ */
+
+public class FriendsBot extends BaseBot {
+    public FriendsBot(List<HWND> windows,
+                      LocalTime timeHHmm,
+                      String botName,
+                      boolean isPet, boolean isCloseAfterFinish) throws AWTException {
+
+        super(windows);
+
+        this.startTime = timeHHmm;
+        this.botName = botName;
+        this.isCloseAfterFinish = isCloseAfterFinish;
+        this.isPet = isPet;
+    }
+
+    public static final byte MAX_BATTLES_ARENA = 50;
+
+    @Override
+    protected String getCounterName() {
+        return "Арена";
+    }
+
+    @Override
+    protected Map<String, Point> getButtonMap() {
+        return ARENA_BUTTONS;
+    }
+
+    @Override
+    public void playGame() {
+        try {
+            startGame();
+
+            //  === Бои с друзьями ===
+            for (int battle = unifiedCounter.getBattleNumber() + 1; battle <= MAX_BATTLES_ARENA; battle++) {
+                Instant battleStartTime = Instant.now();
+                printBattleNumber(battle, MAX_BATTLES_ARENA);
+                clickButton("Друг");
+                Thread.sleep(PAUSE_SHORT_MS);
+                clickButton("Атаковать друга");
+                Thread.sleep(700);
+                clickButton("Атаковать");
+                if (isPet) {
+                    clickButton("Питомец");
+                }
+
+                clickButton("Стрелка вправо");
+                clickButton("Пропустить");
+                clickButton("Закрыть 1");
+                clickButton("Закрыть 2");
+
+                int battleDuration = fightEnd(battleStartTime);
+                int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration;
+                boolean isGameGoingOn = battle < MAX_BATTLES_ARENA;
+                if (isGameGoingOn) {
+                    countdown(secondsBeforeNextBattle);
+                }
+            }
+
+            endGame();
+        } catch (Exception e) {
+            handleExceptions(e);
+        }
+    }
+}
+

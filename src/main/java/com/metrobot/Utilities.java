@@ -45,7 +45,7 @@ public class Utilities {
     }
 
     public static int askMode() {
-        final String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели", "Крысы"};
+        final String[] options = {"Клановые войны", "Рейд", "Арена", "Туннели", "Крысы", "Друзья"};
 
         final String[] boss = {"Зверь", "Упырь", "Вичуха", "Стигмат", "Горгон", "Биомасса", "Слизень", "Тварь"};
 
@@ -125,9 +125,15 @@ public class Utilities {
                     exitAfterCheck.setSelected(false);
                     exitAfterCheck.setEnabled(true);
                     break;
-                case 5: // Старт рейда
+//                case 5: // Старт рейда
+//                    petCheck.setSelected(false);
+//                    petCheck.setEnabled(false);
+//                    exitAfterCheck.setSelected(false);
+//                    exitAfterCheck.setEnabled(true);
+//                    break;
+                case 5: // Друзья
                     petCheck.setSelected(false);
-                    petCheck.setEnabled(false);
+                    petCheck.setEnabled(true);
                     exitAfterCheck.setSelected(false);
                     exitAfterCheck.setEnabled(true);
                     break;
@@ -155,9 +161,9 @@ public class Utilities {
             isPet = (idx == 2 || idx == 3 || idx == 4) && petCheck.isSelected();
             exitAfter = exitAfterCheck.isSelected();
 
-            return idx + 1; // 1–5
+            return idx == 5 ? 7 : idx + 1;
         } else {
-            return -1; // Esc/Cancel - выход из программы (-1), подхватывается null.
+            return -1;
         }
     }
 
