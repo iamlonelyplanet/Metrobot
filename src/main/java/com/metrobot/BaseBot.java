@@ -282,6 +282,57 @@ public abstract class BaseBot {
         }
     }
 
+    // Перегрузка для нескольких кнопок подряд с заданной паузой между кнопками. Все кнопки выполняются в одном окне,
+// затем происходит переход к следующему окну.
+    protected void clickButtons(long pauseBetweenButtons, String... buttonNames)
+            throws InterruptedException {
+
+        if (buttonNames == null || buttonNames.length == 0) {
+            return;
+        }
+
+        Map<String, Point> buttonMap = getButtonMap();
+        String lastButton = buttonNames[buttonNames.length - 1];
+
+        for (int i = 0; i < activeWindows.size(); i++) {
+            HWND hWnd = activeWindows.get(i);
+            if (hWnd == null) continue;
+
+            RECT rect = new RECT();
+            USER32.GetWindowRect(hWnd, rect);
+
+            for (int j = 0; j < buttonNames.length; j++) {
+                String buttonName = buttonNames[j];
+                Point rel = buttonMap.get(buttonName);
+
+                if (rel == null) {
+                    System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
+                    continue;
+                }
+
+                calculateCoordinates(rect, rel, i, buttonName);
+
+                if (FINAL_BUTTONS.contains(buttonName)) {
+                    minimizeActiveWindow(hWnd, i);
+                }
+
+                // Пауза только между кнопками, но не после последней.
+                if (j < buttonNames.length - 1) {
+                    Thread.sleep(pauseBetweenButtons);
+                }
+            }
+
+            // Обычная пауза перед переходом к следующему окну.
+            Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
+        }
+
+        Thread.sleep(PAUSE_SHORT_MS);
+
+        if (LONG_PAUSE_BUTTONS.contains(lastButton)) {
+            Thread.sleep(PAUSE_LONG_MS);
+        }
+    }
+
     protected void calculateCoordinates(RECT rect, Point rel, int i, String buttonName) {
         int x = rect.left + Buttons.xMoveRight + rel.x;
         int y = rect.top + Buttons.yMoveDown + rel.y;

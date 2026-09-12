@@ -58,12 +58,17 @@ public class FriendsBot extends BaseBot {
             for (int battle = unifiedCounter.getBattleNumber() + 1; battle <= MAX_BATTLES_ARENA; battle++) {
                 Instant battleStartTime = Instant.now();
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
-                clickButton("Друг");
-                Thread.sleep(200);
-                clickButton("Атаковать друга");
+
+                clickButtons(200, "Друг", "Атаковать друга");
+
+//                clickButtons("Друг");
+//                Thread.sleep(200);
+//                clickButtons("Атаковать друга");
+
+//                clickButtons("Друг", "Атаковать друга");
                 Thread.sleep(2500);
                 clickButton("Атаковать");
-//                clickButtons("Друг", "Атаковать друга", "Атаковать");
+
                 if (isPet) {
                     clickButton("Питомец");
                 }

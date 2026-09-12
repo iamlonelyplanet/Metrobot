@@ -20,6 +20,7 @@ import static com.metrobot.Buttons.*;
  * Однократно.
  * Метод announceInChat() оповещает игроков о старте рейда в чате игры.
  * После выполнения автоматически стартует режим Рейд для всех окон, выбранных в предыдущем диалоге.
+ * TODO: проработать снятие галочки.
  */
 public class RaidStartBot extends BaseBot {
     public RaidStartBot(List<HWND> windows,
