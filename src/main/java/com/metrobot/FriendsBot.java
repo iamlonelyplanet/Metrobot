@@ -58,15 +58,8 @@ public class FriendsBot extends BaseBot {
             for (int battle = unifiedCounter.getBattleNumber() + 1; battle <= MAX_BATTLES_ARENA; battle++) {
                 Instant battleStartTime = Instant.now();
                 printBattleNumber(battle, MAX_BATTLES_ARENA);
-
-                clickButtons(200, "Друг", "Атаковать друга");
-
-//                clickButtons("Друг");
-//                Thread.sleep(200);
-//                clickButtons("Атаковать друга");
-
-//                clickButtons("Друг", "Атаковать друга");
-                Thread.sleep(2500);
+                clickButtons(600, "Друг", "Атаковать друга");
+                Thread.sleep(1800);
                 clickButton("Атаковать");
 
                 if (isPet) {
@@ -76,9 +69,9 @@ public class FriendsBot extends BaseBot {
                 clickButton("Стрелка вправо");
                 clickButton("Пропустить");
                 if (isFirstBattle) {
-                    clickButton("Похвастаться - снять");
-                    Thread.sleep(100);
-                    clickButton("Похвастаться - закрыть");
+                    clickButtons(100,"Похвастаться - снять", "Похвастаться - закрыть");
+//                    Thread.sleep(100);
+//                    clickButton("Похвастаться - закрыть");
                     isFirstBattle = false;
                 } else {
                     clickButton("Закрыть 1");
