@@ -69,9 +69,7 @@ public class FriendsBot extends BaseBot {
                 clickButton("Стрелка вправо");
                 clickButton("Пропустить");
                 if (isFirstBattle) {
-                    clickButtons(100,"Похвастаться - снять", "Похвастаться - закрыть");
-//                    Thread.sleep(100);
-//                    clickButton("Похвастаться - закрыть");
+                    clickButtons(200,"Похвастаться - снять", "Похвастаться - закрыть");
                     isFirstBattle = false;
                 } else {
                     clickButton("Закрыть 1");

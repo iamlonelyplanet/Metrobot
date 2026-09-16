@@ -96,6 +96,22 @@ public class Buttons {
         put("Нежданчик - закрыть", new Point(560, 495));
     }};
 
+    // --- Палатки ---
+    public static final LinkedHashMap<String, Point> TENT_BUTTONS = new LinkedHashMap<>() {{
+        put("Друг", new Point(85, 555));
+        put("Обыскать", new Point(385, 515));
+        put("В гости", new Point(85, 530));
+        put("Назад", new Point(40, 520));
+
+        put("Стрелка - семь", new Point(660, 605));
+        put("Стрелка вправо", new Point(660, 555));
+        put("Стрелка - начало", new Point(15, 635));
+
+
+        put("Нежданчик - снять", new Point(115, 495));
+        put("Нежданчик - закрыть", new Point(560, 495));
+    }};
+
     // --- КВ и рейды ---
     public static final LinkedHashMap<String, Point> CLAN_BUTTONS = new LinkedHashMap<>() {{
         put("Клан", new Point(315, 58));

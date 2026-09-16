@@ -74,6 +74,15 @@ public class BotFactory {
                 );
                 friendsBot.playGame();
             }
+            case 8 -> {
+                TentBot tentBot = new TentBot(
+                        cfg.getActiveWindows(),
+                        cfg.getStartTime(),
+                        cfg.getBotName(),
+                        cfg.isCloseAfterFinish()
+                );
+                tentBot.playGame();
+            }
 
             default -> System.out.println("Неизвестный режим. Завершаю.");
         }

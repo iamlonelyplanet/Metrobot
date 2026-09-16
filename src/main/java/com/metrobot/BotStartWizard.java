@@ -71,6 +71,7 @@ public class BotStartWizard {
             case 5 -> "Крысы";
             case 6 -> "Старт рейда";
             case 7 -> "Друзья";
+            case 8 -> "Обыск";
             default -> throw new IllegalArgumentException("Неизвестный режим: " + mode);
         };
     }

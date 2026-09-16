@@ -282,6 +282,12 @@ public abstract class BaseBot {
         }
     }
 
+    protected RECT getWindowRect(HWND hWnd) {
+        RECT rect = new RECT();
+        USER32.GetWindowRect(hWnd, rect);
+        return rect;
+    }
+
     // Перегрузка для нескольких кнопок подряд с заданной паузой между кнопками. Все кнопки выполняются в одном окне,
 // затем происходит переход к следующему окну.
     protected void clickButtons(long pauseBetweenButtons, String... buttonNames)
