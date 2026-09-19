@@ -129,7 +129,7 @@ public abstract class BaseBot {
 
     // Сворачиваем активное окна
     protected void minimizeActiveWindow(HWND hWnd, int i) throws InterruptedException {
-//        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
+        Thread.sleep(PAUSE_BETWEEN_WINDOWS_MS);
         USER32.ShowWindow(hWnd, WinUser.SW_MINIMIZE);
         if (i == activeWindows.size() - 1) {
             System.out.println("Свернул окна");

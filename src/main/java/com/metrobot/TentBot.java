@@ -25,7 +25,7 @@ public class TentBot extends BaseBot {
         this.isCloseAfterFinish = isCloseAfterFinish;
     }
 
-    public static final byte MAX_SCREENS = 30;
+    public static final byte MAX_SCREENS = 25;
 
     private static final int FRIENDS_COUNT = 7;
 
@@ -46,7 +46,7 @@ public class TentBot extends BaseBot {
             startGame();
 
             for (HWND hWnd : activeWindows) {
-                System.out.println("\n=== Проверяю окно " + (activeWindows.indexOf(hWnd) + 1) + " ===");
+                System.out.println("\n Боец " + (activeWindows.indexOf(hWnd) + 1));
 
                 boolean[] vipFriends = findVipFriends(hWnd);
 
@@ -61,9 +61,7 @@ public class TentBot extends BaseBot {
 
     private boolean[] findVipFriends(HWND hWnd) {
         BufferedImage screenshot = captureArea(hWnd);
-
         boolean[] vipFriends = new boolean[FRIENDS_COUNT];
-
         int friendWidth = screenshot.getWidth() / FRIENDS_COUNT;
 
         for (int friend = 0; friend < FRIENDS_COUNT; friend++) {
@@ -84,12 +82,7 @@ public class TentBot extends BaseBot {
                     int g = color.getGreen();
                     int b = color.getBlue();
 
-                    if (r > 200
-                            && g > 150
-                            && b < 160
-                            && r - g > 20
-                            && g - b > 30) {
-
+                    if (r > 200 && g > 150 && b < 160 && r - g > 20 && g - b > 30) {
                         goldPixels++;
                     }
                 }
@@ -97,21 +90,14 @@ public class TentBot extends BaseBot {
 
             vipFriends[friend] = goldPixels >= 10;
 
-            System.out.printf(
-                    "Друг %d: %d золотых пикселей → VIP: %s%n",
-                    friend + 1,
-                    goldPixels,
-                    vipFriends[friend]
-            );
+            System.out.printf("Друг %d: %d золотых пикселей → VIP: %s%n", friend + 1, goldPixels, vipFriends[friend]);
         }
 
         return vipFriends;
     }
 
     private BufferedImage captureArea(HWND hWnd) {
-
         RECT rect = getWindowRect(hWnd);
-
         Rectangle area = new Rectangle(
                 rect.left + Buttons.xMoveRight + TentBot.FRIENDS_X,
                 rect.top + Buttons.yMoveDown + TentBot.FRIENDS_Y,

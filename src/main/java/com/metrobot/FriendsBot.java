@@ -53,7 +53,7 @@ public class FriendsBot extends BaseBot {
             startGame();
 
             //  === Бои с друзьями ===
-            boolean isFirstBattle = true;
+            boolean isFirstBattle = false;
 
             for (int battle = unifiedCounter.getBattleNumber() + 1; battle <= MAX_BATTLES_ARENA; battle++) {
                 Instant battleStartTime = Instant.now();
@@ -77,7 +77,7 @@ public class FriendsBot extends BaseBot {
                 }
 
                 int battleDuration = fightEnd(battleStartTime);
-                int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration + 3;
+                int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration + 1;
                 boolean isGameGoingOn = battle < MAX_BATTLES_ARENA;
                 if (isGameGoingOn) {
                     countdown(secondsBeforeNextBattle);
