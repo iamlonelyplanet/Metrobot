@@ -30,7 +30,7 @@ public class TentBot extends BaseBot {
     private static final int FRIENDS_COUNT = 7;
 
     private static final int FRIENDS_X = 43;
-    private static final int FRIENDS_Y = 548; // запас ±5 px
+    private static final int FRIENDS_Y = 548;
     private static final int FRIENDS_WIDTH = 582;
     private static final int FRIENDS_HEIGHT = 22;
 
@@ -44,13 +44,35 @@ public class TentBot extends BaseBot {
     public void playGame() {
         try {
             startGame();
+            showActiveWindows();
 
             for (HWND hWnd : activeWindows) {
-                System.out.println("\n Боец " + (activeWindows.indexOf(hWnd) + 1));
+                int searchedTents = 0;
 
-                boolean[] vipFriends = findVipFriends(hWnd);
+                for (int sevenFriends = 0; sevenFriends < MAX_SCREENS; sevenFriends++) {
+                    boolean[] vipFriends = findVipFriends(hWnd);
+                    System.out.println(Arrays.toString(vipFriends));
 
-                System.out.println(Arrays.toString(vipFriends));
+                    for (int i = 0; i < vipFriends.length; i++) {
+                        if (vipFriends[i]) {
+                            System.out.printf("Экран %d: обыскиваю друга %d", i + 1, sevenFriends + 1);
+                            getBullets(hWnd, i);
+                            searchedTents++;
+                            if (searchedTents >= 10) {
+                                break;
+                            }
+                        }
+                    }
+                    if (searchedTents == 10) {
+                        break;
+                    }
+
+                    Thread.sleep(PAUSE_PET_MS);
+                    clickButtons(hWnd, "Стрелка 7 вправо");
+                    Thread.sleep(PAUSE_SHORT_MS);
+                }
+
+                clickButtons(hWnd, "Стрелка - начало");
             }
 
             endGame();
@@ -90,7 +112,7 @@ public class TentBot extends BaseBot {
 
             vipFriends[friend] = goldPixels >= 10;
 
-            System.out.printf("Друг %d: %d золотых пикселей → VIP: %s%n", friend + 1, goldPixels, vipFriends[friend]);
+            System.out.printf("Друг %d: %d золотых пикселей: %s%n", friend + 1, goldPixels, vipFriends[friend]);
         }
 
         return vipFriends;
@@ -108,9 +130,18 @@ public class TentBot extends BaseBot {
         return robot.createScreenCapture(area);
     }
 
-    protected void getBullets() throws InterruptedException {
-        clickButton("Друг");
-        clickButtons(PAUSE_LONG_MS, "В гости", "Обыскать");
-        clickButton("Назад");
+    protected void getBullets(HWND hWnd, int friendNumber) throws InterruptedException {
+        int x = 85 + friendNumber * 85;
+        Point friendPoint = new Point(x, 555);
+        Point housePoint = new Point(x,525);
+
+        clickAtWindow(hWnd, friendPoint);
+        Thread.sleep(PAUSE_PET_MS);
+
+        clickAtWindow(hWnd, housePoint);
+        Thread.sleep(PAUSE_SHORT_MS);
+
+        clickButtons(hWnd,"Обыскать");
+        Thread.sleep(PAUSE_SHORT_MS);
     }
 }

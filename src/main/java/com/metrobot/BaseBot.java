@@ -339,11 +339,59 @@ public abstract class BaseBot {
         }
     }
 
+    // Перегрузка для нескольких кнопок подряд с заданной паузой в конкретном окне.
+    protected void clickButtons(HWND hWnd, long pauseBetweenButtons, String... buttonNames) throws InterruptedException {
+
+        if (hWnd == null || buttonNames == null || buttonNames.length == 0) {
+            return;
+        }
+
+        Map<String, Point> buttonMap = getButtonMap();
+        RECT rect = getWindowRect(hWnd);
+
+        for (int j = 0; j < buttonNames.length; j++) {
+            String buttonName = buttonNames[j];
+            Point rel = buttonMap.get(buttonName);
+
+            if (rel == null) {
+                System.err.println(
+                        "Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
+                continue;
+            }
+
+            calculateCoordinates(rect, rel, 0, buttonName);
+
+            if (FINAL_BUTTONS.contains(buttonName)) {
+                minimizeActiveWindow(hWnd, 0);
+            }
+
+            // Пауза только между кнопками.
+            if (j < buttonNames.length - 1) {
+                Thread.sleep(pauseBetweenButtons);
+            }
+        }
+    }
+
+    protected void clickButtons(HWND hWnd, String... buttonNames)
+            throws InterruptedException {
+
+        clickButtons(hWnd, 0, buttonNames);
+    }
+
     protected void calculateCoordinates(RECT rect, Point rel, int i, String buttonName) {
         int x = rect.left + Buttons.xMoveRight + rel.x;
         int y = rect.top + Buttons.yMoveDown + rel.y;
         clickAt(x, y);
         System.out.printf("Боец %d нажал \"%s\" (%d, %d)%n", i + 1, buttonName, x, y);
+    }
+
+    protected void clickAtWindow(HWND hWnd, Point rel) {
+        RECT rect = getWindowRect(hWnd);
+
+        int x = rect.left + Buttons.xMoveRight + rel.x;
+        int y = rect.top + Buttons.yMoveDown + rel.y;
+
+        clickAt(x, y);
     }
 
     // Обработка исключений. Учебная штука.

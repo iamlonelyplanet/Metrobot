@@ -103,9 +103,9 @@ public class Buttons {
         put("В гости", new Point(85, 530));
         put("Назад", new Point(40, 520));
 
-        put("Стрелка - семь", new Point(660, 605));
-        put("Стрелка вправо", new Point(660, 555));
-        put("Стрелка - начало", new Point(15, 635));
+        put("Стрелка 7 вправо", new Point(655, 600));
+        put("Стрелка вправо", new Point(655, 555));
+        put("Стрелка - начало", new Point(15, 630));
 
 
         put("Нежданчик - снять", new Point(115, 495));

@@ -53,6 +53,7 @@ public class FriendsBot extends BaseBot {
             startGame();
 
             //  === Бои с друзьями ===
+            boolean isBoxChecked = false;
             boolean isFirstBattle = false;
 
             for (int battle = unifiedCounter.getBattleNumber() + 1; battle <= MAX_BATTLES_ARENA; battle++) {
@@ -88,6 +89,11 @@ public class FriendsBot extends BaseBot {
         } catch (Exception e) {
             handleExceptions(e);
         }
+    }
+
+    private boolean isBoxChecked() {
+
+        return true;
     }
 }
 
