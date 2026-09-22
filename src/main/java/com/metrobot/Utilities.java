@@ -232,7 +232,7 @@ public class Utilities {
             USER32.GetWindowText(hWnd, buffer, 512);
             String title = new String(buffer).trim();
 
-            if (title.contains("Игроклуб") || title.contains("кланов")) {
+            if (title.contains("Игроклуб")){ // || title.contains("кланов")) {
                 resizeWindows(hWnd);
                 USER32.ShowWindow(hWnd, WinUser.SW_RESTORE);
             }

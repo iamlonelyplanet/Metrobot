@@ -50,7 +50,8 @@ public abstract class BaseBot {
             "Крыса",
             "Клан - Выход",
             "Похвастаться - закрыть",
-            "Закрыть - поражение"
+            "Закрыть - поражение",
+            "Нежданчик - закрыть"
     );
 
     private static final Set<String> PET_PAUSE_BUTTONS = Set.of(
@@ -236,6 +237,20 @@ public abstract class BaseBot {
         if (LONG_PAUSE_BUTTONS.contains(buttonName)) {
             Thread.sleep(PAUSE_LONG_MS);
         }
+    }
+
+    protected void clickButton(HWND hWnd, String buttonName) throws InterruptedException {
+        Map<String, Point> buttonMap = getButtonMap();
+        Point rel = buttonMap.get(buttonName);
+
+        if (rel == null) {
+            System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
+            return;
+        }
+
+        RECT rect = getWindowRect(hWnd);
+
+        calculateCoordinates(rect, rel, 0, buttonName);
     }
 
     // Перегрузка метода для нескольких кнопок подряд (без переключений на другие рабочие окна)

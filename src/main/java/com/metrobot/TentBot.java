@@ -29,10 +29,10 @@ public class TentBot extends BaseBot {
 
     private static final int FRIENDS_COUNT = 7;
 
-    private static final int FRIENDS_X = 43;
-    private static final int FRIENDS_Y = 548;
-    private static final int FRIENDS_WIDTH = 582;
-    private static final int FRIENDS_HEIGHT = 22;
+    private static final int X = 43;
+    private static final int Y = 548;
+    private static final int WIDTH = 582;
+    private static final int HEIGHT = 22;
 
     @Override
     protected Map<String, Point> getButtonMap() {
@@ -48,6 +48,8 @@ public class TentBot extends BaseBot {
 
             for (HWND hWnd : activeWindows) {
                 int searchedTents = 0;
+                clickButtons(hWnd, "Стрелка - начало");
+                Thread.sleep(200);
 
                 for (int sevenFriends = 0; sevenFriends < MAX_SCREENS; sevenFriends++) {
                     boolean[] vipFriends = findVipFriends(hWnd);
@@ -121,10 +123,10 @@ public class TentBot extends BaseBot {
     private BufferedImage captureArea(HWND hWnd) {
         RECT rect = getWindowRect(hWnd);
         Rectangle area = new Rectangle(
-                rect.left + Buttons.xMoveRight + TentBot.FRIENDS_X,
-                rect.top + Buttons.yMoveDown + TentBot.FRIENDS_Y,
-                TentBot.FRIENDS_WIDTH,
-                TentBot.FRIENDS_HEIGHT
+                rect.left + Buttons.xMoveRight + X,
+                rect.top + Buttons.yMoveDown + Y,
+                WIDTH,
+                HEIGHT
         );
 
         return robot.createScreenCapture(area);
