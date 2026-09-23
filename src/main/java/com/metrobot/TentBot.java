@@ -26,19 +26,12 @@ public class TentBot extends BaseBot {
     }
 
     public static final byte MAX_SCREENS = 25;
-
     private static final int FRIENDS_COUNT = 7;
-
-    private static final int X_COORDINATE = 43;
-    private static final int Y_COORDINATE = 548;
-    private static final int WIDTH = 582;
-    private static final int HEIGHT = 22;
 
     @Override
     protected Map<String, Point> getButtonMap() {
         return TENT_BUTTONS;
     }
-
 
     @Override
     public void playGame() {
@@ -86,7 +79,8 @@ public class TentBot extends BaseBot {
     }
 
     private boolean[] findVipFriends(HWND hWnd) {
-        BufferedImage screenshot = captureArea(hWnd);
+        BufferedImage screenshot = captureArea(hWnd, ScreenshotArea.TENT);
+
         boolean[] vipFriends = new boolean[FRIENDS_COUNT];
         int friendWidth = screenshot.getWidth() / FRIENDS_COUNT;
 
@@ -97,41 +91,19 @@ public class TentBot extends BaseBot {
                     ? screenshot.getWidth()
                     : (friend + 1) * friendWidth;
 
-            int goldPixels = 0;
+            int goldPixels = countPixelsByColor(
+                    screenshot,
+                    startX,
+                    endX,
+                    ScreenshotArea.TENT.colorCriteria()
+            );
 
-            for (int y = 0; y < screenshot.getHeight(); y++) {
-                for (int x = startX; x < endX; x++) {
-
-                    Color color = new Color(screenshot.getRGB(x, y));
-
-                    int r = color.getRed();
-                    int g = color.getGreen();
-                    int b = color.getBlue();
-
-                    if (r > 200 && g > 150 && b < 160 && r - g > 20 && g - b > 30) {
-                        goldPixels++;
-                    }
-                }
-            }
-
-            vipFriends[friend] = goldPixels >= 10;
+            vipFriends[friend] = goldPixels >= ScreenshotArea.TENT.colorCriteria().minPixels();
 
             System.out.printf("Друг %d: %d золотых пикселей: %s%n", friend + 1, goldPixels, vipFriends[friend]);
         }
 
         return vipFriends;
-    }
-
-    private BufferedImage captureArea(HWND hWnd) {
-        RECT rect = getWindowRect(hWnd);
-        Rectangle area = new Rectangle(
-                rect.left + Buttons.xMoveRight + X_COORDINATE,
-                rect.top + Buttons.yMoveDown + Y_COORDINATE,
-                WIDTH,
-                HEIGHT
-        );
-
-        return robot.createScreenCapture(area);
     }
 
     protected void getBullets(HWND hWnd, int friendNumber) throws InterruptedException {

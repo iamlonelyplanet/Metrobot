@@ -94,47 +94,17 @@ public class FriendsBot extends BaseBot {
         }
     }
 
-    private static final int X = 190;
-    private static final int Y = 510;
-    private static final int WIDTH = 16;
-    private static final int HEIGHT = 26;
-
     private boolean isBoxChecked(HWND hWnd) {
-        BufferedImage screenshot = captureArea(hWnd);
+        BufferedImage screenshot = captureArea(hWnd, ScreenshotArea.SEVEN_FRIENDS);
 
-        int coloredPixels = 0;
-
-        for (int y = 0; y < screenshot.getHeight(); y++) {
-            for (int x = 0; x < screenshot.getWidth(); x++) {
-                Color color = new Color(screenshot.getRGB(x, y));
-
-                int r = color.getRed();
-                int g = color.getGreen();
-                int b = color.getBlue();
-
-                if (r > 190
-                        && g > 130
-                        && b < 150
-                        && r - g > 30
-                        && g - b > 30) {
-                    coloredPixels++;
-                }
-            }
-        }
-
-        return coloredPixels >= 20;
-    }
-
-    private BufferedImage captureArea(HWND hWnd) {
-        RECT rect = getWindowRect(hWnd);
-        Rectangle area = new Rectangle(
-                rect.left + Buttons.xMoveRight + X,
-                rect.top + Buttons.yMoveDown + Y,
-                WIDTH,
-                HEIGHT
+        int coloredPixels = countPixelsByColor(
+                screenshot,
+                0,
+                screenshot.getWidth(),
+                ScreenshotArea.SEVEN_FRIENDS.colorCriteria()
         );
 
-        return robot.createScreenCapture(area);
+        return coloredPixels >= 20;
     }
 }
 

@@ -3,6 +3,7 @@ package com.metrobot;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalTime;
@@ -162,6 +163,7 @@ public abstract class BaseBot {
         );
         // TODO: изучить Method reference! Прикол про Counter::new == name -> new Counter(name)
     }
+
     // Вспомогательный метод для startGame(), переопределён в FriendsBot для унификации счётчика с ArenaBot
     protected String getCounterName() {
         return botName;
@@ -423,6 +425,50 @@ public abstract class BaseBot {
         robot.mouseMove(x, y);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+    }
+
+    protected int countPixelsByColor(
+            BufferedImage screenshot,
+            int startX,
+            int endX,
+            ScreenshotArea.PixelColorCriteria criteria) {
+
+        int coloredPixels = 0;
+
+        for (int y = 0; y < screenshot.getHeight(); y++) {
+            for (int x = startX; x < endX; x++) {
+
+                Color color = new Color(screenshot.getRGB(x, y));
+
+                int r = color.getRed();
+                int g = color.getGreen();
+                int b = color.getBlue();
+
+                if (r > criteria.minRed()
+                        && g > criteria.minGreen()
+                        && b < criteria.maxBlue()
+                        && r - g > criteria.minRedGreenDiff()
+                        && g - b > criteria.minGreenBlueDiff()) {
+
+                    coloredPixels++;
+                }
+            }
+        }
+
+        return coloredPixels;
+    }
+
+    protected BufferedImage captureArea(HWND hWnd, ScreenshotArea area) {
+        RECT rect = getWindowRect(hWnd);
+
+        Rectangle rectangle = new Rectangle(
+                rect.left + Buttons.xMoveRight + area.x(),
+                rect.top + Buttons.yMoveDown + area.y(),
+                area.width(),
+                area.height()
+        );
+
+        return robot.createScreenCapture(rectangle);
     }
 
     // Активируем режим "Автобой" на Арене после выполнения других ботов, на будущее
