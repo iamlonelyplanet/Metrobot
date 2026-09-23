@@ -387,9 +387,7 @@ public abstract class BaseBot {
         }
     }
 
-    protected void clickButtons(HWND hWnd, String... buttonNames)
-            throws InterruptedException {
-
+    protected void clickButtons(HWND hWnd, String... buttonNames) throws InterruptedException {
         clickButtons(hWnd, 0, buttonNames);
     }
 

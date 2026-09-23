@@ -29,8 +29,8 @@ public class TentBot extends BaseBot {
 
     private static final int FRIENDS_COUNT = 7;
 
-    private static final int X = 43;
-    private static final int Y = 548;
+    private static final int X_COORDINATE = 43;
+    private static final int Y_COORDINATE = 548;
     private static final int WIDTH = 582;
     private static final int HEIGHT = 22;
 
@@ -49,7 +49,7 @@ public class TentBot extends BaseBot {
             for (HWND hWnd : activeWindows) {
                 int searchedTents = 0;
                 clickButtons(hWnd, "Стрелка - начало");
-                Thread.sleep(200);
+                Thread.sleep(PAUSE_PET_MS);
 
                 for (int sevenFriends = 0; sevenFriends < MAX_SCREENS; sevenFriends++) {
                     boolean[] vipFriends = findVipFriends(hWnd);
@@ -57,7 +57,7 @@ public class TentBot extends BaseBot {
 
                     for (int i = 0; i < vipFriends.length; i++) {
                         if (vipFriends[i]) {
-                            System.out.printf("Экран %d: обыскиваю друга %d", i + 1, sevenFriends + 1);
+                            System.out.printf("Порция 7 друзей №%d: обыскиваю друга %d\n", sevenFriends + 1, i + 1);
                             getBullets(hWnd, i);
                             searchedTents++;
                             if (searchedTents >= 10) {
@@ -74,7 +74,9 @@ public class TentBot extends BaseBot {
                     Thread.sleep(PAUSE_SHORT_MS);
                 }
 
+                Thread.sleep(PAUSE_PET_MS);
                 clickButtons(hWnd, "Стрелка - начало");
+                clickButtons(hWnd, "Назад");
             }
 
             endGame();
@@ -123,8 +125,8 @@ public class TentBot extends BaseBot {
     private BufferedImage captureArea(HWND hWnd) {
         RECT rect = getWindowRect(hWnd);
         Rectangle area = new Rectangle(
-                rect.left + Buttons.xMoveRight + X,
-                rect.top + Buttons.yMoveDown + Y,
+                rect.left + Buttons.xMoveRight + X_COORDINATE,
+                rect.top + Buttons.yMoveDown + Y_COORDINATE,
                 WIDTH,
                 HEIGHT
         );
@@ -135,7 +137,7 @@ public class TentBot extends BaseBot {
     protected void getBullets(HWND hWnd, int friendNumber) throws InterruptedException {
         int x = 85 + friendNumber * 85;
         Point friendPoint = new Point(x, 555);
-        Point housePoint = new Point(x,525);
+        Point housePoint = new Point(x, 525);
 
         clickAtWindow(hWnd, friendPoint);
         Thread.sleep(PAUSE_PET_MS);
@@ -143,7 +145,7 @@ public class TentBot extends BaseBot {
         clickAtWindow(hWnd, housePoint);
         Thread.sleep(PAUSE_SHORT_MS);
 
-        clickButtons(hWnd,"Обыскать");
+        clickButtons(hWnd, "Обыскать");
         Thread.sleep(PAUSE_SHORT_MS);
     }
 }
