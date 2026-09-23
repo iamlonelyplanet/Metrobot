@@ -42,6 +42,9 @@ public class ClanBot extends BaseBot {
         this.isCloseAfterFinish = isCloseAfterFinish;
     }
 
+    public static final byte MAX_BATTLES_CW = 24;
+    public static final byte MAX_BATTLES_RAID = 12;
+
     private int totalBattles;
     private Instant endInstant;
 
@@ -132,10 +135,10 @@ public class ClanBot extends BaseBot {
             clickButtons("Клан", "Рейды");
             Thread.sleep(PAUSE_SHORT_TUNNELS_MS);// Пересмотреть на предмет "Атаковать босса" сюда (21.07)
             clickButton("Атаковать босса");
-            if (unifiedCounter.getBattleNumber() == 0) {
-                System.out.println("\nСнимаем галочку с \"Похвастаться\" перед первым боем рейда");
-                uncheckUnexpected();
-            }
+//            if (unifiedCounter.getBattleNumber() == 0) {
+//                System.out.println("\nСнимаем галочку с \"Похвастаться\" перед первым боем рейда");
+//                uncheckUnexpected();
+//            }
             Thread.sleep(PAUSE_RAID_BOSS_MS);
 
             boolean isGrenadeModeOn = false;

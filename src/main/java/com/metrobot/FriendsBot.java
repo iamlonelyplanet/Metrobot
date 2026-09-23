@@ -1,13 +1,10 @@
 package com.metrobot;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.time.*;
 
-import com.sun.jna.platform.win32.WinDef.RECT;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
 import static com.metrobot.Buttons.*;
@@ -70,7 +67,7 @@ public class FriendsBot extends BaseBot {
                 Thread.sleep(500);
 
                 for (HWND hWnd : activeWindows) {
-                    if (isBoxChecked(hWnd)) {
+                    if (isAreaMatchesColorCriteria(hWnd, ScreenshotArea.SEVEN_FRIENDS)) {
                         clickButtons(hWnd, 200, "Похвастаться - снять",
                                 "Похвастаться - закрыть");
                     } else {
@@ -82,6 +79,7 @@ public class FriendsBot extends BaseBot {
 
                 int battleDuration = fightEnd(battleStartTime);
                 int secondsBeforeNextBattle = ATTACK_COOLDOWN_SEC - battleDuration + 1;
+//                secondsBeforeNextBattle -= 150;
                 boolean isGameGoingOn = battle < MAX_BATTLES_ARENA;
                 if (isGameGoingOn) {
                     countdown(secondsBeforeNextBattle);
@@ -93,18 +91,4 @@ public class FriendsBot extends BaseBot {
             handleExceptions(e);
         }
     }
-
-    private boolean isBoxChecked(HWND hWnd) {
-        BufferedImage screenshot = captureArea(hWnd, ScreenshotArea.SEVEN_FRIENDS);
-
-        int coloredPixels = countPixelsByColor(
-                screenshot,
-                0,
-                screenshot.getWidth(),
-                ScreenshotArea.SEVEN_FRIENDS.colorCriteria()
-        );
-
-        return coloredPixels >= 20;
-    }
 }
-

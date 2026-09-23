@@ -427,11 +427,8 @@ public abstract class BaseBot {
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
 
-    protected int countPixelsByColor(
-            BufferedImage screenshot,
-            int startX,
-            int endX,
-            ScreenshotArea.PixelColorCriteria criteria) {
+    protected int countPixelsByColor(BufferedImage screenshot, int startX, int endX,
+                                     ScreenshotArea.PixelColorCriteria criteria) {
 
         int coloredPixels = 0;
 
@@ -469,6 +466,19 @@ public abstract class BaseBot {
         );
 
         return robot.createScreenCapture(rectangle);
+    }
+
+    protected boolean isAreaMatchesColorCriteria(HWND hWnd, ScreenshotArea area) {
+        BufferedImage screenshot = captureArea(hWnd, area);
+
+        int coloredPixels = countPixelsByColor(
+                screenshot,
+                0,
+                screenshot.getWidth(),
+                area.colorCriteria()
+        );
+
+        return coloredPixels >= area.colorCriteria().minPixels();
     }
 
     // Активируем режим "Автобой" на Арене после выполнения других ботов, на будущее

@@ -16,8 +16,6 @@ public class Buttons {
     public static final int PAUSE_BETWEEN_WINDOWS_MS = 10;
     public static final int ATTACK_COOLDOWN_SEC = 301; // не менять без крайней необходимости
 
-    public static final byte MAX_BATTLES_CW = 24;
-    public static final byte MAX_BATTLES_RAID = 12;
     public static final byte MAX_ENERGY = 30; // 50 при VIP
 
     /**

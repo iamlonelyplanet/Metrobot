@@ -129,8 +129,10 @@ public class RaidStartBot extends BaseBot {
         Thread.sleep(1000);
         robot.mouseMove(FREE_AREA_X, FREE_AREA_Y);
         robot.mouseWheel(-WHEEL_AMOUNT);
+        Thread.sleep(1000);
 
         pressKeyCombination(KeyEvent.VK_ADD);
+        Thread.sleep(1000);
     }
 
     protected void pasteText(String message) throws Exception {

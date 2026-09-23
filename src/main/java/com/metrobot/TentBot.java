@@ -1,7 +1,6 @@
 package com.metrobot;
 
 import com.sun.jna.platform.win32.WinDef.HWND;
-import com.sun.jna.platform.win32.WinDef.RECT;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

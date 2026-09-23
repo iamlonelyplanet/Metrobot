@@ -1,7 +1,6 @@
 package com.metrobot;
 
 public enum ScreenshotArea {
-
     TENT(
             43,
             548,
