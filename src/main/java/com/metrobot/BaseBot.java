@@ -11,13 +11,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
-import com.metrobot.misc.Grammar;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.RECT;
 import com.sun.jna.platform.win32.WinUser;
 
 import static com.metrobot.Buttons.*;
+import com.metrobot.misc.Grammar;
 
 /**
  * Родительский класс для всех режимов. Полный комплект унифицированных методов.
@@ -251,7 +251,6 @@ public abstract class BaseBot {
         }
 
         RECT rect = getWindowRect(hWnd);
-
         calculateCoordinates(rect, rel, 0, buttonName);
     }
 
@@ -371,8 +370,7 @@ public abstract class BaseBot {
             Point rel = buttonMap.get(buttonName);
 
             if (rel == null) {
-                System.err.println(
-                        "Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
+                System.err.println("Кнопка \"" + buttonName + "\" среди кнопок не найдена.");
                 continue;
             }
 
@@ -407,16 +405,6 @@ public abstract class BaseBot {
         int y = rect.top + Buttons.yMoveDown + rel.y;
 
         clickAt(x, y);
-    }
-
-    // Обработка исключений. Учебная штука.
-    protected void handleExceptions(Exception e) {
-        if (e instanceof InterruptedException) {
-            System.out.println("Прервано. Завершаю работу");
-            Thread.currentThread().interrupt();
-        } else {
-            e.printStackTrace();
-        }
     }
 
     // Клик. Собственно, ядро всей программы. Расширить паузами?
@@ -479,6 +467,16 @@ public abstract class BaseBot {
         );
 
         return coloredPixels >= area.colorCriteria().minPixels();
+    }
+
+    // Обработка исключений. Учебная штука.
+    protected void handleExceptions(Exception e) {
+        if (e instanceof InterruptedException) {
+            System.out.println("Прервано. Завершаю работу");
+            Thread.currentThread().interrupt();
+        } else {
+            e.printStackTrace();
+        }
     }
 
     // Активируем режим "Автобой" на Арене после выполнения других ботов, на будущее
